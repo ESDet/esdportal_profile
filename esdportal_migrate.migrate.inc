@@ -6,6 +6,15 @@
 function esdportal_migrate_migrate_api() {
   $api = array(
     'api' => 2,
+    'groups' => array(
+      'oldPortal' => 'Old Portal Migrations',
+    ),
+    'migrations' => array(
+      'Schools' => array(
+        'class_name' => 'Schools',
+        'group_name' => 'oldPortal',
+      ),
+    ),
   );
   return $api;
 }
