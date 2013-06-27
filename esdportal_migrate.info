@@ -1,7 +1,9 @@
-name = "ESD Portal migrations"
+name = "esdportal_migrate"
 description = "Migrates data from CSV files into Schools taxonomy"
-core = 7.x
-dependencies[] = esdportal_str
+core = "7.x"
+dependencies[] = "esdportal_str"
+dependencies[] = "migrate"
+package = "Migration"
 
-files[] = esdportal_migrate.module
-files[] = schools.inc
+files[] = "esdportal_migrate.module"
+files[] = "esdportal_migrate.migrate.inc"
