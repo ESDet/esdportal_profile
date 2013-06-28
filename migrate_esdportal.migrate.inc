@@ -6,9 +6,15 @@
 function migrate_esdportal_migrate_api() {
   $api = array(
     'api' => 2,
+    'groups' => array(
+      'terms' => array(
+        'title' => t('Terms'),
+      ),
+    ),
     'migrations' => array(
       'Schools' => array(
         'class_name' => 'Schools',
+        'group_name' => 'terms',
       ),
     ),
   );
@@ -36,7 +42,7 @@ class Schools extends Migration {
       MigrateDestinationTerm::getKeySchema()
     );
 
-    $this->source = new MigrateSourceCSV('/home/bc/Desktop/codez/esd/scorecard/portal_live/schools-with-bcode.csv', NULL, array('header_rows'=>1,'embedded_newlines'=>TRUE));
+    $this->source = new MigrateSourceCSV('/home/bc/Desktop/codez/esd/scorecard/portal_live/schools-with-bcode.csv', array(), array('header_rows'=>1,'embedded_newlines'=>TRUE));
 
     $this->destination = new MigrateDestinationTerm('schools');
 
