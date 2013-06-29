@@ -33,10 +33,10 @@ class Schools extends Migration {
 
     $this->map = new MigrateSQLMap($this->machineName,
       array(
-        "field_bcode['und']['0']['value']" => array(
+        "vid" => array(
           'type' => 'int',
           'not null' => TRUE,
-          'description' => 'Building code',
+          'description' => 'vid',
         )
       ),
       MigrateDestinationTerm::getKeySchema()
