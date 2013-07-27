@@ -42,7 +42,7 @@ class Schools extends Migration {
       MigrateDestinationTerm::getKeySchema()
     );
 
-    $this->source = new MigrateSourceCSV('/home/bc/Desktop/codez/esd/scorecard/portal_live/schools-with-bcode.csv', array(), array('header_rows'=>1,'embedded_newlines'=>TRUE));
+    $this->source = new MigrateSourceCSV('/data/disk/esd/schools-with-bcode.csv', array(), array('header_rows'=>1,'embedded_newlines'=>TRUE));
 
     $this->destination = new MigrateDestinationTerm('schools');
 
@@ -65,6 +65,11 @@ class Schools extends Migration {
     $this->addFieldMapping('field_address:phone_number', "field_location['und']['0']['phone']");
     $this->addFieldMapping('field_email', "field_email['und']['0']['value']");
     $this->addFieldMapping('field_bcode', "field_bcode['und']['0']['value']");
+    $this->addFieldMapping('field_links', 'field_links_combined');
+    $this->addFieldMapping('field_links:title', 'field_links_title_combined');
+    $this->addFieldMapping('field_files', 'field_files_combined');
+    $this->addFieldMapping('field_files:source_dir')
+            ->defaultValue('/data/disk/esd/distro/002/drupal-7.22.1-prod/sites/portal.excellentschoolsdetroit.org/files');
 
     $this->addUnMigratedDestinations(array(
       'field_school_type',
@@ -72,5 +77,21 @@ class Schools extends Migration {
       'field_school_status',
     ));
   }
+
+  public function prepareRow($row) {
+    for ($i=0; $i<=10; $i++) {
+      if (strlen($row->{"field_links['und']['$i']['url']"}) > 0) {
+        $field_links_combined[] = $row->{"field_links['und']['$i']['url']"};
+        $field_links_title_combined[] = $row->{"field_links['und']['$i']['title']"};
+      }
+    }
+    for ($i=0; $i<=10; $i++) {
+      $field_files_combined[] = $row->{"field_files['und']['$i']['filename']"};
+    }
+    $row->field_files_combined = $field_files_combined;
+    $row->field_links_combined = $field_links_combined;
+    $row->field_links_title_combined = $field_links_title_combined;
+  }
+
 }
 
