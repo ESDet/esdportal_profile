@@ -1,0 +1,129 @@
+<?php
+
+/**
+ * @file
+ * Module file for esdportal_dash.
+ *
+ * Provide a page at user/:uid/dash for school leaders and superintendents
+ * that lists:
+ *   * all school profiles owned by user (for school leaders)
+ *   * or all school profiles that are children of school terms where user is
+ *     specified in the superintendent entityreference field (for superintendents)
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function esdportal_dash_menu() {
+  $items['user/%/dash'] = array(
+    'page callback' => 'esdportal_dash_page',
+    'page arguments' => array(1),
+    'access callback' => 'esdportal_dash_access',
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+function esdportal_dash_access() {
+  global $user;
+  if (arg(1) != $user->uid) {
+    return FALSE;
+  }
+  $user_roles = array_values($user->roles);
+  if (!is_array($user_roles)) {
+    return FALSE;
+  }
+  if (in_array('Superintendent', $user_roles) || in_array('School Leader', $user_roles)) {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function esdportal_dash_theme() {
+  return array(
+    'esdportal_dash' => array(
+      'variables' => array('data' => NULL),
+      'template' => 'esdportal-dash',
+    ),
+  );
+}
+
+/**
+ * Implements template_preprocess().
+ */
+function template_preprocess_esdportal_dash(&$vars) {
+  $vars['hi'] = 'hihihi';
+}
+
+function esdportal_dash_page($uid) {
+  global $user;
+
+  // Validate uid
+  $uid = intval($uid);
+  if ($uid < 1) {
+    return t('Please provide a numeric uid.');
+  }
+
+  // Get list of schools for which user is superintendent and attach child items
+  $schools = array_flip(_esdportal_dash_superintendented_school_tids($user->uid));
+  foreach ($schools as $tid => &$data) {
+    $data = array();
+    $term = taxonomy_term_load($tid);
+    $nids = taxonomy_select_nodes($tid);
+    // Label school profiles as such... but only one :)
+    foreach ($nids as $nid) {
+      if (!isset($data['school_profile_nid']) && _esdportal_nid_is_school_profile($nid)) {
+        $data['school_profile_nid'] = $nid;
+      }
+    }
+    // Attach aside (report links)
+    $data['aside'] = drupal_render(taxonomy_term_view($term, 'aside'));
+    $data['name'] = $term->name;
+  }
+
+  return theme('esdportal_dash', $data);
+}
+
+/**
+ * Get school tids for which $uid is a superintendent
+ *
+ * @param int $uid
+ *
+ * @return
+ *   Array of taxonomy term IDs
+ */
+function _esdportal_dash_superintendented_school_tids($uid) {
+  // Get terms
+  $tids = db_select('field_data_field_superintendents', 'supers')
+            ->fields('supers', array('entity_id'))
+            ->condition('field_superintendents_target_id', $uid)
+            ->execute()
+            ->fetchCol();
+
+  return $tids;
+}
+
+/**
+ * Is nid referring to a school profile node?
+ *
+ * @param int $nid
+ *
+ * @return
+ *   bool
+ */
+function _esdportal_nid_is_school_profile($nid) {
+  $type = db_select('node')
+            ->fields('node', array('type'))
+            ->condition('nid', $nid)
+            ->execute()
+            ->fetchField();
+
+  return $type == 'school_profile';
+}
+
