@@ -48,7 +48,7 @@ function esdportal_dash_access() {
 function esdportal_dash_theme() {
   return array(
     'esdportal_dash' => array(
-      'variables' => array('data' => NULL),
+      'variables' => array(),
       'template' => 'esdportal-dash',
     ),
   );
@@ -56,10 +56,9 @@ function esdportal_dash_theme() {
 
 /**
  * Implements template_preprocess().
- */
 function template_preprocess_esdportal_dash(&$vars) {
-  $vars['hi'] = 'hihihi';
 }
+ */
 
 function esdportal_dash_page($uid) {
   global $user;
@@ -82,12 +81,12 @@ function esdportal_dash_page($uid) {
         $data['school_profile_nid'] = $nid;
       }
     }
-    // Attach aside (report links)
+    // Attach aside (report links) and name
     $data['aside'] = drupal_render(taxonomy_term_view($term, 'aside'));
     $data['name'] = $term->name;
   }
 
-  return theme('esdportal_dash', $data);
+  return theme('esdportal_dash', array('schools' => $schools));
 }
 
 /**
