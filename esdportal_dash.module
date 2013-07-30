@@ -30,16 +30,7 @@ function esdportal_dash_access() {
   if (arg(1) != $user->uid) {
     return FALSE;
   }
-  $user_roles = array_values($user->roles);
-  if (!is_array($user_roles)) {
-    return FALSE;
-  }
-  if (in_array('Superintendent', $user_roles) || in_array('School Leader', $user_roles)) {
-    return TRUE;
-  }
-  else {
-    return FALSE;
-  }
+  return _esdportal_dash_check_user($user);
 }
 
 /**
@@ -60,6 +51,14 @@ function template_preprocess_esdportal_dash(&$vars) {
 }
  */
 
+/**
+ * Render dashboard page.
+ *
+ * @param int $uid
+ *   Drupal user id
+ *
+ * @return string
+ */
 function esdportal_dash_page($uid) {
   global $user;
 
@@ -77,7 +76,7 @@ function esdportal_dash_page($uid) {
     $nids = taxonomy_select_nodes($tid);
     // Label school profiles as such... but only one :)
     foreach ($nids as $nid) {
-      if (!isset($data['school_profile_nid']) && _esdportal_nid_is_school_profile($nid)) {
+      if (!isset($data['school_profile_nid']) && _esdportal_dash_nid_is_school_profile($nid)) {
         $data['school_profile_nid'] = $nid;
       }
     }
@@ -87,6 +86,17 @@ function esdportal_dash_page($uid) {
   }
 
   return theme('esdportal_dash', array('schools' => $schools));
+}
+
+/**
+ * Implements hook_user_login().
+ *
+ * If user is a superintendent or school leader, redirect to dashboard.
+ */
+function esdportal_dash_user_login(&$edit, $account) {
+  if (_esdportal_dash_check_user($account)) {
+    $_GET['destination'] = 'user/' . $account->uid . '/dash';
+  }
 }
 
 /**
@@ -116,7 +126,7 @@ function _esdportal_dash_superintendented_school_tids($uid) {
  * @return
  *   bool
  */
-function _esdportal_nid_is_school_profile($nid) {
+function _esdportal_dash_nid_is_school_profile($nid) {
   $type = db_select('node')
             ->fields('node', array('type'))
             ->condition('nid', $nid)
@@ -124,5 +134,26 @@ function _esdportal_nid_is_school_profile($nid) {
             ->fetchField();
 
   return $type == 'school_profile';
+}
+
+/**
+ * Check if user should see the dashboard.
+ *
+ * @param object $user
+ *   Drupal user account object
+ *
+ * @return bool
+ */
+function _esdportal_dash_check_user($user) {
+  $user_roles = array_values($user->roles);
+  if (!is_array($user_roles)) {
+    return FALSE;
+  }
+  if (in_array('Superintendent', $user_roles) || in_array('School Leader', $user_roles)) {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
 }
 
