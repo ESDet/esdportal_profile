@@ -91,7 +91,7 @@ function esdportal_dash_block_info() {
   return array(
     'my_schools' => array(
       'info' => 'My Schools',
-      'cache' => DRUPAL_NO_CACHE,//DRUPAL_CACHE_PER_USER,
+      'cache' => DRUPAL_NO_CACHE, // all expensive ops are cache_*()ed
     ),
   );
 }
@@ -169,25 +169,31 @@ function _esdportal_dash_updatable_school_tids($uid) {
  * Build schools info thingie.
  */
 function _esdportal_dash_schools_obj($uid) {
-  // Get list of schools for which user is superintendent or leader and attach child items
-  $superintendented_schools = _esdportal_dash_superintendented_school_tids($uid);
-  $updatable_schools = _esdportal_dash_updatable_school_tids($uid);
-  $schools = array_flip(array_unique(array_merge($superintendented_schools, $updatable_schools)));
-  foreach ($schools as $tid => &$data) {
-    $data = array();
-    $term = taxonomy_term_load($tid);
-    $nids = taxonomy_select_nodes($tid);
-    // Label school profiles as such... but only one :)
-    foreach ($nids as $nid) {
-      if (!isset($data['school_profile_nid']) && _esdportal_dash_nid_is_school_profile($nid)) {
-        $data['school_profile_nid'] = $nid;
+  if ($cached = cache_get('esdportal_dash_schools_' . $uid, 'cache')) {
+    $schools = $cached->data;
+  }
+  if (empty($schools)) {
+    // Get list of schools for which user is superintendent or leader and attach child items
+    $superintendented_schools = _esdportal_dash_superintendented_school_tids($uid);
+    $updatable_schools = _esdportal_dash_updatable_school_tids($uid);
+    $schools = array_flip(array_unique(array_merge($superintendented_schools, $updatable_schools)));
+    foreach ($schools as $tid => &$data) {
+      $data = array();
+      $term = taxonomy_term_load($tid);
+      $nids = taxonomy_select_nodes($tid);
+      // Label school profiles as such... but only one :)
+      foreach ($nids as $nid) {
+        if (!isset($data['school_profile_nid']) && _esdportal_dash_nid_is_school_profile($nid)) {
+          $data['school_profile_nid'] = $nid;
+        }
       }
+      // Attach aside (report links) and name
+      $data['aside'] = drupal_render(taxonomy_term_view($term, 'aside'));
+      $data['name'] = $term->name;
+      // Mark updatable schools as such
+      $data['updatable'] = (in_array($tid, $updatable_schools)) ? TRUE : FALSE;
     }
-    // Attach aside (report links) and name
-    $data['aside'] = drupal_render(taxonomy_term_view($term, 'aside'));
-    $data['name'] = $term->name;
-    // Mark updatable schools as such
-    $data['updatable'] = (in_array($tid, $updatable_schools)) ? TRUE : FALSE;
+    cache_set('esdportal_dash_schools_' . $uid, $schools, time() + 60*60);
   }
   return $schools;
 }
