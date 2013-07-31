@@ -47,9 +47,10 @@ function esdportal_dash_theme() {
 
 /**
  * Implements template_preprocess().
-function template_preprocess_esdportal_dash(&$vars) {
-}
  */
+function template_preprocess_esdportal_dash(&$vars) {
+  
+}
 
 /**
  * Render dashboard page.
@@ -68,8 +69,10 @@ function esdportal_dash_page($uid) {
     return t('Please provide a numeric uid.');
   }
 
-  // Get list of schools for which user is superintendent and attach child items
-  $schools = array_flip(_esdportal_dash_superintendented_school_tids($user->uid));
+  // Get list of schools for which user is superintendent or leader and attach child items
+  $superintendented_schools = _esdportal_dash_superintendented_school_tids($user->uid);
+  $updatable_schools = _esdportal_dash_updatable_school_tids($user->uid);
+  $schools = array_flip(array_unique(array_merge($superintendented_schools, $updatable_schools)));
   foreach ($schools as $tid => &$data) {
     $data = array();
     $term = taxonomy_term_load($tid);
@@ -114,6 +117,20 @@ function _esdportal_dash_superintendented_school_tids($uid) {
             ->condition('field_superintendents_target_id', $uid)
             ->execute()
             ->fetchCol();
+
+  return $tids;
+}
+
+/**
+ * Get parent school tids of school_profiles for which $uid has acl update perms.
+ *
+ * @param int $uid
+ *
+ * @return
+ *   Array of taxonomy term IDs
+ */
+function _esdportal_dash_updatable_school_tids($uid) {
+  $tids = db_query("SELECT fdfs.field_school_tid FROM {acl_user} au INNER JOIN {acl_node} an ON au.acl_id = an.acl_id INNER JOIN {field_data_field_school} AS fdfs ON an.nid=fdfs.entity_id WHERE an.grant_update = 1 AND au.uid = :uid", array("uid" => $uid))->fetchCol();
 
   return $tids;
 }
