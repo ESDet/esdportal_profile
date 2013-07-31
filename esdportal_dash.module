@@ -47,10 +47,9 @@ function esdportal_dash_theme() {
 
 /**
  * Implements template_preprocess().
- */
 function template_preprocess_esdportal_dash(&$vars) {
-  
 }
+ */
 
 /**
  * Render dashboard page.
@@ -86,6 +85,8 @@ function esdportal_dash_page($uid) {
     // Attach aside (report links) and name
     $data['aside'] = drupal_render(taxonomy_term_view($term, 'aside'));
     $data['name'] = $term->name;
+    // Mark updatable schools as such
+    $data['updatable'] = (in_array($tid, $updatable_schools)) ? TRUE : FALSE;
   }
 
   return theme('esdportal_dash', array('schools' => $schools));
