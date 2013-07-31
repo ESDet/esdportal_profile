@@ -68,26 +68,7 @@ function esdportal_dash_page($uid) {
     return t('Please provide a numeric uid.');
   }
 
-  // Get list of schools for which user is superintendent or leader and attach child items
-  $superintendented_schools = _esdportal_dash_superintendented_school_tids($user->uid);
-  $updatable_schools = _esdportal_dash_updatable_school_tids($user->uid);
-  $schools = array_flip(array_unique(array_merge($superintendented_schools, $updatable_schools)));
-  foreach ($schools as $tid => &$data) {
-    $data = array();
-    $term = taxonomy_term_load($tid);
-    $nids = taxonomy_select_nodes($tid);
-    // Label school profiles as such... but only one :)
-    foreach ($nids as $nid) {
-      if (!isset($data['school_profile_nid']) && _esdportal_dash_nid_is_school_profile($nid)) {
-        $data['school_profile_nid'] = $nid;
-      }
-    }
-    // Attach aside (report links) and name
-    $data['aside'] = drupal_render(taxonomy_term_view($term, 'aside'));
-    $data['name'] = $term->name;
-    // Mark updatable schools as such
-    $data['updatable'] = (in_array($tid, $updatable_schools)) ? TRUE : FALSE;
-  }
+  $schools = _esdportal_dash_schools_obj($user->uid);
 
   return theme('esdportal_dash', array('schools' => $schools));
 }
@@ -101,6 +82,54 @@ function esdportal_dash_user_login(&$edit, $account) {
   if (_esdportal_dash_check_user($account)) {
     $_GET['destination'] = 'user/' . $account->uid . '/dash';
   }
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function esdportal_dash_block_info() {
+  return array(
+    'my_schools' => array(
+      'info' => 'My Schools',
+      'cache' => DRUPAL_NO_CACHE,//DRUPAL_CACHE_PER_USER,
+    ),
+  );
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function esdportal_dash_block_view($delta) {
+  switch ($delta) {
+    case 'my_schools':
+    default:
+      $block = esdportal_dash_block_my_schools_content();
+    break;
+  }
+  return $block;
+}
+
+/**
+ * Create my_schools block content.
+ */
+function esdportal_dash_block_my_schools_content() {
+  global $user;
+
+  $schools = _esdportal_dash_schools_obj($user->uid);
+  $links = array();
+  foreach ($schools as $school => $data) {
+    $links[] = l($data['name'], 'node/' . $data['school_profile_nid']);
+  }
+
+  $block['subject'] = t('My school profiles');
+  $block['content'] = array(
+    'school_links' => array(
+      '#items' => $links,
+      '#theme' => 'item_list',
+    ),
+  );
+
+  return $block;
 }
 
 /**
@@ -135,6 +164,34 @@ function _esdportal_dash_updatable_school_tids($uid) {
 
   return $tids;
 }
+
+/**
+ * Build schools info thingie.
+ */
+function _esdportal_dash_schools_obj($uid) {
+  // Get list of schools for which user is superintendent or leader and attach child items
+  $superintendented_schools = _esdportal_dash_superintendented_school_tids($uid);
+  $updatable_schools = _esdportal_dash_updatable_school_tids($uid);
+  $schools = array_flip(array_unique(array_merge($superintendented_schools, $updatable_schools)));
+  foreach ($schools as $tid => &$data) {
+    $data = array();
+    $term = taxonomy_term_load($tid);
+    $nids = taxonomy_select_nodes($tid);
+    // Label school profiles as such... but only one :)
+    foreach ($nids as $nid) {
+      if (!isset($data['school_profile_nid']) && _esdportal_dash_nid_is_school_profile($nid)) {
+        $data['school_profile_nid'] = $nid;
+      }
+    }
+    // Attach aside (report links) and name
+    $data['aside'] = drupal_render(taxonomy_term_view($term, 'aside'));
+    $data['name'] = $term->name;
+    // Mark updatable schools as such
+    $data['updatable'] = (in_array($tid, $updatable_schools)) ? TRUE : FALSE;
+  }
+  return $schools;
+}
+
 
 /**
  * Is nid referring to a school profile node?
