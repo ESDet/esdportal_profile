@@ -16,7 +16,7 @@
  */
 function esdportal_dash_menu() {
   $items['user/%/dash'] = array(
-    'title' => 'Dashboard',
+    'title' => 'My school profiles',
     'page callback' => 'esdportal_dash_page',
     'page arguments' => array(1),
     'access callback' => 'esdportal_dash_access',
@@ -122,7 +122,7 @@ function esdportal_dash_block_my_schools_content() {
     $links[] = l($data['name'], 'node/' . $data['school_profile_nid']);
   }
 
-  $block['subject'] = t('My school profiles');
+  $block['subject'] = l('My school profiles', 'user/' . $user->uid . '/dash');
   $block['content'] = array(
     'school_links' => array(
       '#items' => $links,
