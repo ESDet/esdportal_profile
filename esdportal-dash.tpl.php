@@ -14,7 +14,9 @@
 <br />
 <?php print l('View scores', 'schoolscores/' . $data['bcode']); ?>
 <br />
-<?php print $data['aside']; ?>
+<?php if ($data['aside']): ?>
+  <?php print $data['aside']; ?>
+<?php endif; ?>
 </dd>
 <?php endforeach; ?>
 </dl>

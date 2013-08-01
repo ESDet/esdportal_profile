@@ -203,7 +203,10 @@ function _esdportal_dash_schools_obj($uid) {
         }
       }
       // Attach aside (report links) and name
-      $data['aside'] = drupal_render(taxonomy_term_view($term, 'aside'));
+      $term_array = taxonomy_term_view($term, 'aside');
+      if (array_key_exists('field_links', $term_array) || array_key_exists('field_files', $term_array)) {
+        $data['aside'] = drupal_render($term_array);
+      }
       $data['name'] = $term->name;
       $data['bcode'] = $term->field_bcode['und'][0]['value'];
       // Mark updatable schools as such
