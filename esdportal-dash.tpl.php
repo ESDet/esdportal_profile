@@ -1,3 +1,8 @@
+<?php if ($message): ?>
+<div class="messages <?php print $message['type']; ?>">
+<?php print $message['text']; ?>
+</div>
+<?php endif; ?>
 <dl>
 <?php foreach ($schools as $nid => $data): ?>
 <dt><?php print l($data['name'], 'node/' . $data['school_profile_nid']); ?></dt>

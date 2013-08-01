@@ -23,6 +23,15 @@ function esdportal_dash_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['admin/config/esdportal_dash'] = array(
+    'title' => t('Portal User Dashboard Settings'),
+    'description' => t('Change the message at the top of user/%/dash'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('esdportal_dash_admin'),
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
   return $items;
 }
 
@@ -71,7 +80,12 @@ function esdportal_dash_page($uid) {
 
   $schools = _esdportal_dash_schools_obj($user->uid);
 
-  return theme('esdportal_dash', array('schools' => $schools));
+  $message = array(
+    'type' => variable_get('esdportal_dash_alerttype', 'instruction'),
+    'text' => variable_get('esdportal_dash_alert', 'This page lists your school profiles.'),
+  );
+
+  return theme('esdportal_dash', array('message' => $message, 'schools' => $schools));
 }
 
 /**
@@ -237,5 +251,37 @@ function _esdportal_dash_check_user($user) {
   else {
     return FALSE;
   }
+}
+
+/**
+ * Set custom top message on user/%/dash.
+ */
+function esdportal_dash_admin() {
+  $form = array();
+
+  $form['esdportal_dash_alert'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Alert message'),
+    '#description' => t('This message will display above the dashboard.'),
+    '#max_length' => 256,
+    '#size' => 20,
+    '#required' => TRUE,
+    '#default_value' => variable_get('esdportal_dash_alert', t('This page lists your school profiles.')),
+  );
+
+  $form['esdportal_dash_alerttype'] = array(
+    '#type' => 'select',
+    '#title' => t('Alert message type'),
+    '#required' => TRUE,
+    '#options' => array(
+      'instruction' => t('Instruction'),
+      'status' => t('Status'),
+      'warning' => t('Warning'),
+      'error' => t('Error'),
+    ),
+    '#default_value' => variable_get('esdportal_dash_alerttype', 'instruction'),
+  );
+
+  return system_settings_form($form);
 }
 
