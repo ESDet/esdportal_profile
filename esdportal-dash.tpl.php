@@ -12,7 +12,7 @@
  / <?php print l('Edit profile', 'node/' . $data['school_profile_nid'] . '/edit'); ?>
 <?php endif; ?>
 <br />
-<?php print l('View scores', 'schoolscores/' . $data['bcode']); ?>
+<?php print l('View 2013 scores', 'schoolscores/' . $data['bcode']); ?>
 <br />
 <?php if ($data['aside']): ?>
   <?php print $data['aside']; ?>
