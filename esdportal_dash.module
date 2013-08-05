@@ -16,7 +16,7 @@
  */
 function esdportal_dash_menu() {
   $items['user/%/dash'] = array(
-    'title' => 'My school profiles',
+    'title' => 'My School Profiles',
     'page callback' => 'esdportal_dash_page',
     'page arguments' => array(1),
     'access callback' => 'esdportal_dash_access',
