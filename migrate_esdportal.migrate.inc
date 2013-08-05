@@ -42,7 +42,7 @@ class Schools extends Migration {
       MigrateDestinationTerm::getKeySchema()
     );
 
-    $this->source = new MigrateSourceCSV('/data/disk/esd/schools-with-bcode.csv', array(), array('header_rows'=>1,'embedded_newlines'=>TRUE));
+    $this->source = new MigrateSourceCSV('/data/disk/esd/schools-joined-edited-working.csv', array(), array('header_rows'=>1,'embedded_newlines'=>TRUE));
 
     $this->destination = new MigrateDestinationTerm('schools');
 
@@ -70,12 +70,30 @@ class Schools extends Migration {
     $this->addFieldMapping('field_files', 'field_files_combined');
     $this->addFieldMapping('field_files:source_dir')
             ->defaultValue('/data/disk/esd/distro/002/drupal-7.22.1-prod/sites/portal.excellentschoolsdetroit.org/files');
+    $this->addFieldMapping('field_state_status', 'stateStatus');
+    $this->addFieldMapping('field_school_status', 'esdStatus');
+    $this->addFieldMapping('field_2011_pct_det_res', 'percentDetResident2011');
+    $this->addFieldMapping('field_strict_discipline_academy', 'strictDisciplineAcademy');
+    $this->addFieldMapping('field_special_ed_emphasis', 'specialEdEmphasis');
+    $this->addFieldMapping('field_alternative_school', 'alternativeSchool');
+    $this->addFieldMapping('field_career_technical_emphasis', 'careerTechnicalEmphasis');
+    $this->addFieldMapping('field_specialty_school', 'specialtySchool');
+    $this->addFieldMapping('field_governance', 'governance');
+    $this->addFieldMapping('field_school_scorecard_status', 'category');
+    $this->addFieldMapping('field_school_type', 'type');
+    $this->addFieldMapping('field_authorized_grades', 'authorizedGrades')->separator(',');
+    $this->addFieldMapping('field_district', 'district');
+    $this->addFieldMapping('field_district:create_term')->defaultValue(TRUE);
+    $this->addFieldMapping('field_operator', 'operator');
+    $this->addFieldMapping('field_operator:create_term')->defaultValue(TRUE);
+    $this->addFieldMapping('field_authorizer', 'authorizer');
+    $this->addFieldMapping('field_authorizer:create_term')->defaultValue(TRUE);
+    $this->addFieldMapping('field_opted_in', 'optedIn');
+    $this->addFieldMapping('field_5e_roster', '5ERoster');
+    $this->addFieldMapping('field_2013_site_visit_date', 'siteVisitDate2013');
+    $this->addFieldMapping('field_grdataletter', 'grDataLetter');
+    $this->addFieldMapping('field_grdatatype', 'grDataType');
 
-    $this->addUnMigratedDestinations(array(
-      'field_school_type',
-      'field_school_scorecard_status',
-      'field_school_status',
-    ));
   }
 
   public function prepareRow($row) {
