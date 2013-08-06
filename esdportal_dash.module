@@ -249,7 +249,7 @@ function _esdportal_dash_check_user($user) {
   if (!is_array($user_roles)) {
     return FALSE;
   }
-  if (in_array('Superintendent', $user_roles) || in_array('School Leader', $user_roles)) {
+  if (in_array('Superintendent', $user_roles) || in_array('School Leader', $user_roles) || in_array('School Representative', $user_roles)) {
     return TRUE;
   }
   else {
