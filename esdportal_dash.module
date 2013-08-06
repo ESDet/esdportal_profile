@@ -212,7 +212,7 @@ function _esdportal_dash_schools_obj($uid) {
       // Mark updatable schools as such
       $data['updatable'] = (in_array($tid, $updatable_schools)) ? TRUE : FALSE;
     }
-    cache_set('esdportal_dash_schools_' . $uid, $schools, time() + 60*60);
+    cache_set('esdportal_dash_schools_' . $uid, $schools, 'cache', time() + 60*60);
   }
   return $schools;
 }
