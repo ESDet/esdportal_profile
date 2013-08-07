@@ -33,16 +33,16 @@ class Schools extends Migration {
 
     $this->map = new MigrateSQLMap($this->machineName,
       array(
-        "vid" => array(
+        "bcode" => array(
           'type' => 'int',
           'not null' => TRUE,
-          'description' => 'vid',
+          'description' => 'bcode',
         )
       ),
       MigrateDestinationTerm::getKeySchema()
     );
 
-    $this->source = new MigrateSourceCSV('/data/disk/esd/schools-joined-edited-working.csv', array(), array('header_rows'=>1,'embedded_newlines'=>TRUE));
+    $this->source = new MigrateSourceCSV('/data/disk/esd/schools-joined-edited-working-display.csv', array(), array('header_rows'=>1,'embedded_newlines'=>TRUE));
 
     $this->destination = new MigrateDestinationTerm('schools');
 
@@ -64,7 +64,7 @@ class Schools extends Migration {
     $this->addFieldMapping('field_address:fax_number', "field_location['und']['0']['fax']");
     $this->addFieldMapping('field_address:phone_number', "field_location['und']['0']['phone']");
     $this->addFieldMapping('field_email', "field_email['und']['0']['value']");
-    $this->addFieldMapping('field_bcode', "field_bcode['und']['0']['value']");
+    $this->addFieldMapping('field_bcode', "bcode");
     $this->addFieldMapping('field_links', 'field_links_combined');
     $this->addFieldMapping('field_links:title', 'field_links_title_combined');
     $this->addFieldMapping('field_files', 'field_files_combined');
@@ -93,6 +93,7 @@ class Schools extends Migration {
     $this->addFieldMapping('field_2013_site_visit_date', 'siteVisitDate2013');
     $this->addFieldMapping('field_grdataletter', 'grDataLetter');
     $this->addFieldMapping('field_grdatatype', 'grDataType');
+    $this->addFieldMapping('field_scorecard_display', 'scorecard_display');
 
   }
 
