@@ -94,7 +94,7 @@ function esdportal_dash_page($uid) {
  * If user is a superintendent or school leader, redirect to dashboard.
  */
 function esdportal_dash_user_login(&$edit, $account) {
-  if (_esdportal_dash_check_user($account)) {
+  if (!isset($_POST['form_id']) || $_POST['form_id'] != 'user_pass_reset' && _esdportal_dash_check_user($account)) {
     $_GET['destination'] = 'user/' . $account->uid . '/dash';
   }
 }
