@@ -164,13 +164,21 @@ function esdportal_dash_block_sitevisitask_content() {
   $asks = array();
   foreach ($schools as $school => $data) {
     $node = node_load($data['school_profile_nid']);
-    $asks[] = node_view($node, 'sitevisitask');
+    $tid = _esdportal_str_get_sitevisitstatus($node);
+    $options = _esdportal_str_get_sitevisitstatus_options($tid);
+    if ($options['showblock']) {
+      $asks[] = node_view($node, 'sitevisitask');
+    }
   }
 
-  $block['subject'] = 'Site visit ask';
-  $block['content'] = array(
-    'asks' => $asks,
-  );
+  if (count($asks)) {
+    $block['subject'] = null;
+    $block['content'] = array(
+      'asks' => $asks,
+    );
+  } else {
+    $block = null;
+  }
 
   return $block;
 }
