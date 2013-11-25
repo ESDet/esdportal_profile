@@ -108,6 +108,10 @@ function esdportal_dash_block_info() {
       'info' => 'My Schools',
       'cache' => DRUPAL_NO_CACHE, // all expensive ops are cache_*()ed
     ),
+    'sitevisitask' => array(
+      'info' => 'Site visit ask',
+      'cache' => DRUPAL_NO_CACHE,
+    ),
   );
 }
 
@@ -116,10 +120,13 @@ function esdportal_dash_block_info() {
  */
 function esdportal_dash_block_view($delta) {
   switch ($delta) {
+    case 'sitevisitask':
+      $block = esdportal_dash_block_sitevisitask_content();
+      break;
     case 'my_schools':
     default:
       $block = esdportal_dash_block_my_schools_content();
-    break;
+      break;
   }
   return $block;
 }
@@ -142,6 +149,27 @@ function esdportal_dash_block_my_schools_content() {
       '#items' => $links,
       '#theme' => 'item_list',
     ),
+  );
+
+  return $block;
+}
+
+/**
+ * Create sitevisitask block content.
+ */
+function esdportal_dash_block_sitevisitask_content() {
+  global $user;
+
+  $schools = _esdportal_dash_schools_obj($user->uid);
+  $asks = array();
+  foreach ($schools as $school => $data) {
+    $node = node_load($data['school_profile_nid']);
+    $asks[] = node_view($node, 'sitevisitask');
+  }
+
+  $block['subject'] = 'Site visit ask';
+  $block['content'] = array(
+    'asks' => $asks,
   );
 
   return $block;
