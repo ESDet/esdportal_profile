@@ -112,6 +112,10 @@ function esdportal_dash_block_info() {
       'info' => 'Site visit ask',
       'cache' => DRUPAL_NO_CACHE,
     ),
+    'growthdataask' => array(
+      'info' => 'Growth data ask',
+      'cache' => DRUPAL_NO_CACHE,
+    ),
   );
 }
 
@@ -122,6 +126,9 @@ function esdportal_dash_block_view($delta) {
   switch ($delta) {
     case 'sitevisitask':
       $block = esdportal_dash_block_sitevisitask_content();
+      break;
+    case 'growthdataask':
+      $block = esdportal_dash_block_growthdataask_content();
       break;
     case 'my_schools':
     default:
@@ -168,6 +175,34 @@ function esdportal_dash_block_sitevisitask_content() {
     $options = _esdportal_str_get_sitevisitstatus_options($tid);
     if ($options['showblock']) {
       $asks[] = node_view($node, 'sitevisitask');
+    }
+  }
+
+  if (count($asks)) {
+    $block['subject'] = null;
+    $block['content'] = array(
+      'asks' => $asks,
+    );
+  } else {
+    $block = null;
+  }
+
+  return $block;
+}
+
+/**
+ * Create growthdataask block content.
+ */
+function esdportal_dash_block_growthdataask_content() {
+  global $user;
+
+  $schools = _esdportal_dash_schools_obj($user->uid);
+  $asks = array();
+  foreach ($schools as $school => $data) {
+    $node = node_load($data['school_profile_nid']);
+    $has_growthdata_file = _esdportal_str_is_growthdata_uploaded($node);
+    if (!$has_growthdata_file) {
+      $asks[] = node_view($node, 'growthdataask');
     }
   }
 
