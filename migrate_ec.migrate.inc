@@ -52,12 +52,13 @@ class GS_ec_terms extends Migration {
     //$query = db_select('earlychild', 'ec')
     //           ->fields('ec');
     //$this->source = new MigrateSourceSQL($query);
-    $this->source = new MigrateSourceCSV('/tmp/esd-ec-gsexport-test.csv', array(), array('header_rows'=>1, 'embedded_newlines'=>FALSE));
+    $this->source = new MigrateSourceCSV('/tmp/migrate_ec/esd-ec-gsexport-test.csv', array(), array('header_rows'=>1, 'embedded_newlines'=>FALSE));
 
     $this->destination = new MigrateDestinationTerm('ec');
 
     $this->addFieldMapping('name', 'Business Name');
     $this->addFieldMapping('field_address')->defaultValue('US');
+    $this->addFieldMapping('field_address:name_line', 'Business Name');
     $this->addFieldMapping('field_address:locality', 'City');
     $this->addFieldMapping('field_address:phone_number', 'Phone');
     $this->addFieldMapping('field_address:postal_code', 'ZipCode');
@@ -72,7 +73,7 @@ class GS_ec_terms extends Migration {
     $this->addFieldMapping('field_esd_ec_id', 'id');
     $this->addFieldMapping('field_licensed_date', 'Licensed/registered date');
     //$this->addFieldMapping('field_months_of_operation MonthsOfOperation
-    $this->addFieldMapping('field_state_license_id', 'LicenseNumber');
+    $this->addFieldMapping('field_state_license_id', 'License Number');
   }
 
   public function prepareRow($row) {
@@ -103,7 +104,7 @@ class GS_ec_profiles extends Migration {
     //$query = db_select('earlychild', 'ec')
     //           ->fields('ec');
     //$this->source = new MigrateSourceSQL($query);
-    $this->source = new MigrateSourceCSV('/tmp/esd-ec-gsexport.csv', array(), array('header_rows'=>1, 'embedded_newlines'=>FALSE));
+    $this->source = new MigrateSourceCSV('/tmp/migrate_ec/esd-ec-gsexport.csv', array(), array('header_rows'=>1, 'embedded_newlines'=>FALSE));
 
     $this->destination = new MigrateDestinationTerm('ec');
 
