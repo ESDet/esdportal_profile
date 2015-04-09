@@ -14,6 +14,11 @@ function migrate_ec_migrate_api() {
     'groups' => array(
       'terms' => array(
         'title' => t('Terms'),
+        'disable_hooks' => array(
+          'field_attach_presave' => array(
+            'geocoder',
+          ),
+        ),
       ),
       'nodes' => array(
         'title' => t('Nodes'),
@@ -60,8 +65,9 @@ class GS_ec_terms extends Migration {
     $this->addFieldMapping('field_address')->defaultValue('US');
     $this->addFieldMapping('field_address:name_line', 'Business Name');
     $this->addFieldMapping('field_address:locality', 'City');
+    $this->addFieldMapping('field_address:administrative_area', 'State');
     $this->addFieldMapping('field_address:phone_number', 'Phone');
-    $this->addFieldMapping('field_address:postal_code', 'ZipCode');
+    $this->addFieldMapping('field_address:postal_code', 'Zip Code');
     $this->addFieldMapping('field_address:thoroughfare', 'Address');
     $this->addFieldMapping(NULL, 'Accepts Ages From');
     $this->addFieldMapping('field_age_from', 'AgeFromMonthified');
@@ -79,12 +85,13 @@ class GS_ec_terms extends Migration {
   public function prepareRow($row) {
     $age_from_matches = array();
     $age_to_matches = array();
-    preg_replace('/(\d*) years (\d*) months/', $row->{'Accepts Ages From'}, $age_from_matches);
+    preg_match('/(\d*) years (\d*) months/', $row->{'Accepts Ages From'}, $age_from_matches);
     $row->AgeFromMonthified = (int) $age_from_matches[1] * 12 + (int) $age_from_matches[2];
-    preg_replace('/(\d*) years (\d*) months/', $row->{'Accepts Ages To'}, $age_to_matches);
+    preg_match('/(\d*) years (\d*) months/', $row->{'Accepts Ages To'}, $age_to_matches);
     $row->AgeToMonthified = (int) $age_to_matches[1] * 12 + (int) $age_to_matches[2];
   }
 }
+
 class GS_ec_profiles extends Migration {
   public function __construct($arguments) {
     parent::__construct($arguments);
@@ -106,7 +113,7 @@ class GS_ec_profiles extends Migration {
     //$this->source = new MigrateSourceSQL($query);
     $this->source = new MigrateSourceCSV('/tmp/migrate_ec/esd-ec-gsexport.csv', array(), array('header_rows'=>1, 'embedded_newlines'=>FALSE));
 
-    $this->destination = new MigrateDestinationTerm('ec');
+    $this->destination = new MigrateDestinationNode('ec_profile');
 
     $this->addFieldMapping('title', 'Business Name');
     $this->addFieldMapping('field_esd_ec_id', 'id');
