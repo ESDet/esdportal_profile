@@ -1,5 +1,5 @@
 name = "migrate_ec"
-description = "Imports early childhood taxonomy terms from Great Start export"
+description = "Imports early childhood data"
 core = "7.x"
 dependencies[] = "esdportal_str"
 dependencies[] = "migrate"
