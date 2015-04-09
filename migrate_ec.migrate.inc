@@ -52,7 +52,7 @@ class GS_ec_terms extends Migration {
     //$query = db_select('earlychild', 'ec')
     //           ->fields('ec');
     //$this->source = new MigrateSourceSQL($query);
-    $this->source = new MigrateSourceCSV('/tmp/migrate_ec/esd-ec-gsexport-test.csv', array(), array('header_rows'=>1, 'embedded_newlines'=>FALSE));
+    $this->source = new MigrateSourceCSV('/tmp/migrate_ec/esd-ec-gsexport.csv', array(), array('header_rows'=>1, 'embedded_newlines'=>FALSE));
 
     $this->destination = new MigrateDestinationTerm('ec');
 
