@@ -25,6 +25,10 @@ function migrate_ec_migrate_api() {
       ),
     ),
     'migrations' => array(
+      'ESD_ec_profiles_2015' => array(
+        'class_name' => 'ESD_ec_profiles_2015',
+        'group_name' => 'nodes',
+      ),
       'GS_ec_terms' => array(
         'class_name' => 'GS_ec_terms',
         'group_name' => 'terms',
@@ -36,6 +40,54 @@ function migrate_ec_migrate_api() {
     ),
   );
   return $api;
+}
+
+class ESD_ec_profiles_2015 extends Migration {
+  public function __construct($arguments) {
+    parent::__construct($arguments);
+    $this->description = t('Creates early childhood center profiles (nodes) from ESD 2015 scores.');
+
+    $this->map = new MigrateSQLMap($this->machineName,
+      array(
+        'id' => array(
+          'type' => 'int',
+          'not null' => TRUE,
+          'description' => 'State of Michigan license number, minus letters',
+        )
+      ),
+      MigrateDestinationTerm::getKeySchema()
+    );
+
+    $this->source = new MigrateSourceCSV('/tmp/migrate_ec/esd-ec-2015-test.csv', array(), array('header_rows'=>1, 'embedded_newlines'=>FALSE));
+
+    $this->destination = new MigrateDestinationNode('ec_profile');
+
+    $this->addFieldMapping('title', 'program_name');
+    $this->addFieldMapping('field_esd_ec_id', 'program_id');
+  }
+
+  public function prepareRow($row) {
+    $specialties = array();
+
+    $potential_specialties = array(
+      'Preschool' => $row->{'Preschool'},
+      'Head Start' => $row->{'Head Start'},
+      'Early Head Start' => $row->{'Early Head Start'},
+      'Great Start Readiness Program' => $row->{'Great Start Readiness Program'},
+      'School Age ONLY' => $row->{'School Age ONLY'},
+      'Montessori' => $row->{'Montessori'},
+      'Reggio Inspired' => $row->{'Reggio Inspired'},
+      'Faith-based' => $row->{'Faith-based'},
+    );
+
+    foreach ($potential_specialties as $key => $value) {
+      if ($value === 'Yes') {
+        $specialties[] = $key;
+      }
+    }
+
+    $row->collated_specialties = $specialties;
+  }
 }
 
 class GS_ec_terms extends Migration {
@@ -127,9 +179,31 @@ class GS_ec_profiles extends Migration {
     $this->addFieldMapping(NULL, 'Montessori');
     $this->addFieldMapping(NULL, 'Reggio Inspired');
     $this->addFieldMapping(NULL, 'Faith-based');
+    $this->addFieldMapping('field_ec_specialty', 'collated_specialties');
+    $this->addFieldMapping('field_ec_specialty:create_term', TRUE);
+    $this->addFieldMapping('field_ec_specialty:ignore_case', TRUE);
   }
 
   public function prepareRow($row) {
-    
+    $specialties = array();
+
+    $potential_specialties = array(
+      'Preschool' => $row->{'Preschool'},
+      'Head Start' => $row->{'Head Start'},
+      'Early Head Start' => $row->{'Early Head Start'},
+      'Great Start Readiness Program' => $row->{'Great Start Readiness Program'},
+      'School Age ONLY' => $row->{'School Age ONLY'},
+      'Montessori' => $row->{'Montessori'},
+      'Reggio Inspired' => $row->{'Reggio Inspired'},
+      'Faith-based' => $row->{'Faith-based'},
+    );
+
+    foreach ($potential_specialties as $key => $value) {
+      if ($value === 'Yes') {
+        $specialties[] = $key;
+      }
+    }
+
+    $row->collated_specialties = $specialties;
   }
 }
