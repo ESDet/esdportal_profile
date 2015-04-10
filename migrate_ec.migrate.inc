@@ -42,6 +42,14 @@ function migrate_ec_migrate_api() {
   return $api;
 }
 
+/**
+ * Based on ESD's 2015 early chlidhood center scorecard data,
+ * creates ec_profile nodes.
+ *
+ * Only sets two fields: the title & the ec term reference field.
+ *
+ * The same dataset will later be used to populate 2015 test results in a data table.
+ */
 class ESD_ec_profiles_2015 extends Migration {
   public function __construct($arguments) {
     parent::__construct($arguments);
@@ -49,7 +57,7 @@ class ESD_ec_profiles_2015 extends Migration {
 
     $this->map = new MigrateSQLMap($this->machineName,
       array(
-        'id' => array(
+        'program_id' => array(
           'type' => 'int',
           'not null' => TRUE,
           'description' => 'State of Michigan license number, minus letters',
@@ -58,38 +66,25 @@ class ESD_ec_profiles_2015 extends Migration {
       MigrateDestinationTerm::getKeySchema()
     );
 
-    $this->source = new MigrateSourceCSV('/tmp/migrate_ec/esd-ec-2015-test.csv', array(), array('header_rows'=>1, 'embedded_newlines'=>FALSE));
+    $this->source = new MigrateSourceCSV('/tmp/migrate_ec/esd-ec-2015.csv', array(), array('header_rows'=>1, 'embedded_newlines'=>FALSE));
 
     $this->destination = new MigrateDestinationNode('ec_profile');
 
     $this->addFieldMapping('title', 'program_name');
-    $this->addFieldMapping('field_esd_ec_id', 'program_id');
+    $this->addFieldMapping(NULL, 'program_id');
+    $this->addFieldMapping('field_ec', 'prepared_schoolid');
+    $this->addFieldMapping('field_ec:source_type')->defaultValue('tid');
   }
 
   public function prepareRow($row) {
-    $specialties = array();
-
-    $potential_specialties = array(
-      'Preschool' => $row->{'Preschool'},
-      'Head Start' => $row->{'Head Start'},
-      'Early Head Start' => $row->{'Early Head Start'},
-      'Great Start Readiness Program' => $row->{'Great Start Readiness Program'},
-      'School Age ONLY' => $row->{'School Age ONLY'},
-      'Montessori' => $row->{'Montessori'},
-      'Reggio Inspired' => $row->{'Reggio Inspired'},
-      'Faith-based' => $row->{'Faith-based'},
-    );
-
-    foreach ($potential_specialties as $key => $value) {
-      if ($value === 'Yes') {
-        $specialties[] = $key;
-      }
-    }
-
-    $row->collated_specialties = $specialties;
+    $row->prepared_schoolid = db_query("SELECT entity_id FROM {field_data_field_esd_ec_id} WHERE field_esd_ec_id_value = :esd_ec_id", array(":esd_ec_id" => (int) $row->program_id))->fetchField();
   }
 }
 
+/**
+ * Based on Great Start exported data,
+ * creates taxonomy terms for all Michigan early childhood centers.
+ */
 class GS_ec_terms extends Migration {
   public function __construct($arguments) {
     parent::__construct($arguments);
@@ -144,6 +139,9 @@ class GS_ec_terms extends Migration {
   }
 }
 
+/**
+ * @todo
+ */
 class GS_ec_profiles extends Migration {
   public function __construct($arguments) {
     parent::__construct($arguments);
