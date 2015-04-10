@@ -121,8 +121,8 @@ class GS_ec_terms extends Migration {
     $this->addFieldMapping(NULL, 'Accepts Ages To');
     $this->addFieldMapping('field_age_to', 'AgeToMonthified');
     $this->addFieldMapping('field_ec_license_type', 'License Type');
-    $this->addFieldMapping('field_ec_license_type:create_term', TRUE);
-    $this->addFieldMapping('field_ec_license_type:ignore_case', TRUE);
+    $this->addFieldMapping('field_ec_license_type:create_term')->defaultValue(TRUE);
+    $this->addFieldMapping('field_ec_license_type:ignore_case')->defaultValue(TRUE);
     $this->addFieldMapping('field_esd_ec_id', 'id');
     $this->addFieldMapping('field_licensed_date', 'Licensed/registered date');
     //$this->addFieldMapping('field_months_of_operation MonthsOfOperation
@@ -140,11 +140,14 @@ class GS_ec_terms extends Migration {
 }
 
 /**
- * @todo
+ * Updates ec_profile nodes with information found in the GS export.
  */
 class GS_ec_profiles extends Migration {
   public function __construct($arguments) {
     parent::__construct($arguments);
+
+    $this->systemOfRecord = Migration::DESTINATION;
+
     $this->description = t('Updates early childhood center profiles (nodes) from Great Start export.');
 
     $this->map = new MigrateSQLMap($this->machineName,
@@ -158,15 +161,12 @@ class GS_ec_profiles extends Migration {
       MigrateDestinationTerm::getKeySchema()
     );
 
-    //$query = db_select('earlychild', 'ec')
-    //           ->fields('ec');
-    //$this->source = new MigrateSourceSQL($query);
     $this->source = new MigrateSourceCSV('/tmp/migrate_ec/esd-ec-gsexport.csv', array(), array('header_rows'=>1, 'embedded_newlines'=>FALSE));
 
     $this->destination = new MigrateDestinationNode('ec_profile');
 
-    $this->addFieldMapping('title', 'Business Name');
-    $this->addFieldMapping('field_esd_ec_id', 'id');
+    $this->addFieldMapping(NULL, 'id');
+    $this->addFieldMapping('nid', 'nid');
     //$this->addFieldMapping('field_gsc_provider_id GSCProviderID
     //$this->addFieldMapping('field_months_of_operation MonthsOfOperation
     $this->addFieldMapping(NULL, 'Preschool');
@@ -178,11 +178,27 @@ class GS_ec_profiles extends Migration {
     $this->addFieldMapping(NULL, 'Reggio Inspired');
     $this->addFieldMapping(NULL, 'Faith-based');
     $this->addFieldMapping('field_ec_specialty', 'collated_specialties');
-    $this->addFieldMapping('field_ec_specialty:create_term', TRUE);
-    $this->addFieldMapping('field_ec_specialty:ignore_case', TRUE);
+    $this->addFieldMapping('field_ec_specialty:create_term')->defaultValue(TRUE);
+    $this->addFieldMapping('field_ec_specialty:ignore_case')->defaultValue(TRUE);
   }
 
   public function prepareRow($row) {
+    // only try to update centers that are part of the ESD universe
+
+    $ec_tid = db_query("SELECT entity_id FROM {field_data_field_esd_ec_id} WHERE field_esd_ec_id_value = :esd_ec_id", array(":esd_ec_id" => (int) $row->id))->fetchField();
+
+    if ($ec_tid < 1) {
+      return false;
+    }
+
+    $ec_profile_id = db_query("SELECT entity_id FROM {field_data_field_ec} WHERE field_ec_tid = :ec_tid AND entity_type='node' AND bundle='ec_profile'", array(':ec_tid' => (int) $ec_tid))->fetchField();
+
+    if ($ec_profile_id < 1) {
+      return false;
+    }
+
+    $row->nid = $ec_profile_id;
+
     $specialties = array();
 
     $potential_specialties = array(
