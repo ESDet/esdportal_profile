@@ -180,6 +180,9 @@ class GS_ec_profiles extends Migration {
     $this->addFieldMapping('field_ec_specialty', 'collated_specialties');
     $this->addFieldMapping('field_ec_specialty:create_term')->defaultValue(TRUE);
     $this->addFieldMapping('field_ec_specialty:ignore_case')->defaultValue(TRUE);
+    $this->addFieldMapping('field_website', 'Website');
+    $this->addFieldMapping('field_capacity', 'Capacity');
+
   }
 
   public function prepareRow($row) {
