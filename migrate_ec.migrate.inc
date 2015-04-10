@@ -221,3 +221,50 @@ class GS_ec_profiles extends Migration {
     $row->collated_specialties = $specialties;
   }
 }
+
+/**
+ * @todo
+ * Updates ec_profiles with info from old earlychild table.
+ */
+class ESD_oldearlychild_ec_profiles extends Migration {
+  public function __construct($arguments) {
+    parent::__construct($arguments);
+
+    $this->systemOfRecord = Migration::DESTINATION;
+
+    $this->description = t('Updates early childhood center profiles (nodes) from old earlychild data.');
+
+    $this->map = new MigrateSQLMap($this->machineName,
+      array(
+        'id' => array(
+          'type' => 'int',
+          'not null' => TRUE,
+          'description' => 'State of Michigan license number, minus letters',
+        )
+      ),
+      MigrateDestinationTerm::getKeySchema()
+    );
+
+    $this->source = new MigrateSourceSQL(/* @todo */);
+
+    $this->destination = new MigrateDestinationNode('ec_profile');
+
+    $this->addFieldMapping('field_sunday_open', 'SundayDayOpen');
+    $this->addFieldMapping('field_sunday_close', 'SundayDayClose');
+    $this->addFieldMapping('field_monday_open', 'MondayDayOpen');
+    $this->addFieldMapping('field_monday_close', 'MondayDayClose');
+    $this->addFieldMapping('field_tuesday_open', 'TuesdayDayOpen');
+    $this->addFieldMapping('field_tuesday_close', 'TuesdayDayClose');
+    $this->addFieldMapping('field_wednesday_open', 'WednesdayDayOpen');
+    $this->addFieldMapping('field_wednesday_close', 'WednesdayDayClose');
+    $this->addFieldMapping('field_thursday_open', 'ThursdayDayOpen');
+    $this->addFieldMapping('field_thursday_close', 'ThursdayDayClose');
+    $this->addFieldMapping('field_friday_open', 'FridayDayOpen');
+    $this->addFieldMapping('field_friday_close', 'FridayDayClose');
+    $this->addFieldMapping('field_saturday_open', 'SaturdayDayOpen');
+    $this->addFieldMapping('field_saturday_close', 'SaturdayDayClose');
+    $this->addFieldMapping('field_ec_transportation', 'Transportation');
+    $this->addFieldMapping('field_ec_environment', 'Environment');
+    $this->addFieldMapping('field_ec_meals', 'Meals');
+  }
+}
