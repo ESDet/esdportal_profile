@@ -258,10 +258,11 @@ class ESD_oldearlychild_ec_profiles extends Migration {
 
     $this->description = t('Updates early childhood center profiles (nodes) from old earlychild data.');
 
-    $q = db_select('field_data_field_esd_ec_id', 'ec_id');
-    $q->leftjoin('earlychild', 'ec', 'ec.id=ec_id.field_esd_ec_id_value');
+    $q = db_select('field_data_field_esd_ec_id', 'f_d_f_esd_ec_id');
+    $q->innerJoin('field_data_field_ec', 'f_d_f_ec', 'f_d_f_ec.field_ec_tid=f_d_f_esd_ec_id.entity_id');
+    $q->innerJoin('earlychild', 'ec', 'ec.id=f_d_f_esd_ec_id.field_esd_ec_id_value');
     /// @todo join term to related node!
-    $q->fields('ec_id', array('entity_id'))
+    $q->fields('f_d_f_ec', array('entity_id'))
       ->fields('ec', array(
         'SundayDayOpen',
         'SundayDayClose',
@@ -302,7 +303,7 @@ class ESD_oldearlychild_ec_profiles extends Migration {
           'unsigned' => TRUE,
           'not null' => TRUE,
           'description' => 'ec_profile entity_id',
-          'alias' => 'ec_id',
+          'alias' => 'f_d_f_ec',
         )
       ),
       MigrateDestinationNode::getKeySchema()
@@ -340,7 +341,8 @@ class ESD_oldearlychild_ec_profiles extends Migration {
     $this->addFieldMapping('field_ec_subsidy:ignore_case')->defaultValue(TRUE);
     $this->addFieldMapping(NULL, 'GSCcontract');
     $this->addFieldMapping('field_ec_contract', 'GSCcontractBoolified');
-    $this->addFieldMapping('field_ec_fee', 'GSCfee');
+    $this->addFieldMapping(NULL, 'GSCfee');
+    $this->addFieldMapping('field_ec_fee', 'GSCfeeFloatified');
     $this->addFieldMapping('field_email', 'GSCemail');
     $this->addFieldMapping('field_ec_contact', 'GSCcontact');
     $this->addFieldMapping('field_ec_message', 'GSCmessage');
@@ -361,5 +363,8 @@ class ESD_oldearlychild_ec_profiles extends Migration {
     // taxonomize the taxonomies
     $row->GSCspecialTaxonomyManyified = Migrate_EC_Helpers::csvToArray($row->GSCspecial);
     $row->GSCspecialtyTaxonomyManyified = Migrate_EC_Helpers::csvToArray($row->GSCspecialty);
+
+    // floatify the floats
+    $row->GSCfeeFloatified = str_replace('$', '', $row->GSCfee);
   }
 }
