@@ -37,9 +37,30 @@ function migrate_ec_migrate_api() {
         'class_name' => 'GS_ec_profiles',
         'group_name' => 'nodes',
       ),
+      'ESD_oldearlychild_ec_profiles' => array(
+        'class_name' => 'ESD_oldearlychild_ec_profiles',
+        'group_name' => 'nodes',
+      ),
     ),
   );
   return $api;
+}
+
+class Migrate_EC_Helpers {
+  /**
+   * given string 'a, b, , c, d'
+   * return array('a', 'b', 'c', 'd')
+   */
+  public static function csvToArray($csv) {
+    $ret = array();
+    $potential_values = preg_split("/[\s]*[,][\s]*/", $csv);
+    foreach ($potential_values as $val) {
+      if (strlen($val) > 1) {
+        $ret[] = $val;
+      }
+    }
+    return $ret;
+  }
 }
 
 /**
@@ -237,21 +258,59 @@ class ESD_oldearlychild_ec_profiles extends Migration {
 
     $this->description = t('Updates early childhood center profiles (nodes) from old earlychild data.');
 
+    $q = db_select('field_data_field_esd_ec_id', 'ec_id');
+    $q->leftjoin('earlychild', 'ec', 'ec.id=ec_id.field_esd_ec_id_value');
+    /// @todo join term to related node!
+    $q->fields('ec_id', array('entity_id'))
+      ->fields('ec', array(
+        'SundayDayOpen',
+        'SundayDayClose',
+        'MondayDayOpen',
+        'MondayDayClose',
+        'TuesdayDayOpen',
+        'TuesdayDayClose',
+        'WednesdayDayOpen',
+        'WednesdayDayClose',
+        'ThursdayDayOpen',
+        'ThursdayDayClose',
+        'FridayDayOpen',
+        'FridayDayClose',
+        'SaturdayDayOpen',
+        'SaturdayDayClose',
+        'Transportation',
+        'Environment',
+        'Meals',
+        'GSCeligibility',
+        'GSCspecial',
+        'GSCsubsidy',
+        'GSCcapacity',
+        'GSCcontract',
+        'GSCfee',
+        'GSCemail',
+        'GSCcontact',
+        'GSCmessage',
+        'GSCspecialty',
+        'GSCschedule',
+      ));
+
+    $this->source = new MigrateSourceSQL($q);
+
     $this->map = new MigrateSQLMap($this->machineName,
       array(
-        'id' => array(
+        'entity_id' => array(
           'type' => 'int',
+          'unsigned' => TRUE,
           'not null' => TRUE,
-          'description' => 'State of Michigan license number, minus letters',
+          'description' => 'ec_profile entity_id',
+          'alias' => 'ec_id',
         )
       ),
-      MigrateDestinationTerm::getKeySchema()
+      MigrateDestinationNode::getKeySchema()
     );
-
-    $this->source = new MigrateSourceSQL(/* @todo */);
 
     $this->destination = new MigrateDestinationNode('ec_profile');
 
+    $this->addFieldMapping('nid', 'entity_id');
     $this->addFieldMapping('field_sunday_open', 'SundayDayOpen');
     $this->addFieldMapping('field_sunday_close', 'SundayDayClose');
     $this->addFieldMapping('field_monday_open', 'MondayDayOpen');
@@ -266,8 +325,41 @@ class ESD_oldearlychild_ec_profiles extends Migration {
     $this->addFieldMapping('field_friday_close', 'FridayDayClose');
     $this->addFieldMapping('field_saturday_open', 'SaturdayDayOpen');
     $this->addFieldMapping('field_saturday_close', 'SaturdayDayClose');
-    $this->addFieldMapping('field_ec_transportation', 'Transportation');
+    $this->addFieldMapping(NULL, 'Transportation');
+    $this->addFieldMapping('field_ec_transportation', 'TransportationBoolified');
     $this->addFieldMapping('field_ec_environment', 'Environment');
     $this->addFieldMapping('field_ec_meals', 'Meals');
+    $this->addFieldMapping(NULL, 'GSCeligibility');
+    $this->addFieldMapping('field_ec_eligibility', 'GSCeligibilityBoolified');
+    $this->addFieldMapping(NULL, 'GSCspecial');
+    $this->addFieldMapping('field_ec_special', 'GSCspecialTaxonomyManyified');
+    $this->addFieldMapping('field_ec_special:create_term')->defaultValue(TRUE);
+    $this->addFieldMapping('field_ec_special:ignore_case')->defaultValue(TRUE);
+    $this->addFieldMapping('field_ec_subsidy', 'GSCsubsidy');
+    $this->addFieldMapping('field_ec_subsidy:create_term')->defaultValue(TRUE);
+    $this->addFieldMapping('field_ec_subsidy:ignore_case')->defaultValue(TRUE);
+    $this->addFieldMapping(NULL, 'GSCcontract');
+    $this->addFieldMapping('field_ec_contract', 'GSCcontractBoolified');
+    $this->addFieldMapping('field_ec_fee', 'GSCfee');
+    $this->addFieldMapping('field_email', 'GSCemail');
+    $this->addFieldMapping('field_ec_contact', 'GSCcontact');
+    $this->addFieldMapping('field_ec_message', 'GSCmessage');
+    $this->addFieldMapping(NULL, 'GSCspecialty');
+    $this->addFieldMapping('field_ec_specialty', 'GSCspecialtyTaxonomyManyfied');
+    $this->addFieldMapping('field_ec_specialty:create_term')->defaultValue(TRUE);
+    $this->addFieldMapping('field_ec_specialty:ignore_case')->defaultValue(TRUE);
+    $this->addFieldMapping('field_ec_schedule', 'GSCschedule');
+
+  }
+
+  public function prepareRow($row) {
+    // bool the bools
+    $row->TransportationBoolified = ($row->Transportation === "Yes") ? TRUE : FALSE;
+    $row->GSCeligibility = ($row->GSCeligibility === "Yes") ? TRUE : FALSE;
+    $row->GSCcontact = ($row->GSCcontractBoolified === "Yes") ? TRUE : FALSE;
+
+    // taxonomize the taxonomies
+    $row->GSCspecialTaxonomyManyified = Migrate_EC_Helpers::csvToArray($row->GSCspecial);
+    $row->GSCspecialtyTaxonomyManyified = Migrate_EC_Helpers::csvToArray($row->GSCspecialty);
   }
 }
