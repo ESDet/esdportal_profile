@@ -370,7 +370,7 @@ class ESD_oldearlychild_ec_profiles extends Migration {
     $row->GSCspecialTaxonomyManyified = Migrate_EC_Helpers::csvToArray($row->GSCspecial);
     $row->GSCspecialtyTaxonomyManyified = Migrate_EC_Helpers::csvToArray($row->GSCspecialty);
     $row->EnvironmentTaxonomyManyified = Migrate_EC_Helpers::csvToArray($row->Environment);
-    $row->MealsTaxonomyManyified Migrate_EC_Helpers::csvToArray($row->Meals);
+    $row->MealsTaxonomyManyified = Migrate_EC_Helpers::csvToArray($row->Meals);
 
     // floatify the floats
     $row->GSCfeeFloatified = str_replace('$', '', $row->GSCfee);
