@@ -328,8 +328,14 @@ class ESD_oldearlychild_ec_profiles extends Migration {
     $this->addFieldMapping('field_saturday_close', 'SaturdayDayClose');
     $this->addFieldMapping(NULL, 'Transportation');
     $this->addFieldMapping('field_ec_transportation', 'TransportationBoolified');
-    $this->addFieldMapping('field_ec_environment', 'Environment');
-    $this->addFieldMapping('field_ec_meals', 'Meals');
+    $this->addFieldMapping(NULL, 'Environment');
+    $this->addFieldMapping('field_ec_environment', 'EnvironmentTaxonomyManyified');
+    $this->addFieldMapping('field_ec_environment:create_term')->defaultValue(TRUE);
+    $this->addFieldMapping('field_ec_environment:ignore_case')->defaultValue(TRUE);
+    $this->addFieldMapping(NULL, 'Meals');
+    $this->addFieldMapping('field_ec_meals', 'MealsTaxonomyManyified');
+    $this->addFieldMapping('field_ec_meals:create_term')->defaultValue(TRUE);
+    $this->addFieldMapping('field_ec_meals:ignore_case')->defaultValue(TRUE);
     $this->addFieldMapping(NULL, 'GSCeligibility');
     $this->addFieldMapping('field_ec_eligibility', 'GSCeligibilityBoolified');
     $this->addFieldMapping(NULL, 'GSCspecial');
