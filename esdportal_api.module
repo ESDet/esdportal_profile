@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * @file esdportal_api.module
+ */
+
+define("ESDPORTAL_API_DEFAULT_LIMIT", 100);
+define("ESDPORTAL_API_MAX_LIMIT", 1000);
+
+/**
+ * Implements hook_services_resources().
+ *
+ * Defines resources for special (non-standard) ESD Portal data.
+ */
+function esdportal_api_services_resources() {
+  $api = array(
+    'ec_profiles' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'help' => 'Retrieves Early Childhood Center Profile',
+          'callback' => '_esdportal_api_retrieve_ec_profile',
+          'access callback' => 'user_access',
+          'access arguments' => array('access content'),
+          'access arguments append' => FALSE,
+          'args' => array(
+            array(
+              'name' => 'id',
+              'type' => 'int',
+              'description' => 'ec_profile entity ID',
+              'source' => array('path' => '0'),
+              'optional' => FALSE,
+              'default value' => NULL,
+            ),
+          ),
+        ),
+        'index' => array(
+          'help' => 'Lists Early Childhood Center Profiles',
+          'callback' => '_esdportal_api_index_ec_profiles',
+          'access arguments' => array('access content'),
+          'args' => array(
+            array(
+              'name' => 'limit',
+              'type' => 'int',
+              'description' => 'Limit response count (default ' . ESDPORTAL_API_DEFAULT_LIMIT . ')',
+              'source' => array('param' => 'limit'),
+              'optional' => TRUE,
+              'default value' => ESDPORTAL_API_DEFAULT_LIMIT,
+            ),
+            array(
+              'name' => 'offset',
+              'type' => 'int',
+              'description' => 'Offset starting record',
+              'source' => array('param' => 'offset'),
+              'optional' => TRUE,
+              'default value' => 0,
+            ),
+            array(
+              'name' => 'filters',
+              'type' => 'array',
+              'description' => 'Filter properties',
+              'source' => array('param' => 'filters'),
+              'optional' => TRUE,
+              'default value' => array(),
+            ),
+            array(
+              'name' => 'sort',
+              'type' => 'array',
+              'description' => 'Sort by property and order by value (ASC or DESC)',
+              'source' => array('param' => 'sort'),
+              'optional' => TRUE,
+              'default value' => array(),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+
+  return $api;
+}
+
+/**
+ * Stub.
+ */
+function _esdportal_api_retrieve_ec_profile($id) {
+
+}
+
+/**
+ * Stub.
+ */
+function _esdportal_api_index_ec_profiles($limit, $offset, $filters, $sort) {
+
+}
+

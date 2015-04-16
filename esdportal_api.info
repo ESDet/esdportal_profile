@@ -1,0 +1,7 @@
+name = "esdportal_api"
+description = "Provides an API for Excellent Schools Detroit education data"
+core = "7.x"
+dependencies[] = "esdportal_str"
+
+files[] = "esdportal_api.module"
+
