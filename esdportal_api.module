@@ -74,6 +74,58 @@ function esdportal_api_services_resources() {
         ),
       ),
     ),
+    'ec_state_ratings' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'help' => 'Retrieves state ratings for an Early Childhood Center',
+          'callback' => '_esdportal_api_retrieve_ec_state_rating',
+          'access callback' => 'user_access',
+          'access arguments' => array('access content'),
+          'access arguments append' => FALSE,
+          'args' => array(
+            array(
+              'name' => 'esd_ec_id',
+              'type' => 'int',
+              'description' => 'ESD-universe early childhood center ID',
+              'source' => array('path' => '0'),
+              'optional' => FALSE,
+              'default value' => NULL,
+            ),
+            array(
+              'name' => 'batch_timestamp',
+              'type' => 'int',
+              'description' => 'UNIX timestamp of a specific batch (if not provided, returns most recent rating)',
+              'source' => array('path' => '1'),
+              'optional' => TRUE,
+              'default value' => NULL,
+            ),
+          ),
+        ),
+        'index' => array(
+          'help' => 'Lists Early Childhood Center state rating batch timestamps',
+          'callback' => '_esdportal_api_index_ec_state_ratings_batches',
+          'access arguments' => array('access content'),
+          'args' => array(
+            array(
+              'name' => 'limit',
+              'type' => 'int',
+              'description' => 'Limit response count (default ' . ESDPORTAL_API_DEFAULT_LIMIT . ')',
+              'source' => array('param' => 'limit'),
+              'optional' => TRUE,
+              'default value' => ESDPORTAL_API_DEFAULT_LIMIT,
+            ),
+            array(
+              'name' => 'offset',
+              'type' => 'int',
+              'description' => 'Offset starting record',
+              'source' => array('param' => 'offset'),
+              'optional' => TRUE,
+              'default value' => 0,
+            ),
+          ),
+        ),
+      ),
+    ),
   );
 
   return $api;
@@ -93,3 +145,16 @@ function _esdportal_api_index_ec_profiles($limit, $offset, $filters, $sort) {
 
 }
 
+/**
+ * Stub.
+ */
+function _esdportal_api_retrieve_ec_state_rating($esd_ec_id, $batch_timestamp) {
+
+}
+
+/**
+ * Stub.
+ */
+function _esdportal_api_index_ec_state_ratings_batches($limit, $offset) {
+
+}
