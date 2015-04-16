@@ -1,4 +1,4 @@
-# Download the data for the Ledger
+# Download the data from ESD's Earlychild Dataset Transition workbook
 
 EC_WORKBOOK_BASE='https://docs.google.com/spreadsheets/d/1smYR13Ge7YSMgPBoLrfQn3nG2wNA8kKeT5m-x8ITVoA/export?format=csv&gid=';
 EC_ESD_2015_BASE='https://docs.google.com/spreadsheets/d/1e7VHAaySfJuZtpaygi2kuKj0gdUquRgNqn8EQhMNXcg/export?format=csv&gid=';
