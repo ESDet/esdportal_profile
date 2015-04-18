@@ -95,32 +95,24 @@ function esdportal_api_services_resources() {
               'name' => 'batch_timestamp',
               'type' => 'int',
               'description' => 'UNIX timestamp of a specific batch (if not provided, returns most recent rating)',
-              'source' => array('path' => '1'),
+              'source' => array('param' => 'batch_timestamp'),
               'optional' => TRUE,
               'default value' => NULL,
             ),
           ),
         ),
         'index' => array(
-          'help' => 'Lists Early Childhood Center state rating batch timestamps',
-          'callback' => '_esdportal_api_index_ec_state_ratings_batches',
+          'help' => 'Lists most recent Early Childhood Center state ratings',
+          'callback' => '_esdportal_api_index_ec_state_ratings',
           'access arguments' => array('access content'),
           'args' => array(
             array(
-              'name' => 'limit',
+              'name' => 'batch_timestamp',
               'type' => 'int',
-              'description' => 'Limit response count (default ' . ESDPORTAL_API_DEFAULT_LIMIT . ')',
-              'source' => array('param' => 'limit'),
+              'description' => 'UNIX timestamp of a specific batch (if not provided, returns most recent ratings)',
+              'source' => array('path' => '1'),
               'optional' => TRUE,
-              'default value' => ESDPORTAL_API_DEFAULT_LIMIT,
-            ),
-            array(
-              'name' => 'offset',
-              'type' => 'int',
-              'description' => 'Offset starting record',
-              'source' => array('param' => 'offset'),
-              'optional' => TRUE,
-              'default value' => 0,
+              'default value' => NULL,
             ),
           ),
         ),
@@ -135,26 +127,52 @@ function esdportal_api_services_resources() {
  * Stub.
  */
 function _esdportal_api_retrieve_ec_profile($id) {
-
+  return false;
 }
 
 /**
  * Stub.
  */
 function _esdportal_api_index_ec_profiles($limit, $offset, $filters, $sort) {
-
+  return false;
 }
 
 /**
- * Stub.
+ * Retrieves a single EC Center's rating with given timestamp or most recent timestamp if none is given.
+ *
+ * @param $esd_ec_id
+ *
+ * @param $batch_timestamp
  */
 function _esdportal_api_retrieve_ec_state_rating($esd_ec_id, $batch_timestamp) {
-
+  if (isset($batch_timestamp) && $batch_timestamp > 0) {
+    $rating = db_query('SELECT * FROM {ec_state_ratings} WHERE timestamp=:batch_timestamp AND esd_ec_id=:esd_ec_id', array(':esd_ec_id' => $esd_ec_id, ':batch_timestamp' => $batch_timestamp))->fetchAssoc();
+  } else {
+    $rating = db_query('SELECT * FROM {ec_state_ratings} WHERE timestamp=(SELECT MAX(timestamp) FROM {ec_state_ratings}) AND esd_ec_id=:esd_ec_id', array(':esd_ec_id' => $esd_ec_id))->fetchAssoc();
+  }
+  return $rating;
 }
 
 /**
- * Stub.
+ * Lists all batch timestamps.
+ *
+ * (not offered via api yet)
  */
-function _esdportal_api_index_ec_state_ratings_batches($limit, $offset) {
+function _esdportal_api_index_ec_state_ratings_batches() {
+  return db_query('SELECT DISTINCT(timestamp) FROM {ec_state_ratings} ORDER BY timestamp DESC')->fetchAssoc();
+}
 
+/**
+ * Lists set of EC state ratings with given timestamp or most recent timestamp if none is given.
+ *
+ * @param int $batch_timestamp
+ */
+function _esdportal_api_index_ec_state_ratings($batch_timestamp) {
+  if (isset($batch_timestamp) && $batch_timestamp > 0) {
+    $ratings = db_query('SELECT * FROM {ec_state_ratings} WHERE timestamp=:batch_timestamp', array(':batch_timestamp' => $batch_timestamp))->fetchAssoc();
+  } else {
+    $ratings = db_query('SELECT * FROM {ec_state_ratings} WHERE timestamp=(SELECT MAX(timestamp) FROM {ec_state_ratings})')->fetchAll();
+  }
+
+  return array('ec_state_ratings' => $ratings);
 }
