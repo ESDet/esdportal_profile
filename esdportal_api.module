@@ -4,6 +4,10 @@
  * @file esdportal_api.module
  */
 
+use Tobscure\JsonApi\Document;
+use Tobscure\JsonApi\SerializerAbstract;
+use Drupal\esdportal_api\Serializers\EcSerializer;
+
 define("ESDPORTAL_API_DEFAULT_LIMIT", 100);
 define("ESDPORTAL_API_MAX_LIMIT", 1000);
 
@@ -14,11 +18,11 @@ define("ESDPORTAL_API_MAX_LIMIT", 1000);
  */
 function esdportal_api_services_resources() {
   $api = array(
-    'ec_profiles' => array(
+    'ecs' => array(
       'operations' => array(
         'retrieve' => array(
-          'help' => 'Retrieves Early Childhood Center Profile',
-          'callback' => '_esdportal_api_retrieve_ec_profile',
+          'help' => 'Retrieves Early Childhood Center',
+          'callback' => '_esdportal_api_retrieve_ec',
           'access callback' => 'user_access',
           'access arguments' => array('access content'),
           'access arguments append' => FALSE,
@@ -26,7 +30,7 @@ function esdportal_api_services_resources() {
             array(
               'name' => 'id',
               'type' => 'int',
-              'description' => 'ec_profile entity ID',
+              'description' => 'ec entity ID',
               'source' => array('path' => '0'),
               'optional' => FALSE,
               'default value' => NULL,
@@ -34,8 +38,8 @@ function esdportal_api_services_resources() {
           ),
         ),
         'index' => array(
-          'help' => 'Lists Early Childhood Center Profiles',
-          'callback' => '_esdportal_api_index_ec_profiles',
+          'help' => 'Lists Early Childhood Centers',
+          'callback' => '_esdportal_api_index_ecs',
           'access arguments' => array('access content'),
           'args' => array(
             array(
@@ -126,14 +130,24 @@ function esdportal_api_services_resources() {
 /**
  * Stub.
  */
-function _esdportal_api_retrieve_ec_profile($id) {
-  return false;
+function _esdportal_api_retrieve_ec($id) {
+  $document = new Document;
+
+  $ec = taxonomy_term_load($id);
+
+  $serializer = new EcSerializer();
+
+  $resource = $serializer->resource($ec);
+
+  $document->setData($resource);
+
+  return $document->toArray();
 }
 
 /**
  * Stub.
  */
-function _esdportal_api_index_ec_profiles($limit, $offset, $filters, $sort) {
+function _esdportal_api_index_ecs($limit, $offset, $filters, $sort) {
   return false;
 }
 
