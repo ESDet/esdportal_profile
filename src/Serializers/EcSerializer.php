@@ -17,4 +17,8 @@ class EcSerializer extends SerializerAbstract {
   protected function attributes($ec_term) {
     return $ec_term;
   }
+
+  protected function getId($ec_term) {
+    return entity_extract_ids('taxonomy_term', $ec_term)[0];
+  }
 }

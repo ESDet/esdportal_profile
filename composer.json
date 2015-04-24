@@ -3,6 +3,13 @@
     "require": {
         "tobscure/json-api": "dev-master"
     },
+
+    "repositories": [
+       {
+         "type": "vcs",
+         "url":  "https://github.com/bnchdrff/json-api.git"
+       }
+    ],
     "license": "GNU GPLv2",
     "authors": [
         {
