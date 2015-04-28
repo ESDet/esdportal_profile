@@ -49,6 +49,22 @@ function esdportal_api_services_resources() {
               'optional' => TRUE,
               'default value' => null,
             ),
+            array(
+              'name' => 'limit',
+              'type' => 'int',
+              'description' => 'Limit response count (default ' . ESDPORTAL_API_DEFAULT_LIMIT . ')',
+              'source' => array('param' => 'limit'),
+              'optional' => TRUE,
+              'default value' => ESDPORTAL_API_DEFAULT_LIMIT,
+            ),
+            array(
+              'name' => 'offset',
+              'type' => 'int',
+              'description' => 'Offset starting record',
+              'source' => array('param' => 'offset'),
+              'optional' => TRUE,
+              'default value' => 0,
+            ),
           ),
         ),
       ),
@@ -126,13 +142,19 @@ function _esdportal_api_retrieve_ec($id) {
 /**
  * Retrieves list of all early childhood centers.
  *
- * @param $includes
+ * @param string $includes
  *   related datasets to include, comma-separated
+ * @param int $limit
+ *   if null, return all results(!)
+ * @param int $offset
  */
-function _esdportal_api_index_ecs($includes = null) {
+function _esdportal_api_index_ecs($includes = null, $limit = null, $offset = 0) {
   $document = new Document;
 
   $ecs = taxonomy_get_tree(19, 0, null, true);
+
+  // paginate
+  $ecs = array_slice($ecs, $offset, $limit, TRUE);
 
   $includes = explode(',', $includes);
 
