@@ -109,8 +109,12 @@ function _esdportal_api_retrieve_ec($id) {
   $document = new Document;
 
   $ec = taxonomy_term_load($id);
+  $ec->ec_profile_ids = taxonomy_select_nodes($ec->tid, FALSE);
+  $ec->ec_profiles = array_map(function($ec_profile_id) {
+    return node_load($ec_profile_id);
+  }, $ec->ec_profile_ids);
 
-  $serializer = new EcSerializer();
+  $serializer = new EcSerializer(['ec_profiles']);
 
   $resource = $serializer->resource($ec);
 
