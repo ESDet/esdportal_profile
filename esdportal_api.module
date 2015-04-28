@@ -154,7 +154,10 @@ function _esdportal_api_index_ecs($includes = null, $limit = null, $offset = 0) 
   $ecs = taxonomy_get_tree(19, 0, null, true);
 
   // paginate
+  $total = count($ecs);
   $ecs = array_slice($ecs, $offset, $limit, TRUE);
+  $link_to_self = $_SERVER['REQUEST_URI'];
+
 
   $includes = (strlen($includes) > 0) ? explode(',', $includes) : null;
 
@@ -177,7 +180,8 @@ function _esdportal_api_index_ecs($includes = null, $limit = null, $offset = 0) 
 
   $document->setData($collection);
 
-  $document->addMeta('total', count($ecs));
+  $document->addMeta('total', $total);
+  $document->addLink('self', $link_to_self);
 
   return $document->toArray();
 }
