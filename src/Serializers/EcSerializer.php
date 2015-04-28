@@ -15,6 +15,8 @@ use Drupal\esdportal_api\Serializers\EcProfileSerializer;
 
 class EcSerializer extends SerializerAbstract {
   protected $type = 'ecs';
+  protected $link = ['ec_profiles'];
+  protected $include = null;
 
   protected function attributes($ec_term) {
     // these turn into linkages:

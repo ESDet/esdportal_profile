@@ -156,9 +156,9 @@ function _esdportal_api_index_ecs($includes = null, $limit = null, $offset = 0) 
   // paginate
   $ecs = array_slice($ecs, $offset, $limit, TRUE);
 
-  $includes = explode(',', $includes);
+  $includes = (strlen($includes) > 0) ? explode(',', $includes) : null;
 
-  $serializer = (count($includes) > 0) ? new EcSerializer($includes) : new EcSerializer([], ['ec_profiles']);
+  $serializer = ($includes) ? new EcSerializer($includes) : new EcSerializer();
 
   foreach ($ecs as &$ec) {
     $ec->ec_profile_ids = taxonomy_select_nodes($ec->tid, FALSE);
