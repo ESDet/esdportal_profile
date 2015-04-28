@@ -42,12 +42,12 @@ function esdportal_api_services_resources() {
           'access arguments' => array('access content'),
           'args' => array(
             array(
-              'name' => 'load_profiles',
-              'type' => 'int',
-              'description' => 'Load early childhood center profile entities if true, otherwise just return their IDs',
-              'source' => array('param' => 'load_profiles'),
+              'name' => 'includes',
+              'type' => 'string',
+              'description' => 'Include other datasets, comma-separated',
+              'source' => array('param' => 'includes'),
               'optional' => TRUE,
-              'default value' => 0,
+              'default value' => null,
             ),
           ),
         ),
@@ -126,21 +126,24 @@ function _esdportal_api_retrieve_ec($id) {
 /**
  * Retrieves list of all early childhood centers.
  *
- * @param $load_profiles
+ * @param $includes
+ *   related datasets to include, comma-separated
  */
-function _esdportal_api_index_ecs($load_profiles = false) {
+function _esdportal_api_index_ecs($includes = null) {
   $document = new Document;
 
   $ecs = taxonomy_get_tree(19, 0, null, true);
 
-  $serializer = ($load_profiles) ? new EcSerializer(['ec_profiles']) : new EcSerializer([], ['ec_profiles']);
+  $includes = explode(',', $includes);
+
+  $serializer = (count($includes) > 0) ? new EcSerializer($includes) : new EcSerializer([], ['ec_profiles']);
 
   foreach ($ecs as &$ec) {
     $ec->ec_profile_ids = taxonomy_select_nodes($ec->tid, FALSE);
   }
   unset($ec);
 
-  if ($load_profiles) {
+  if (in_array('ec_profiles', $includes)) {
     foreach ($ecs as $ec) {
       $ec->ec_profiles = array_map(function($ec_profile_id) {
         return node_load($ec_profile_id);
