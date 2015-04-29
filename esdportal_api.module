@@ -44,7 +44,7 @@ function esdportal_api_services_resources() {
             array(
               'name' => 'includes',
               'type' => 'string',
-              'description' => 'Include other datasets, comma-separated',
+              'description' => 'Include other datasets, comma-separated (current options: ec_profiles)',
               'source' => array('param' => 'includes'),
               'optional' => TRUE,
               'default value' => null,
