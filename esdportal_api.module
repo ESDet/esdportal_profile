@@ -6,6 +6,7 @@
 
 use Tobscure\JsonApi\Document;
 use Drupal\esdportal_api\Serializers\EcSerializer;
+use Drupal\esdportal_api\EcDataUtils;
 
 define("ESDPORTAL_API_DEFAULT_LIMIT", 100);
 define("ESDPORTAL_API_MAX_LIMIT", 1000);
@@ -44,7 +45,7 @@ function esdportal_api_services_resources() {
             array(
               'name' => 'includes',
               'type' => 'string',
-              'description' => 'Include other datasets, comma-separated (current options: ec_profiles)',
+              'description' => 'Include other datasets, comma-separated (current options: ec_profiles, most_recent_ec_state_rating)',
               'source' => array('param' => 'includes'),
               'optional' => TRUE,
               'default value' => null,
@@ -130,7 +131,10 @@ function _esdportal_api_retrieve_ec($id) {
     return node_load($ec_profile_id);
   }, $ec->ec_profile_ids);
 
-  $serializer = new EcSerializer(['ec_profiles']);
+  $ec->most_recent_ec_state_rating = (object) _esdportal_api_retrieve_ec_state_rating(\Drupal\esdportal_api\EcDataUtils::getEcId($ec));
+  $ec->most_recent_ec_state_rating_id = $ec->most_recent_ec_state_rating->rating_id;
+
+  $serializer = new EcSerializer(['ec_profiles', 'most_recent_ec_state_rating']);
 
   $resource = $serializer->resource($ec);
 
@@ -176,6 +180,13 @@ function _esdportal_api_index_ecs($includes = null, $limit = null, $offset = 0) 
     }
   }
 
+  if (in_array('most_recent_ec_state_rating', $includes)) {
+    foreach ($ecs as $ec) {
+      $ec->most_recent_ec_state_rating = (object) _esdportal_api_retrieve_ec_state_rating(\Drupal\esdportal_api\EcDataUtils::getEcId($ec));
+      $ec->most_recent_ec_state_rating_id = $ec->most_recent_ec_state_rating->rating_id;
+    }
+  }
+
   $collection = $serializer->collection($ecs);
 
   $document->setData($collection);
@@ -193,7 +204,7 @@ function _esdportal_api_index_ecs($includes = null, $limit = null, $offset = 0) 
  *
  * @param $batch_timestamp
  */
-function _esdportal_api_retrieve_ec_state_rating($esd_ec_id, $batch_timestamp) {
+function _esdportal_api_retrieve_ec_state_rating($esd_ec_id, $batch_timestamp = null) {
   if (isset($batch_timestamp) && $batch_timestamp > 0) {
     $rating = db_query('SELECT * FROM {ec_state_ratings} WHERE timestamp=:batch_timestamp AND esd_ec_id=:esd_ec_id', array(':esd_ec_id' => $esd_ec_id, ':batch_timestamp' => $batch_timestamp))->fetchAssoc();
   } else {
