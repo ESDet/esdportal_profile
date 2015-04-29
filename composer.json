@@ -3,7 +3,6 @@
     "require": {
         "tobscure/json-api": "dev-master"
     },
-
     "repositories": [
        {
          "type": "vcs",
