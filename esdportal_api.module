@@ -35,6 +35,14 @@ function esdportal_api_services_resources() {
               'optional' => FALSE,
               'default value' => NULL,
             ),
+            array(
+              'name' => 'flatten_fields',
+              'type' => 'int',
+              'description' => 'Remove localization structure from fields if true',
+              'source' => array('param' => 'flatten_fields'),
+              'optional' => TRUE,
+              'default value' => 0,
+            ),
           ),
         ),
         'index' => array(
@@ -122,7 +130,7 @@ function esdportal_api_services_resources() {
 /**
  * Stub.
  */
-function _esdportal_api_retrieve_ec($id) {
+function _esdportal_api_retrieve_ec($id, $flatten_fields = false) {
   $document = new Document;
 
   $ec = taxonomy_term_load($id);
@@ -131,8 +139,17 @@ function _esdportal_api_retrieve_ec($id) {
     return node_load($ec_profile_id);
   }, $ec->ec_profile_ids);
 
+  if ($flatten_fields) {
+    $cloned_ec = clone $ec;
+    unset($ec);
+    $ec = $cloned_ec;
+    $ec->machine_name = $ec->vocabulary_machine_name;
+    \Drupal\esdportal_api\EcDataUtils::flattenFields('taxonomy_term', $ec);
+  }
+
   $ec->most_recent_ec_state_rating = (object) _esdportal_api_retrieve_ec_state_rating(\Drupal\esdportal_api\EcDataUtils::getEcId($ec));
   $ec->most_recent_ec_state_rating_id = $ec->most_recent_ec_state_rating->rating_id;
+
 
   $serializer = new EcSerializer(['ec_profiles', 'most_recent_ec_state_rating']);
 
