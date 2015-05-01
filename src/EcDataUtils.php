@@ -9,6 +9,12 @@
 namespace Drupal\esdportal_api;
 
 class EcDataUtils {
+  /**
+   * Given an ec entity, return its id.
+   *
+   * @param object $ec
+   * @return int|null entity id
+   */
   public static function getEcId($ec) {
     if(isset($ec->field_esd_ec_id['und']) && isset($ec->field_esd_ec_id['und'][0]) && isset($ec->field_esd_ec_id['und'][0]['value'])) {
       return $ec->field_esd_ec_id['und'][0]['value'];
@@ -38,7 +44,6 @@ class EcDataUtils {
    *   A clone of the entity whose field value arrays should be flattened.
    */
   public static function flattenFields($entity_type, $cloned_entity) {
-    xdebug_break();
     $bundle = field_extract_bundle($entity_type, $cloned_entity);
     $clone_wrapper = entity_metadata_wrapper($entity_type, $cloned_entity);
 
@@ -46,7 +51,19 @@ class EcDataUtils {
     foreach (field_info_instances($entity_type, $bundle) as $field_name => $instance) {
       // Set the field property to the raw wrapper value, which applies the
       // desired flattening of the value array.
-      $cloned_entity->{$field_name} = $clone_wrapper->{$field_name}->raw();
+
+      if ($clone_wrapper->{$field_name}->type() == 'taxonomy_term') {
+        $term = $clone_wrapper->{$field_name}->value();
+        $cloned_entity->{$field_name} = ['tid' => $term->tid, 'name' => $term->name];
+      } elseif ($clone_wrapper->{$field_name}->type() == 'list<taxonomy_term>') {
+        $new_val = [];
+        foreach ($clone_wrapper->{$field_name}->value() as $term) {
+          $new_val[] = ['tid' => $term->tid, 'name' => $term->name];
+        }
+        $cloned_entity->{$field_name} = $new_val;
+      } else {
+        $cloned_entity->{$field_name} = $clone_wrapper->{$field_name}->raw();
+      }
     }
   }
 }
