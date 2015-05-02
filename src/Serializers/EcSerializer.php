@@ -16,13 +16,13 @@ use Drupal\esdportal_api\Serializers\EcStateRatingSerializer;
 
 class EcSerializer extends SerializerAbstract {
   protected $type = 'ecs';
-  protected $link = ['ec_profiles', 'most_recent_ec_state_rating'];
+  protected $link = ['ec_profile', 'most_recent_ec_state_rating'];
   protected $include = null;
 
   protected function attributes($ec_term) {
     // these turn into linkages:
-    unset($ec_term->ec_profiles);
-    unset($ec_term->ec_profile_ids);
+    unset($ec_term->ec_profile);
+    unset($ec_term->ec_profile_id);
     unset($ec_term->most_recent_ec_state_rating);
     unset($ec_term->most_recent_ec_state_rating_id);
 
@@ -33,17 +33,17 @@ class EcSerializer extends SerializerAbstract {
     return entity_extract_ids('taxonomy_term', $ec_term)[0];
   }
 
-  protected function ec_profiles() {
+  protected function ec_profile() {
     return function ($ec, $include, $included) {
       $serializer = new EcProfileSerializer($included);
 
-      if (count($ec->ec_profile_ids) == 0) {
+      if (!$ec->ec_profile_id) {
         return null;
       }
 
-      $ec_profiles = $serializer->collection($include ? $ec->ec_profiles : $ec->ec_profile_ids);
+      $ec_profile = $serializer->resource($include ? $ec->ec_profile : $ec->ec_profile_id);
 
-      $link = new Link($ec_profiles);
+      $link = new Link($ec_profile);
 
       return $link;
     };

@@ -53,7 +53,7 @@ function esdportal_api_services_resources() {
             array(
               'name' => 'includes',
               'type' => 'string',
-              'description' => 'Include other datasets, comma-separated (current options: ec_profiles, most_recent_ec_state_rating)',
+              'description' => 'Include other datasets, comma-separated (current options: ec_profile, most_recent_ec_state_rating)',
               'source' => array('param' => 'includes'),
               'optional' => TRUE,
               'default value' => null,
@@ -142,16 +142,19 @@ function _esdportal_api_retrieve_ec($id, $flatten_fields = false) {
   $document = new Document;
 
   $ec = taxonomy_term_load($id);
-  $ec->ec_profile_ids = taxonomy_select_nodes($ec->tid, FALSE);
-  $ec->ec_profiles = array_map(function($ec_profile_id) use ($flatten_fields) {
-    $ec_profile = node_load($ec_profile_id);
+  if (!$ec) {
+    return services_error(t('early childhood center @id does not exist.', array('@id' => $id)), 404);
+  }
+
+  $ec->ec_profile_id = _esdportal_api_get_ec_profile_id($ec);
+
+  if ($ec->ec_profile_id) {
+    $ec->ec_profile = node_load($ec->ec_profile_id);
 
     if ($flatten_fields) {
-      _esdportal_api_flatten_entity_fields('node', $ec_profile);
+      _esdportal_api_flatten_entity_fields('node', $ec->ec_profile);
     }
-
-    return $ec_profile;
-  }, $ec->ec_profile_ids);
+  }
 
   if ($flatten_fields) {
     _esdportal_api_flatten_entity_fields('taxonomy_term', $ec);
@@ -160,8 +163,7 @@ function _esdportal_api_retrieve_ec($id, $flatten_fields = false) {
   $ec->most_recent_ec_state_rating = (object) _esdportal_api_retrieve_ec_state_rating(\Drupal\esdportal_api\EcDataUtils::getEcId($ec));
   $ec->most_recent_ec_state_rating_id = $ec->most_recent_ec_state_rating->rating_id;
 
-
-  $serializer = new EcSerializer(['ec_profiles', 'most_recent_ec_state_rating']);
+  $serializer = new EcSerializer(['ec_profile', 'most_recent_ec_state_rating']);
 
   $resource = $serializer->resource($ec);
 
@@ -175,6 +177,12 @@ function _esdportal_api_flatten_entity_fields($entity_type, &$entity) {
     $entity->machine_name = $entity->vocabulary_machine_name;
   }
   \Drupal\esdportal_api\EcDataUtils::flattenFields($entity_type, $entity);
+}
+
+function _esdportal_api_get_ec_profile_id($ec) {
+  $ec_profile_id = db_query("SELECT ti.nid FROM taxonomy_index AS ti INNER JOIN node AS n ON n.nid=ti.nid WHERE ti.tid=:tid AND n.type='ec_profile'", array(':tid' => $ec->tid))->fetchField();
+
+  return $ec_profile_id;
 }
 
 /**
@@ -206,21 +214,19 @@ function _esdportal_api_index_ecs($includes = null, $limit = null, $offset = 0, 
       _esdportal_api_flatten_entity_fields('taxonomy_term', $ec);
     }
 
-    $ec->ec_profile_ids = taxonomy_select_nodes($ec->tid, FALSE);
+    $ec->ec_profile_id = _esdportal_api_get_ec_profile_id($ec);
   }
   unset($ec);
 
-  if (in_array('ec_profiles', $includes)) {
+  if (in_array('ec_profile', $includes)) {
     foreach ($ecs as $ec) {
-      $ec->ec_profiles = array_map(function($ec_profile_id) use ($flatten_fields) {
-        $ec_profile = node_load($ec_profile_id);
+      if ($ec->ec_profile_id) {
+        $ec->ec_profile = node_load($ec->ec_profile_id);
 
         if ($flatten_fields) {
-          _esdportal_api_flatten_entity_fields('node', $ec_profile);
+          _esdportal_api_flatten_entity_fields('node', $ec->ec_profile);
         }
-
-        return $ec_profile;
-      }, $ec->ec_profile_ids);
+      }
     }
   }
 
