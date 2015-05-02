@@ -203,7 +203,7 @@ function _esdportal_api_index_ecs($includes = null, $limit = null, $offset = 0, 
 
   foreach ($ecs as &$ec) {
     if ($flatten_fields) {
-      _esdportal_api_flatten_entity_fields('node', $ec);
+      _esdportal_api_flatten_entity_fields('taxonomy_term', $ec);
     }
 
     $ec->ec_profile_ids = taxonomy_select_nodes($ec->tid, FALSE);
