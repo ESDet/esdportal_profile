@@ -16,8 +16,10 @@ class EcDataUtils {
    * @return int|null entity id
    */
   public static function getEcId($ec) {
-    if(isset($ec->field_esd_ec_id['und']) && isset($ec->field_esd_ec_id['und'][0]) && isset($ec->field_esd_ec_id['und'][0]['value'])) {
+    if (isset($ec->field_esd_ec_id['und']) && isset($ec->field_esd_ec_id['und'][0]) && isset($ec->field_esd_ec_id['und'][0]['value'])) {
       return $ec->field_esd_ec_id['und'][0]['value'];
+    } elseif (gettype($ec->field_esd_ec_id) == 'string') {
+      return $ec->field_esd_ec_id;
     } else {
       return null;
     }
