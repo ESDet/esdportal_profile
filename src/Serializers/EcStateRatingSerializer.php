@@ -18,7 +18,7 @@ class EcStateRatingSerializer extends SerializerAbstract {
     return $ec_state_rating;
   }
 
-  protected function getId($ec_state_rating) {
+  protected function id($ec_state_rating) {
     return $ec_state_rating->rating_id;
   }
 }
