@@ -21,4 +21,7 @@ class EcProfileSerializer extends SerializerAbstract {
   protected function id($ec_profile) {
     return $ec_profile->nid;
   }
+  protected function getId($ec_profile) {
+    return $ec_profile->nid;
+  }
 }
