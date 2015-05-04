@@ -4,20 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "88bdd91685b60260a1e2d78c827a924c",
+    "hash": "7dcea21896af2a6fe5639fafc21c5b7a",
     "packages": [
         {
             "name": "tobscure/json-api",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/tobscure/json-api.git",
-                "reference": "ac86d11b64b34962999523164863b8130f0222e8"
+                "url": "https://github.com/bnchdrff/json-api.git",
+                "reference": "2f418c15e8001728321e048637d99a12d5cf6bb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tobscure/json-api/zipball/ac86d11b64b34962999523164863b8130f0222e8",
-                "reference": "ac86d11b64b34962999523164863b8130f0222e8",
+                "url": "https://api.github.com/repos/bnchdrff/json-api/zipball/2f418c15e8001728321e048637d99a12d5cf6bb1",
+                "reference": "2f418c15e8001728321e048637d99a12d5cf6bb1",
                 "shasum": ""
             },
             "require": {
@@ -32,7 +32,6 @@
                     "Tobscure\\JsonApi\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Toby Zerner",
@@ -40,7 +39,10 @@
                 }
             ],
             "description": "JSON-API responses in PHP.",
-            "time": "2015-05-03 02:29:55"
+            "support": {
+                "source": "https://github.com/bnchdrff/json-api/tree/master"
+            },
+            "time": "2015-04-23 17:38:58"
         }
     ],
     "packages-dev": [],
