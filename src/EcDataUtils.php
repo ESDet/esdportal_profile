@@ -61,7 +61,7 @@ class EcDataUtils {
       // Set the field property to the raw wrapper value, which applies the
       // desired flattening of the value array.
 
-      // For taxonomy temr refs, format nicely using loadtermnames module 'name'
+      // For taxonomy term refs, format nicely using loadtermnames module 'name'
       if ($clone_wrapper->{$field_name}->type() == 'taxonomy_term') {
         $term = $clone_wrapper->{$field_name}->value();
         $cloned_entity->{$field_name} = ['tid' => $term->tid, 'name' => $term->name];
