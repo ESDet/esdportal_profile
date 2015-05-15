@@ -6,6 +6,7 @@
 
 use Tobscure\JsonApi\Document;
 use Drupal\esdportal_api\Serializers\EcSerializer;
+use Drupal\esdportal_api\Serializers\SchoolSerializer;
 use Drupal\esdportal_api\EcDataUtils;
 
 define("ESDPORTAL_API_DEFAULT_LIMIT", 100);
@@ -130,6 +131,75 @@ function esdportal_api_services_resources() {
         ),
       ),
     ),
+    'schools' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'help' => 'Retrieves School',
+          'callback' => '_esdportal_api_retrieve_school',
+          'access callback' => 'user_access',
+          'access arguments' => array('access content'),
+          'access arguments append' => FALSE,
+          'args' => array(
+            array(
+              'name' => 'id',
+              'type' => 'int',
+              'description' => 'school entity ID',
+              'source' => array('path' => '0'),
+              'optional' => FALSE,
+              'default value' => NULL,
+            ),
+            array(
+              'name' => 'flatten_fields',
+              'type' => 'int',
+              'description' => 'Remove localization structure from fields if true',
+              'source' => array('param' => 'flatten_fields'),
+              'optional' => TRUE,
+              'default value' => 0,
+            ),
+          ),
+        ),
+        'index' => array(
+          'help' => 'Lists Schools',
+          'callback' => '_esdportal_api_index_schools',
+          'access arguments' => array('access content'),
+          'args' => array(
+            array(
+              'name' => 'includes',
+              'type' => 'string',
+              'description' => 'Include other datasets, comma-separated (current options: school_profile, @todo more)',
+              'source' => array('param' => 'includes'),
+              'optional' => TRUE,
+              'default value' => null,
+            ),
+            array(
+              'name' => 'limit',
+              'type' => 'int',
+              'description' => 'Limit response count (default ' . ESDPORTAL_API_DEFAULT_LIMIT . ')',
+              'source' => array('param' => 'limit'),
+              'optional' => TRUE,
+              'default value' => ESDPORTAL_API_DEFAULT_LIMIT,
+            ),
+            array(
+              'name' => 'offset',
+              'type' => 'int',
+              'description' => 'Offset starting record',
+              'source' => array('param' => 'offset'),
+              'optional' => TRUE,
+              'default value' => 0,
+            ),
+            array(
+              'name' => 'flatten_fields',
+              'type' => 'int',
+              'description' => 'Remove localization structure from fields if true',
+              'source' => array('param' => 'flatten_fields'),
+              'optional' => TRUE,
+              'default value' => 0,
+            ),
+          ),
+        ),
+      ),
+    ),
+
   );
 
   return $api;
@@ -303,5 +373,102 @@ function _esdportal_api_index_ec_state_ratings($batch_timestamp) {
   }
 
   return array('ec_state_ratings' => $ratings);
+}
+
+/**
+ * Retrieves a single school.
+ *
+ * @param $id
+ *   esd internal school id
+ * @param $flatten_fields
+ *   if true, remove l10n structure & other drupal structures from response
+ *
+ * @return
+ *   nested array of the school data
+ */
+function _esdportal_api_retrieve_school($id, $flatten_fields = false) {
+  $document = new Document;
+
+  $school = taxonomy_term_load($id);
+  if (!$school) {
+    return services_error(t('school @id does not exist.', array('@id' => $id)), 404);
+  }
+
+  $school->school_profile_id = _esdportal_api_get_related_nid('school_profile', $school);
+
+  if ($school->school_profile_id) {
+    $school->school_profile = node_load($school->school_profile_id);
+
+    if ($flatten_fields) {
+      _esdportal_api_flatten_entity_fields('node', $school->school_profile);
+    }
+  }
+
+  if ($flatten_fields) {
+    _esdportal_api_flatten_entity_fields('taxonomy_term', $school);
+  }
+
+  $serializer = new SchoolSerializer(['school_profile']);
+
+  $resource = $serializer->resource($school);
+
+  $document->setData($resource);
+
+  return $document->toArray();
+}
+
+/**
+ * Retrieves list of all schools.
+ *
+ * @param string $includes
+ *   related datasets to include, comma-separated
+ * @param int $limit
+ *   if null, return all results(!)
+ * @param int $offset
+ */
+function _esdportal_api_index_schools($includes = null, $limit = null, $offset = 0, $flatten_fields = false) {
+  $document = new Document;
+
+  $schools = taxonomy_get_tree(4, 0, null, true);
+
+  // paginate
+  $total = count($schools);
+  $schools = array_slice($schools, $offset, $limit, TRUE);
+  $link_to_self = $_SERVER['REQUEST_URI'];
+
+
+  $includes = (strlen($includes) > 0) ? explode(',', $includes) : null;
+
+  $serializer = ($includes) ? new SchoolSerializer($includes) : new SchoolSerializer();
+
+  foreach ($schools as &$school) {
+    if ($flatten_fields) {
+      _esdportal_api_flatten_entity_fields('taxonomy_term', $school);
+    }
+
+    $school->school_profile_id = _esdportal_api_get_related_nid('school_profile', $school);
+  }
+  unset($school);
+
+  if (in_array('school_profile', $includes)) {
+    foreach ($schools as $school) {
+      if ($school->school_profile_id) {
+        $school->school_profile = node_load($school->school_profile_id);
+
+        if ($flatten_fields) {
+          _esdportal_api_flatten_entity_fields('node', $school->school_profile);
+        }
+      }
+    }
+  }
+
+  $collection = $serializer->collection($schools);
+
+  $document->setData($collection);
+
+  $document->addMeta('total', $total);
+  $document->addLink('self', $link_to_self);
+
+  return $document->toArray();
 }
 
