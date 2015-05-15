@@ -154,7 +154,7 @@ function _esdportal_api_retrieve_ec($id, $flatten_fields = false) {
     return services_error(t('early childhood center @id does not exist.', array('@id' => $id)), 404);
   }
 
-  $ec->ec_profile_id = _esdportal_api_get_ec_profile_id($ec);
+  $ec->ec_profile_id = _esdportal_api_get_related_nid('ec_profile', $ec);
 
   if ($ec->ec_profile_id) {
     $ec->ec_profile = node_load($ec->ec_profile_id);
@@ -187,10 +187,20 @@ function _esdportal_api_flatten_entity_fields($entity_type, &$entity) {
   \Drupal\esdportal_api\EcDataUtils::flattenFields($entity_type, $entity);
 }
 
-function _esdportal_api_get_ec_profile_id($ec) {
-  $ec_profile_id = db_query("SELECT ti.nid FROM taxonomy_index AS ti INNER JOIN node AS n ON n.nid=ti.nid WHERE ti.tid=:tid AND n.type='ec_profile'", array(':tid' => $ec->tid))->fetchField();
+/**
+ * Given a taxonomy term, find the first node related to it & return its nid.
+ *
+ * @param string $bundle
+ *   content type
+ * @param string $term
+ *   taxonomy term
+ * @return
+ *   node id
+ */
+function _esdportal_api_get_related_nid($bundle, $term) {
+  $nid = db_query("SELECT ti.nid FROM taxonomy_index AS ti INNER JOIN node AS n ON n.nid=ti.nid WHERE ti.tid=:tid AND n.type=:bundle", array(':tid' => $term->tid, ':bundle' => $bundle))->fetchField();
 
-  return $ec_profile_id;
+  return $nid;
 }
 
 /**
@@ -222,7 +232,7 @@ function _esdportal_api_index_ecs($includes = null, $limit = null, $offset = 0, 
       _esdportal_api_flatten_entity_fields('taxonomy_term', $ec);
     }
 
-    $ec->ec_profile_id = _esdportal_api_get_ec_profile_id($ec);
+    $ec->ec_profile_id = _esdportal_api_get_related_nid('ec_profile', $ec);
   }
   unset($ec);
 
