@@ -136,7 +136,15 @@ function esdportal_api_services_resources() {
 }
 
 /**
- * Stub.
+ * Retrieves a single early childhood center.
+ *
+ * @param $id
+ *   esd internal ec id
+ * @param $flatten_fields
+ *   if true, remove l10n structure & other drupal crap from response
+ *
+ * @return
+ *   nested array of the ec data
  */
 function _esdportal_api_retrieve_ec($id, $flatten_fields = false) {
   $document = new Document;
