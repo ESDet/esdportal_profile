@@ -44,28 +44,17 @@ class SchoolSerializer extends SerializerAbstract {
   protected static $potential_data_table_names;
 
   protected function attributes($school_term) {
+    self::$potential_data_tables = \Drupal\esdportal_api\EcDataUtils::getDataTablesWithBcodes();
+    self::$potential_data_table_names = \Drupal\esdportal_api\EcDataUtils::extractDataTableNames(self::$potential_data_tables);
+
     // these turn into linkages:
     unset($school_term->school_profile);
     unset($school_term->school_profile_id);
-    unset($school_term->act_2011);
-    unset($school_term->act_2012);
-    unset($school_term->act_2013);
-    unset($school_term->act_2014);
-    unset($school_term->esd_hs_2013);
-    unset($school_term->esd_hs_2014);
-    unset($school_term->esd_hs_2015);
-    unset($school_term->esd_k8_2013_r1);
-    unset($school_term->esd_k8_2013);
-    unset($school_term->esd_k8_2014);
-    unset($school_term->esd_k8_2015);
-    unset($school_term->fiveessentials_2013);
-    unset($school_term->fiveessentials_2014);
-    unset($school_term->fiveessentials_2015);
-    unset($school_term->meap_2009);
-    unset($school_term->meap_2010);
-    unset($school_term->meap_2011);
-    unset($school_term->meap_2012);
-    unset($school_term->meap_2013);
+
+    foreach (self::$potential_data_table_names as $name) {
+      unset($school_term->{$name});
+    }
+    xdebug_break();
 
     return $school_term;
   }
