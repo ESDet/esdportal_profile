@@ -15,16 +15,13 @@ class fiveessentials_2015Serializer extends SerializerAbstract {
   protected $type = 'fiveessentials_2015s';
 
   protected function attributes($row) {
-    xdebug_break();
     return $row;
   }
 
   protected function id($row) {
-    xdebug_break();
     return $row->State_Schl_Id;
   }
   protected function getId($row) {
-    xdebug_break();
     return $row->State_Schl_Id;
   }
 }
