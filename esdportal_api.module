@@ -166,7 +166,7 @@ function esdportal_api_services_resources() {
             array(
               'name' => 'includes',
               'type' => 'string',
-              'description' => 'Include other datasets, comma-separated (current options: school_profile, @todo more)',
+              'description' => 'Include other datasets, comma-separated (current options: school_profile, ' . implode(', ', _esdportal_api_get_school_data_tables()) . ')',
               'source' => array('param' => 'includes'),
               'optional' => TRUE,
               'default value' => null,
@@ -436,12 +436,13 @@ function _esdportal_api_index_schools($includes = null, $limit = null, $offset =
   $schools = array_slice($schools, $offset, $limit, TRUE);
   $link_to_self = $_SERVER['REQUEST_URI'];
 
-
   $includes = (strlen($includes) > 0) ? explode(',', $includes) : null;
 
   $serializer = ($includes) ? new SchoolSerializer($includes) : new SchoolSerializer();
 
   foreach ($schools as &$school) {
+    $school->bcode = $school->field_bcode['und'][0]['value'];
+
     if ($flatten_fields) {
       _esdportal_api_flatten_entity_fields('taxonomy_term', $school);
     }
@@ -451,7 +452,7 @@ function _esdportal_api_index_schools($includes = null, $limit = null, $offset =
   unset($school);
 
   if (in_array('school_profile', $includes)) {
-    foreach ($schools as $school) {
+    foreach ($schools as &$school) {
       if ($school->school_profile_id) {
         $school->school_profile = node_load($school->school_profile_id);
 
@@ -460,6 +461,31 @@ function _esdportal_api_index_schools($includes = null, $limit = null, $offset =
         }
       }
     }
+  }
+  unset($school);
+
+  $potential_data_tables = \Drupal\esdportal_api\EcDataUtils::getDataTablesWithBcodes();
+  $potential_data_table_names = \Drupal\esdportal_api\EcDataUtils::extractDataTableNames($potential_data_tables);
+
+  $tables_to_include = array_intersect($potential_data_table_names, $includes);
+
+  if (count($tables_to_include) > 0) {
+    // we've got some data tables to include!
+    foreach ($schools as &$school) {
+      foreach ($tables_to_include as $table) {
+        $table_info = $potential_data_tables[$table];
+        $data_table_identifier = $table_info->name;
+
+        $q = db_select($table_info->name)
+               ->fields($table_info->name)
+               ->condition($table_info->table_schema['primary key'][0], $school->bcode);
+
+        $res = $q->execute();
+
+        $school->{$data_table_identifier} = $res->fetchObject();
+      }
+    }
+    unset($school);
   }
 
   $collection = $serializer->collection($schools);
@@ -472,3 +498,7 @@ function _esdportal_api_index_schools($includes = null, $limit = null, $offset =
   return $document->toArray();
 }
 
+function _esdportal_api_get_school_data_tables() {
+  $potential_data_tables = \Drupal\esdportal_api\EcDataUtils::getDataTablesWithBcodes();
+  return \Drupal\esdportal_api\EcDataUtils::extractDataTableNames($potential_data_tables);
+}

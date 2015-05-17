@@ -26,6 +26,28 @@ class EcDataUtils {
   }
 
   /**
+   * Returns data tables that JOIN by buildingcode.
+   *
+   * @return
+   *   array of drupal data table objects
+   */
+  public static function getDataTablesWithBcodes() {
+    return array_filter(data_get_all_tables(), function($table) {
+      return (isset($table->meta['join']) && isset($table->meta['join']['field_data_field_bcode']));
+    });
+  }
+
+  /**
+   * Extracts table names from array of drupal data table objects
+   *
+   * @return array
+   *   table names
+   */
+  public static function extractDataTableNames($tables) {
+    return array_keys($tables);
+  }
+
+  /**
    * As seen in commerce_services: flatten fields
    *
    * For the ESD api, we:
