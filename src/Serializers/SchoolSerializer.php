@@ -47,7 +47,25 @@ class SchoolSerializer extends SerializerAbstract {
     // these turn into linkages:
     unset($school_term->school_profile);
     unset($school_term->school_profile_id);
+    unset($school_term->act_2011);
+    unset($school_term->act_2012);
+    unset($school_term->act_2013);
+    unset($school_term->act_2014);
+    unset($school_term->esd_hs_2013);
+    unset($school_term->esd_hs_2014);
+    unset($school_term->esd_hs_2015);
+    unset($school_term->esd_k8_2013_r1);
+    unset($school_term->esd_k8_2013);
+    unset($school_term->esd_k8_2014);
+    unset($school_term->esd_k8_2015);
+    unset($school_term->fiveessentials_2013);
+    unset($school_term->fiveessentials_2014);
     unset($school_term->fiveessentials_2015);
+    unset($school_term->meap_2009);
+    unset($school_term->meap_2010);
+    unset($school_term->meap_2011);
+    unset($school_term->meap_2012);
+    unset($school_term->meap_2013);
 
     return $school_term;
   }
