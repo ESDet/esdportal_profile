@@ -95,6 +95,10 @@ class SchoolSerializer extends SerializerAbstract {
         return null;
       }
 
+      if (!$school->{$table_name}) {
+        return null;
+      }
+
       $datum = $serializer->resource($include ? $school->{$table_name} : $school->bcode);
 
       $link = new Link($datum);

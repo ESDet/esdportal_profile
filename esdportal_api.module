@@ -482,7 +482,9 @@ function _esdportal_api_index_schools($includes = null, $limit = null, $offset =
 
         $res = $q->execute();
 
-        $school->{$data_table_identifier} = $res->fetchObject();
+        $data = $res->fetchObject();
+
+        $school->{$data_table_identifier} = ($data) ? $data : false;
       }
     }
     unset($school);
