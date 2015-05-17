@@ -64,7 +64,9 @@ class EcDataUtils {
       // For taxonomy term refs, format nicely using loadtermnames module 'name'
       if ($clone_wrapper->{$field_name}->type() == 'taxonomy_term') {
         $term = $clone_wrapper->{$field_name}->value();
-        $cloned_entity->{$field_name} = ['tid' => $term->tid, 'name' => $term->name];
+        if ($cloned_entity->{$field_name}) {
+          $cloned_entity->{$field_name} = ['tid' => $term->tid, 'name' => $term->name];
+        }
       } elseif ($clone_wrapper->{$field_name}->type() == 'list<taxonomy_term>') {
         $new_val = [];
         foreach ($clone_wrapper->{$field_name}->value() as $term) {
