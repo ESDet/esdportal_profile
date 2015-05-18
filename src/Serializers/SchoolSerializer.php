@@ -54,7 +54,6 @@ class SchoolSerializer extends SerializerAbstract {
     foreach (self::$potential_data_table_names as $name) {
       unset($school_term->{$name});
     }
-    xdebug_break();
 
     return $school_term;
   }
