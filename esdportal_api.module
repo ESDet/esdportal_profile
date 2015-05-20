@@ -400,7 +400,7 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = false)
   $document = new Document;
 
   $school = taxonomy_term_load($id);
-  xdebug_break();
+
   if (!$school || ($school->vid != 4)) {
     return services_error(t('school @id does not exist.', array('@id' => $id)), 404);
   }
