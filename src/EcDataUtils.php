@@ -1,34 +1,43 @@
 <?php
 /**
  * @file
- * Contains:
- *   Drupal\esdportal_api\EcDataUtils
+ * Useful helpers for the esdportal_api module.
  *
+ * Contains:
+ *   Drupal\esdportal_api\EcDataUtils.
  */
 
 namespace Drupal\esdportal_api;
 
+/**
+ * Some static helpers.
+ */
 class EcDataUtils {
   /**
    * Given an ec entity, return its id.
    *
    * @param object $ec
+   *   An early childhood taxonomy term.
+   *
    * @return int|null entity id
+   *   The taxonomy term's id.
    */
   public static function getEcId($ec) {
     if (isset($ec->field_esd_ec_id['und']) && isset($ec->field_esd_ec_id['und'][0]) && isset($ec->field_esd_ec_id['und'][0]['value'])) {
       return $ec->field_esd_ec_id['und'][0]['value'];
-    } elseif (gettype($ec->field_esd_ec_id) == 'string') {
+    }
+    elseif (gettype($ec->field_esd_ec_id) == 'string') {
       return $ec->field_esd_ec_id;
-    } else {
-      return null;
+    }
+    else {
+      return NULL;
     }
   }
 
   /**
    * Returns data tables that JOIN by buildingcode.
    *
-   * @return
+   * @return array
    *   array of drupal data table objects
    */
   public static function getDataTablesWithBcodes() {
@@ -38,7 +47,7 @@ class EcDataUtils {
   }
 
   /**
-   * Extracts table names from array of drupal data table objects
+   * Extracts table names from array of drupal data table objects.
    *
    * @return array
    *   table names
@@ -48,7 +57,7 @@ class EcDataUtils {
   }
 
   /**
-   * As seen in commerce_services: flatten fields
+   * As seen in commerce_services: flatten fields.
    *
    * For the ESD api, we:
    *   * flatten fields (remove i18n & change multiple fields to arrays)
@@ -69,9 +78,9 @@ class EcDataUtils {
    * stored in the entity cache, causing potential errors should that entity be
    * loaded and manipulated later in the same request.
    *
-   * @param $entity_type
+   * @param string $entity_type
    *   The machine-name entity type of the given entity.
-   * @param $cloned_entity
+   * @param object $cloned_entity
    *   A clone of the entity whose field value arrays should be flattened.
    */
   public static function flattenFields($entity_type, $cloned_entity) {
@@ -82,22 +91,42 @@ class EcDataUtils {
     foreach (field_info_instances($entity_type, $bundle) as $field_name => $instance) {
       // Set the field property to the raw wrapper value, which applies the
       // desired flattening of the value array.
-
       // For taxonomy term refs, format nicely using loadtermnames module 'name'
       if ($clone_wrapper->{$field_name}->type() == 'taxonomy_term') {
         $term = $clone_wrapper->{$field_name}->value();
         if ($cloned_entity->{$field_name}) {
           $cloned_entity->{$field_name} = ['tid' => $term->tid, 'name' => $term->name];
         }
-      } elseif ($clone_wrapper->{$field_name}->type() == 'list<taxonomy_term>') {
+      }
+      elseif ($clone_wrapper->{$field_name}->type() == 'list<taxonomy_term>') {
         $new_val = [];
         foreach ($clone_wrapper->{$field_name}->value() as $term) {
           $new_val[] = ['tid' => $term->tid, 'name' => $term->name];
         }
         $cloned_entity->{$field_name} = $new_val;
-      } else {
+      }
+      else {
         $cloned_entity->{$field_name} = $clone_wrapper->{$field_name}->raw();
       }
     }
   }
+
+  /**
+   * Converts underscore_name to camelName.
+   */
+  public static function underscoreToCamel($underscore_name) {
+    $underscore_name[0] = strtoupper($underscore_name[0]);
+
+    return preg_replace_callback('/_([a-z0-9])/', function($c) {
+      return strtoupper($c[1]);
+    }, $underscore_name);
+  }
+
+  /**
+   * Converts camelName to underscore_name.
+   */
+  public static function camelToUnderscore($camel_name) {
+    return strtolower(preg_replace('/([a-z])([A-Z0-9])/', '$1_$2', $camel_name));
+  }
+
 }

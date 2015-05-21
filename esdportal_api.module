@@ -1,7 +1,8 @@
 <?php
 
 /**
- * @file esdportal_api.module
+ * @file
+ * esdportal_api.module
  */
 
 use Tobscure\JsonApi\Document;
@@ -57,7 +58,7 @@ function esdportal_api_services_resources() {
               'description' => 'Include other datasets, comma-separated (current options: ec_profile, most_recent_ec_state_rating)',
               'source' => array('param' => 'includes'),
               'optional' => TRUE,
-              'default value' => null,
+              'default value' => NULL,
             ),
             array(
               'name' => 'limit',
@@ -154,7 +155,7 @@ function esdportal_api_services_resources() {
               'description' => 'Include other datasets, comma-separated (current options: school_profile, ' . implode(', ', _esdportal_api_get_school_data_tables()) . ')',
               'source' => array('param' => 'includes'),
               'optional' => TRUE,
-              'default value' => null,
+              'default value' => NULL,
             ),
             array(
               'name' => 'flatten_fields',
@@ -177,7 +178,7 @@ function esdportal_api_services_resources() {
               'description' => 'Include other datasets, comma-separated (current options: school_profile, ' . implode(', ', _esdportal_api_get_school_data_tables()) . ')',
               'source' => array('param' => 'includes'),
               'optional' => TRUE,
-              'default value' => null,
+              'default value' => NULL,
             ),
             array(
               'name' => 'limit',
@@ -216,16 +217,16 @@ function esdportal_api_services_resources() {
 /**
  * Retrieves a single early childhood center.
  *
- * @param $id
- *   esd internal ec id
- * @param $flatten_fields
- *   if true, remove l10n structure & other drupal crap from response
+ * @param int $id
+ *   ESD internal ec id.
+ * @param bool $flatten_fields
+ *   If true, remove l10n structure & other drupal crap from response.
  *
- * @return
- *   nested array of the ec data
+ * @return array
+ *   Nested array of the ec data.
  */
-function _esdportal_api_retrieve_ec($id, $flatten_fields = false) {
-  $document = new Document;
+function _esdportal_api_retrieve_ec($id, $flatten_fields = FALSE) {
+  $document = new Document();
 
   $ec = taxonomy_term_load($id);
   if (!$ec) {
@@ -258,6 +259,14 @@ function _esdportal_api_retrieve_ec($id, $flatten_fields = false) {
   return $document->toArray();
 }
 
+/**
+ * Helper function to flatten an entity's fields.
+ *
+ * @param string $entity_type
+ *   Drupal entity type.
+ * @param object &$entity
+ *   An entity object.
+ */
 function _esdportal_api_flatten_entity_fields($entity_type, &$entity) {
   if (isset($entity->vocabulary_machine_name)) {
     $entity->machine_name = $entity->vocabulary_machine_name;
@@ -269,10 +278,11 @@ function _esdportal_api_flatten_entity_fields($entity_type, &$entity) {
  * Given a taxonomy term, find the first node related to it & return its nid.
  *
  * @param string $bundle
- *   content type
- * @param string $term
- *   taxonomy term
- * @return
+ *   Content type.
+ * @param object $term
+ *   Taxonomy term.
+ *
+ * @return int
  *   node id
  */
 function _esdportal_api_get_related_nid($bundle, $term) {
@@ -285,23 +295,26 @@ function _esdportal_api_get_related_nid($bundle, $term) {
  * Retrieves list of all early childhood centers.
  *
  * @param string $includes
- *   related datasets to include, comma-separated
+ *   Related datasets to include, comma-separated.
  * @param int $limit
- *   if null, return all results(!)
+ *   If null, return all results.
  * @param int $offset
+ *   Offset starting record.
+ *
+ * @return array
+ *   JSON-API data.
  */
-function _esdportal_api_index_ecs($includes = null, $limit = null, $offset = 0, $flatten_fields = false) {
-  $document = new Document;
+function _esdportal_api_index_ecs($includes = NULL, $limit = NULL, $offset = 0, $flatten_fields = FALSE) {
+  $document = new Document();
 
-  $ecs = taxonomy_get_tree(19, 0, null, true);
+  $ecs = taxonomy_get_tree(19, 0, NULL, TRUE);
 
-  // paginate
+  // Paginate.
   $total = count($ecs);
   $ecs = array_slice($ecs, $offset, $limit, TRUE);
   $link_to_self = $_SERVER['REQUEST_URI'];
 
-
-  $includes = (strlen($includes) > 0) ? explode(',', $includes) : null;
+  $includes = (strlen($includes) > 0) ? explode(',', $includes) : NULL;
 
   $serializer = ($includes) ? new EcSerializer($includes) : new EcSerializer();
 
@@ -344,16 +357,24 @@ function _esdportal_api_index_ecs($includes = null, $limit = null, $offset = 0, 
 }
 
 /**
- * Retrieves a single EC Center's rating with given timestamp or most recent timestamp if none is given.
+ * Retrieves an ec_state_rating.
  *
- * @param $esd_ec_id
+ * Retrieves a single EC Center's rating with given timestamp or most recent
+ * timestamp if none is given.
  *
- * @param $batch_timestamp
+ * @param int $esd_ec_id
+ *   Early childhood center ID.
+ * @param int $batch_timestamp
+ *   The specific timestamp to grab. If null, return most recent one.
+ *
+ * @return array
+ *   State rating data.
  */
-function _esdportal_api_retrieve_ec_state_rating($esd_ec_id, $batch_timestamp = null) {
+function _esdportal_api_retrieve_ec_state_rating($esd_ec_id, $batch_timestamp = NULL) {
   if (isset($batch_timestamp) && $batch_timestamp > 0) {
     $rating = db_query('SELECT * FROM {ec_state_ratings} WHERE timestamp=:batch_timestamp AND esd_ec_id=:esd_ec_id', array(':esd_ec_id' => $esd_ec_id, ':batch_timestamp' => $batch_timestamp))->fetchAssoc();
-  } else {
+  }
+  else {
     $rating = db_query('SELECT * FROM {ec_state_ratings} WHERE timestamp=(SELECT MAX(timestamp) FROM {ec_state_ratings}) AND esd_ec_id=:esd_ec_id', array(':esd_ec_id' => $esd_ec_id))->fetchAssoc();
   }
   return $rating;
@@ -362,21 +383,30 @@ function _esdportal_api_retrieve_ec_state_rating($esd_ec_id, $batch_timestamp = 
 /**
  * Lists all batch timestamps.
  *
- * (not offered via api yet)
+ * Not offered via api yet.
  */
 function _esdportal_api_index_ec_state_ratings_batches() {
   return db_query('SELECT DISTINCT(timestamp) FROM {ec_state_ratings} ORDER BY timestamp DESC')->fetchAssoc();
 }
 
 /**
- * Lists set of EC state ratings with given timestamp or most recent timestamp if none is given.
+ * Lists ec_state_ratings.
+ *
+ * Lists set of EC state ratings with given timestamp or most recent timestamp,
+ * if none is given.
  *
  * @param int $batch_timestamp
+ *   The specific batch timestamp to retrieve. If null, retrieve most recent
+ *   batch.
+ *
+ * @return array
+ *   Array of ec state rating data.
  */
-function _esdportal_api_index_ec_state_ratings($batch_timestamp) {
+function _esdportal_api_index_ec_state_ratings($batch_timestamp = NULL) {
   if (isset($batch_timestamp) && $batch_timestamp > 0) {
     $ratings = db_query('SELECT * FROM {ec_state_ratings} WHERE timestamp=:batch_timestamp', array(':batch_timestamp' => $batch_timestamp))->fetchAssoc();
-  } else {
+  }
+  else {
     $ratings = db_query('SELECT * FROM {ec_state_ratings} WHERE timestamp=(SELECT MAX(timestamp) FROM {ec_state_ratings})')->fetchAll();
   }
 
@@ -387,17 +417,17 @@ function _esdportal_api_index_ec_state_ratings($batch_timestamp) {
  * Retrieves a single school.
  *
  * @param int $id
- *   esd internal school id
+ *   ESD internal school id.
  * @param string $includes
- *   related datasets to include, comma-separated
+ *   Related datasets to include, comma-separated.
  * @param bool $flatten_fields
- *   if true, remove l10n structure & other drupal structures from response
+ *   If true, remove l10n structure & other drupal structures from response.
  *
- * @return
- *   nested array of the school data
+ * @return array
+ *   JSON-API data
  */
-function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = false) {
-  $document = new Document;
+function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE) {
+  $document = new Document();
 
   $school = taxonomy_term_load($id);
 
@@ -405,9 +435,9 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = false)
     return services_error(t('school @id does not exist.', array('@id' => $id)), 404);
   }
 
-  $includes = (strlen($includes) > 0) ? explode(',', $includes) : null;
+  $includes = (strlen($includes) > 0) ? explode(',', $includes) : NULL;
 
-  // add school_profile by default if no other includes are specified
+  // Add school_profile by default if no other includes are specified.
   if (!count($includes)) {
     $includes[] = 'school_profile';
   }
@@ -429,22 +459,26 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = false)
  * Retrieves list of all schools.
  *
  * @param string $includes
- *   related datasets to include, comma-separated
+ *   Related datasets to include, comma-separated.
  * @param int $limit
- *   if null, return all results(!)
+ *   If null, return all results.
  * @param int $offset
+ *   Offset starting record.
+ *
+ * @return array
+ *   JSON-API data.
  */
-function _esdportal_api_index_schools($includes = null, $limit = null, $offset = 0, $flatten_fields = false) {
-  $document = new Document;
+function _esdportal_api_index_schools($includes = NULL, $limit = NULL, $offset = 0, $flatten_fields = FALSE) {
+  $document = new Document();
 
-  $schools = taxonomy_get_tree(4, 0, null, true);
+  $schools = taxonomy_get_tree(4, 0, NULL, TRUE);
 
-  // paginate
+  // Paginate.
   $total = count($schools);
   $schools = array_slice($schools, $offset, $limit, TRUE);
   $link_to_self = $_SERVER['REQUEST_URI'];
 
-  $includes = (strlen($includes) > 0) ? explode(',', $includes) : null;
+  $includes = (strlen($includes) > 0) ? explode(',', $includes) : NULL;
 
   $serializer = ($includes) ? new SchoolSerializer($includes) : new SchoolSerializer();
 
@@ -460,21 +494,28 @@ function _esdportal_api_index_schools($includes = null, $limit = null, $offset =
   return $document->toArray();
 }
 
+/**
+ * Lists all data tables.
+ *
+ * @return array
+ *   Data table names.
+ */
 function _esdportal_api_get_school_data_tables() {
   $potential_data_tables = \Drupal\esdportal_api\EcDataUtils::getDataTablesWithBcodes();
   return \Drupal\esdportal_api\EcDataUtils::extractDataTableNames($potential_data_tables);
 }
 
 /**
- * @param array $schools
- *   array of school entities
- * @param array $includes
- *   datasets to include
- * @param bool $flatten_fields
+ * Loads all includes for a set of schools.
  *
- * @return array $schools
+ * @param array &$schools
+ *   School entities.
+ * @param array $includes
+ *   Datasets to include.
+ * @param bool $flatten_fields
+ *   Whether or not to flattenFields.
  */
-function _esdportal_api_load_includes_for_schools(&$schools, $includes, $flatten_fields) {
+function _esdportal_api_load_includes_for_schools(array &$schools, array $includes, $flatten_fields) {
   $potential_data_tables = \Drupal\esdportal_api\EcDataUtils::getDataTablesWithBcodes();
   $potential_data_table_names = \Drupal\esdportal_api\EcDataUtils::extractDataTableNames($potential_data_tables);
 
@@ -519,7 +560,7 @@ function _esdportal_api_load_includes_for_schools(&$schools, $includes, $flatten
 
         $data = $res->fetchObject();
 
-        $school->{$data_table_identifier} = ($data) ? $data : false;
+        $school->{$data_table_identifier} = ($data) ? $data : FALSE;
       }
     }
     unset($school);
