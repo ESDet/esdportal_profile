@@ -3,6 +3,9 @@
 /**
  * @file
  * Generates serializers for Drupal Data module tables.
+ *
+ * Run with `drush scr generate_data_serializers.php` and copy `/tmp/*php` to
+ * `src/Serializers`.
  */
 
 use \Drupal\esdportal_api\EcDataUtils;
