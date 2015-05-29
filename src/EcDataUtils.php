@@ -68,15 +68,15 @@ class EcDataUtils {
    *
    * Flattens field value arrays on the given entity.
    *
-   * Field flattening in Commerce Services involves reducing their value arrays to
-   * just the current language of the entity and reducing fields with single
+   * Field flattening in Commerce Services involves reducing their value arrays
+   * to just the current language of the entity and reducing fields with single
    * column schemas to simple scalar values or arrays of scalar values.
    *
-   * Note that because this function irreparably alters an entity's structure, it
-   * should only be called using a clone of the entity whose field value arrays
-   * should be flattened. Otherwise the flattening will affect the entity as
-   * stored in the entity cache, causing potential errors should that entity be
-   * loaded and manipulated later in the same request.
+   * Note that because this function irreparably alters an entity's structure,
+   * it should only be called using a clone of the entity whose field value
+   * arrays should be flattened. Otherwise the flattening will affect the entity
+   * as stored in the entity cache, causing potential errors should that entity
+   * be loaded and manipulated later in the same request.
    *
    * @param string $entity_type
    *   The machine-name entity type of the given entity.
@@ -134,14 +134,14 @@ class EcDataUtils {
    *
    * Returns a list of properties for the specified entity type.
    *
-   * For the purpose of the Commerce Services module, the properties returned are
-   * those that correspond to a database column as determined by the Entity API.
-   * These may be used to filter and sort index queries.
+   * For the purpose of the Commerce Services module, the properties returned
+   * are those that correspond to a database column as determined by the Entity
+   * API. These may be used to filter and sort index queries.
    *
-   * @param $entity_type
+   * @param string $entity_type
    *   Machine-name of the entity type whose properties should be returned.
    *
-   * @return
+   * @return array
    *   An associative array of properties for the specified entity type with the
    *   key being the property name and the value being the corresponding schema
    *   field on the entity type's base table.
@@ -162,8 +162,8 @@ class EcDataUtils {
         }
       }
 
-      // If the entity type supports revisions, add revision and log to the array
-      // of acceptable properties.
+      // If the entity type supports revisions, add revision and log to the
+      // array of acceptable properties.
       if (!empty($entity_info['revision table'])) {
         $properties[$entity_type] += array('revision', 'log');
       }
@@ -177,12 +177,12 @@ class EcDataUtils {
    *
    * Returns a list of fields for the specified entity type.
    *
-   * @param $entity_type
+   * @param string $entity_type
    *   Machine-name of the entity type whose properties should be returned.
-   * @param $bundle
+   * @param string $bundle
    *   Optional bundle name to limit the returned fields to.
    *
-   * @return
+   * @return array
    *   An associative array of fields for the specified entity type with the key
    *   being the field name and the value being the Entity API property type.
    */
@@ -226,25 +226,26 @@ class EcDataUtils {
    *
    * Adds property and field conditions to an index EntityFieldQuery.
    *
-   * @param $query
+   * @param EntityFieldQuery $query
    *   The EntityFieldQuery object being built for the index query.
-   * @param $entity_type
+   * @param string $entity_type
    *   Machine-name of the entity type of the index query.
-   * @param $filter
+   * @param array $filter
    *   An associative array of property names, single column field names, or
    *   multi-column field column names with their values to use to filter the
    *   result set of the index request.
-   * @param $filter_op
-   *   An associative array of field and property names with the operators to use
-   *   when applying their filter conditions to the index request query.
+   * @param array $filter_op
+   *   An associative array of field and property names with the operators to
+   *   use when applying their filter conditions to the index request query.
    */
-  public static function indexQueryFilter($query, $entity_type, $filter, $filter_op) {
-    // Loop over each filter field to add them as property or field conditions on
-    // the query object. This function assumes the $filter and $filter_op arrays
-    // contain matching keys to set the correct operator to the filter fields.
+  public static function indexQueryFilter(EntityFieldQuery $query, $entity_type, array $filter, array $filter_op) {
+    // Loop over each filter field to add them as property or field conditions
+    // on the query object. This function assumes the $filter and $filter_op
+    // arrays contain matching keys to set the correct operator to the filter
+    // fields.
     foreach ($filter as $filter_field => $filter_value) {
-      // Determine the corresponding operator for this filter field, defaulting to
-      // = in case of an erroneous request.
+      // Determine the corresponding operator for this filter field, defaulting
+      // to = in case of an erroneous request.
       $operator = '=';
 
       if (!empty($filter_op[$filter_field])) {
@@ -260,8 +261,8 @@ class EcDataUtils {
       else {
         // Look for the field name among the entity type's field list.
         foreach (self::entityTypeFields($entity_type) as $field_name => $field_type) {
-          // If the filter field begins with a field name, then either the filter
-          // field is the field name or is a column of the field.
+          // If the filter field begins with a field name, then either the
+          // filter field is the field name or is a column of the field.
           if (strpos($filter_field, $field_name) === 0) {
             $field_info = field_info_field($field_name);
 
@@ -273,8 +274,9 @@ class EcDataUtils {
               break;
             }
             else {
-              // Otherwise if the filter field contains a valid column specification
-              // for the field type, add the field condition to the index query.
+              // Otherwise if the filter field contains a valid column
+              // specification for the field type, add the field condition to
+              // the index query.
               $column = substr($filter_field, strlen($field_name) + 1);
 
               if (in_array($column, array_keys($field_info['columns']))) {
@@ -293,19 +295,19 @@ class EcDataUtils {
    *
    * Adds property and field order by directions to an index EntityFieldQuery.
    *
-   * @param $query
+   * @param EntityFieldQuery $query
    *   The EntityFieldQuery object being built for the index query.
-   * @param $entity_type
+   * @param string $entity_type
    *   Machine-name of the entity type of the index query.
-   * @param $sort_by
+   * @param array $sort_by
    *   An array of database fields to sort the query by, with sort fields being
    *   valid properties, single column field names, or multi-column field column
    *   names for the matching entity type.
-   * @param $sort_order
+   * @param array $sort_order
    *   The corresponding sort orders for the fields specified in the $sort_by
    *   array; one of either 'DESC' or 'ASC'.
    */
-  public static function indexQuerySort($query, $entity_type, $sort_by, $sort_order) {
+  public static function indexQuerySort(EntityFieldQuery $query, $entity_type, array $sort_by, array $sort_order) {
     // Loop over each sort field to add them as property or field order by
     // directions on the query object. This function assumes the $sort_by and
     // $sort_order arrays contain an equal number of elements with keys matching
@@ -341,8 +343,9 @@ class EcDataUtils {
               break;
             }
             else {
-              // Otherwise if the sort field contains a valid column specification
-              // for the field type, add the field condition to the index query.
+              // Otherwise if the sort field contains a valid column
+              // specification for the field type, add the field condition to
+              // the index query.
               $column = substr($sort_field, strlen($field_name) + 1);
 
               if (in_array($column, array_keys($field_info['columns']))) {
