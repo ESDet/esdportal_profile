@@ -110,9 +110,9 @@ class SchoolSerializer extends SerializerAbstract {
       $table_name = $method;
 
       // ... But we want a method that is camelCased.
-      $method = \Drupal\esdportal_api\EcDataUtils::underscoreToCamel($table_name);
+      $camelized_method = \Drupal\esdportal_api\EcDataUtils::underscoreToCamel($table_name);
 
-      $class_name = 'Drupal\\esdportal_api\\Serializers\\' . $method . 'Serializer';
+      $class_name = 'Drupal\\esdportal_api\\Serializers\\' . $camelized_method . 'Serializer';
 
       // Legit data table name?
       if (!array_search($table_name, self::$potentialDataTableNames)) {
