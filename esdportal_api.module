@@ -307,7 +307,7 @@ function _esdportal_api_get_related_nid($bundle, $term) {
 function _esdportal_api_index_ecs($includes = NULL, $limit = NULL, $offset = 0, $flatten_fields = FALSE) {
   $document = new Document();
 
-  $ecs = taxonomy_get_tree(19, 0, NULL, TRUE);
+  $ecs = _esdportal_api_taxonomy_get_tree(19);
 
   // Paginate.
   $total = count($ecs);
@@ -471,7 +471,7 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE)
 function _esdportal_api_index_schools($includes = NULL, $limit = NULL, $offset = 0, $flatten_fields = FALSE) {
   $document = new Document();
 
-  $schools = taxonomy_get_tree(4, 0, NULL, TRUE);
+  $schools = _esdportal_api_taxonomy_get_tree(4);
 
   // Paginate.
   $total = count($schools);
@@ -565,4 +565,23 @@ function _esdportal_api_load_includes_for_schools(array &$schools, array $includ
     }
     unset($school);
   }
+}
+
+/**
+ * Load vocabulary terms.
+ *
+ * Loads a whole taxonomy vocabulary, with sort and filter options akin to
+ * commerce_services.
+ *
+ * @param int $vid
+ *   Taxonomy vocabulary id.
+ *
+ * @return array
+ *   Array of term objects.
+ */
+function _esdportal_api_taxonomy_get_tree($vid) {
+  // Bare minimum.
+  $terms = taxonomy_get_tree($vid, 0, NULL, TRUE);
+
+  return $terms;
 }
