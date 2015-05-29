@@ -129,4 +129,231 @@ class EcDataUtils {
     return strtolower(preg_replace('/([a-z])([A-Z0-9])/', '$1_$2', $camel_name));
   }
 
+  /**
+   * As seen in commerce_services...
+   *
+   * Returns a list of properties for the specified entity type.
+   *
+   * For the purpose of the Commerce Services module, the properties returned are
+   * those that correspond to a database column as determined by the Entity API.
+   * These may be used to filter and sort index queries.
+   *
+   * @param $entity_type
+   *   Machine-name of the entity type whose properties should be returned.
+   *
+   * @return
+   *   An associative array of properties for the specified entity type with the
+   *   key being the property name and the value being the corresponding schema
+   *   field on the entity type's base table.
+   */
+  public static function entityTypeProperties($entity_type) {
+    $properties = drupal_static(__FUNCTION__);
+
+    if (!isset($properties[$entity_type])) {
+      $entity_info = entity_get_info($entity_type);
+      $info = entity_get_property_info($entity_type);
+      $properties[$entity_type] = array();
+
+      // Loop over only the properties of the entity type.
+      foreach ($info['properties'] as $key => $value) {
+        // If the value specifies a schema field...
+        if (!empty($value['schema field'])) {
+          $properties[$entity_type][$key] = $value['schema field'];
+        }
+      }
+
+      // If the entity type supports revisions, add revision and log to the array
+      // of acceptable properties.
+      if (!empty($entity_info['revision table'])) {
+        $properties[$entity_type] += array('revision', 'log');
+      }
+    }
+
+    return $properties[$entity_type];
+  }
+
+  /**
+   * As seen in commerce_services...
+   *
+   * Returns a list of fields for the specified entity type.
+   *
+   * @param $entity_type
+   *   Machine-name of the entity type whose properties should be returned.
+   * @param $bundle
+   *   Optional bundle name to limit the returned fields to.
+   *
+   * @return
+   *   An associative array of fields for the specified entity type with the key
+   *   being the field name and the value being the Entity API property type.
+   */
+  public static function entityTypeFields($entity_type, $bundle = NULL) {
+    $fields = drupal_static(__FUNCTION__);
+
+    if (!isset($fields[$entity_type])) {
+      $info = entity_get_property_info($entity_type);
+      $fields = array();
+
+      // Loop over the bundles info to inspect their fields.
+      foreach ($info['bundles'] as $bundle_name => $bundle_info) {
+        // Loop over the properties on the bundle to find field information.
+        foreach ($bundle_info['properties'] as $key => $value) {
+          if (!empty($value['field'])) {
+            $fields[$entity_type][$bundle_name][$key] = $value['type'];
+          }
+        }
+      }
+    }
+
+    // If a specific bundle's fields was requested, return just those.
+    if (!empty($bundle)) {
+      return $fields[$entity_type][$bundle];
+    }
+    else {
+      // Otherwise combine all the fields for various bundles of the entity type
+      // into a single return value.
+      $combined_fields = array();
+
+      foreach ($fields[$entity_type] as $bundle_name => $bundle_fields) {
+        $combined_fields += $bundle_fields;
+      }
+
+      return $combined_fields;
+    }
+  }
+
+  /**
+   * As seen in commerce_services: filtering.
+   *
+   * Adds property and field conditions to an index EntityFieldQuery.
+   *
+   * @param $query
+   *   The EntityFieldQuery object being built for the index query.
+   * @param $entity_type
+   *   Machine-name of the entity type of the index query.
+   * @param $filter
+   *   An associative array of property names, single column field names, or
+   *   multi-column field column names with their values to use to filter the
+   *   result set of the index request.
+   * @param $filter_op
+   *   An associative array of field and property names with the operators to use
+   *   when applying their filter conditions to the index request query.
+   */
+  public static function indexQueryFilter($query, $entity_type, $filter, $filter_op) {
+    // Loop over each filter field to add them as property or field conditions on
+    // the query object. This function assumes the $filter and $filter_op arrays
+    // contain matching keys to set the correct operator to the filter fields.
+    foreach ($filter as $filter_field => $filter_value) {
+      // Determine the corresponding operator for this filter field, defaulting to
+      // = in case of an erroneous request.
+      $operator = '=';
+
+      if (!empty($filter_op[$filter_field])) {
+        $operator = $filter_op[$filter_field];
+      }
+
+      // If the current filter field is a property, use a property condition.
+      $properties = self::entityTypeProperties($entity_type);
+
+      if (in_array($filter_field, array_keys($properties))) {
+        $query->propertyCondition($properties[$filter_field], $filter_value, $operator);
+      }
+      else {
+        // Look for the field name among the entity type's field list.
+        foreach (self::entityTypeFields($entity_type) as $field_name => $field_type) {
+          // If the filter field begins with a field name, then either the filter
+          // field is the field name or is a column of the field.
+          if (strpos($filter_field, $field_name) === 0) {
+            $field_info = field_info_field($field_name);
+
+            // If it is the field name and the field type has a single column
+            // schema, add the field condition to the index query.
+            if ($field_name == $filter_field && count($field_info['columns']) == 1) {
+              $column = key($field_info['columns']);
+              $query->fieldCondition($field_name, $column, $filter_value, $operator);
+              break;
+            }
+            else {
+              // Otherwise if the filter field contains a valid column specification
+              // for the field type, add the field condition to the index query.
+              $column = substr($filter_field, strlen($field_name) + 1);
+
+              if (in_array($column, array_keys($field_info['columns']))) {
+                $query->fieldCondition($field_name, $column, $filter_value, $operator);
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * As seen in commerce_services: sorting.
+   *
+   * Adds property and field order by directions to an index EntityFieldQuery.
+   *
+   * @param $query
+   *   The EntityFieldQuery object being built for the index query.
+   * @param $entity_type
+   *   Machine-name of the entity type of the index query.
+   * @param $sort_by
+   *   An array of database fields to sort the query by, with sort fields being
+   *   valid properties, single column field names, or multi-column field column
+   *   names for the matching entity type.
+   * @param $sort_order
+   *   The corresponding sort orders for the fields specified in the $sort_by
+   *   array; one of either 'DESC' or 'ASC'.
+   */
+  public static function indexQuerySort($query, $entity_type, $sort_by, $sort_order) {
+    // Loop over each sort field to add them as property or field order by
+    // directions on the query object. This function assumes the $sort_by and
+    // $sort_order arrays contain an equal number of elements with keys matching
+    // the sort field to the appropriate sort order.
+    foreach ($sort_by as $sort_key => $sort_field) {
+      // Determine the corresponding sort direction for this sort field,
+      // defaulting to DESC in case of an erroneous request.
+      $direction = 'DESC';
+
+      if (!empty($sort_order[$sort_key])) {
+        $direction = strtoupper($sort_order[$sort_key]);
+      }
+
+      // If the current sort field is a property, use a property condition.
+      $properties = self::entityTypeProperties($entity_type);
+
+      if (in_array($sort_field, array_keys($properties))) {
+        $query->propertyOrderBy($properties[$sort_field], $direction);
+      }
+      else {
+        // Look for the field name among the entity type's field list.
+        foreach (self::entityTypeFields($entity_type) as $field_name => $field_type) {
+          // If the sort field begins with a field name, then either the sort
+          // field is the field name or is a column of the field.
+          if (strpos($sort_field, $field_name) === 0) {
+            $field_info = field_info_field($field_name);
+
+            // If it is the field name and the field type has a single column
+            // schema, add the field condition to the index query.
+            if ($field_name == $sort_field && count($field_info['columns']) == 1) {
+              $column = key($field_info['columns']);
+              $query->fieldOrderBy($field_name, $column, $direction);
+              break;
+            }
+            else {
+              // Otherwise if the sort field contains a valid column specification
+              // for the field type, add the field condition to the index query.
+              $column = substr($sort_field, strlen($field_name) + 1);
+
+              if (in_array($column, array_keys($field_info['columns']))) {
+                $query->fieldOrderBy($field_name, $column, $direction);
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
 }
