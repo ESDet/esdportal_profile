@@ -226,7 +226,7 @@ class EcDataUtils {
    *
    * Adds property and field conditions to an index EntityFieldQuery.
    *
-   * @param EntityFieldQuery $query
+   * @param \EntityFieldQuery $query
    *   The EntityFieldQuery object being built for the index query.
    * @param string $entity_type
    *   Machine-name of the entity type of the index query.
@@ -238,7 +238,7 @@ class EcDataUtils {
    *   An associative array of field and property names with the operators to
    *   use when applying their filter conditions to the index request query.
    */
-  public static function indexQueryFilter(EntityFieldQuery $query, $entity_type, array $filter, array $filter_op) {
+  public static function indexQueryFilter(\EntityFieldQuery $query, $entity_type, array $filter, array $filter_op) {
     // Loop over each filter field to add them as property or field conditions
     // on the query object. This function assumes the $filter and $filter_op
     // arrays contain matching keys to set the correct operator to the filter
@@ -295,7 +295,7 @@ class EcDataUtils {
    *
    * Adds property and field order by directions to an index EntityFieldQuery.
    *
-   * @param EntityFieldQuery $query
+   * @param \EntityFieldQuery $query
    *   The EntityFieldQuery object being built for the index query.
    * @param string $entity_type
    *   Machine-name of the entity type of the index query.
@@ -307,7 +307,7 @@ class EcDataUtils {
    *   The corresponding sort orders for the fields specified in the $sort_by
    *   array; one of either 'DESC' or 'ASC'.
    */
-  public static function indexQuerySort(EntityFieldQuery $query, $entity_type, array $sort_by, array $sort_order) {
+  public static function indexQuerySort(\EntityFieldQuery $query, $entity_type, array $sort_by, array $sort_order) {
     // Loop over each sort field to add them as property or field order by
     // directions on the query object. This function assumes the $sort_by and
     // $sort_order arrays contain an equal number of elements with keys matching
