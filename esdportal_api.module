@@ -478,7 +478,7 @@ function _esdportal_api_index_schools($includes = NULL, $limit = NULL, $offset =
   $schools = array_slice($schools, $offset, $limit, TRUE);
   $link_to_self = $_SERVER['REQUEST_URI'];
 
-  $includes = (strlen($includes) > 0) ? explode(',', $includes) : NULL;
+  $includes = (strlen($includes) > 0) ? explode(',', $includes) : [];
 
   $serializer = ($includes) ? new SchoolSerializer($includes) : new SchoolSerializer();
 
@@ -515,7 +515,7 @@ function _esdportal_api_get_school_data_tables() {
  * @param bool $flatten_fields
  *   Whether or not to flattenFields.
  */
-function _esdportal_api_load_includes_for_schools(array &$schools, array $includes, $flatten_fields) {
+function _esdportal_api_load_includes_for_schools(array &$schools, array $includes = [], $flatten_fields = NULL) {
   $potential_data_tables = \Drupal\esdportal_api\EcDataUtils::getDataTablesWithBcodes();
   $potential_data_table_names = \Drupal\esdportal_api\EcDataUtils::extractDataTableNames($potential_data_tables);
 
