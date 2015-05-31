@@ -255,7 +255,7 @@ class EcDataUtils {
       // If the current filter field is a property, use a property condition.
       $properties = self::entityTypeProperties($entity_type);
 
-      if (in_array($filter_field, array_keys($properties))) {
+      if (in_array($filter_field, array_keys($properties), TRUE)) {
         $query->propertyCondition($properties[$filter_field], $filter_value, $operator);
       }
       else {
