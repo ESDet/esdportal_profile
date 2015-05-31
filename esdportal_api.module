@@ -61,6 +61,53 @@ function esdportal_api_services_resources() {
               'default value' => NULL,
             ),
             array(
+              'name' => 'flatten_fields',
+              'type' => 'int',
+              'description' => 'Remove localization structure from fields if true',
+              'source' => array('param' => 'flatten_fields'),
+              'optional' => TRUE,
+              'default value' => 0,
+            ),
+            array(
+              'name' => 'filter',
+              'type' => 'array',
+              'description' => 'An array of field or property names from early childhood center entities paired with values to use to filter the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'filter'),
+              'default value' => array(),
+              'commerce_services_field_populate' => 'node',
+            ),
+            array(
+              'name' => 'filter_op',
+              'type' => 'array',
+              'description' => 'An array of field or property names from early childhood center entities paired with the operator to use when filtering the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'filter_op'),
+              'default value' => array(),
+              'commerce_services_match_keys' => array(
+                'arg' => 'filter',
+                'default value' => '=',
+              ),
+            ),
+            array(
+              'name' => 'sort_by',
+              'type' => 'string',
+              'description' => 'A comma separated list of field or property names from early childhood center entities by which to sort the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'sort_by'),
+              'default value' => 'name',
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'sort_order',
+              'type' => 'string',
+              'description' => 'A comma separated list of order specifiers (DESC or ASC) indicating the direction the sort_by values should be applied to the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'sort_order'),
+              'default value' => 'DESC',
+              'commerce_services_explode' => ',',
+            ),
+            array(
               'name' => 'limit',
               'type' => 'int',
               'description' => 'Limit response count (default ' . ESDPORTAL_API_DEFAULT_LIMIT . ')',
@@ -73,14 +120,6 @@ function esdportal_api_services_resources() {
               'type' => 'int',
               'description' => 'Offset starting record',
               'source' => array('param' => 'offset'),
-              'optional' => TRUE,
-              'default value' => 0,
-            ),
-            array(
-              'name' => 'flatten_fields',
-              'type' => 'int',
-              'description' => 'Remove localization structure from fields if true',
-              'source' => array('param' => 'flatten_fields'),
               'optional' => TRUE,
               'default value' => 0,
             ),
@@ -296,6 +335,22 @@ function _esdportal_api_get_related_nid($bundle, $term) {
  *
  * @param string $includes
  *   Related datasets to include, comma-separated.
+ * @param bool $flatten_fields
+ *   If true, remove l10n structure & other drupal structures from response.
+ * @param array|bool $filter
+ *   An associative array of property names, single column field names, or
+ *   multi-column field column names with their values to use to filter the
+ *   result set of the index request.
+ * @param array|bool $filter_op
+ *   An associative array of field and property names with the operators to use
+ *   when applying their filter conditions to the index request query.
+ * @param array|bool $sort_by
+ *   An array of database fields to sort the query by, with sort fields being
+ *   valid properties, single column field names, or multi-column field column
+ *   names for the matching entity type.
+ * @param array|bool $sort_order
+ *   The corresponding sort orders for the fields specified in the $sort_by
+ *   array; one of either 'DESC' or 'ASC'.
  * @param int $limit
  *   If null, return all results.
  * @param int $offset
@@ -304,15 +359,12 @@ function _esdportal_api_get_related_nid($bundle, $term) {
  * @return array
  *   JSON-API data.
  */
-function _esdportal_api_index_ecs($includes = NULL, $limit = NULL, $offset = 0, $flatten_fields = FALSE) {
+function _esdportal_api_index_ecs($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $sort_by = FALSE, $sort_order = FALSE, $limit = NULL, $offset = 0) {
   $document = new Document();
 
-  $ecs = _esdportal_api_taxonomy_get_tree(19);
-
-  // Paginate.
-  $total = count($ecs);
-  $ecs = array_slice($ecs, $offset, $limit, TRUE);
   $link_to_self = $_SERVER['REQUEST_URI'];
+
+  list($ecs, $total) = _esdportal_api_taxonomy_get_tree(19, $filter, $filter_op, $sort_by, $sort_order, $limit, $offset);
 
   $includes = (strlen($includes) > 0) ? explode(',', $includes) : NULL;
 
@@ -471,7 +523,7 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE)
 function _esdportal_api_index_schools($includes = NULL, $limit = NULL, $offset = 0, $flatten_fields = FALSE) {
   $document = new Document();
 
-  $schools = _esdportal_api_taxonomy_get_tree(4);
+  list($schools, $total) = _esdportal_api_taxonomy_get_tree(4);
 
   // Paginate.
   $total = count($schools);
@@ -573,15 +625,226 @@ function _esdportal_api_load_includes_for_schools(array &$schools, array $includ
  * Loads a whole taxonomy vocabulary, with sort and filter options akin to
  * commerce_services.
  *
+ * Function signature cribbed from commerce_services module.
+ *
  * @param int $vid
  *   Taxonomy vocabulary id.
+ * @param array $filter
+ *   An associative array of property names, single column field names, or
+ *   multi-column field column names with their values to use to filter the
+ *   result set of the index request.
+ * @param array $filter_op
+ *   An associative array of field and property names with the operators to use
+ *   when applying their filter conditions to the index request query.
+ * @param array $sort_by
+ *   An array of database fields to sort the query by, with sort fields being
+ *   valid properties, single column field names, or multi-column field column
+ *   names for the matching entity type.
+ * @param array $sort_order
+ *   The corresponding sort orders for the fields specified in the $sort_by
+ *   array; one of either 'DESC' or 'ASC'.
+ * @param int $limit
+ *   The number of entities to retrieve.
+ * @param int $offset
+ *   The zero-based index from which to start retrieving entities.
  *
  * @return array
- *   Array of term objects.
+ *   Array of term objects & total # of results.
  */
-function _esdportal_api_taxonomy_get_tree($vid) {
-  // Bare minimum.
-  $terms = taxonomy_get_tree($vid, 0, NULL, TRUE);
+function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op, array $sort_by, array $sort_order, $limit, $offset) {
+  // Start building a query.
+  $query = new EntityFieldQuery();
 
-  return $terms;
+  $query
+    ->addTag('term_access')
+    ->addMetaData('op', 'view')
+    ->entityCondition('entity_type', 'taxonomy_term')
+    ->propertyCondition('vid', (int) $vid, '=')
+    ->range($offset, $limit);
+
+  // Add the specified property and field condtions to the query.
+  if ($filter && $filter_op) {
+    \Drupal\esdportal_api\EcDataUtils::indexQueryFilter($query, 'taxonomy_term', $filter, $filter_op);
+  }
+
+  // Add the specified sort conditions to the query.
+  if ($sort_by && $sort_order) {
+    \Drupal\esdportal_api\EcDataUtils::indexQuerySort($query, 'taxonomy_term', $sort_by, $sort_order);
+  }
+
+  // Execute the query and load the terms it returns, if any.
+  $result = $query->execute();
+
+  if (!empty($result['taxonomy_term'])) {
+    $tids = array_keys($result['taxonomy_term']);
+    $terms = taxonomy_term_load_multiple($tids);
+  }
+
+  $total = $query->range(0, 999999999)->count()->execute();
+
+  return [$terms, $total];
+}
+
+/**
+ * Implements hook_services_request_preprocess_alter().
+ *
+ * Via commerce_services...
+ *
+ * This preprocess function performs a variety of Commerce Services specific
+ * operations on resource arguments. Any argument using one of the following
+ * keys on any resource will be preprocessed:
+ *
+ * commerce_services_explode:
+ *
+ * For certain resources, we define arguments as strings that should be exploded
+ * into arrays prior to being passed to the resource callback. To indicate this,
+ * our argument definitions may include a commerce_services_explode key whose
+ * value is the delimiter this preprocess function will use to explode the value
+ * of that argument into an array.
+ *
+ * Example: the product-display resource includes an index callback definition
+ * that may accept a fields argument. This argument was defined as a string
+ * derived from the GET parameters of the API request, but prior to invoking the
+ * index callback, this preprocess function will see that the argument indicates
+ * it is a comma delimited string and explode it accordingly.
+ *
+ * commerce_services_required_fields:
+ *
+ * Additionally, when a fields argument contains a value from the API request,
+ * there may be certain fields or properties that should always be returned even
+ * if not included in the argument value. These may be indicated in argument
+ * definitions via the commerce_services_required_fields array. This preprocess
+ * function will ensure that the fields array always includes required fields.
+ *
+ * commerce_services_field_populate:
+ *
+ * As a best practice, we really try to avoid array notation in our query
+ * parameters. However, if you want a resource callback argument to be an
+ * associative array, this would typically be your only option. The primary use
+ * case in Commerce Services is to apply a filter to an index query, where you
+ * would specify a field or property name and the corresponding value that the
+ * query should be filtered by: GET /product-display?filter[status]=1
+ *
+ * To avoid this, we make the commerce_services_field_populate option available.
+ * Its value should be the entity type for the query that will be used to
+ * generate the response. During preprocessing, this function will look for any
+ * query parameter whose key matches a field or property name on the given
+ * entity type and add it directly to the argument's array. Thus, instead of the
+ * array notation demonstrated above, you could: GET /product-display?status=1
+ *
+ * The only exception to this will be field or property names that collide with
+ * actual argument names for the operation callback. Thus, if the index
+ * operation actually had an argument called status, you would have to revert to
+ * array notation to apply a filter on the status property.
+ *
+ * commerce_services_match_keys:
+ *
+ * Finally, this preprocess function also accommodates key matching between
+ * related array arguments. One argument may specify another argument whose keys
+ * should all be represented in its own value array, providing a default value
+ * to fill in for any keys that are missing.
+ *
+ * Example: the product-display resource includes an index callback definition
+ * that may accept filter and filter_op array arguments. In the event that an
+ * operator is not specified for a particular filter, it should default to a
+ * simple equality check with the '=' operator. Therefore, the filter_op
+ * argument uses the commerce_services_match_keys property to specify that its
+ * array keys should match those of the filter argument, using '=' as the
+ * default value.
+ */
+function esdportal_api_services_request_preprocess_alter($controller, &$args) {
+  // Build an associative array of arguments whose keys are their names and
+  // values their numeric key in the $args array.
+  $arg_names = array();
+
+  foreach ($controller['args'] as $key => $value) {
+    $arg_names[$value['name']] = $key;
+  }
+
+  // Loop over the argument metadata in the controller looking for any that
+  // include any of our special keys.
+  foreach ($controller['args'] as $key => $value) {
+    // If this argument needs to be exploded into an array...
+    if (!empty($value['commerce_services_explode'])) {
+      // Explode the argument using the specified delimiter.
+      if (!empty($args[$key])) {
+        $args[$key] = explode($value['commerce_services_explode'], $args[$key]);
+      }
+      else {
+        // Otherwise ensure it is just converted to an array.
+        $args[$key] = array();
+      }
+    }
+
+    // If this argument is for a fields array that we want to ensure contains
+    // one or more required values...
+    if (!empty($value['commerce_services_required_fields']) && !empty($args[$key])) {
+      foreach ($value['commerce_services_required_fields'] as $required_field) {
+        if (!in_array($required_field, $args[$key])) {
+          $args[$key][] = $required_field;
+        }
+      }
+    }
+
+    // If this argument should be populated from other query parameters that
+    // don't match other arguments on the operation...
+    if (!empty($value['commerce_services_field_populate'])) {
+      // Loop over the query parameters.
+      foreach ($_GET as $param_key => $param_value) {
+        // Continue if this is either the 'q' parameter or the name of an
+        // argument for the operation callback.
+        if ($param_key === 'q' || in_array($param_key, array_keys($arg_names), TRUE)) {
+          continue;
+        }
+
+        // If this parameter key is a property for the specified entity type,
+        // add it to the argument's value array now.
+        if (in_array($param_key, array_keys(\Drupal\esdportal_api\EcDataUtils::entityTypeProperties($value['commerce_services_field_populate'])), TRUE)) {
+          $args[$key][$param_key] = $param_value;
+        }
+        else {
+          // Otherwise look and see if the parameter key begins with a field
+          // name, assuming it must be either a field name or field column name.
+          foreach (array_keys(\Drupal\esdportal_api\EcDataUtils::entityTypeFields($value['commerce_services_field_populate'])) as $field_name) {
+            if (strpos($param_key, $field_name) === 0) {
+              $field_info = field_info_field($field_name);
+
+              // If it is the field name and the field type has a single column
+              // schema, add it to the argument's value array now.
+              if ($field_name == $param_key && count($field_info['columns']) == 1) {
+                $args[$key][$param_key] = $param_value;
+                break;
+              }
+              else {
+                // Otherwise if the parameter key contains a valid column
+                // specification for the field type, add it to the argument's
+                // value array as well.
+                $column = substr($param_key, strlen($field_name) + 1);
+
+                if (in_array($column, array_keys($field_info['columns']))) {
+                  $args[$key][$param_key] = $param_value;
+                  break;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // If this argument is an associative array that needs keys matching some
+    // other array argument...
+    if (!empty($value['commerce_services_match_keys'])) {
+      $matching_arg_key = $arg_names[$value['commerce_services_match_keys']['arg']];
+
+      if (!empty($args[$matching_arg_key])) {
+        // Loop over the argument value that this argument's keys should match.
+        foreach ($args[$matching_arg_key] as $arg_key => $arg_value) {
+          if (empty($args[$key][$arg_key])) {
+            $args[$key][$arg_key] = $value['commerce_services_match_keys']['default value'];
+          }
+        }
+      }
+    }
+  }
 }
