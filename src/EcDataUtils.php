@@ -324,7 +324,7 @@ class EcDataUtils {
       // If the current sort field is a property, use a property condition.
       $properties = self::entityTypeProperties($entity_type);
 
-      if (in_array($sort_field, array_keys($properties))) {
+      if (in_array($sort_field, array_keys($properties), TRUE)) {
         $query->propertyOrderBy($properties[$sort_field], $direction);
       }
       else {
