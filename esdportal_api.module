@@ -220,6 +220,53 @@ function esdportal_api_services_resources() {
               'default value' => NULL,
             ),
             array(
+              'name' => 'flatten_fields',
+              'type' => 'int',
+              'description' => 'Remove localization structure from fields if true',
+              'source' => array('param' => 'flatten_fields'),
+              'optional' => TRUE,
+              'default value' => 0,
+            ),
+            array(
+              'name' => 'filter',
+              'type' => 'array',
+              'description' => 'An array of field or property names from school entities paired with values to use to filter the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'filter'),
+              'default value' => array(),
+              'commerce_services_field_populate' => 'node',
+            ),
+            array(
+              'name' => 'filter_op',
+              'type' => 'array',
+              'description' => 'An array of field or property names from school entities paired with the operator to use when filtering the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'filter_op'),
+              'default value' => array(),
+              'commerce_services_match_keys' => array(
+                'arg' => 'filter',
+                'default value' => '=',
+              ),
+            ),
+            array(
+              'name' => 'sort_by',
+              'type' => 'string',
+              'description' => 'A comma separated list of field or property names from school entities by which to sort the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'sort_by'),
+              'default value' => 'name',
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'sort_order',
+              'type' => 'string',
+              'description' => 'A comma separated list of order specifiers (DESC or ASC) indicating the direction the sort_by values should be applied to the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'sort_order'),
+              'default value' => 'DESC',
+              'commerce_services_explode' => ',',
+            ),
+            array(
               'name' => 'limit',
               'type' => 'int',
               'description' => 'Limit response count (default ' . ESDPORTAL_API_DEFAULT_LIMIT . ')',
@@ -232,14 +279,6 @@ function esdportal_api_services_resources() {
               'type' => 'int',
               'description' => 'Offset starting record',
               'source' => array('param' => 'offset'),
-              'optional' => TRUE,
-              'default value' => 0,
-            ),
-            array(
-              'name' => 'flatten_fields',
-              'type' => 'int',
-              'description' => 'Remove localization structure from fields if true',
-              'source' => array('param' => 'flatten_fields'),
               'optional' => TRUE,
               'default value' => 0,
             ),
@@ -512,6 +551,22 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE)
  *
  * @param string $includes
  *   Related datasets to include, comma-separated.
+ * @param bool $flatten_fields
+ *   If true, remove l10n structure & other drupal structures from response.
+ * @param array|bool $filter
+ *   An associative array of property names, single column field names, or
+ *   multi-column field column names with their values to use to filter the
+ *   result set of the index request.
+ * @param array|bool $filter_op
+ *   An associative array of field and property names with the operators to use
+ *   when applying their filter conditions to the index request query.
+ * @param array|bool $sort_by
+ *   An array of database fields to sort the query by, with sort fields being
+ *   valid properties, single column field names, or multi-column field column
+ *   names for the matching entity type.
+ * @param array|bool $sort_order
+ *   The corresponding sort orders for the fields specified in the $sort_by
+ *   array; one of either 'DESC' or 'ASC'.
  * @param int $limit
  *   If null, return all results.
  * @param int $offset
@@ -520,14 +575,11 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE)
  * @return array
  *   JSON-API data.
  */
-function _esdportal_api_index_schools($includes = NULL, $limit = NULL, $offset = 0, $flatten_fields = FALSE) {
+function _esdportal_api_index_schools($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $sort_by = FALSE, $sort_order = FALSE, $limit = NULL, $offset = 0) {
   $document = new Document();
 
-  list($schools, $total) = _esdportal_api_taxonomy_get_tree(4);
+  list($schools, $total) = _esdportal_api_taxonomy_get_tree(4, $filter, $filter_op, $sort_by, $sort_order, $limit, $offset);
 
-  // Paginate.
-  $total = count($schools);
-  $schools = array_slice($schools, $offset, $limit, TRUE);
   $link_to_self = $_SERVER['REQUEST_URI'];
 
   $includes = (strlen($includes) > 0) ? explode(',', $includes) : [];
