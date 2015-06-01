@@ -94,6 +94,11 @@ class EcDataUtils {
       // For taxonomy term refs, format nicely using loadtermnames module 'name'
       if ($clone_wrapper->{$field_name}->type() == 'taxonomy_term') {
         $term = $clone_wrapper->{$field_name}->value();
+        // Explicitly set single-value taxonomy_term fields as null, rather than
+        // an empty array.
+        if (count($cloned_entity->{$field_name}) == 0) {
+          $cloned_entity->{$field_name} = NULL;
+        }
         if ($cloned_entity->{$field_name}) {
           $cloned_entity->{$field_name} = ['tid' => $term->tid, 'name' => $term->name];
         }
