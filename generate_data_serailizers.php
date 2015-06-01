@@ -10,18 +10,15 @@
 
 use \Drupal\esdportal_api\EcDataUtils;
 
-/**
- * Generate serializer classes.
- *
+/*
  * Given a table name and its mysql primary key, generates a tobscure/json-api
  * serializer class.
- *
- * @param string $table_name
- *   Drupal Data table name.
- * @param string $primary_key
- *   The table's primary key.
  */
-function generate_data_serializer($table_name, $primary_key) {
+
+
+foreach (\Drupal\esdportal_api\EcDataUtils::getDataTablesWithBcodes() as $table) {
+  $table_name = $table->name;
+  $primary_key = $table->table_schema['primary key'][0];
 
   $camel_name = \Drupal\esdportal_api\EcDataUtils::underscoreToCamel($table_name);
 
@@ -70,9 +67,4 @@ class ${camel_name}Serializer extends SerializerAbstract {
 EOF;
 
   file_put_contents('/tmp/' . $camel_name . 'Serializer.php', $contents);
-
-}
-
-foreach (\Drupal\esdportal_api\EcDataUtils::getDataTablesWithBcodes() as $table) {
-  generate_data_serializer($table->name, $table->table_schema['primary key'][0]);
 }
