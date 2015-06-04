@@ -13,6 +13,10 @@ use Drupal\esdportal_api\EcDataUtils;
 define("ESDPORTAL_API_DEFAULT_LIMIT", 100);
 define("ESDPORTAL_API_MAX_LIMIT", 1000);
 
+// Define any filter_special query_TAG_alters here:
+define("ESDPORTAL_API_SPECIALTAGS_SCHOOLS", "school_profile_has_specialed, school_profile_has_arts, school_profile_has_sports, school_profile_has_transportation, school_profile_has_before_after_care, school_profile_application_required, school_profile_collegereadiness");
+define("ESDPORTAL_API_SPECIALTAGS_ECS", "ec_profile_is_free_or_reduced_cost, ec_profile_has_transportation, ec_profile_has_special_needs_experience, ec_profile_has_meals");
+
 /**
  * Implements hook_services_resources().
  *
@@ -89,6 +93,15 @@ function esdportal_api_services_resources() {
                 'arg' => 'filter',
                 'default value' => '=',
               ),
+            ),
+            array(
+              'name' => 'filter_special',
+              'type' => 'array',
+              'description' => 'A comma-separated list of custom filters to apply. Options: ' . ESDPORTAL_API_SPECIALTAGS_ECS,
+              'optional' => TRUE,
+              'source' => array('param' => 'filter_special'),
+              'default value' => array(),
+              'commerce_services_explode' => ',',
             ),
             array(
               'name' => 'sort_by',
@@ -251,6 +264,15 @@ function esdportal_api_services_resources() {
               ),
             ),
             array(
+              'name' => 'filter_special',
+              'type' => 'array',
+              'description' => 'A comma-separated list of custom filters to apply. Options: ' . ESDPORTAL_API_SPECIALTAGS_SCHOOLS,
+              'optional' => TRUE,
+              'source' => array('param' => 'filter_special'),
+              'default value' => array(),
+              'commerce_services_explode' => ',',
+            ),
+            array(
               'name' => 'sort_by',
               'type' => 'string',
               'description' => 'A comma separated list of field or property names from school entities by which to sort the result set.',
@@ -385,6 +407,8 @@ function _esdportal_api_get_related_nid($bundle, $term) {
  * @param array|bool $filter_op
  *   An associative array of field and property names with the operators to use
  *   when applying their filter conditions to the index request query.
+ * @param array|bool $filter_special
+ *   An array of names of special filters to apply.
  * @param array|bool $sort_by
  *   An array of database fields to sort the query by, with sort fields being
  *   valid properties, single column field names, or multi-column field column
@@ -400,12 +424,12 @@ function _esdportal_api_get_related_nid($bundle, $term) {
  * @return array
  *   JSON-API data.
  */
-function _esdportal_api_index_ecs($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $sort_by = FALSE, $sort_order = FALSE, $limit = NULL, $offset = 0) {
+function _esdportal_api_index_ecs($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $limit = NULL, $offset = 0) {
   $document = new Document();
 
   $link_to_self = $_SERVER['REQUEST_URI'];
 
-  list($ecs, $total) = _esdportal_api_taxonomy_get_tree(19, $filter, $filter_op, $sort_by, $sort_order, $limit, $offset);
+  list($ecs, $total) = _esdportal_api_taxonomy_get_tree(19, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $limit, $offset);
 
   $includes = (strlen($includes) > 0) ? explode(',', $includes) : NULL;
 
@@ -562,6 +586,8 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE)
  * @param array|bool $filter_op
  *   An associative array of field and property names with the operators to use
  *   when applying their filter conditions to the index request query.
+ * @param array|bool $filter_special
+ *   An array of names of special filters to apply.
  * @param array|bool $sort_by
  *   An array of database fields to sort the query by, with sort fields being
  *   valid properties, single column field names, or multi-column field column
@@ -577,10 +603,10 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE)
  * @return array
  *   JSON-API data.
  */
-function _esdportal_api_index_schools($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $sort_by = FALSE, $sort_order = FALSE, $limit = NULL, $offset = 0) {
+function _esdportal_api_index_schools($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $limit = NULL, $offset = 0) {
   $document = new Document();
 
-  list($schools, $total) = _esdportal_api_taxonomy_get_tree(4, $filter, $filter_op, $sort_by, $sort_order, $limit, $offset);
+  list($schools, $total) = _esdportal_api_taxonomy_get_tree(4, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $limit, $offset);
 
   $link_to_self = $_SERVER['REQUEST_URI'];
 
@@ -690,6 +716,8 @@ function _esdportal_api_load_includes_for_schools(array &$schools, array $includ
  * @param array $filter_op
  *   An associative array of field and property names with the operators to use
  *   when applying their filter conditions to the index request query.
+ * @param array $filter_special
+ *   An array of names of special filters to apply.
  * @param array $sort_by
  *   An array of database fields to sort the query by, with sort fields being
  *   valid properties, single column field names, or multi-column field column
@@ -705,7 +733,7 @@ function _esdportal_api_load_includes_for_schools(array &$schools, array $includ
  * @return array
  *   Array of term objects & total # of results.
  */
-function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op, array $sort_by, array $sort_order, $limit, $offset) {
+function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op, array $filter_special, array $sort_by, array $sort_order, $limit, $offset) {
   // Start building a query.
   $query = new EntityFieldQuery();
 
@@ -724,6 +752,17 @@ function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op,
   // Add the specified sort conditions to the query.
   if ($sort_by && $sort_order) {
     \Drupal\esdportal_api\EcDataUtils::indexQuerySort($query, 'taxonomy_term', $sort_by, $sort_order);
+  }
+
+  // Add special filters.
+  if ($filter_special) {
+    $allowed_tags = explode(', ', ESDPORTAL_API_SPECIALTAGS_SCHOOLS . ', ' . ESDPORTAL_API_SPECIALTAGS_ECS);
+
+    foreach ($filter_special[0] as $tag) {
+      if (in_array($tag, $allowed_tags)) {
+        $query->addTag($tag);
+      }
+    }
   }
 
   // Execute the query and load the terms it returns, if any.
@@ -908,4 +947,26 @@ function esdportal_api_services_request_preprocess_alter($controller, &$args) {
       }
     }
   }
+}
+
+
+// As new query_TAG_alters are added, be sure to also include them in the
+// constants at the top of this module!
+/**
+ * Alters EntityFieldQuery.
+ */
+function esdportal_api_query_ec_profile_is_free_or_reduced_cost_alter(\QueryAlterableInterface $query) {
+  // First, inner join with ec_profiles.
+  _esdportal_api_add_ec_profile_join($query);
+}
+
+/**
+ * Adds join with ec_profiles.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for ec taxonomy terms.
+ */
+function _esdportal_api_add_ec_profile_join(\QueryAlterableInterface &$query) {
+  $query->join('field_data_field_ec', 'ec', 'ec.field_ec_tid=taxonomy_term_data.tid');
+  $query->condition('ec.bundle', 'ec_profile', '=');
 }
