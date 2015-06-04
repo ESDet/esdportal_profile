@@ -76,6 +76,7 @@ function esdportal_api_services_resources() {
               'source' => array('param' => 'filter'),
               'default value' => array(),
               'commerce_services_field_populate' => 'taxonomy_term',
+              'commerce_services_explode' => ',',
             ),
             array(
               'name' => 'filter_op',
