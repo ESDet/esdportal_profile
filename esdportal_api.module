@@ -965,7 +965,7 @@ function esdportal_api_query_ec_profile_is_free_or_reduced_cost_alter(\QueryAlte
   // First, inner join with ec_profiles.
   _esdportal_api_add_ec_profile_join($query);
 
-  _esdportal_api_add_ti_join($query);
+  _esdportal_api_add_ec_ti_join($query);
 
   $query->condition('ti.tid', array(5141, 5158, 5155, 5154), 'IN');
 }
@@ -1028,14 +1028,14 @@ function _esdportal_api_add_ec_profile_join(\QueryAlterableInterface &$query) {
 }
 
 /**
- * Adds join with taxonomy_index.
+ * Adds join with taxonomy_index to an ec query.
  *
  * Alias taxonomy_index as ti & group by ti.nid.
  *
  * @param \QueryAlterableInterface &$query
  *   A query.
  */
-function _esdportal_api_add_ti_join(\QueryAlterableInterface &$query) {
+function _esdportal_api_add_ec_ti_join(\QueryAlterableInterface &$query) {
   $query->join('taxonomy_index', 'ti', 'ti.nid=ec_profile_ref.entity_id');
   $query->groupBy('ti.nid');
 }
