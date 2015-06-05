@@ -954,10 +954,69 @@ function esdportal_api_services_request_preprocess_alter($controller, &$args) {
 // constants at the top of this module!
 /**
  * Alters EntityFieldQuery.
+ *
+ * IF ec_profile.field_ec_subsidy {vid:18} = “Accepts State Subsidy”
+ * {tid:5141}
+ * OR IF ec_profile ec_profile.field_ec_specialty {vid:35}
+ * = “Early Head Start” {tid:5158} OR “Head Start” {tid:5155} OR
+ * “Great Start Readiness Program {tid:5154}
  */
-function esdportal_api_query_ec_profile_is_free_or_reduced_cost_alter(\QueryAlterableInterface $query) {
+function esdportal_api_query_ec_profile_is_free_or_reduced_cost_alter(\QueryAlterableInterface &$query) {
   // First, inner join with ec_profiles.
   _esdportal_api_add_ec_profile_join($query);
+
+  _esdportal_api_add_ti_join($query);
+
+  $query->condition('ti.tid', array(5141, 5158, 5155, 5154), 'IN');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF ec_profile.field_ec_transportation = 1
+ *
+ */
+function esdportal_api_query_ec_profile_has_transportation_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with ec_profiles.
+  _esdportal_api_add_ec_profile_join($query);
+
+  $query->join('field_data_field_ec_transportation', 'ec_transportation', 'ec_transportation.entity_id=ec_profile_ref.entity_id');
+  $query->condition('ec_transportation.field_ec_transportation_value', '1', '=');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF ec_profile.field_ec_special {vid:34} CONTAINS more than 5 values/items
+ *
+ */
+function esdportal_api_query_ec_profile_has_special_needs_experience_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with ec_profiles.
+  _esdportal_api_add_ec_profile_join($query);
+
+  $query->join('field_data_field_ec_special', 'ec_special', 'ec_special.entity_id=ec_profile_ref.entity_id');
+  $query->groupBy('ec_special.entity_id');
+  $query->having('COUNT(ec_special.entity_id) > 5');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF ec_profile.field_ec_meals {vid:30} = “Lunch” {tid:5163}
+ * AND “Afternoon Snack” {tid:5164}
+ *
+ */
+function esdportal_api_query_ec_profile_has_meals_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with ec_profiles.
+  _esdportal_api_add_ec_profile_join($query);
+
+  $subquery = db_select('taxonomy_index', 'ti_has_meals');
+  $subquery->addField('ti_has_meals', 'nid', 'ti_has_meals_nid');
+  $subquery->addField('ti_has_meals', 'tid', 'ti_has_meals_tid');
+  $subquery->condition('ti_has_meals.tid', array(5163, 5164), 'IN');
+
+  $query->join($subquery, 'ti_has_meals', 'ti_has_meals_nid=ec_profile_ref.entity_id');
+  $query->groupBy('ti_has_meals_nid');
 }
 
 /**
@@ -967,6 +1026,19 @@ function esdportal_api_query_ec_profile_is_free_or_reduced_cost_alter(\QueryAlte
  *   A query, probably looking for ec taxonomy terms.
  */
 function _esdportal_api_add_ec_profile_join(\QueryAlterableInterface &$query) {
-  $query->join('field_data_field_ec', 'ec', 'ec.field_ec_tid=taxonomy_term_data.tid');
-  $query->condition('ec.bundle', 'ec_profile', '=');
+  $query->join('field_data_field_ec', 'ec_profile_ref', 'ec_profile_ref.field_ec_tid=taxonomy_term_data.tid');
+  $query->condition('ec_profile_ref.bundle', 'ec_profile', '=');
+}
+
+/**
+ * Adds join with taxonomy_index.
+ *
+ * Alias taxonomy_index as ti & group by ti.nid.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query.
+ */
+function _esdportal_api_add_ti_join(\QueryAlterableInterface &$query) {
+  $query->join('taxonomy_index', 'ti', 'ti.nid=ec_profile_ref.entity_id');
+  $query->groupBy('ti.nid');
 }
