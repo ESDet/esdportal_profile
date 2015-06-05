@@ -974,7 +974,6 @@ function esdportal_api_query_ec_profile_is_free_or_reduced_cost_alter(\QueryAlte
  * Alters EntityFieldQuery.
  *
  * IF ec_profile.field_ec_transportation = 1
- *
  */
 function esdportal_api_query_ec_profile_has_transportation_alter(\QueryAlterableInterface &$query) {
   // First, inner join with ec_profiles.
@@ -987,8 +986,7 @@ function esdportal_api_query_ec_profile_has_transportation_alter(\QueryAlterable
 /**
  * Alters EntityFieldQuery.
  *
- * IF ec_profile.field_ec_special {vid:34} CONTAINS more than 5 values/items
- *
+ * IF ec_profile.field_ec_special {vid:34} CONTAINS more than 5 values/items.
  */
 function esdportal_api_query_ec_profile_has_special_needs_experience_alter(\QueryAlterableInterface &$query) {
   // First, inner join with ec_profiles.
@@ -1004,7 +1002,6 @@ function esdportal_api_query_ec_profile_has_special_needs_experience_alter(\Quer
  *
  * IF ec_profile.field_ec_meals {vid:30} = “Lunch” {tid:5163}
  * AND “Afternoon Snack” {tid:5164}
- *
  */
 function esdportal_api_query_ec_profile_has_meals_alter(\QueryAlterableInterface &$query) {
   // First, inner join with ec_profiles.
