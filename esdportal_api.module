@@ -1048,3 +1048,132 @@ function _esdportal_api_add_ec_ti_join(\QueryAlterableInterface &$query) {
   $query->join('taxonomy_index', 'ti', 'ti.nid=ec_profile_ref.entity_id');
   $query->groupBy('ti.nid');
 }
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF school_profile.field_special_ed_level = moderate OR intensive.
+ */
+function esdportal_api_query_school_profile_has_specialed_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  _esdportal_api_add_school_profile_join($query);
+
+  $query->join('field_data_field_special_ed_level', 'special_ed_level', 'special_ed_level.entity_id=school_profile_ref.entity_id');
+  $query->condition('special_ed_level.field_special_ed_level_value', array('moderate', 'intensive'), 'IN');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF schools.field_arts_media + schools.field_arts_visual +
+ * schools.field_arts_music + schools.field_arts.performing_written CONTAINS
+ * more than 8 values total
+ * OR IF schools.field_academic_focus = all_arts OR visual_arts OR
+ * performing_arts OR music.
+ */
+function esdportal_api_query_school_profile_has_arts_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  _esdportal_api_add_school_profile_join($query);
+
+  $q_visual = db_select('field_data_field_arts_visual', 'favisual')
+    ->condition('field_arts_visual_value', 'None', '!=');
+  $q_visual->addField('favisual', 'entity_id', 'id');
+  $q_visual->addExpression('COUNT(favisual.field_arts_visual_value)', 'count');
+  $q_visual->groupBy('entity_id');
+
+  $q_music = db_select('field_data_field_arts_music', 'famusic')
+    ->condition('field_arts_music_value', 'None', '!=');
+  $q_music->addField('famusic', 'entity_id', 'id');
+  $q_music->addExpression('COUNT(famusic.field_arts_music_value)', 'count');
+  $q_music->groupBy('entity_id');
+
+  $q_media = db_select('field_data_field_arts_media', 'famedia')
+    ->condition('field_arts_media_value', 'None', '!=');
+  $q_media->addField('famedia', 'entity_id', 'id');
+  $q_media->addExpression('COUNT(famedia.field_arts_media_value)', 'count');
+  $q_media->groupBy('entity_id');
+
+  $q_visual
+    ->union($q_music)
+    ->union($q_media);
+
+  $subq = db_select($q_visual, 'unioned');
+  $subq->addField('unioned', 'id', 'union_id');
+  $subq->addExpression('SUM(count)', 'total');
+  $subq->groupBy('union_id');
+  $subq->havingCondition('total', 8, '>');
+
+  $query->join($subq, 'counts', 'union_id=school_profile_ref.entity_id');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF school_profile.field_boys_sports CONTAINS 4 or more values/items
+ * AND IF schools.field_girls_sports CONTAINS 4 or more values/items.
+ */
+function esdportal_api_query_school_profile_has_sports_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  _esdportal_api_add_school_profile_join($query);
+  // TODO: finish this.
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF school_profile.field_transportation_options = passes OR busses OR
+ * shared_bus.
+ */
+function esdportal_api_query_school_profile_has_transportation_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  _esdportal_api_add_school_profile_join($query);
+  // TODO: finish this.
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF school_profile.field_before_after_care = after OR before.
+ */
+function esdportal_api_query_school_profile_has_before_after_care_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  _esdportal_api_add_school_profile_join($query);
+  // TODO: finish this.
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF school_profile.field_application_process = yes.
+ */
+function esdportal_api_query_school_profile_application_required_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  _esdportal_api_add_school_profile_join($query);
+  // TODO: finish this.
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF school_profile.field_facilities = college_center
+ * OR IF school_profile.field_extra_learning_resources = career_counseling
+ * OR IF school_profile.field_staff_resources = college_counselor
+ * AND IF school_profile.field_college_prep CONTAINS any value EXCEPT none.
+ */
+function esdportal_api_query_school_profile_collegereadiness_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  _esdportal_api_add_school_profile_join($query);
+  // TODO: finish this.
+}
+
+/**
+ * Adds join with school_profiles.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function _esdportal_api_add_school_profile_join(\QueryAlterableInterface &$query) {
+  $query->join('field_data_field_school', 'school_profile_ref', 'school_profile_ref.field_school_tid=taxonomy_term_data.tid');
+  $query->condition('school_profile_ref.bundle', 'school_profile', '=');
+  $query->addField('school_profile_ref', 'entity_id', 'school_profile_id');
+}
