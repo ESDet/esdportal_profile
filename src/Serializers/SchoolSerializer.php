@@ -55,6 +55,9 @@ class SchoolSerializer extends SerializerAbstract {
     unset($school_term->school_profile);
     unset($school_term->school_profile_id);
 
+    // These fields are private:
+    unset($school_term->field_files);
+
     foreach (self::$potentialDataTableNames as $name) {
       unset($school_term->{$name});
     }
