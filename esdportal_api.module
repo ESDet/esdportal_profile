@@ -59,7 +59,7 @@ function esdportal_api_services_resources() {
             array(
               'name' => 'includes',
               'type' => 'string',
-              'description' => 'Include other datasets, comma-separated (current options: ec_profile, most_recent_ec_state_rating)',
+              'description' => 'Include other datasets, comma-separated (current options: ec_profile, most_recent_ec_state_rating, all)',
               'source' => array('param' => 'includes'),
               'optional' => TRUE,
               'default value' => NULL,
@@ -205,7 +205,7 @@ function esdportal_api_services_resources() {
             array(
               'name' => 'includes',
               'type' => 'string',
-              'description' => 'Include other datasets, comma-separated (current options: school_profile, ' . implode(', ', _esdportal_api_get_school_data_tables()) . ')',
+              'description' => 'Include other datasets, comma-separated (current options: school_profile, ' . implode(', ', _esdportal_api_get_school_data_tables()) . ', all)',
               'source' => array('param' => 'includes'),
               'optional' => TRUE,
               'default value' => NULL,
@@ -228,7 +228,7 @@ function esdportal_api_services_resources() {
             array(
               'name' => 'includes',
               'type' => 'string',
-              'description' => 'Include other datasets, comma-separated (current options: school_profile, ' . implode(', ', _esdportal_api_get_school_data_tables()) . ')',
+              'description' => 'Include other datasets, comma-separated (current options: school_profile, ' . implode(', ', _esdportal_api_get_school_data_tables()) . ', all)',
               'source' => array('param' => 'includes'),
               'optional' => TRUE,
               'default value' => NULL,
@@ -397,7 +397,7 @@ function _esdportal_api_get_related_nid($bundle, $term) {
  * Retrieves list of all early childhood centers.
  *
  * @param string $includes
- *   Related datasets to include, comma-separated.
+ *   Related datasets to include, comma-separated. 'all' will include all.
  * @param bool $flatten_fields
  *   If true, remove l10n structure & other drupal structures from response.
  * @param array|bool $filter
@@ -431,7 +431,18 @@ function _esdportal_api_index_ecs($includes = NULL, $flatten_fields = FALSE, $fi
 
   list($ecs, $total) = _esdportal_api_taxonomy_get_tree(19, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $limit, $offset);
 
+  // All the potential includes.
+  $all_includes = [
+    'ec_profile',
+    'most_recent_ec_state_rating'
+  ];
+
   $includes = (strlen($includes) > 0) ? explode(',', $includes) : NULL;
+
+  // Include all the includes.
+  if (in_array('all', $includes)) {
+    $includes = $all_includes;
+  }
 
   $serializer = ($includes) ? new EcSerializer($includes) : new EcSerializer();
 
@@ -536,7 +547,7 @@ function _esdportal_api_index_ec_state_ratings($batch_timestamp = NULL) {
  * @param int $id
  *   ESD internal school id.
  * @param string $includes
- *   Related datasets to include, comma-separated.
+ *   Related datasets to include, comma-separated. 'all' will include all.
  * @param bool $flatten_fields
  *   If true, remove l10n structure & other drupal structures from response.
  *
@@ -552,11 +563,18 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE)
     return services_error(t('school @id does not exist.', array('@id' => $id)), 404);
   }
 
+  $all_includes = array_merge(['school_profile'], _esdportal_api_get_school_data_tables());
+
   $includes = (strlen($includes) > 0) ? explode(',', $includes) : NULL;
 
   // Add school_profile by default if no other includes are specified.
   if (!count($includes)) {
     $includes[] = 'school_profile';
+  }
+
+  // Include all the includes.
+  if (in_array('all', $includes)) {
+    $includes = $all_includes;
   }
 
   $serializer = ($includes) ? new SchoolSerializer($includes) : new SchoolSerializer();
@@ -576,7 +594,7 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE)
  * Retrieves list of all schools.
  *
  * @param string $includes
- *   Related datasets to include, comma-separated.
+ *   Related datasets to include, comma-separated. 'all' will include all.
  * @param bool $flatten_fields
  *   If true, remove l10n structure & other drupal structures from response.
  * @param array|bool $filter
@@ -610,7 +628,14 @@ function _esdportal_api_index_schools($includes = NULL, $flatten_fields = FALSE,
 
   $link_to_self = $_SERVER['REQUEST_URI'];
 
+  $all_includes = array_merge(['school_profile'], _esdportal_api_get_school_data_tables());
+  
   $includes = (strlen($includes) > 0) ? explode(',', $includes) : [];
+
+  // Include all the includes.
+  if (in_array('all', $includes)) {
+    $includes = $all_includes;
+  }
 
   $serializer = ($includes) ? new SchoolSerializer($includes) : new SchoolSerializer();
 
@@ -654,7 +679,13 @@ function _esdportal_api_load_includes_for_schools(array &$schools, array $includ
   $tables_to_include = array_intersect($potential_data_table_names, $includes);
 
   foreach ($schools as &$school) {
-    $school->bcode = $school->field_bcode['und'][0]['value'];
+    // Some schools don't have BCODEs.
+    if (!isset($school->field_bcode[LANGUAGE_NONE])) {
+      $school->bcode = NULL;
+    }
+    else {
+      $school->bcode = $school->field_bcode[LANGUAGE_NONE][0]['value'];
+    }
 
     if ($flatten_fields) {
       _esdportal_api_flatten_entity_fields('taxonomy_term', $school);
@@ -680,19 +711,32 @@ function _esdportal_api_load_includes_for_schools(array &$schools, array $includ
   if (count($tables_to_include) > 0) {
     // we've got some data tables to include!
     foreach ($schools as &$school) {
-      foreach ($tables_to_include as $table) {
-        $table_info = $potential_data_tables[$table];
-        $data_table_identifier = $table_info->name;
+      if ($school->bcode !== NULL) {
+        foreach ($tables_to_include as $table) {
+          $table_info = $potential_data_tables[$table];
+          $data_table_identifier = $table_info->name;
 
-        $q = db_select($table_info->name)
-               ->fields($table_info->name)
-               ->condition($table_info->table_schema['primary key'][0], $school->bcode);
+          $q = db_select($table_info->name)
+                 ->fields($table_info->name)
+                 ->condition($table_info->table_schema['primary key'][0], $school->bcode);
 
-        $res = $q->execute();
+          try {
+            $res = $q->execute();
+          }
+          catch (Exception $e) {
+            // no table?
+            if ($e->getCode() == '42') {
+              // do nothing for now...
+            }
+            else {
+              watchdog_exception('_esdportal_api_load_includes_for_schools', $e);
+            }
+          }
 
-        $data = $res->fetchObject();
+          $data = $res->fetchObject();
 
-        $school->{$data_table_identifier} = ($data) ? $data : FALSE;
+          $school->{$data_table_identifier} = ($data) ? $data : FALSE;
+        }
       }
     }
     unset($school);
