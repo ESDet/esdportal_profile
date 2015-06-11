@@ -629,7 +629,7 @@ function _esdportal_api_index_schools($includes = NULL, $flatten_fields = FALSE,
   $link_to_self = $_SERVER['REQUEST_URI'];
 
   $all_includes = array_merge(['school_profile'], _esdportal_api_get_school_data_tables());
-  
+
   $includes = (strlen($includes) > 0) ? explode(',', $includes) : [];
 
   // Include all the includes.
@@ -724,9 +724,9 @@ function _esdportal_api_load_includes_for_schools(array &$schools, array $includ
             $res = $q->execute();
           }
           catch (Exception $e) {
-            // no table?
+            // No table?
             if ($e->getCode() == '42') {
-              // do nothing for now...
+              // Do nothing for now...
             }
             else {
               watchdog_exception('_esdportal_api_load_includes_for_schools', $e);
