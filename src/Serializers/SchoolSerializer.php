@@ -118,7 +118,7 @@ class SchoolSerializer extends SerializerAbstract {
       $class_name = 'Drupal\\esdportal_api\\Serializers\\' . $camelized_method . 'Serializer';
 
       // Legit data table name?
-      if (!array_search($table_name, self::$potentialDataTableNames)) {
+      if (!in_array($table_name, self::$potentialDataTableNames)) {
         return NULL;
       }
 
