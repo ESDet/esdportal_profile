@@ -38,11 +38,23 @@ class EcDataUtils {
    * Returns data tables that JOIN by buildingcode.
    *
    * @return array
-   *   array of drupal data table objects
+   *   Array of drupal data table objects.
    */
   public static function getDataTablesWithBcodes() {
     return array_filter(data_get_all_tables(), function($table) {
       return (isset($table->meta['join']) && isset($table->meta['join']['field_data_field_bcode']));
+    });
+  }
+
+  /**
+   * Returns data tables that JOIN by earlychild programid.
+   *
+   * @return array
+   *   Array of drupal data table objects.
+   */
+  public static function getDataTablesWithProgramIds() {
+    return array_filter(data_get_all_tables(), function($table) {
+      return (isset($table->meta['join']) && isset($table->meta['join']['earlychild']));
     });
   }
 

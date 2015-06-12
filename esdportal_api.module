@@ -15,7 +15,7 @@ define("ESDPORTAL_API_MAX_LIMIT", 1000);
 
 // Define any filter_special query_TAG_alters here:
 define("ESDPORTAL_API_SPECIALTAGS_SCHOOLS", "school_profile_has_specialed, school_profile_has_arts, school_profile_has_sports, school_profile_has_transportation, school_profile_has_before_after_care, school_profile_application_required, school_profile_collegereadiness");
-define("ESDPORTAL_API_SPECIALTAGS_ECS", "ec_profile_is_free_or_reduced_cost, ec_profile_has_transportation, ec_profile_has_special_needs_experience, ec_profile_has_meals");
+define("ESDPORTAL_API_SPECIALTAGS_ECS", "ec_profile_is_free_or_reduced_cost, ec_profile_has_transportation, ec_profile_has_special_needs_experience, ec_profile_has_meals, has_esd_el_2014, has_esd_el_2015");
 
 /**
  * Implements hook_services_resources().
@@ -59,7 +59,7 @@ function esdportal_api_services_resources() {
             array(
               'name' => 'includes',
               'type' => 'string',
-              'description' => 'Include other datasets, comma-separated (current options: ec_profile, most_recent_ec_state_rating, all)',
+              'description' => 'Include other datasets, comma-separated (current options: ec_profile, most_recent_ec_state_rating, ' . implode(', ', _esdportal_api_get_ec_data_tables()) . ', all)',
               'source' => array('param' => 'includes'),
               'optional' => TRUE,
               'default value' => NULL,
@@ -427,17 +427,19 @@ function _esdportal_api_get_related_nid($bundle, $term) {
 function _esdportal_api_index_ecs($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $limit = NULL, $offset = 0) {
   $document = new Document();
 
-  $link_to_self = $_SERVER['REQUEST_URI'];
-
   list($ecs, $total) = _esdportal_api_taxonomy_get_tree(19, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $limit, $offset);
 
-  // All the potential includes.
-  $all_includes = [
+  $link_to_self = $_SERVER['REQUEST_URI'];
+
+  // All the potential includes aside from data tables.
+  $special_includes = [
     'ec_profile',
     'most_recent_ec_state_rating'
   ];
 
-  $includes = (strlen($includes) > 0) ? explode(',', $includes) : NULL;
+  $all_includes = array_merge($special_includes, _esdportal_api_get_ec_data_tables());
+
+  $includes = (strlen($includes) > 0) ? explode(',', $includes) : [];
 
   // Include all the includes.
   if (in_array('all', $includes)) {
@@ -446,33 +448,7 @@ function _esdportal_api_index_ecs($includes = NULL, $flatten_fields = FALSE, $fi
 
   $serializer = ($includes) ? new EcSerializer($includes) : new EcSerializer();
 
-  foreach ($ecs as &$ec) {
-    if ($flatten_fields) {
-      _esdportal_api_flatten_entity_fields('taxonomy_term', $ec);
-    }
-
-    $ec->ec_profile_id = _esdportal_api_get_related_nid('ec_profile', $ec);
-  }
-  unset($ec);
-
-  if (in_array('ec_profile', $includes)) {
-    foreach ($ecs as $ec) {
-      if ($ec->ec_profile_id) {
-        $ec->ec_profile = node_load($ec->ec_profile_id);
-
-        if ($flatten_fields) {
-          _esdportal_api_flatten_entity_fields('node', $ec->ec_profile);
-        }
-      }
-    }
-  }
-
-  if (in_array('most_recent_ec_state_rating', $includes)) {
-    foreach ($ecs as $ec) {
-      $ec->most_recent_ec_state_rating = (object) _esdportal_api_retrieve_ec_state_rating(\Drupal\esdportal_api\EcDataUtils::getEcId($ec));
-      $ec->most_recent_ec_state_rating_id = $ec->most_recent_ec_state_rating->rating_id;
-    }
-  }
+  _esdportal_api_load_includes_for_ecs($ecs, $includes, $flatten_fields);
 
   $collection = $serializer->collection($ecs);
 
@@ -652,13 +628,24 @@ function _esdportal_api_index_schools($includes = NULL, $flatten_fields = FALSE,
 }
 
 /**
- * Lists all data tables.
+ * Lists all school data tables.
  *
  * @return array
  *   Data table names.
  */
 function _esdportal_api_get_school_data_tables() {
   $potential_data_tables = \Drupal\esdportal_api\EcDataUtils::getDataTablesWithBcodes();
+  return \Drupal\esdportal_api\EcDataUtils::extractDataTableNames($potential_data_tables);
+}
+
+/**
+ * List all Early Childhood data tables.
+ *
+ * @return array
+ *   Data table names.
+ */
+function _esdportal_api_get_ec_data_tables() {
+  $potential_data_tables = \Drupal\esdportal_api\EcDataUtils::getDataTablesWithProgramIds();
   return \Drupal\esdportal_api\EcDataUtils::extractDataTableNames($potential_data_tables);
 }
 
@@ -742,6 +729,95 @@ function _esdportal_api_load_includes_for_schools(array &$schools, array $includ
     unset($school);
   }
 }
+
+/**
+ * Loads all includes for a set of early childhood centers.
+ *
+ * @param array &$ecs
+ *   Early childhood center entities.
+ * @param array $includes
+ *   Datasets to include.
+ * @param bool $flatten_fields
+ *   Whether or not to flattenFields.
+ */
+function _esdportal_api_load_includes_for_ecs(array &$ecs, array $includes = [], $flatten_fields = NULL) {
+  $potential_data_tables = \Drupal\esdportal_api\EcDataUtils::getDataTablesWithProgramIds();
+  $potential_data_table_names = \Drupal\esdportal_api\EcDataUtils::extractDataTableNames($potential_data_tables);
+
+  $tables_to_include = array_intersect($potential_data_table_names, $includes);
+
+  foreach ($ecs as &$ec) {
+    // Some ecs don't have program_ids.
+    if (!isset($ec->field_esd_ec_id[LANGUAGE_NONE])) {
+      $ec->program_id = NULL;
+    }
+    else {
+      $ec->program_id = $ec->field_esd_ec_id[LANGUAGE_NONE][0]['value'];
+    }
+
+    if ($flatten_fields) {
+      _esdportal_api_flatten_entity_fields('taxonomy_term', $ec);
+    }
+
+    $ec->ec_profile_id = _esdportal_api_get_related_nid('ec_profile', $ec);
+  }
+  unset($ec);
+
+  if (in_array('ec_profile', $includes)) {
+    foreach ($ecs as $ec) {
+      if ($ec->ec_profile_id) {
+        $ec->ec_profile = node_load($ec->ec_profile_id);
+
+        if ($flatten_fields) {
+          _esdportal_api_flatten_entity_fields('node', $ec->ec_profile);
+        }
+      }
+    }
+  }
+  unset($ec);
+
+  if (in_array('most_recent_ec_state_rating', $includes)) {
+    foreach ($ecs as $ec) {
+      $ec->most_recent_ec_state_rating = (object) _esdportal_api_retrieve_ec_state_rating(\Drupal\esdportal_api\EcDataUtils::getEcId($ec));
+      $ec->most_recent_ec_state_rating_id = $ec->most_recent_ec_state_rating->rating_id;
+    }
+  }
+
+  if (count($tables_to_include) > 0) {
+    // we've got some data tables to include!
+    foreach ($ecs as &$ec) {
+      if ($ec->program_id !== NULL) {
+        foreach ($tables_to_include as $table) {
+          $table_info = $potential_data_tables[$table];
+          $data_table_identifier = $table_info->name;
+
+          $q = db_select($table_info->name)
+                 ->fields($table_info->name)
+                 ->condition($table_info->table_schema['primary key'][0], $ec->program_id);
+
+          try {
+            $res = $q->execute();
+          }
+          catch (Exception $e) {
+            // No table?
+            if ($e->getCode() == '42') {
+              // Do nothing for now...
+            }
+            else {
+              watchdog_exception('_esdportal_api_load_includes_for_schools', $e);
+            }
+          }
+
+          $data = $res->fetchObject();
+
+          $ec->{$data_table_identifier} = ($data) ? $data : FALSE;
+        }
+      }
+    }
+    unset($ec);
+  }
+}
+
 
 /**
  * Load vocabulary terms.
@@ -1067,6 +1143,26 @@ function esdportal_api_query_ec_profile_has_meals_alter(\QueryAlterableInterface
 
   $query->join($subquery, 'ti_has_meals', 'ti_has_meals_nid=ec_profile_ref.entity_id');
   $query->groupBy('ti_has_meals_nid');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * Only return early childhood centers with a record in esd_el_2014.
+ */
+function esdportal_api_query_has_esd_el_2014_alter(\QueryAlterableInterface &$query) {
+  $query->join('field_data_field_esd_ec_id', 'ec_id', 'ec_id.entity_id=taxonomy_term_data.tid');
+  $query->join('esd_el_2014', 'esd_el_2014', 'esd_el_2014.program_id=ec_id.field_esd_ec_id_value');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * Only return early childhood centers with a record in esd_el_2015.
+ */
+function esdportal_api_query_has_esd_el_2015_alter(\QueryAlterableInterface &$query) {
+  $query->join('field_data_field_esd_ec_id', 'ec_id', 'ec_id.entity_id=taxonomy_term_data.tid');
+  $query->join('esd_el_2015', 'esd_el_2015', 'esd_el_2014.program_id=ec_id.field_esd_ec_id_value');
 }
 
 /**
