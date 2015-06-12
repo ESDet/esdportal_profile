@@ -72,7 +72,7 @@ class EcSerializer extends SerializerAbstract {
     return function ($ec, $include, $included) {
       $serializer = new EcStateRatingSerializer($included);
 
-      if (!$ec->most_recent_ec_state_rating) {
+      if (!isset($ec->most_recent_ec_state_rating)) {
         return NULL;
       }
 
