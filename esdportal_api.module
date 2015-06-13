@@ -1261,7 +1261,24 @@ function esdportal_api_query_school_profile_has_arts_alter(\QueryAlterableInterf
 function esdportal_api_query_school_profile_has_sports_alter(\QueryAlterableInterface &$query) {
   // First, inner join with school_profiles.
   _esdportal_api_add_school_profile_join($query);
-  // TODO: finish this.
+
+  $q_boysports = db_select('field_data_field_boys_sports', 'fbs')
+    ->condition('field_boys_sports_value', 'none', '!=');
+  $q_boysports->addField('fbs', 'entity_id', 'id');
+  $q_boysports->addExpression('COUNT(fbs.field_boys_sports_value)', 'count');
+  $q_boysports->groupBy('entity_id');
+  $q_boysports->havingCondition('count', 3, '>');
+
+  $q_girlsports = db_select('field_data_field_girls_sports', 'fgs')
+    ->condition('field_girls_sports_value', 'none', '!=');
+  $q_girlsports->addField('fgs', 'entity_id', 'id');
+  $q_girlsports->addExpression('COUNT(fgs.field_girls_sports_value)', 'count');
+  $q_girlsports->groupBy('entity_id');
+  $q_girlsports->havingCondition('count', 3, '>');
+
+  $q_boysports->union($q_girlsports);
+
+  $query->join($q_boysports, 'boycount', 'boycount.id=school_profile_ref.entity_id');
 }
 
 /**
