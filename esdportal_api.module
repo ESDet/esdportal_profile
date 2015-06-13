@@ -1237,13 +1237,19 @@ function esdportal_api_query_school_profile_has_arts_alter(\QueryAlterableInterf
     ->union($q_music)
     ->union($q_media);
 
-  $subq = db_select($q_visual, 'unioned');
-  $subq->addField('unioned', 'id', 'union_id');
-  $subq->addExpression('SUM(count)', 'total');
-  $subq->groupBy('union_id');
-  $subq->havingCondition('total', 8, '>');
+  $count_subq = db_select($q_visual, 'unioned');
+  $count_subq->addField('unioned', 'id', 'union_id');
+  $count_subq->addExpression('SUM(count)', 'total');
+  $count_subq->groupBy('union_id');
+  $count_subq->havingCondition('total', 8, '>');
 
-  $query->join($subq, 'counts', 'union_id=school_profile_ref.entity_id');
+  $query->join($count_subq, 'counts', 'union_id=school_profile_ref.entity_id');
+
+  $faf_subq = db_select('field_data_field_academic_focus', 'faf')
+    ->condition('field_academic_focus_value', ['all_arts', 'visual_arts', 'performing_arts', 'music'], 'IN');
+  $faf_subq->addField('faf', 'entity_id', 'id');
+
+  $query->leftJoin($faf_subq, 'faf', 'faf.id=school_profile_ref.entity_id');
 }
 
 /**
