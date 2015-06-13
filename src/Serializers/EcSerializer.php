@@ -107,7 +107,6 @@ class EcSerializer extends SerializerAbstract {
     self::$potentialDataTableNames = \Drupal\esdportal_api\EcDataUtils::extractDataTableNames(self::$potentialDataTables);
 
     return function ($ec, $include, $included) use ($method) {
-      xdebug_break();
       // The actual called method is underscore-separated...
       $table_name = $method;
 

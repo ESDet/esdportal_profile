@@ -1162,7 +1162,7 @@ function esdportal_api_query_has_esd_el_2014_alter(\QueryAlterableInterface &$qu
  */
 function esdportal_api_query_has_esd_el_2015_alter(\QueryAlterableInterface &$query) {
   $query->join('field_data_field_esd_ec_id', 'ec_id', 'ec_id.entity_id=taxonomy_term_data.tid');
-  $query->join('esd_el_2015', 'esd_el_2015', 'esd_el_2014.program_id=ec_id.field_esd_ec_id_value');
+  $query->join('esd_el_2015', 'esd_el_2015', 'esd_el_2015.program_id=ec_id.field_esd_ec_id_value');
 }
 
 /**
