@@ -1290,7 +1290,8 @@ function esdportal_api_query_school_profile_has_sports_alter(\QueryAlterableInte
 function esdportal_api_query_school_profile_has_transportation_alter(\QueryAlterableInterface &$query) {
   // First, inner join with school_profiles.
   _esdportal_api_add_school_profile_join($query);
-  // TODO: finish this.
+
+  $query->join('field_data_field_transportation_options', 'transport_opts', "transport_opts.entity_id=school_profile_ref.entity_id AND transport_opts.field_transportation_options_value IN ('passes', 'busses', 'shared bus')");
 }
 
 /**
@@ -1301,7 +1302,8 @@ function esdportal_api_query_school_profile_has_transportation_alter(\QueryAlter
 function esdportal_api_query_school_profile_has_before_after_care_alter(\QueryAlterableInterface &$query) {
   // First, inner join with school_profiles.
   _esdportal_api_add_school_profile_join($query);
-  // TODO: finish this.
+
+  $query->join('field_data_field_before_after_care', 'beforeaftercare', "beforeaftercare.entity_id=school_profile_ref.entity_id AND beforeaftercare.field_before_after_care_value IN ('before', 'after')");
 }
 
 /**
@@ -1312,7 +1314,8 @@ function esdportal_api_query_school_profile_has_before_after_care_alter(\QueryAl
 function esdportal_api_query_school_profile_application_required_alter(\QueryAlterableInterface &$query) {
   // First, inner join with school_profiles.
   _esdportal_api_add_school_profile_join($query);
-  // TODO: finish this.
+
+  $query->join('field_data_field_application_process', 'apppx', "apppx.entity_id=school_profile_ref.entity_id AND apppx.field_application_process_value='yes'");
 }
 
 /**
