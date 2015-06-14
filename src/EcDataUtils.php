@@ -125,10 +125,17 @@ class EcDataUtils {
       elseif ($clone_wrapper->{$field_name}->type() == 'list<text>') {
         $opts = $clone_wrapper->{$field_name}->optionsList();
         $newval = [];
+        $iter = 0;
+
         foreach ($clone_wrapper->{$field_name}->value() as $machine_val) {
-          $newval[$machine_val] = $opts[$machine_val];
+          $newval[$iter]['machine_name'] = $machine_val;
+          $newval[$iter]['label'] = $opts[$machine_val];
+          $iter++;
         }
+        unset($iter);
+
         $cloned_entity->{$field_name} = $newval;
+        unset($newval);
       }
       elseif ($clone_wrapper->{$field_name}->type() == 'text' && $clone_wrapper->{$field_name}->label()) {
         $cloned_entity->{$field_name} = [
