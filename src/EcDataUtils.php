@@ -139,7 +139,8 @@ class EcDataUtils {
       }
       elseif ($clone_wrapper->{$field_name}->type() == 'text' && $clone_wrapper->{$field_name}->label()) {
         $cloned_entity->{$field_name} = [
-          $clone_wrapper->{$field_name}->value() => $clone_wrapper->{$field_name}->label(),
+          'machine_name' => $clone_wrapper->{$field_name}->value(),
+          'label' => $clone_wrapper->{$field_name}->label(),
         ];
       }
       else {
