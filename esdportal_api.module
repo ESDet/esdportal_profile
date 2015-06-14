@@ -1329,7 +1329,11 @@ function esdportal_api_query_school_profile_application_required_alter(\QueryAlt
 function esdportal_api_query_school_profile_collegereadiness_alter(\QueryAlterableInterface &$query) {
   // First, inner join with school_profiles.
   _esdportal_api_add_school_profile_join($query);
-  // TODO: finish this.
+
+  $query->join('field_data_field_college_prep', 'collegeprep', "collegeprep.entity_id=school_profile_ref.entity_id AND collegeprep.field_college_prep_value IS NOT NULL AND collegeprep.field_college_prep_value != 'none'");
+  $query->join('field_data_field_facilities', 'facil', "facil.entity_id=school_profile_ref.entity_id AND facil.field_facilities_value = 'college_center'");
+  $query->leftJoin('field_data_field_extra_learning_resources', 'extralearn', "extralearn.entity_id=school_profile_ref.entity_id AND extralearn.field_extra_learning_resources_value = 'career_counseling'");
+  $query->leftJoin('field_data_field_staff_resources', 'staffres', "staffres.entity_id=school_profile_ref.entity_id AND staffres.field_staff_resources_value = 'college_counselor'");
 }
 
 /**
