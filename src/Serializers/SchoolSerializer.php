@@ -32,6 +32,7 @@ use Drupal\esdportal_api\Serializers\meap_2010Serializer;
 use Drupal\esdportal_api\Serializers\meap_2011Serializer;
 use Drupal\esdportal_api\Serializers\meap_2012Serializer;
 use Drupal\esdportal_api\Serializers\meap_2013Serializer;
+use Drupal\esdportal_api\Serializers\meap_2014Serializer;
 
 /**
  * Serializes early childhood taxonomy terms.
