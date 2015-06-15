@@ -1501,3 +1501,105 @@ function esdportal_api_query_school_profile_changed_desc_alter(\QueryAlterableIn
   $order['n.changed'] = 'DESC';
   $order = array_reverse($order, TRUE);
 }
+
+/**
+ * Sort by Early Learning ESD score.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_ec_total_pts_desc_alter(\QueryAlterableInterface &$query) {
+  // Add id join.
+  $query->join('field_data_field_esd_ec_id', 'ec_id', "ec_id.entity_id=taxonomy_term_data.tid AND ec_id.bundle='ec'");
+
+  // Add esd_el_2015 join.
+  $query->join('esd_el_2015', 'esd_el_2015', 'esd_el_2015.program_id=ec_id.field_esd_ec_id_value');
+
+  // Our orderBy comes first.
+  $order =& $query->getOrderBy();
+  $order = array_reverse($order, TRUE);
+  $order['esd_el_2015.total_points'] = 'DESC';
+  $order = array_reverse($order, TRUE);
+}
+
+/**
+ * Sort by Early Learning ESD score.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_ec_total_pts_asc_alter(\QueryAlterableInterface &$query) {
+  // Add id join.
+  $query->join('field_data_field_esd_ec_id', 'ec_id', "ec_id.entity_id=taxonomy_term_data.tid AND ec_id.bundle='ec'");
+
+  // Add esd_el_2015 join.
+  $query->join('esd_el_2015', 'esd_el_2015', 'esd_el_2015.program_id=ec_id.field_esd_ec_id_value');
+
+  // Our orderBy comes first.
+  $order =& $query->getOrderBy();
+  $order = array_reverse($order, TRUE);
+  $order['esd_el_2015.total_points'] = 'ASC';
+  $order = array_reverse($order, TRUE);
+}
+
+/**
+ * Sort by K8/HS ESD score.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_school_combined_total_pts_desc_alter(\QueryAlterableInterface &$query) {
+  // Add bcode join.
+  $query->join('field_data_field_bcode', 'field_bcode', "field_bcode.entity_id=taxonomy_term_data.tid AND field_bcode.bundle='schools'");
+
+  // Build a UNIONed table of combined K8 & HS scores.
+  $k8_scores = db_select('esd_k8_2015', 'k8scores');
+  $k8_scores->addField('k8scores', 'bcode', 'score_bcode');
+  $k8_scores->addField('k8scores', 'total_pts', 'score');
+
+  $hs_scores = db_select('esd_hs_2015', 'hsscores');
+  $hs_scores->addField('hsscores', 'bcode', 'score_bcode');
+  $hs_scores->addField('hsscores', 'total_pts', 'score');
+
+  $k8_scores->union($hs_scores);
+
+  // Join with our query.
+  $query->join($k8_scores, 'scores', 'score_bcode=field_bcode.field_bcode_value');
+
+  // Our orderBy comes first.
+  $order =& $query->getOrderBy();
+  $order = array_reverse($order, TRUE);
+  $order['scores.score'] = 'DESC';
+  $order = array_reverse($order, TRUE);
+}
+
+/**
+ * Sort by K8/HS ESD score.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_school_combined_total_pts_asc_alter(\QueryAlterableInterface &$query) {
+  // Add bcode join.
+  $query->join('field_data_field_bcode', 'field_bcode', "field_bcode.entity_id=taxonomy_term_data.tid AND field_bcode.bundle='schools'");
+
+  // Build a UNIONed table of combined K8 & HS scores.
+  $k8_scores = db_select('esd_k8_2015', 'k8scores');
+  $k8_scores->addField('k8scores', 'bcode', 'score_bcode');
+  $k8_scores->addField('k8scores', 'total_pts', 'score');
+
+  $hs_scores = db_select('esd_hs_2015', 'hsscores');
+  $hs_scores->addField('hsscores', 'bcode', 'score_bcode');
+  $hs_scores->addField('hsscores', 'total_pts', 'score');
+
+  $k8_scores->union($hs_scores);
+
+  // Join with our query.
+  $query->join($k8_scores, 'scores', 'score_bcode=field_bcode.field_bcode_value');
+
+  // Our orderBy comes first.
+  $order =& $query->getOrderBy();
+  $order = array_reverse($order, TRUE);
+  $order['scores.score'] = 'ASC';
+  $order = array_reverse($order, TRUE);
+}
