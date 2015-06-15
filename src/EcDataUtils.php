@@ -128,8 +128,11 @@ class EcDataUtils {
         $iter = 0;
 
         foreach ($clone_wrapper->{$field_name}->value() as $machine_val) {
+          $label = $opts[$machine_val];
+
           $newval[$iter]['machine_name'] = $machine_val;
-          $newval[$iter]['label'] = $opts[$machine_val];
+          // For fields with only labels, set both as the same thing.
+          $newval[$iter]['label'] = ($label) ? $label : $machine_val;
           $iter++;
         }
         unset($iter);
