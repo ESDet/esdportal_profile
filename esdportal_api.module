@@ -17,6 +17,11 @@ define("ESDPORTAL_API_MAX_LIMIT", 1000);
 define("ESDPORTAL_API_SPECIALTAGS_SCHOOLS", "school_profile_has_specialed, school_profile_has_arts, school_profile_has_sports, school_profile_has_transportation, school_profile_has_before_after_care, school_profile_application_required, school_profile_collegereadiness");
 define("ESDPORTAL_API_SPECIALTAGS_ECS", "ec_profile_is_free_or_reduced_cost, ec_profile_has_transportation, ec_profile_has_special_needs_experience, ec_profile_has_meals, has_esd_el_2014, has_esd_el_2015");
 
+// Do the same for special sorts:
+// These sorts are defined as query tags with names "sort_tag_[asc|desc]".
+define("ESDPORTAL_API_SPECIALSORTS_ECS", "ec_profile_changed, ec_total_pts");
+define("ESDPORTAL_API_SPECIALSORTS_SCHOOLS", "school_profile_changed, school_combined_total_pts");
+
 /**
  * Implements hook_services_resources().
  *
@@ -118,6 +123,24 @@ function esdportal_api_services_resources() {
               'description' => 'A comma separated list of order specifiers (DESC or ASC) indicating the direction the sort_by values should be applied to the result set.',
               'optional' => TRUE,
               'source' => array('param' => 'sort_order'),
+              'default value' => 'DESC',
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'sort_by_special',
+              'type' => 'string',
+              'description' => 'A comma separated list of special sorts to apply. Options: ' . ESDPORTAL_API_SPECIALSORTS_ECS,
+              'optional' => TRUE,
+              'source' => array('param' => 'sort_by_special'),
+              'default value' => 'name',
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'sort_order_special',
+              'type' => 'string',
+              'description' => 'A comma separated list of order specifiers (DESC or ASC) indicating the direction the sort_by_special values should be applied to the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'sort_order_special'),
               'default value' => 'DESC',
               'commerce_services_explode' => ',',
             ),
@@ -291,6 +314,24 @@ function esdportal_api_services_resources() {
               'commerce_services_explode' => ',',
             ),
             array(
+              'name' => 'sort_by_special',
+              'type' => 'string',
+              'description' => 'A comma separated list of special sorts to apply. Options: ' . ESDPORTAL_API_SPECIALSORTS_SCHOOLS,
+              'optional' => TRUE,
+              'source' => array('param' => 'sort_by_special'),
+              'default value' => 'name',
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'sort_order_special',
+              'type' => 'string',
+              'description' => 'A comma separated list of order specifiers (DESC or ASC) indicating the direction the sort_by_special values should be applied to the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'sort_order_special'),
+              'default value' => 'DESC',
+              'commerce_services_explode' => ',',
+            ),
+            array(
               'name' => 'limit',
               'type' => 'int',
               'description' => 'Limit response count (default ' . ESDPORTAL_API_DEFAULT_LIMIT . ')',
@@ -416,6 +457,11 @@ function _esdportal_api_get_related_nid($bundle, $term) {
  * @param array|bool $sort_order
  *   The corresponding sort orders for the fields specified in the $sort_by
  *   array; one of either 'DESC' or 'ASC'.
+ * @param array|bool $sort_by_special
+ *   A comma separated list of special sorts to apply.
+ * @param array|bool $sort_order_special
+ *   The corresponding sort orders for the fields specified in the
+ *   $sort_by_special array; one of either 'DESC' or 'ASC'.
  * @param int $limit
  *   If null, return all results.
  * @param int $offset
@@ -424,10 +470,10 @@ function _esdportal_api_get_related_nid($bundle, $term) {
  * @return array
  *   JSON-API data.
  */
-function _esdportal_api_index_ecs($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $limit = NULL, $offset = 0) {
+function _esdportal_api_index_ecs($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $sort_by_special = FALSE, $sort_order_special = FALSE, $limit = NULL, $offset = 0) {
   $document = new Document();
 
-  list($ecs, $total) = _esdportal_api_taxonomy_get_tree(19, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $limit, $offset);
+  list($ecs, $total) = _esdportal_api_taxonomy_get_tree(19, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $sort_by_special, $sort_order_special, $limit, $offset);
 
   $link_to_self = $_SERVER['REQUEST_URI'];
 
@@ -587,7 +633,11 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE)
  *   valid properties, single column field names, or multi-column field column
  *   names for the matching entity type.
  * @param array|bool $sort_order
- *   The corresponding sort orders for the fields specified in the $sort_by
+ *   The corresponding sort orders for the fields specified in the $sort_by.
+ * @param array|bool $sort_by_special
+ *   A comma separated list of special sorts to apply.
+ * @param array|bool $sort_order_special
+ *   The corresponding sort orders for the fields specified in the
  *   array; one of either 'DESC' or 'ASC'.
  * @param int $limit
  *   If null, return all results.
@@ -597,10 +647,10 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE)
  * @return array
  *   JSON-API data.
  */
-function _esdportal_api_index_schools($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $limit = NULL, $offset = 0) {
+function _esdportal_api_index_schools($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $sort_by_special = FALSE, $sort_order_special = FALSE, $limit = NULL, $offset = 0) {
   $document = new Document();
 
-  list($schools, $total) = _esdportal_api_taxonomy_get_tree(4, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $limit, $offset);
+  list($schools, $total) = _esdportal_api_taxonomy_get_tree(4, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $sort_by_special, $sort_order_special, $limit, $offset);
 
   $link_to_self = $_SERVER['REQUEST_URI'];
 
@@ -845,6 +895,11 @@ function _esdportal_api_load_includes_for_ecs(array &$ecs, array $includes = [],
  * @param array $sort_order
  *   The corresponding sort orders for the fields specified in the $sort_by
  *   array; one of either 'DESC' or 'ASC'.
+ * @param array|bool $sort_by_special
+ *   A comma separated list of special sorts to apply.
+ * @param array|bool $sort_order_special
+ *   The corresponding sort orders for the fields specified in the
+ *   array; one of either 'DESC' or 'ASC'.
  * @param int $limit
  *   The number of entities to retrieve.
  * @param int $offset
@@ -853,7 +908,7 @@ function _esdportal_api_load_includes_for_ecs(array &$ecs, array $includes = [],
  * @return array
  *   Array of term objects & total # of results.
  */
-function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op, array $filter_special, array $sort_by, array $sort_order, $limit, $offset) {
+function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op, array $filter_special, array $sort_by, array $sort_order, array $sort_by_special, array $sort_order_special, $limit, $offset) {
   // Start building a query.
   $query = new EntityFieldQuery();
 
@@ -882,6 +937,33 @@ function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op,
       if (in_array($tag, $allowed_tags)) {
         $query->addTag($tag);
       }
+    }
+  }
+
+  // Add special sorts.
+  if ($sort_by_special) {
+    $allowed_special_sorts = explode(', ', ESDPORTAL_API_SPECIALSORTS_ECS . ', ' . ESDPORTAL_API_SPECIALSORTS_SCHOOLS);
+
+    // As in commerce_services:
+    // Loop over each sort field to add them as property or field order by
+    // directions on the query object. This function assumes the $sort_by and
+    // $sort_order arrays contain an equal number of elements with keys matching
+    // the sort field to the appropriate sort order.
+    foreach ($sort_by_special as $sort_key => $sort_field) {
+      // Determine the corresponding sort direction for this sort field,
+      // defaulting to DESC in case of an erroneous request.
+      $direction = 'DESC';
+
+      if (!empty($sort_order_special[$sort_key])) {
+        $direction = strtolower($sort_order_special[$sort_key]);
+      }
+
+      if (in_array($sort_by_special[$sort_key], $allowed_special_sorts)) {
+        // Construct tag as "special_sort_name_DIR"
+        $tag = $sort_by_special[$sort_key] . '_' . $direction;
+        $query->addTag($tag);
+      }
+
     }
   }
 
@@ -1346,4 +1428,76 @@ function _esdportal_api_add_school_profile_join(\QueryAlterableInterface &$query
   $query->join('field_data_field_school', 'school_profile_ref', 'school_profile_ref.field_school_tid=taxonomy_term_data.tid');
   $query->condition('school_profile_ref.bundle', 'school_profile', '=');
   $query->addField('school_profile_ref', 'entity_id', 'school_profile_id');
+}
+
+/**
+ * Sort by ec profile changed timestamp, ascending.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_ec_profile_changed_asc_alter(\QueryAlterableInterface &$query) {
+  _esdportal_api_add_ec_profile_join($query);
+
+  $query->join('node', 'n', 'ec_profile_ref.entity_id=n.nid');
+
+  // Our orderBy comes first!
+  $order =& $query->getOrderBy();
+  $order = array_reverse($order, TRUE);
+  $order['n.changed'] = 'ASC';
+  $order = array_reverse($order, TRUE);
+}
+
+/**
+ * Sort by ec profile changed timestamp, descending.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_ec_profile_changed_desc_alter(\QueryAlterableInterface &$query) {
+  _esdportal_api_add_ec_profile_join($query);
+
+  $query->join('node', 'n', 'ec_profile_ref.entity_id=n.nid');
+
+  // Our orderBy comes first!
+  $order =& $query->getOrderBy();
+  $order = array_reverse($order, TRUE);
+  $order['n.changed'] = 'DESC';
+  $order = array_reverse($order, TRUE);
+}
+
+/**
+ * Sort by school profile changed timestamp, ascending.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_school_profile_changed_asc_alter(\QueryAlterableInterface &$query) {
+  _esdportal_api_add_school_profile_join($query);
+
+  $query->join('node', 'n', 'school_profile_ref.entity_id=n.nid');
+
+  // Our orderBy comes first!
+  $order =& $query->getOrderBy();
+  $order = array_reverse($order, TRUE);
+  $order['n.changed'] = 'ASC';
+  $order = array_reverse($order, TRUE);
+}
+
+/**
+ * Sort by school profile changed timestamp, descending.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_school_profile_changed_desc_alter(\QueryAlterableInterface &$query) {
+  _esdportal_api_add_school_profile_join($query);
+
+  $query->join('node', 'n', 'school_profile_ref.entity_id=n.nid');
+
+  // Our orderBy comes first!
+  $order =& $query->getOrderBy();
+  $order = array_reverse($order, TRUE);
+  $order['n.changed'] = 'DESC';
+  $order = array_reverse($order, TRUE);
 }
