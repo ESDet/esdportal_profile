@@ -702,6 +702,9 @@ function _esdportal_api_get_ec_data_tables() {
 /**
  * Loads all includes for a set of schools.
  *
+ * First, load BCODE-related data tables (not as positive of a match as schid)
+ * and then try loading schid-related tables.
+ *
  * @param array &$schools
  *   School entities.
  * @param array $includes
@@ -710,10 +713,15 @@ function _esdportal_api_get_ec_data_tables() {
  *   Whether or not to flattenFields.
  */
 function _esdportal_api_load_includes_for_schools(array &$schools, array $includes = [], $flatten_fields = NULL) {
-  $potential_data_tables = \Drupal\esdportal_api\EcDataUtils::getDataTablesWithBcodes();
-  $potential_data_table_names = \Drupal\esdportal_api\EcDataUtils::extractDataTableNames($potential_data_tables);
+  $potential_bcode_data_tables = \Drupal\esdportal_api\EcDataUtils::getDataTablesWithBcodes();
+  $potential_bcode_data_table_names = \Drupal\esdportal_api\EcDataUtils::extractDataTableNames($potential_bcode_data_tables);
 
-  $tables_to_include = array_intersect($potential_data_table_names, $includes);
+  $bcode_tables_to_include = array_intersect($potential_bcode_data_table_names, $includes);
+
+  $potential_schid_data_tables = \Drupal\esdportal_api\EcDataUtils::getDataTablesWithEsdSchids();
+  $potential_schid_data_table_names = \Drupal\esdportal_api\EcDataUtils::extractDataTableNames($potential_schid_data_tables);
+
+  $schid_tables_to_include = array_intersect($potential_schid_data_table_names, $includes);
 
   foreach ($schools as &$school) {
     // Some schools don't have BCODEs.
@@ -722,6 +730,14 @@ function _esdportal_api_load_includes_for_schools(array &$schools, array $includ
     }
     else {
       $school->bcode = $school->field_bcode[LANGUAGE_NONE][0]['value'];
+    }
+
+    // Some schools don't have ESD internal school IDs.
+    if (!isset($school->field_esd_schid[LANGUAGE_NONE])) {
+      $school->esd_schid = NULL;
+    }
+    else {
+      $school->esd_schid = $school->field_esd_schid[LANGUAGE_NONE][0]['value'];
     }
 
     if ($flatten_fields) {
@@ -745,12 +761,13 @@ function _esdportal_api_load_includes_for_schools(array &$schools, array $includ
   }
   unset($school);
 
-  if (count($tables_to_include) > 0) {
+  // First, load BCODE-joined tables...
+  if (count($bcode_tables_to_include) > 0) {
     // we've got some data tables to include!
     foreach ($schools as &$school) {
       if ($school->bcode !== NULL) {
-        foreach ($tables_to_include as $table) {
-          $table_info = $potential_data_tables[$table];
+        foreach ($bcode_tables_to_include as $table) {
+          $table_info = $potential_bcode_data_tables[$table];
           $data_table_identifier = $table_info->name;
 
           $q = db_select($table_info->name)
@@ -773,6 +790,41 @@ function _esdportal_api_load_includes_for_schools(array &$schools, array $includ
           $data = $res->fetchObject();
 
           $school->{$data_table_identifier} = ($data) ? $data : FALSE;
+        }
+      }
+    }
+    unset($school);
+  }
+
+  // And then overwrite (if necessary) or add internal-ID-joined tables.
+  if (count($schid_tables_to_include) > 0) {
+    foreach ($schools as &$school) {
+      if ($school->esd_schid !== NULL) {
+        foreach ($schid_tables_to_include as $table) {
+          $table_info = $potential_schid_data_tables[$table];
+          $data_table_identifier = $table_info->name;
+
+          $q = db_select($table_info->name)
+                 ->fields($table_info->name)
+                 ->condition($table_info->meta['join']['field_data_field_esd_schid']['field'], $school->esd_schid);
+
+          try {
+            $res = $q->execute();
+          }
+          catch (Exception $e) {
+            // No table?
+            if ($e->getCode() == '42') {
+              // Do nothing for now...
+            }
+            else {
+              watchdog_exception('_esdportal_api_load_includes_for_schools', $e);
+            }
+          }
+
+          $data = $res->fetchObject();
+
+          // Keep BCODE data if it's there already.
+          $school->{$data_table_identifier} = ($data) ? $data : $school->{$data_table_identifier};
         }
       }
     }

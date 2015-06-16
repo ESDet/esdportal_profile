@@ -47,6 +47,18 @@ class EcDataUtils {
   }
 
   /**
+   * Returns data tables that JOIN by ESD internal school ID.
+   *
+   * @return array
+   *   Array of drupal data table objects.
+   */
+  public static function getDataTablesWithEsdSchids() {
+    return array_filter(data_get_all_tables(), function($table) {
+      return (isset($table->meta['join']) && isset($table->meta['join']['field_data_field_esd_schid']));
+    });
+  }
+
+  /**
    * Returns data tables that JOIN by earlychild programid.
    *
    * @return array
