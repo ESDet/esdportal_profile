@@ -1001,6 +1001,12 @@ function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op,
     // directions on the query object. This function assumes the $sort_by and
     // $sort_order arrays contain an equal number of elements with keys matching
     // the sort field to the appropriate sort order.
+    //
+    // To avoid contradictory / duplicate sorts, build the array of sort => dir
+    // and then add the tags from there.
+
+    $special_sorts = [];
+
     foreach ($sort_by_special as $sort_key => $sort_field) {
       // Determine the corresponding sort direction for this sort field,
       // defaulting to DESC in case of an erroneous request.
@@ -1010,12 +1016,17 @@ function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op,
         $direction = strtolower($sort_order_special[$sort_key]);
       }
 
-      if (in_array($sort_by_special[$sort_key], $allowed_special_sorts)) {
-        // Construct tag as "special_sort_name_DIR"
-        $tag = $sort_by_special[$sort_key] . '_' . $direction;
-        $query->addTag($tag);
-      }
+      $sort_type = $sort_by_special[$sort_key];
 
+      if (in_array($sort_type, $allowed_special_sorts)) {
+        $special_sorts[$sort_type] = $direction;
+      }
+    }
+
+    foreach ($special_sorts as $sort_type => $direction) {
+      // Construct tag as "special_sort_name_DIR"
+      $tag = $sort_by_special[$sort_key] . '_' . $direction;
+      $query->addTag($tag);
     }
   }
 
