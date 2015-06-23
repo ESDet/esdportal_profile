@@ -1572,11 +1572,8 @@ function esdportal_api_query_school_profile_changed_desc_alter(\QueryAlterableIn
  *   A query, probably looking for school taxonomy terms.
  */
 function esdportal_api_query_ec_total_pts_desc_alter(\QueryAlterableInterface &$query) {
-  // Add id join.
-  $query->join('field_data_field_esd_ec_id', 'ec_id', "ec_id.entity_id=taxonomy_term_data.tid AND ec_id.bundle='ec'");
-
-  // Add esd_el_2015 join.
-  $query->join('esd_el_2015', 'esd_el_2015', 'esd_el_2015.program_id=ec_id.field_esd_ec_id_value');
+  // Add tag (which also adds needed joins)
+  $query->addTag('has_esd_el_2015');
 
   // Our orderBy comes first.
   $order =& $query->getOrderBy();
@@ -1592,11 +1589,8 @@ function esdportal_api_query_ec_total_pts_desc_alter(\QueryAlterableInterface &$
  *   A query, probably looking for school taxonomy terms.
  */
 function esdportal_api_query_ec_total_pts_asc_alter(\QueryAlterableInterface &$query) {
-  // Add id join.
-  $query->join('field_data_field_esd_ec_id', 'ec_id', "ec_id.entity_id=taxonomy_term_data.tid AND ec_id.bundle='ec'");
-
-  // Add esd_el_2015 join.
-  $query->join('esd_el_2015', 'esd_el_2015', 'esd_el_2015.program_id=ec_id.field_esd_ec_id_value');
+  // Add tag (which also adds needed joins)
+  $query->addTag('has_esd_el_2015');
 
   // Our orderBy comes first.
   $order =& $query->getOrderBy();
