@@ -1589,6 +1589,7 @@ function esdportal_api_query_ec_total_pts_desc_alter(\QueryAlterableInterface &$
   // Add tag (which also adds needed joins)
   if (!$query->hasTag('has_esd_el_2015')) {
     esdportal_api_query_has_esd_el_2015_alter($query);
+    $query->addTag('has_esd_el_2015');
   }
 
   // Our orderBy comes first.
@@ -1608,6 +1609,7 @@ function esdportal_api_query_ec_total_pts_asc_alter(\QueryAlterableInterface &$q
   // Add tag (which also adds needed joins)
   if (!$query->hasTag('has_esd_el_2015')) {
     esdportal_api_query_has_esd_el_2015_alter($query);
+    $query->addTag('has_esd_el_2015');
   }
 
   // Our orderBy comes first.
