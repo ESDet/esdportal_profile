@@ -47,6 +47,14 @@ function esdportal_api_services_resources() {
               'default value' => NULL,
             ),
             array(
+              'name' => 'includes',
+              'type' => 'string',
+              'description' => 'Include other datasets, comma-separated (current options: ec_profile, most_recent_ec_state_rating, ' . implode(', ', _esdportal_api_get_ec_data_tables()) . ', all)',
+              'source' => array('param' => 'includes'),
+              'optional' => TRUE,
+              'default value' => NULL,
+            ),
+            array(
               'name' => 'flatten_fields',
               'type' => 'int',
               'description' => 'Remove localization structure from fields if true',
@@ -362,40 +370,46 @@ function esdportal_api_services_resources() {
  *
  * @param int $id
  *   ESD internal ec id.
+ * @param string $includes
+ *   Related datasets to include, comma-separated. 'all' will include all.
  * @param bool $flatten_fields
  *   If true, remove l10n structure & other drupal crap from response.
  *
  * @return array
  *   Nested array of the ec data.
  */
-function _esdportal_api_retrieve_ec($id, $flatten_fields = FALSE) {
+function _esdportal_api_retrieve_ec($id, $includes, $flatten_fields = FALSE) {
   $document = new Document();
 
   $ec = taxonomy_term_load($id);
-  if (!$ec) {
+
+  if (!$ec || $ec->vid != 19) {
     return services_error(t('early childhood center @id does not exist.', array('@id' => $id)), 404);
   }
 
-  $ec->ec_profile_id = _esdportal_api_get_related_nid('ec_profile', $ec);
+  $all_includes = array_merge(['ec_profile', 'most_recent_ec_state_rating'], _esdportal_api_get_ec_data_tables());
 
-  if ($ec->ec_profile_id) {
-    $ec->ec_profile = node_load($ec->ec_profile_id);
+  $includes = (strlen($includes) > 0) ? explode(',', $includes) : NULL;
 
-    if ($flatten_fields) {
-      _esdportal_api_flatten_entity_fields('node', $ec->ec_profile);
-    }
+  // Add ec_profile and most_recent_ec_state_rating by default if no other
+  // includes are specified.
+  if (!count($includes)) {
+    $includes[] = 'ec_profile';
+    $includes[] = 'most_recent_ec_state_rating';
   }
 
-  if ($flatten_fields) {
-    _esdportal_api_flatten_entity_fields('taxonomy_term', $ec);
+  // Include all the includes.
+  if (in_array('all', $includes)) {
+    $includes = $all_includes;
   }
 
-  $ec->most_recent_ec_state_rating = (object) _esdportal_api_retrieve_ec_state_rating(\Drupal\esdportal_api\EcDataUtils::getEcId($ec));
-  $ec->most_recent_ec_state_rating_id = $ec->most_recent_ec_state_rating->rating_id;
+  $serializer = ($includes) ? new EcSerializer($includes) : new EcSerializer();
 
-  $serializer = new EcSerializer(['ec_profile', 'most_recent_ec_state_rating']);
+  $ecs = [$ec];
 
-  $resource = $serializer->resource($ec);
+  _esdportal_api_load_includes_for_ecs($ecs, $includes, $flatten_fields);
+
+  $resource = $serializer->resource($ecs[0]);
 
   $document->setData($resource);
 
