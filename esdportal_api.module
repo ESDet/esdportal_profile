@@ -1355,7 +1355,10 @@ function _esdportal_api_add_ec_ti_join(\QueryAlterableInterface &$query) {
  */
 function esdportal_api_query_school_profile_has_specialed_alter(\QueryAlterableInterface &$query) {
   // First, inner join with school_profiles.
-  _esdportal_api_add_school_profile_join($query);
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
 
   $query->join('field_data_field_special_ed_level', 'special_ed_level', 'special_ed_level.entity_id=school_profile_ref.entity_id');
   $query->condition('special_ed_level.field_special_ed_level_value', array('moderate', 'intensive'), 'IN');
@@ -1372,7 +1375,10 @@ function esdportal_api_query_school_profile_has_specialed_alter(\QueryAlterableI
  */
 function esdportal_api_query_school_profile_has_arts_alter(\QueryAlterableInterface &$query) {
   // First, inner join with school_profiles.
-  _esdportal_api_add_school_profile_join($query);
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
 
   $q_visual = db_select('field_data_field_arts_visual', 'favisual')
     ->condition('field_arts_visual_value', 'None', '!=');
@@ -1419,7 +1425,10 @@ function esdportal_api_query_school_profile_has_arts_alter(\QueryAlterableInterf
  */
 function esdportal_api_query_school_profile_has_sports_alter(\QueryAlterableInterface &$query) {
   // First, inner join with school_profiles.
-  _esdportal_api_add_school_profile_join($query);
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
 
   $q_boysports = db_select('field_data_field_boys_sports', 'fbs')
     ->condition('field_boys_sports_value', 'none', '!=');
@@ -1448,7 +1457,10 @@ function esdportal_api_query_school_profile_has_sports_alter(\QueryAlterableInte
  */
 function esdportal_api_query_school_profile_has_transportation_alter(\QueryAlterableInterface &$query) {
   // First, inner join with school_profiles.
-  _esdportal_api_add_school_profile_join($query);
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
 
   $query->join('field_data_field_transportation_options', 'transport_opts', "transport_opts.entity_id=school_profile_ref.entity_id AND transport_opts.field_transportation_options_value IN ('passes', 'busses', 'shared bus')");
 }
@@ -1460,7 +1472,10 @@ function esdportal_api_query_school_profile_has_transportation_alter(\QueryAlter
  */
 function esdportal_api_query_school_profile_has_before_after_care_alter(\QueryAlterableInterface &$query) {
   // First, inner join with school_profiles.
-  _esdportal_api_add_school_profile_join($query);
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
 
   $query->join('field_data_field_before_after_care', 'beforeaftercare', "beforeaftercare.entity_id=school_profile_ref.entity_id AND beforeaftercare.field_before_after_care_value IN ('before', 'after')");
 }
@@ -1472,7 +1487,10 @@ function esdportal_api_query_school_profile_has_before_after_care_alter(\QueryAl
  */
 function esdportal_api_query_school_profile_application_required_alter(\QueryAlterableInterface &$query) {
   // First, inner join with school_profiles.
-  _esdportal_api_add_school_profile_join($query);
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
 
   $query->join('field_data_field_application_process', 'apppx', "apppx.entity_id=school_profile_ref.entity_id AND apppx.field_application_process_value='yes'");
 }
@@ -1487,7 +1505,10 @@ function esdportal_api_query_school_profile_application_required_alter(\QueryAlt
  */
 function esdportal_api_query_school_profile_collegereadiness_alter(\QueryAlterableInterface &$query) {
   // First, inner join with school_profiles.
-  _esdportal_api_add_school_profile_join($query);
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
 
   $query->join('field_data_field_college_prep', 'collegeprep', "collegeprep.entity_id=school_profile_ref.entity_id AND collegeprep.field_college_prep_value IS NOT NULL AND collegeprep.field_college_prep_value != 'none'");
   $query->join('field_data_field_facilities', 'facil', "facil.entity_id=school_profile_ref.entity_id AND facil.field_facilities_value = 'college_center'");
@@ -1501,7 +1522,7 @@ function esdportal_api_query_school_profile_collegereadiness_alter(\QueryAlterab
  * @param \QueryAlterableInterface &$query
  *   A query, probably looking for school taxonomy terms.
  */
-function _esdportal_api_add_school_profile_join(\QueryAlterableInterface &$query) {
+function esdportal_api_query_has_school_profile_alter(\QueryAlterableInterface &$query) {
   $query->join('field_data_field_school', 'school_profile_ref', 'school_profile_ref.field_school_tid=taxonomy_term_data.tid');
   $query->condition('school_profile_ref.bundle', 'school_profile', '=');
   $query->addField('school_profile_ref', 'entity_id', 'school_profile_id');
@@ -1550,7 +1571,10 @@ function esdportal_api_query_ec_profile_changed_desc_alter(\QueryAlterableInterf
  *   A query, probably looking for school taxonomy terms.
  */
 function esdportal_api_query_school_profile_changed_asc_alter(\QueryAlterableInterface &$query) {
-  _esdportal_api_add_school_profile_join($query);
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
 
   $query->join('node', 'n', 'school_profile_ref.entity_id=n.nid');
 
@@ -1568,7 +1592,10 @@ function esdportal_api_query_school_profile_changed_asc_alter(\QueryAlterableInt
  *   A query, probably looking for school taxonomy terms.
  */
 function esdportal_api_query_school_profile_changed_desc_alter(\QueryAlterableInterface &$query) {
-  _esdportal_api_add_school_profile_join($query);
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
 
   $query->join('node', 'n', 'school_profile_ref.entity_id=n.nid');
 
@@ -1620,6 +1647,16 @@ function esdportal_api_query_ec_total_pts_asc_alter(\QueryAlterableInterface &$q
 }
 
 /**
+ * Adds a BCODE join to a school query.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_has_bcode_alter(\QueryAlterableInterface &$query) {
+  $query->join('field_data_field_bcode', 'field_bcode', "field_bcode.entity_id=taxonomy_term_data.tid AND field_bcode.bundle='schools'");
+}
+
+/**
  * Sort by K8/HS ESD score.
  *
  * @param \QueryAlterableInterface &$query
@@ -1627,7 +1664,10 @@ function esdportal_api_query_ec_total_pts_asc_alter(\QueryAlterableInterface &$q
  */
 function esdportal_api_query_school_combined_total_pts_desc_alter(\QueryAlterableInterface &$query) {
   // Add bcode join.
-  $query->join('field_data_field_bcode', 'field_bcode', "field_bcode.entity_id=taxonomy_term_data.tid AND field_bcode.bundle='schools'");
+  if (!$query->hasTag('has_bcode')) {
+    esdportal_api_query_has_bcode_alter($query);
+    $query->addTag('has_bcode');
+  }
 
   // Build a UNIONed table of combined K8 & HS scores.
   $k8_scores = db_select('esd_k8_2015', 'k8scores');
@@ -1658,7 +1698,10 @@ function esdportal_api_query_school_combined_total_pts_desc_alter(\QueryAlterabl
  */
 function esdportal_api_query_school_combined_total_pts_asc_alter(\QueryAlterableInterface &$query) {
   // Add bcode join.
-  $query->join('field_data_field_bcode', 'field_bcode', "field_bcode.entity_id=taxonomy_term_data.tid AND field_bcode.bundle='schools'");
+  if (!$query->hasTag('has_bcode')) {
+    esdportal_api_query_has_bcode_alter($query);
+    $query->addTag('has_bcode');
+  }
 
   // Build a UNIONed table of combined K8 & HS scores.
   $k8_scores = db_select('esd_k8_2015', 'k8scores');
