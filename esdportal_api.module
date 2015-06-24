@@ -1587,7 +1587,9 @@ function esdportal_api_query_school_profile_changed_desc_alter(\QueryAlterableIn
  */
 function esdportal_api_query_ec_total_pts_desc_alter(\QueryAlterableInterface &$query) {
   // Add tag (which also adds needed joins)
-  $query->addTag('has_esd_el_2015');
+  if (!$query->hasTag('has_esd_el_2015')) {
+    esdportal_api_query_has_esd_el_2015_alter($query);
+  }
 
   // Our orderBy comes first.
   $order =& $query->getOrderBy();
@@ -1604,7 +1606,9 @@ function esdportal_api_query_ec_total_pts_desc_alter(\QueryAlterableInterface &$
  */
 function esdportal_api_query_ec_total_pts_asc_alter(\QueryAlterableInterface &$query) {
   // Add tag (which also adds needed joins)
-  $query->addTag('has_esd_el_2015');
+  if (!$query->hasTag('has_esd_el_2015')) {
+    esdportal_api_query_has_esd_el_2015_alter($query);
+  }
 
   // Our orderBy comes first.
   $order =& $query->getOrderBy();
