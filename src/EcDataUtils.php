@@ -349,6 +349,11 @@ class EcDataUtils {
         $operator = $filter_op[$filter_field];
       }
 
+      // If operator is IN, try to turn the filter into an array.
+      if ($operator == 'IN') {
+        $filter_value = explode(',', $filter_value);
+      }
+
       // If the current filter field is a property, use a property condition.
       $properties = self::entityTypeProperties($entity_type);
 
