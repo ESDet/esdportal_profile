@@ -1670,7 +1670,7 @@ function esdportal_api_query_school_combined_total_pts_desc_alter(\QueryAlterabl
   // Build a UNIONed table of combined K8 & HS scores.
   $k8_scores = db_select('esd_k8_2015', 'k8scores');
   $k8_scores->addField('k8scores', 'bcode', 'score_bcode');
-  $k8_scores->addField('k8scores', 'total_pts', 'score');
+  $k8_scores->addExpression('k8scores.total_pts*100', 'score');
 
   $hs_scores = db_select('esd_hs_2015', 'hsscores');
   $hs_scores->addField('hsscores', 'bcode', 'score_bcode');
@@ -1704,7 +1704,7 @@ function esdportal_api_query_school_combined_total_pts_asc_alter(\QueryAlterable
   // Build a UNIONed table of combined K8 & HS scores.
   $k8_scores = db_select('esd_k8_2015', 'k8scores');
   $k8_scores->addField('k8scores', 'bcode', 'score_bcode');
-  $k8_scores->addField('k8scores', 'total_pts', 'score');
+  $k8_scores->addExpression('k8scores.total_pts*100', 'score');
 
   $hs_scores = db_select('esd_hs_2015', 'hsscores');
   $hs_scores->addField('hsscores', 'bcode', 'score_bcode');
