@@ -283,7 +283,7 @@ function esdportal_api_services_resources() {
             array(
               'name' => 'filter_op',
               'type' => 'array',
-              'description' => 'An array of field or property names from school entities paired with the operator to use when filtering the result set.',
+              'description' => 'An array of field or property names from school entities paired with the operator to use when filtering the result set. If operator is IN, the query builder will attempt to explode the value of filter by commas (e.g. `filter[field_school_type]=10,922&filter_op[field_school_type]=IN` will be transformed into a `WHERE ... IN (..., ...)` query.',
               'optional' => TRUE,
               'source' => array('param' => 'filter_op'),
               'default value' => array(),
