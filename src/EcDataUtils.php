@@ -368,6 +368,16 @@ class EcDataUtils {
           if (strpos($filter_field, $field_name) === 0) {
             $field_info = field_info_field($field_name);
 
+            // If field is list_boolean, convert true => 1 and false => 0.
+            if ($field_info['type'] == 'list_boolean') {
+              if ($filter_value === 'true') {
+                $filter_value = 1;
+              }
+              if ($filter_value === 'false') {
+                $filter_value = 0;
+              }
+            }
+
             // If it is the field name and the field type has a single column
             // schema, add the field condition to the index query.
             if ($field_name == $filter_field && count($field_info['columns']) == 1) {
