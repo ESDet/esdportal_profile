@@ -14,8 +14,8 @@ define("ESDPORTAL_API_DEFAULT_LIMIT", 100);
 define("ESDPORTAL_API_MAX_LIMIT", 1000);
 
 // Define any filter_special query_TAG_alters here:
-define("ESDPORTAL_API_SPECIALTAGS_SCHOOLS", "school_profile_has_specialed, school_profile_has_arts, school_profile_has_sports, school_profile_has_transportation, school_profile_has_before_after_care, school_profile_application_required, school_profile_collegereadiness");
-define("ESDPORTAL_API_SPECIALTAGS_ECS", "ec_profile_is_free_or_reduced_cost, ec_profile_has_transportation, ec_profile_has_special_needs_experience, ec_profile_has_meals, has_esd_el_2014, has_esd_el_2015");
+define("ESDPORTAL_API_SPECIALTAGS_SCHOOLS", "school_profile_has_specialed, school_profile_has_arts, school_profile_has_sports, school_profile_has_transportation, school_profile_has_before_after_care, school_profile_application_required, school_profile_collegereadiness, esd_k8hs_2015_highscore");
+define("ESDPORTAL_API_SPECIALTAGS_ECS", "ec_profile_is_free_or_reduced_cost, ec_profile_has_transportation, ec_profile_has_special_needs_experience, ec_profile_has_meals, has_esd_el_2014, has_esd_el_2015, esd_el_2015_highscore");
 
 // Do the same for special sorts:
 // These sorts are defined as query tags with names "sort_tag_[asc|desc]".
@@ -1652,6 +1652,51 @@ function esdportal_api_query_ec_total_pts_asc_alter(\QueryAlterableInterface &$q
  */
 function esdportal_api_query_has_bcode_alter(\QueryAlterableInterface &$query) {
   $query->join('field_data_field_bcode', 'field_bcode', "field_bcode.entity_id=taxonomy_term_data.tid AND field_bcode.bundle='schools'");
+}
+
+/**
+ * Only show high scoring schools.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_esd_k8hs_2015_highscore_alter(\QueryAlterableInterface &$query) {
+  // Add bcode join.
+  if (!$query->hasTag('has_bcode')) {
+    esdportal_api_query_has_bcode_alter($query);
+    $query->addTag('has_bcode');
+  }
+
+  // Build a UNIONed table of combined K8 & HS grades.
+  $k8_grades = db_select('esd_k8_2015', 'k8grades');
+  $k8_grades->addField('k8grades', 'bcode', 'grade_bcode');
+  $k8_grades->addField('k8grades', 'total_ltrgrade', 'grade_ltrgrade');
+
+  $hs_grades = db_select('esd_hs_2015', 'hsgrades');
+  $hs_grades->addField('hsgrades', 'bcode', 'grade_bcode');
+  $hs_grades->addField('hsgrades', 'total_ltrgrade', 'grade_ltrgrade');
+
+  $k8_grades->union($hs_grades);
+
+  // Join with our query.
+  $query->join($k8_grades, 'grades', 'grade_bcode=field_bcode.field_bcode_value');
+  $query->condition('grade_ltrgrade', ['C+', 'B-', 'B', 'B+', 'A-', 'A', 'A+'], 'IN');
+}
+
+/**
+ * Only show high scoring early childhood centers.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for early childhood taxonomy terms.
+ */
+function esdportal_api_query_esd_el_2015_highscore_alter(\QueryAlterableInterface &$query) {
+  // Add tag (which also adds needed joins)
+  if (!$query->hasTag('has_esd_el_2015')) {
+    esdportal_api_query_has_esd_el_2015_alter($query);
+    $query->addTag('has_esd_el_2015');
+  }
+
+  $query->condition('esd_el_2015.overall_rating', ['Silver', 'Gold'], 'IN');
 }
 
 /**
