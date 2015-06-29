@@ -401,7 +401,7 @@ function _esdportal_api_retrieve_ec($id, $includes, $flatten_fields = FALSE) {
     $includes = $all_includes;
   }
 
-  $serializer = ($includes) ? new EcSerializer($includes) : new EcSerializer();
+  $serializer = ($includes) ? new EcSerializer($includes) : new EcSerializer([]);
 
   $ecs = [$ec];
 
@@ -504,7 +504,7 @@ function _esdportal_api_index_ecs($includes = NULL, $flatten_fields = FALSE, $fi
     $includes = $all_includes;
   }
 
-  $serializer = ($includes) ? new EcSerializer($includes) : new EcSerializer();
+  $serializer = ($includes) ? new EcSerializer($includes) : new EcSerializer([]);
 
   _esdportal_api_load_includes_for_ecs($ecs, $includes, $flatten_fields);
 
@@ -611,7 +611,7 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE)
     $includes = $all_includes;
   }
 
-  $serializer = ($includes) ? new SchoolSerializer($includes) : new SchoolSerializer();
+  $serializer = ($includes) ? new SchoolSerializer($includes) : new SchoolSerializer([]);
 
   $schools = [$school];
 
@@ -675,7 +675,7 @@ function _esdportal_api_index_schools($includes = NULL, $flatten_fields = FALSE,
     $includes = $all_includes;
   }
 
-  $serializer = ($includes) ? new SchoolSerializer($includes) : new SchoolSerializer();
+  $serializer = ($includes) ? new SchoolSerializer($includes) : new SchoolSerializer([]);
 
   _esdportal_api_load_includes_for_schools($schools, $includes, $flatten_fields);
 
