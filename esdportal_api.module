@@ -1696,7 +1696,7 @@ function esdportal_api_query_esd_el_2015_highscore_alter(\QueryAlterableInterfac
     $query->addTag('has_esd_el_2015');
   }
 
-  $query->condition('esd_el_2015.overall_rating', ['Silver', 'Gold'], 'IN');
+  $query->condition('esd_el_2015.overall_rating', ['Bronze', 'Silver', 'Gold'], 'IN');
 }
 
 /**
