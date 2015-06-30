@@ -1249,7 +1249,10 @@ function esdportal_api_services_request_preprocess_alter($controller, &$args) {
  */
 function esdportal_api_query_ec_profile_is_free_or_reduced_cost_alter(\QueryAlterableInterface &$query) {
   // First, inner join with ec_profiles.
-  _esdportal_api_add_ec_profile_join($query);
+  if (!$query->hasTag('has_ec_profile')) {
+    esdportal_api_query_has_ec_profile_alter($query);
+    $query->addTag('has_ec_profile');
+  }
 
   _esdportal_api_add_ec_ti_join($query);
 
@@ -1263,7 +1266,10 @@ function esdportal_api_query_ec_profile_is_free_or_reduced_cost_alter(\QueryAlte
  */
 function esdportal_api_query_ec_profile_has_transportation_alter(\QueryAlterableInterface &$query) {
   // First, inner join with ec_profiles.
-  _esdportal_api_add_ec_profile_join($query);
+  if (!$query->hasTag('has_ec_profile')) {
+    esdportal_api_query_has_ec_profile_alter($query);
+    $query->addTag('has_ec_profile');
+  }
 
   $query->join('field_data_field_ec_transportation', 'ec_transportation', 'ec_transportation.entity_id=ec_profile_ref.entity_id');
   $query->condition('ec_transportation.field_ec_transportation_value', '1', '=');
@@ -1276,7 +1282,10 @@ function esdportal_api_query_ec_profile_has_transportation_alter(\QueryAlterable
  */
 function esdportal_api_query_ec_profile_has_special_needs_experience_alter(\QueryAlterableInterface &$query) {
   // First, inner join with ec_profiles.
-  _esdportal_api_add_ec_profile_join($query);
+  if (!$query->hasTag('has_ec_profile')) {
+    esdportal_api_query_has_ec_profile_alter($query);
+    $query->addTag('has_ec_profile');
+  }
 
   $query->join('field_data_field_ec_special', 'ec_special', 'ec_special.entity_id=ec_profile_ref.entity_id');
   $query->groupBy('ec_special.entity_id');
@@ -1291,7 +1300,10 @@ function esdportal_api_query_ec_profile_has_special_needs_experience_alter(\Quer
  */
 function esdportal_api_query_ec_profile_has_meals_alter(\QueryAlterableInterface &$query) {
   // First, inner join with ec_profiles.
-  _esdportal_api_add_ec_profile_join($query);
+  if (!$query->hasTag('has_ec_profile')) {
+    esdportal_api_query_has_ec_profile_alter($query);
+    $query->addTag('has_ec_profile');
+  }
 
   $subquery = db_select('taxonomy_index', 'ti_has_meals');
   $subquery->addField('ti_has_meals', 'nid', 'ti_has_meals_nid');
@@ -1328,7 +1340,7 @@ function esdportal_api_query_has_esd_el_2015_alter(\QueryAlterableInterface &$qu
  * @param \QueryAlterableInterface &$query
  *   A query, probably looking for ec taxonomy terms.
  */
-function _esdportal_api_add_ec_profile_join(\QueryAlterableInterface &$query) {
+function esdportal_api_query_has_ec_profile_alter(\QueryAlterableInterface &$query) {
   $query->join('field_data_field_ec', 'ec_profile_ref', 'ec_profile_ref.field_ec_tid=taxonomy_term_data.tid');
   $query->condition('ec_profile_ref.bundle', 'ec_profile', '=');
 }
@@ -1533,7 +1545,10 @@ function esdportal_api_query_has_school_profile_alter(\QueryAlterableInterface &
  *   A query, probably looking for school taxonomy terms.
  */
 function esdportal_api_query_ec_profile_changed_asc_alter(\QueryAlterableInterface &$query) {
-  _esdportal_api_add_ec_profile_join($query);
+  if (!$query->hasTag('has_ec_profile')) {
+    esdportal_api_query_has_ec_profile_alter($query);
+    $query->addTag('has_ec_profile');
+  }
 
   $query->join('node', 'n', 'ec_profile_ref.entity_id=n.nid');
 
@@ -1551,7 +1566,10 @@ function esdportal_api_query_ec_profile_changed_asc_alter(\QueryAlterableInterfa
  *   A query, probably looking for school taxonomy terms.
  */
 function esdportal_api_query_ec_profile_changed_desc_alter(\QueryAlterableInterface &$query) {
-  _esdportal_api_add_ec_profile_join($query);
+  if (!$query->hasTag('has_ec_profile')) {
+    esdportal_api_query_has_ec_profile_alter($query);
+    $query->addTag('has_ec_profile');
+  }
 
   $query->join('node', 'n', 'ec_profile_ref.entity_id=n.nid');
 
