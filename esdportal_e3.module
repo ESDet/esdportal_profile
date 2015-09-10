@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file esdportal_e3.module
+ *
+ * Defines entities and bundles related to ESD's E3 system.
+ */
+
+/**
+ * Implements hook_entity_info().
+ */
+function esdportal_e3_entity_info() {
+  $entity_infos = [
+  ];
+
+  return $entity_infos;
+}
+
