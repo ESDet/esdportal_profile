@@ -1,0 +1,53 @@
+<?php
+/**
+ * Implements hook_schema().
+ */
+function contactentity_schema() {
+  $schema = array();
+
+  $schema['contactentity_contacts'] = array(
+    'description' => 'The base table for the Contact entity',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Primary key of the Contact entity',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'created' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0
+      ),
+      'changed' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0
+      ),
+      'fullname' => array(
+        'description' => 'Contact name.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ),
+      'firstname' => array(
+        'description' => 'Contact first name.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ),
+      'lastname' => array(
+        'description' => 'Contact last name.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+      ),
+    ),
+    'primary key' => array('id'),
+  );
+
+  return $schema;
+}
+
+
+
