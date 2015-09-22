@@ -28,7 +28,7 @@ function esdportal_contact_entity_info() {
       ),
       'label callback' => 'entity_class_label',
       'uri callback' => 'entity_class_uri',
-      'module' => 'esdportal_contact',
+      'module' => 'esdportal_e3',
       'access callback' => 'esdportal_contact_access',
     ),
   );
