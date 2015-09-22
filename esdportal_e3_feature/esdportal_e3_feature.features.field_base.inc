@@ -10,13 +10,31 @@
 function esdportal_e3_feature_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_test_field'
-  $field_bases['field_test_field'] = array(
+  // Exported field_base: 'field_phone'
+  $field_bases['field_phone'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_test_field',
+    'field_name' => 'field_phone',
+    'foreign keys' => array(),
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
+  // Exported field_base: 'field_position_role'
+  $field_bases['field_position_role'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_position_role',
     'foreign keys' => array(
       'format' => array(
         'columns' => array(
