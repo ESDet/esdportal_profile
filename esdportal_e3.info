@@ -8,3 +8,5 @@ dependencies[] = entity
 dependencies[] = views
 
 files[] = esdportal_e3.controller.inc
+files[] = esdportal_e3.admin.inc
+
