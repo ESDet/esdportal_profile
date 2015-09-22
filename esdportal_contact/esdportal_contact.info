@@ -1,0 +1,10 @@
+name = Esdportal Contacts
+description = Creates contact entity and CRUD for bundles.
+package = Other
+version = VERSION
+core = 7.x
+
+dependencies[] = entity
+dependencies[] = views
+
+files[] = esdportal_contact.controller.inc

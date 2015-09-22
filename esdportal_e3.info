@@ -1,5 +1,0 @@
-name = ESD Portal E3 data management
-description = Manages contacts and events related to the E3 program
-core = 7.x
-php = 5.4
-dependencies[] = entity
