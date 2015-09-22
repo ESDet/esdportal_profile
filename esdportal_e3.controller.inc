@@ -84,7 +84,7 @@ class EsdportalContact extends Entity {
   }
 
   protected function defaultUri() {
-    return array('path' => 'task/' . $this->identifier());
+    return array('path' => 'contact/' . $this->identifier());
   }
 }
 
