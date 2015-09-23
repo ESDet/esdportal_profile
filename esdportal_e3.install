@@ -3,27 +3,27 @@
 /**
  * Implements hook_schema().
  */
-function esdportal_contact_schema() {
+function esdportal_e3_schema() {
   $schema = array();
 
   $schema['esdportal_contact'] = array(
     'description' => 'The base table for tasks.',
     'fields' => array(
       'cid' => array(
-        'description' => 'The primary identifier for the contact.',
+        'description' => 'The primary identifier for the task.',
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
       'type' => array(
-        'description' => 'The type (bundle) of this contact.',
+        'description' => 'The type (bundle) of this task.',
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
         'default' => '',
       ),
       'title' => array(
-        'description' => 'The name of the contact.',
+        'description' => 'The title of the task.',
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
@@ -35,19 +35,19 @@ function esdportal_contact_schema() {
         'not null' => TRUE,
       ),
       'created' => array(
-        'description' => 'The Unix timestamp when the contact was created.',
+        'description' => 'The Unix timestamp when the task was created.',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
       ),
       'changed' => array(
-        'description' => 'The Unix timestamp when the contact was most recently saved.',
+        'description' => 'The Unix timestamp when the task was most recently saved.',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
       ),
       'description' => array(
-        'description' => 'contact description.',
+        'description' => 'task description.',
         'type' => 'text',
       ),
     ),
@@ -55,12 +55,12 @@ function esdportal_contact_schema() {
   );
 
   $schema['esdportal_contact_type'] = array(
-    'description' => 'Stores information about all defined contact types.',
+    'description' => 'Stores information about all defined task types.',
     'fields' => array(
       'id' => array(
         'type' => 'serial',
         'not null' => TRUE,
-        'description' => 'Primary Key: Unique contact type ID.',
+        'description' => 'Primary Key: Unique task type ID.',
       ),
       'type' => array(
         'description' => 'The machine-readable name of this type.',

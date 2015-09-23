@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Generates the contact type editing form.
+ * Generates the task type editing form.
  */
 function esdportal_contact_type_form($form, &$form_state, $contact_type, $op = 'edit') {
 
@@ -58,14 +58,14 @@ function esdportal_contact_type_form($form, &$form_state, $contact_type, $op = '
 }
 
 /**
- * Submit handler for creating/editing contact_type.
+ * Submit handler for creating/editing task_type.
  */
 function esdportal_contact_type_form_submit(&$form, &$form_state) {
   $contact_type = entity_ui_form_submit_build_entity($form, $form_state);
   // Save and go back.
   esdportal_contact_type_save($contact_type);
 
-  // Redirect user back to list of contact types.
+  // Redirect user back to list of task types.
   $form_state['redirect'] = 'admin/structure/contact-types';
 }
 
@@ -74,7 +74,7 @@ function esdportal_contact_type_form_submit_delete(&$form, &$form_state) {
 }
 
 /**
- * Contact type delete form.
+ * Task type delete form.
  */
 function esdportal_contact_type_form_delete_confirm($form, &$form_state, $contact_type) {
   $form_state['contact_type'] = $contact_type;
@@ -90,7 +90,7 @@ function esdportal_contact_type_form_delete_confirm($form, &$form_state, $contac
 }
 
 /**
- * Contact type delete form submit handler.
+ * Task type delete form submit handler.
  */
 function esdportal_contact_type_form_delete_confirm_submit($form, &$form_state) {
   $contact_type = $form_state['contact_type'];
@@ -103,7 +103,7 @@ function esdportal_contact_type_form_delete_confirm_submit($form, &$form_state) 
 }
 
 /**
- * Page to select contact Type to add new contact.
+ * Page to select task Type to add new task.
  */
 function esdportal_contact_admin_add_page() {
   $items = array();
@@ -114,7 +114,7 @@ function esdportal_contact_admin_add_page() {
 }
 
 /**
- * Add new contact page callback.
+ * Add new task page callback.
  */
 function esdportal_contact_add($type) {
   $contact_type = esdportal_contact_types($type);
@@ -128,7 +128,7 @@ function esdportal_contact_add($type) {
 }
 
 /**
- * Contact Form.
+ * Task Form.
  */
 function esdportal_contact_form($form, &$form_state, $contact) {
   $form_state['contact'] = $contact;
@@ -168,7 +168,7 @@ function esdportal_contact_form($form, &$form_state, $contact) {
     '#submit' => $submit + array('esdportal_contact_form_submit'),
   );
 
-  // Show Delete button if we edit contact.
+  // Show Delete button if we edit task.
   $contact_id = entity_id('esdportal_contact' ,$contact);
   if (!empty($contact_id) && esdportal_contact_access('edit', $contact)) {
     $form['actions']['delete'] = array(
@@ -188,7 +188,7 @@ function esdportal_contact_form_validate($form, &$form_state) {
 }
 
 /**
- * Contact submit handler.
+ * Task submit handler.
  */
 function esdportal_contact_form_submit($form, &$form_state) {
   $contact = $form_state['contact'];

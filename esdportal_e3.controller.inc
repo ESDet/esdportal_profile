@@ -50,7 +50,7 @@ class EsdportalContactController extends EntityAPIController {
   }
 
   /**
-   * Save Contact Type.
+   * Save Task Type.
    */
   public function save($entity, DatabaseTransaction $transaction = NULL) {
     parent::save($entity, $transaction);
