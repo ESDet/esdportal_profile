@@ -7,23 +7,37 @@ function esdportal_e3_schema() {
   $schema = array();
 
   $schema['esdportal_contact'] = array(
-    'description' => 'The base table for tasks.',
+    'description' => 'The base table for contacts.',
     'fields' => array(
       'cid' => array(
-        'description' => 'The primary identifier for the task.',
+        'description' => 'The primary identifier for the contact.',
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
       'type' => array(
-        'description' => 'The type (bundle) of this task.',
+        'description' => 'The type (bundle) of this contact.',
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
         'default' => '',
       ),
       'title' => array(
-        'description' => 'The title of the task.',
+        'description' => 'The fullname of the contact.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'firstname' => array(
+        'description' => 'The firstname of the contact.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'lastname' => array(
+        'description' => 'The lastname of the contact.',
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
@@ -35,19 +49,19 @@ function esdportal_e3_schema() {
         'not null' => TRUE,
       ),
       'created' => array(
-        'description' => 'The Unix timestamp when the task was created.',
+        'description' => 'The Unix timestamp when the contact was created.',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
       ),
       'changed' => array(
-        'description' => 'The Unix timestamp when the task was most recently saved.',
+        'description' => 'The Unix timestamp when the contact was most recently saved.',
         'type' => 'int',
         'not null' => TRUE,
         'default' => 0,
       ),
       'description' => array(
-        'description' => 'task description.',
+        'description' => 'contact description.',
         'type' => 'text',
       ),
     ),
@@ -55,12 +69,12 @@ function esdportal_e3_schema() {
   );
 
   $schema['esdportal_contact_type'] = array(
-    'description' => 'Stores information about all defined task types.',
+    'description' => 'Stores information about all defined contact types.',
     'fields' => array(
       'id' => array(
         'type' => 'serial',
         'not null' => TRUE,
-        'description' => 'Primary Key: Unique task type ID.',
+        'description' => 'Primary Key: Unique contact type ID.',
       ),
       'type' => array(
         'description' => 'The machine-readable name of this type.',

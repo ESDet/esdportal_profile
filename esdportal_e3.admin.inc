@@ -140,10 +140,18 @@ function esdportal_contact_form($form, &$form_state, $contact) {
     '#default_value' => $contact->title,
   );
 
-  $form['description'] = array(
-    '#type' => 'textarea',
-    '#title' => t('Description'),
-    '#default_value' => $contact->description,
+  $form['firstname'] = array(
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#title' => t('First Name'),
+    '#default_value' => $contact->firstname,
+  );
+
+  $form['lastname'] = array(
+    '#type' => 'textfield',
+    '#required' => TRUE,
+    '#title' => t('Last Name'),
+    '#default_value' => $contact->lastname,
   );
 
   $form['uid'] = array(

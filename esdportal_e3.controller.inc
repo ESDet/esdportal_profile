@@ -7,6 +7,8 @@ class EsdportalContactController extends EntityAPIController {
     $values += array(
       'title' => '',
       'description' => '',
+      'firstname' => '',
+      'lastname' => '',
       'created' => REQUEST_TIME,
       'changed' => REQUEST_TIME,
       'uid' => $user->uid,
@@ -19,10 +21,10 @@ class EsdportalContactController extends EntityAPIController {
     $content['author'] = array('#markup' => t('Created by: !author', array('!author' => $wrapper->uid->name->value(array('sanitize' => TRUE)))));
 
     // Make Description and Status themed like default fields.
-    $content['description'] = array(
+    $content['firstname'] = array(
       '#theme' => 'field',
       '#weight' => 0,
-      '#title' =>t('Description'),
+      '#title' =>t('First Name'),
       '#access' => TRUE,
       '#label_display' => 'above',
       '#view_mode' => 'full',
@@ -31,9 +33,25 @@ class EsdportalContactController extends EntityAPIController {
       '#field_type' => 'text',
       '#entity_type' => 'esdportal_contact',
       '#bundle' => $entity->type,
-      '#items' => array(array('value' => $entity->description)),
+      '#items' => array(array('value' => $entity->firstname)),
       '#formatter' => 'text_default',
-      0 => array('#markup' => check_plain($entity->description))
+      0 => array('#markup' => check_plain($entity->firstname))
+    );
+    $content['lastname'] = array(
+      '#theme' => 'field',
+      '#weight' => 0,
+      '#title' =>t('Last Name'),
+      '#access' => TRUE,
+      '#label_display' => 'above',
+      '#view_mode' => 'full',
+      '#language' => LANGUAGE_NONE,
+      '#field_name' => 'field_fake_description',
+      '#field_type' => 'text',
+      '#entity_type' => 'esdportal_contact',
+      '#bundle' => $entity->type,
+      '#items' => array(array('value' => $entity->lastname)),
+      '#formatter' => 'text_default',
+      0 => array('#markup' => check_plain($entity->lastname))
     );
 
     return parent::buildContent($entity, $view_mode, $langcode, $content);
