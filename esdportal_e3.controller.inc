@@ -68,7 +68,7 @@ class EsdportalContactController extends EntityAPIController {
   }
 
   /**
-   * Save Task Type.
+   * Save Contact Type.
    */
   public function save($entity, DatabaseTransaction $transaction = NULL) {
     parent::save($entity, $transaction);
@@ -80,7 +80,7 @@ class EsdportalContactController extends EntityAPIController {
 }
 
 /**
- * UI controller for Task Type.
+ * UI controller for Contact Type.
  */
 class EsdportalContactTypeUIController extends EntityDefaultUIController {
   /**
@@ -94,7 +94,7 @@ class EsdportalContactTypeUIController extends EntityDefaultUIController {
 }
 
 /**
- * Task class.
+ * Contact class.
  */
 class EsdportalContact extends Entity {
   protected function defaultLabel() {
@@ -107,7 +107,7 @@ class EsdportalContact extends Entity {
 }
 
 /**
- * Task Type class.
+ * Contact Type class.
  */
 class EsdportalContactType extends Entity {
   public $type;

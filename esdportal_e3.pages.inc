@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Task view callback.
+ * Contact view callback.
  */
 function esdportal_contact_view($contact) {
   drupal_set_title(entity_label('esdportal_contact', $contact));

@@ -1,5 +1,5 @@
-name = Example Tasks
-description = Example of usage Entity API.
+name = Contact Entity
+description = Custom module defines the Contact entity and Teacher bundle.
 package = Other
 version = VERSION
 core = 7.x
