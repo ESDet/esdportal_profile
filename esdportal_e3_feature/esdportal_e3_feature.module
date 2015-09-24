@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the esdportal_e3_feature feature.
+ */
+
+include_once 'esdportal_e3_feature.features.inc';
