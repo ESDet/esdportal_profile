@@ -214,6 +214,8 @@ function esdportal_e3_entity_property_info_alter(&$info) {
     'label' => t("Contact First Name"),
     'type' => 'varchar',
     'length' => 255,
+    'setter callback' => 'entity_property_verbatim_set',
+    'setter permission' => 'administer esdportal_contact entities',
     'schema field' => 'firstname',
     'description' => t("The first name of the contact."),
   );
