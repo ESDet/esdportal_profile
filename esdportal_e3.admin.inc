@@ -1,6 +1,10 @@
 <?php
 
 /**
+ * @file
+ */
+
+/**
  * Generates the E3 contact type editing form.
  */
 function e3_contact_type_form($form, &$form_state, $e3_contact_type, $op = 'edit') {
@@ -51,7 +55,7 @@ function e3_contact_type_form($form, &$form_state, $e3_contact_type, $op = 'edit
       '#value' => t('Delete E3 Contact type'),
       '#weight' => 45,
       '#limit_validation_errors' => array(),
-      '#submit' => array('e3_contact_type_form_submit_delete')
+      '#submit' => array('e3_contact_type_form_submit_delete'),
     );
   }
   return $form;
@@ -69,6 +73,9 @@ function e3_contact_type_form_submit(&$form, &$form_state) {
   $form_state['redirect'] = 'admin/structure/e3-contact-types';
 }
 
+/**
+ *
+ */
 function e3_contact_type_form_submit_delete(&$form, &$form_state) {
   $form_state['redirect'] = 'admin/structure/e3-contact-types/' . $form_state['e3_contact_type']->type . '/delete';
 }
@@ -177,7 +184,7 @@ function e3_contact_form($form, &$form_state, $e3_contact) {
   );
 
   // Show Delete button if we edit E3 Contact.
-  $e3_contact_id = entity_id('e3_contact' ,$e3_contact);
+  $e3_contact_id = entity_id('e3_contact', $e3_contact);
   if (!empty($e3_contact_id) && e3_contact_access('edit', $e3_contact)) {
     $form['actions']['delete'] = array(
       '#type' => 'submit',
@@ -191,6 +198,9 @@ function e3_contact_form($form, &$form_state, $e3_contact) {
   return $form;
 }
 
+/**
+ *
+ */
 function e3_contact_form_validate($form, &$form_state) {
 
 }
@@ -212,6 +222,9 @@ function e3_contact_form_submit($form, &$form_state) {
   drupal_set_message(t('E3 Contact %title saved.', array('%title' => entity_label('e3_contact', $e3_contact))));
 }
 
+/**
+ *
+ */
 function e3_contact_form_submit_delete($form, &$form_state) {
   $e3_contact = $form_state['e3_contact'];
   $e3_contact_uri = entity_uri('e3_contact', $e3_contact);
@@ -224,7 +237,7 @@ function e3_contact_form_submit_delete($form, &$form_state) {
 function e3_contact_delete_form($form, &$form_state, $e3_contact) {
   $form_state['e3_contact'] = $e3_contact;
   // Always provide entity id in the same form key as in the entity edit form.
-  $form['e3_contact_type_id'] = array('#type' => 'value', '#value' => entity_id('e3_contact' ,$e3_contact));
+  $form['e3_contact_type_id'] = array('#type' => 'value', '#value' => entity_id('e3_contact', $e3_contact));
   $e3_contact_uri = entity_uri('e3_contact', $e3_contact);
   return confirm_form($form,
     t('Are you sure you want to delete E3 Contact %title?', array('%title' => entity_label('e3_contact', $e3_contact))),

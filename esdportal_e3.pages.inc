@@ -1,6 +1,10 @@
 <?php
 
 /**
+ * @file
+ */
+
+/**
  * Contact view callback.
  */
 function e3_contact_view($contact) {

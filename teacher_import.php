@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 $csv_path = "/home/gl2748/Dev/ESD6/profiles/esdportal_profile/modules/custom/esdportal_e3/initial_teacher_import.csv";
 
 if (($handle = fopen($csv_path, "r")) !== FALSE) {
@@ -9,6 +13,9 @@ if (($handle = fopen($csv_path, "r")) !== FALSE) {
 }
 fclose($handle);
 
+/**
+ *
+ */
 function teacherimport($data) {
   $newteacher = entity_create('e3_contact', array('type' => 'teacher'));
   $newteacher->uid = '1';
@@ -20,4 +27,3 @@ function teacherimport($data) {
   $newteacher->field_email = array(LANGUAGE_NONE => array(0 => array('value' => $data[2])));
   entity_save('e3_contact', $newteacher);
 }
-
