@@ -44,6 +44,7 @@ function esdportal_e3_entity_info() {
     'entity keys' => array(
       'id' => 'id',
       'name' => 'type',
+      'label' => 'type',
     ),
     'module' => 'esdportal_e3',
     // Enable the entity API's admin UI.
