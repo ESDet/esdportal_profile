@@ -1,7 +1,23 @@
 <?php
 
+/**
+ * @file
+ * Controller for E3 entity types.
+ */
+
+/**
+ * Defines entity controller for E3 Contact.
+ */
 class E3ContactController extends EntityAPIController {
 
+  /**
+   * Creates an E3 Contact entity.
+   *
+   * @param array $values
+   *   Contact data.
+   *
+   * @return result of parent::create
+   */
   public function create(array $values = array()) {
     global $user;
     $values += array(
@@ -16,51 +32,72 @@ class E3ContactController extends EntityAPIController {
     return parent::create($values);
   }
 
+  /**
+   * Adds features to entity form.
+   *
+   * @param object $entity
+   *   An E3 Contact
+   * @param string $view_mode
+   */
   public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
     $wrapper = entity_metadata_wrapper('e3_contact', $entity);
-//    Un Comment to display node author - defaults to admin if importer script was used
-//    $content['author'] = array('#markup' => t('Created by: !author', array('!author' => $wrapper->uid->name->value(array('sanitize' => TRUE)))));
 
-    // Make Description and Status themed like default fields.
+    $content['author'] = array(
+      '#markup' => t('Created by: !author', array('!author' => $wrapper->uid->name->value(array('sanitize' => TRUE)))),
+    );
+
+    // Make firstname and lastname themed like default fields.
     $content['firstname'] = array(
       '#theme' => 'field',
       '#weight' => 0,
-      '#title' =>t('First Name'),
+      '#title' => t('First Name'),
       '#access' => TRUE,
       '#label_display' => 'above',
       '#view_mode' => 'full',
       '#language' => LANGUAGE_NONE,
-      '#field_name' => 'field_fake_description',
+      '#field_name' => 'field_firstname',
       '#field_type' => 'text',
       '#entity_type' => 'e3_contact',
       '#bundle' => $entity->type,
       '#items' => array(array('value' => $entity->firstname)),
       '#formatter' => 'text_default',
-      0 => array('#markup' => check_plain($entity->firstname))
+      0 => array('#markup' => check_plain($entity->firstname)),
     );
     $content['lastname'] = array(
       '#theme' => 'field',
       '#weight' => 0,
-      '#title' =>t('Last Name'),
+      '#title' => t('Last Name'),
       '#access' => TRUE,
       '#label_display' => 'above',
       '#view_mode' => 'full',
       '#language' => LANGUAGE_NONE,
-      '#field_name' => 'field_fake_description',
+      '#field_name' => 'field_lastname',
       '#field_type' => 'text',
       '#entity_type' => 'e3_contact',
       '#bundle' => $entity->type,
       '#items' => array(array('value' => $entity->lastname)),
       '#formatter' => 'text_default',
-      0 => array('#markup' => check_plain($entity->lastname))
+      0 => array('#markup' => check_plain($entity->lastname)),
     );
 
     return parent::buildContent($entity, $view_mode, $langcode, $content);
   }
+
 }
 
- class E3ContactTypeController extends EntityAPIControllerExportable {
-   public function create(array $values = array()) {
+/**
+ * Defines entity controller for E3 Contact Type.
+ */
+class E3ContactTypeController extends EntityAPIControllerExportable {
+
+  /**
+   * Creates an E3 Contact entity.
+   *
+   * @param array $values
+   *
+   * @return result of parent::create
+   */
+  public function create(array $values = array()) {
     $values += array(
       'label' => '',
       'description' => '',
@@ -69,7 +106,10 @@ class E3ContactController extends EntityAPIController {
   }
 
   /**
-   * Save Contact Type.
+   * Saves E3 Contact Type.
+   *
+   * @param object $entity
+   * @param DatabaseTransaction $transaction
    */
   public function save($entity, DatabaseTransaction $transaction = NULL) {
     parent::save($entity, $transaction);
@@ -78,6 +118,7 @@ class E3ContactController extends EntityAPIController {
     // @see http://drupal.org/node/1399618
     variable_set('menu_rebuild_needed', TRUE);
   }
+
 }
 
 /**
@@ -89,26 +130,34 @@ class E3ContactTypeUIController extends EntityDefaultUIController {
    */
   public function hook_menu() {
     $items = parent::hook_menu();
-    $items[$this->path]['description'] = 'Manage Contact types.';
+    $items[$this->path]['description'] = 'Manage E3 Contact types.';
     return $items;
   }
+
 }
 
 /**
- * Contact class.
+ * E3 Contact class.
  */
 class E3Contact extends Entity {
+  /**
+   *
+   */
   protected function defaultLabel() {
     return $this->title;
   }
 
+  /**
+   *
+   */
   protected function defaultUri() {
     return array('path' => 'e3-contact/' . $this->identifier());
   }
+
 }
 
 /**
- * Contact Type class.
+ * E3 Contact Type class.
  */
 class E3ContactType extends Entity {
   public $type;
