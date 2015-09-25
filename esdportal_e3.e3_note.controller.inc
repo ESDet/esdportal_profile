@@ -6,12 +6,12 @@
  */
 
 /**
- * Defines entity controller for E3 Contact.
+ * Defines entity controller for E3 Note.
  */
-class E3ContactController extends EntityAPIController {
+class E3NoteController extends EntityAPIController {
 
   /**
-   * Creates an E3 Contact entity.
+   * Creates an E3 Note entity.
    *
    * @param array $values
    *   Contact data.
@@ -21,13 +21,11 @@ class E3ContactController extends EntityAPIController {
   public function create(array $values = array()) {
     global $user;
     $values += array(
-      'fullname' => '',
-      'description' => '',
-      'firstname' => '',
-      'lastname' => '',
+      'uid' => $user->uid,
       'created' => REQUEST_TIME,
       'changed' => REQUEST_TIME,
-      'uid' => $user->uid,
+      'starttime' => '',
+      'endtime' => '',
     );
     return parent::create($values);
   }
@@ -36,48 +34,48 @@ class E3ContactController extends EntityAPIController {
    * Adds features to entity form.
    *
    * @param object $entity
-   *   An E3 Contact
+   *   An E3 Note
    * @param string $view_mode
    */
   public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
-    $wrapper = entity_metadata_wrapper('e3_contact', $entity);
+    $wrapper = entity_metadata_wrapper('e3_note', $entity);
 
     $content['author'] = array(
       '#markup' => t('Created by: !author', array('!author' => $wrapper->uid->name->value(array('sanitize' => TRUE)))),
     );
 
     // Make firstname and lastname themed like default fields.
-    $content['firstname'] = array(
+    $content['starttime'] = array(
       '#theme' => 'field',
       '#weight' => 0,
-      '#title' => t('First Name'),
+      '#title' => t('Start Time'),
       '#access' => TRUE,
       '#label_display' => 'above',
       '#view_mode' => 'full',
       '#language' => LANGUAGE_NONE,
-      '#field_name' => 'field_firstname',
+      '#field_name' => 'field_starttime',
       '#field_type' => 'text',
-      '#entity_type' => 'e3_contact',
+      '#entity_type' => 'e3_note',
       '#bundle' => $entity->type,
-      '#items' => array(array('value' => $entity->firstname)),
+      '#items' => array(array('value' => $entity->starttime)),
       '#formatter' => 'text_default',
-      0 => array('#markup' => check_plain($entity->firstname)),
+      0 => array('#markup' => check_plain($entity->starttime)),
     );
-    $content['lastname'] = array(
+    $content['endtime'] = array(
       '#theme' => 'field',
       '#weight' => 0,
-      '#title' => t('Last Name'),
+      '#title' => t('End Time'),
       '#access' => TRUE,
       '#label_display' => 'above',
       '#view_mode' => 'full',
       '#language' => LANGUAGE_NONE,
-      '#field_name' => 'field_lastname',
+      '#field_name' => 'field_endtime',
       '#field_type' => 'text',
-      '#entity_type' => 'e3_contact',
+      '#entity_type' => 'e3_note',
       '#bundle' => $entity->type,
-      '#items' => array(array('value' => $entity->lastname)),
+      '#items' => array(array('value' => $entity->endtime)),
       '#formatter' => 'text_default',
-      0 => array('#markup' => check_plain($entity->lastname)),
+      0 => array('#markup' => check_plain($entity->endname)),
     );
 
     return parent::buildContent($entity, $view_mode, $langcode, $content);
@@ -86,12 +84,12 @@ class E3ContactController extends EntityAPIController {
 }
 
 /**
- * Defines entity controller for E3 Contact Type.
+ * Defines entity controller for E3 Note Type.
  */
-class E3ContactTypeController extends EntityAPIControllerExportable {
+class E3NoteTypeController extends EntityAPIControllerExportable {
 
   /**
-   * Creates an E3 Contact entity.
+   * Creates an E3 Note entity.
    *
    * @param array $values
    *
@@ -106,7 +104,7 @@ class E3ContactTypeController extends EntityAPIControllerExportable {
   }
 
   /**
-   * Saves E3 Contact Type.
+   * Saves E3 Note Type.
    *
    * @param object $entity
    * @param DatabaseTransaction $transaction
@@ -124,22 +122,22 @@ class E3ContactTypeController extends EntityAPIControllerExportable {
 /**
  * UI controller for Contact Type.
  */
-class E3ContactTypeUIController extends EntityDefaultUIController {
+class E3NoteTypeUIController extends EntityDefaultUIController {
   /**
    * Overrides hook_menu() defaults.
    */
   public function hook_menu() {
     $items = parent::hook_menu();
-    $items[$this->path]['description'] = 'Manage E3 Contact types.';
+    $items[$this->path]['description'] = 'Manage E3 Note types.';
     return $items;
   }
 
 }
 
 /**
- * E3 Contact class.
+ * E3 Note class.
  */
-class E3Contact extends Entity {
+class E3Note extends Entity {
   /**
    *
    */
@@ -151,15 +149,15 @@ class E3Contact extends Entity {
    *
    */
   protected function defaultUri() {
-    return array('path' => 'e3-contact/' . $this->identifier());
+    return array('path' => 'e3-note/' . $this->identifier());
   }
 
 }
 
 /**
- * E3 Contact Type class.
+ * E3 Note Type class.
  */
-class E3ContactType extends Entity {
+class E3NoteType extends Entity {
   public $type;
   public $label;
   public $weight = 0;
@@ -168,7 +166,7 @@ class E3ContactType extends Entity {
    *
    */
   public function __construct($values = array()) {
-    parent::__construct($values, 'e3_contact_type');
+    parent::__construct($values, 'e3_note_type');
   }
 
   /**
