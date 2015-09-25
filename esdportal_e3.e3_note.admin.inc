@@ -18,7 +18,7 @@ function e3_note_type_form($form, &$form_state, $e3_note_type, $op = 'edit') {
     '#title' => t('Label'),
     '#type' => 'textfield',
     '#default_value' => $e3_note_type->label,
-    '#description' => t('The human-readable name of this E3 Contact type.'),
+    '#description' => t('The human-readable name of this E3 Note type.'),
     '#required' => TRUE,
     '#size' => 30,
   );
@@ -33,26 +33,26 @@ function e3_note_type_form($form, &$form_state, $e3_note_type, $op = 'edit') {
       'exists' => 'e3_note_types',
       'source' => array('label'),
     ),
-    '#description' => t('A unique machine-readable name for this E3 Contact type. It must only contain lowercase letters, numbers, and underscores.'),
+    '#description' => t('A unique machine-readable name for this E3 Note type. It must only contain lowercase letters, numbers, and underscores.'),
   );
 
   $form['description'] = array(
     '#type' => 'textarea',
     '#default_value' => isset($e3_note_type->description) ? $e3_note_type->description : '',
-    '#description' => t('Description about the E3 Contact type.'),
+    '#description' => t('Description about the E3 Note type.'),
   );
 
   $form['actions'] = array('#type' => 'actions');
   $form['actions']['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Save E3 Contact type'),
+    '#value' => t('Save E3 Note type'),
     '#weight' => 40,
   );
 
   if (!$e3_note_type->isLocked() && $op != 'add' && $op != 'clone') {
     $form['actions']['delete'] = array(
       '#type' => 'submit',
-      '#value' => t('Delete E3 Contact type'),
+      '#value' => t('Delete E3 Note type'),
       '#weight' => 45,
       '#limit_validation_errors' => array(),
       '#submit' => array('e3_note_type_form_submit_delete'),
@@ -62,14 +62,14 @@ function e3_note_type_form($form, &$form_state, $e3_note_type, $op = 'edit') {
 }
 
 /**
- * Submit handler for creating/editing E3 Contact type.
+ * Submit handler for creating/editing E3 Note type.
  */
 function e3_note_type_form_submit(&$form, &$form_state) {
   $e3_note_type = entity_ui_form_submit_build_entity($form, $form_state);
   // Save and go back.
   e3_note_type_save($e3_note_type);
 
-  // Redirect user back to list of E3 Contact types.
+  // Redirect user back to list of E3 Note types.
   $form_state['redirect'] = 'admin/structure/e3-note-types';
 }
 
@@ -81,14 +81,14 @@ function e3_note_type_form_submit_delete(&$form, &$form_state) {
 }
 
 /**
- * E3 Contact type delete form.
+ * E3 Note type delete form.
  */
 function e3_note_type_form_delete_confirm($form, &$form_state, $e3_note_type) {
   $form_state['e3_note_type'] = $e3_note_type;
   // Always provide entity id in the same form key as in the entity edit form.
   $form['e3_note_type_id'] = array('#type' => 'value', '#value' => entity_id('e3_note_type', $e3_note_type));
   return confirm_form($form,
-    t('Are you sure you want to delete E3 Contact type %title?', array('%title' => entity_label('e3_note_type', $e3_note_type))),
+    t('Are you sure you want to delete E3 Note type %title?', array('%title' => entity_label('e3_note_type', $e3_note_type))),
     'e3-note/' . entity_id('e3_note_type', $e3_note_type),
     t('This action cannot be undone.'),
     t('Delete'),
@@ -97,7 +97,7 @@ function e3_note_type_form_delete_confirm($form, &$form_state, $e3_note_type) {
 }
 
 /**
- * E3 Contact type delete form submit handler.
+ * E3 Note type delete form submit handler.
  */
 function e3_note_type_form_delete_confirm_submit($form, &$form_state) {
   $e3_note_type = $form_state['e3_note_type'];
@@ -110,18 +110,18 @@ function e3_note_type_form_delete_confirm_submit($form, &$form_state) {
 }
 
 /**
- * Page to select E3 Contact type to add new entity.
+ * Page to select E3 Note type to add new entity.
  */
 function e3_note_admin_add_page() {
   $items = array();
   foreach (e3_note_types() as $e3_note_type_key => $e3_note_type) {
     $items[] = l(entity_label('e3_note_type', $e3_note_type), 'e3-note/add/' . $e3_note_type_key);
   }
-  return array('list' => array('#theme' => 'item_list', '#items' => $items, '#title' => t('Select type of E3 Contact to create.')));
+  return array('list' => array('#theme' => 'item_list', '#items' => $items, '#title' => t('Select type of E3 Note to create.')));
 }
 
 /**
- * Add new E3 Contact page callback.
+ * Add new E3 Note page callback.
  */
 function e3_note_add($type) {
   $e3_note_type = e3_note_types($type);
@@ -135,7 +135,7 @@ function e3_note_add($type) {
 }
 
 /**
- * E3 Contact Form.
+ * E3 Note Form.
  */
 function e3_note_form($form, &$form_state, $e3_note) {
   $form_state['e3_note'] = $e3_note;
@@ -172,11 +172,11 @@ function e3_note_form($form, &$form_state, $e3_note) {
 
   $form['actions']['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Save E3 Contact'),
+    '#value' => t('Save E3 Note'),
     '#submit' => $submit + array('e3_note_form_submit'),
   );
 
-  // Show Delete button if we edit E3 Contact.
+  // Show Delete button if we edit E3 Note.
   $e3_note_id = entity_id('e3_note', $e3_note);
   if (!empty($e3_note_id) && e3_note_access('edit', $e3_note)) {
     $form['actions']['delete'] = array(
@@ -199,7 +199,7 @@ function e3_note_form_validate($form, &$form_state) {
 }
 
 /**
- * E3 Contact submit handler.
+ * E3 Note submit handler.
  */
 function e3_note_form_submit($form, &$form_state) {
   $e3_note = $form_state['e3_note'];
@@ -212,7 +212,7 @@ function e3_note_form_submit($form, &$form_state) {
 
   $form_state['redirect'] = $e3_note_uri['path'];
 
-  drupal_set_message(t('E3 Contact %title saved.', array('%title' => entity_label('e3_note', $e3_note))));
+  drupal_set_message(t('E3 Note %title saved.', array('%title' => entity_label('e3_note', $e3_note))));
 }
 
 /**
@@ -233,7 +233,7 @@ function e3_note_delete_form($form, &$form_state, $e3_note) {
   $form['e3_note_type_id'] = array('#type' => 'value', '#value' => entity_id('e3_note', $e3_note));
   $e3_note_uri = entity_uri('e3_note', $e3_note);
   return confirm_form($form,
-    t('Are you sure you want to delete E3 Contact %title?', array('%title' => entity_label('e3_note', $e3_note))),
+    t('Are you sure you want to delete E3 Note %title?', array('%title' => entity_label('e3_note', $e3_note))),
     $e3_note_uri['path'],
     t('This action cannot be undone.'),
     t('Delete'),
@@ -248,7 +248,7 @@ function e3_note_delete_form_submit($form, &$form_state) {
   $e3_note = $form_state['e3_note'];
   e3_note_delete($e3_note);
 
-  drupal_set_message(t('E3 Contact %title deleted.', array('%title' => entity_label('e3_note', $e3_note))));
+  drupal_set_message(t('E3 Note %title deleted.', array('%title' => entity_label('e3_note', $e3_note))));
 
   $form_state['redirect'] = '<front>';
 }

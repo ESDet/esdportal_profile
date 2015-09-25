@@ -14,7 +14,7 @@ class E3NoteController extends EntityAPIController {
    * Creates an E3 Note entity.
    *
    * @param array $values
-   *   Contact data.
+   *   Note data.
    *
    * @return result of parent::create
    */
@@ -120,7 +120,7 @@ class E3NoteTypeController extends EntityAPIControllerExportable {
 }
 
 /**
- * UI controller for Contact Type.
+ * UI controller for Note Type.
  */
 class E3NoteTypeUIController extends EntityDefaultUIController {
   /**

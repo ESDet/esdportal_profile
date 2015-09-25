@@ -5,7 +5,7 @@
  */
 
 /**
- * Contact view callback.
+ * Note view callback.
  */
 function e3_note_view($contact) {
   drupal_set_title(entity_label('e3_note', $note));
