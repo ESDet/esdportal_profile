@@ -6,10 +6,10 @@
 function esdportal_e3_schema() {
   $schema = array();
 
-  $schema['esdportal_contact'] = array(
+  $schema['e3_contact'] = array(
     'description' => 'The base table for contacts.',
     'fields' => array(
-      'cid' => array(
+      'id' => array(
         'description' => 'The primary identifier for the contact.',
         'type' => 'serial',
         'unsigned' => TRUE,
@@ -61,20 +61,20 @@ function esdportal_e3_schema() {
         'default' => 0,
       ),
       'description' => array(
-        'description' => 'contact description.',
+        'description' => 'E3 Contact description.',
         'type' => 'text',
       ),
     ),
-    'primary key' => array('cid'),
+    'primary key' => array('id'),
   );
 
-  $schema['esdportal_contact_type'] = array(
-    'description' => 'Stores information about all defined contact types.',
+  $schema['e3_contact_type'] = array(
+    'description' => 'Stores information about all defined E3 Contact Types.',
     'fields' => array(
       'id' => array(
         'type' => 'serial',
         'not null' => TRUE,
-        'description' => 'Primary Key: Unique contact type ID.',
+        'description' => 'Primary Key: Unique E3 Contact Type ID.',
       ),
       'type' => array(
         'description' => 'The machine-readable name of this type.',

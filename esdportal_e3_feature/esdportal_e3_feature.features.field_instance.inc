@@ -10,8 +10,8 @@
 function esdportal_e3_feature_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'esdportal_contact-teacher-field_email'
-  $field_instances['esdportal_contact-teacher-field_email'] = array(
+  // Exported field_instance: 'e3_contact-teacher-field_email'
+  $field_instances['e3_contact-teacher-field_email'] = array(
     'bundle' => 'teacher',
     'default_value' => NULL,
     'deleted' => 0,
@@ -25,7 +25,7 @@ function esdportal_e3_feature_field_default_field_instances() {
         'weight' => 1,
       ),
     ),
-    'entity_type' => 'esdportal_contact',
+    'entity_type' => 'e3_contact',
     'field_name' => 'field_email',
     'label' => 'Email',
     'required' => 0,
@@ -45,8 +45,8 @@ function esdportal_e3_feature_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'esdportal_contact-teacher-field_teacher_phone'
-  $field_instances['esdportal_contact-teacher-field_teacher_phone'] = array(
+  // Exported field_instance: 'e3_contact-teacher-field_teacher_phone'
+  $field_instances['e3_contact-teacher-field_teacher_phone'] = array(
     'bundle' => 'teacher',
     'default_value' => NULL,
     'deleted' => 0,
@@ -60,7 +60,7 @@ function esdportal_e3_feature_field_default_field_instances() {
         'weight' => 0,
       ),
     ),
-    'entity_type' => 'esdportal_contact',
+    'entity_type' => 'e3_contact',
     'field_name' => 'field_teacher_phone',
     'label' => 'Phone',
     'required' => 0,

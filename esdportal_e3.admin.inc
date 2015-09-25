@@ -1,20 +1,20 @@
 <?php
 
 /**
- * Generates the contact type editing form.
+ * Generates the E3 contact type editing form.
  */
-function esdportal_contact_type_form($form, &$form_state, $contact_type, $op = 'edit') {
+function e3_contact_type_form($form, &$form_state, $e3_contact_type, $op = 'edit') {
 
   if ($op == 'clone') {
-    $contact_type->label .= ' (cloned)';
-    $contact_type->type = '';
+    $e3_contact_type->label .= ' (cloned)';
+    $e3_contact_type->type = '';
   }
 
   $form['label'] = array(
     '#title' => t('Label'),
     '#type' => 'textfield',
-    '#default_value' => $contact_type->label,
-    '#description' => t('The human-readable name of this contact type.'),
+    '#default_value' => $e3_contact_type->label,
+    '#description' => t('The human-readable name of this E3 Contact type.'),
     '#required' => TRUE,
     '#size' => 30,
   );
@@ -22,67 +22,67 @@ function esdportal_contact_type_form($form, &$form_state, $contact_type, $op = '
   // Machine-readable type name.
   $form['type'] = array(
     '#type' => 'machine_name',
-    '#default_value' => isset($contact_type->type) ? $contact_type->type : '',
+    '#default_value' => isset($e3_contact_type->type) ? $e3_contact_type->type : '',
     '#maxlength' => 32,
-    '#disabled' => $contact_type->isLocked() && $op != 'clone',
+    '#disabled' => $e3_contact_type->isLocked() && $op != 'clone',
     '#machine_name' => array(
-      'exists' => 'esdportal_contact_types',
+      'exists' => 'e3_contact_types',
       'source' => array('label'),
     ),
-    '#description' => t('A unique machine-readable name for this contact type. It must only contain lowercase letters, numbers, and underscores.'),
+    '#description' => t('A unique machine-readable name for this E3 Contact type. It must only contain lowercase letters, numbers, and underscores.'),
   );
 
   $form['description'] = array(
     '#type' => 'textarea',
-    '#default_value' => isset($contact_type->description) ? $contact_type->description : '',
-    '#description' => t('Description about the contact type.'),
+    '#default_value' => isset($e3_contact_type->description) ? $e3_contact_type->description : '',
+    '#description' => t('Description about the E3 Contact type.'),
   );
 
   $form['actions'] = array('#type' => 'actions');
   $form['actions']['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Save contact type'),
+    '#value' => t('Save E3 Contact type'),
     '#weight' => 40,
   );
 
-  if (!$contact_type->isLocked() && $op != 'add' && $op != 'clone') {
+  if (!$e3_contact_type->isLocked() && $op != 'add' && $op != 'clone') {
     $form['actions']['delete'] = array(
       '#type' => 'submit',
-      '#value' => t('Delete contact type'),
+      '#value' => t('Delete E3 Contact type'),
       '#weight' => 45,
       '#limit_validation_errors' => array(),
-      '#submit' => array('esdportal_contact_type_form_submit_delete')
+      '#submit' => array('e3_contact_type_form_submit_delete')
     );
   }
   return $form;
 }
 
 /**
- * Submit handler for creating/editing contact_type.
+ * Submit handler for creating/editing E3 Contact type.
  */
-function esdportal_contact_type_form_submit(&$form, &$form_state) {
-  $contact_type = entity_ui_form_submit_build_entity($form, $form_state);
+function e3_contact_type_form_submit(&$form, &$form_state) {
+  $e3_contact_type = entity_ui_form_submit_build_entity($form, $form_state);
   // Save and go back.
-  esdportal_contact_type_save($contact_type);
+  e3_contact_type_save($e3_contact_type);
 
-  // Redirect user back to list of contact types.
-  $form_state['redirect'] = 'admin/structure/contact-types';
+  // Redirect user back to list of E3 Contact types.
+  $form_state['redirect'] = 'admin/structure/e3-contact-types';
 }
 
-function esdportal_contact_type_form_submit_delete(&$form, &$form_state) {
-  $form_state['redirect'] = 'admin/structure/contact-types/' . $form_state['esdportal_contact_type']->type . '/delete';
+function e3_contact_type_form_submit_delete(&$form, &$form_state) {
+  $form_state['redirect'] = 'admin/structure/e3-contact-types/' . $form_state['e3_contact_type']->type . '/delete';
 }
 
 /**
- * Contact type delete form.
+ * E3 Contact type delete form.
  */
-function esdportal_contact_type_form_delete_confirm($form, &$form_state, $contact_type) {
-  $form_state['contact_type'] = $contact_type;
+function e3_contact_type_form_delete_confirm($form, &$form_state, $e3_contact_type) {
+  $form_state['e3_contact_type'] = $e3_contact_type;
   // Always provide entity id in the same form key as in the entity edit form.
-  $form['contact_type_id'] = array('#type' => 'value', '#value' => entity_id('esdportal_contact_type' ,$contact_type));
+  $form['e3_contact_type_id'] = array('#type' => 'value', '#value' => entity_id('e3_contact_type', $e3_contact_type));
   return confirm_form($form,
-    t('Are you sure you want to delete contact type %title?', array('%title' => entity_label('contact_type', $contact_type))),
-    'contact/' . entity_id('esdportal_contact_type' ,$contact_type),
+    t('Are you sure you want to delete E3 Contact type %title?', array('%title' => entity_label('e3_contact_type', $e3_contact_type))),
+    'e3-contact/' . entity_id('e3_contact_type', $e3_contact_type),
     t('This action cannot be undone.'),
     t('Delete'),
     t('Cancel')
@@ -90,76 +90,76 @@ function esdportal_contact_type_form_delete_confirm($form, &$form_state, $contac
 }
 
 /**
- * Contact type delete form submit handler.
+ * E3 Contact type delete form submit handler.
  */
-function esdportal_contact_type_form_delete_confirm_submit($form, &$form_state) {
-  $contact_type = $form_state['contact_type'];
-  esdportal_contact_type_delete($contact_type);
+function e3_contact_type_form_delete_confirm_submit($form, &$form_state) {
+  $e3_contact_type = $form_state['e3_contact_type'];
+  e3_contact_type_delete($e3_contact_type);
 
-  watchdog('esdportal_contact_type', '@type: deleted %title.', array('@type' => $contact_type->type, '%title' => $contact_type->label));
-  drupal_set_message(t('@type %title has been deleted.', array('@type' => $contact_type->type, '%title' => $contact_type->label)));
+  watchdog('e3_contact_type', '@type: deleted %title.', array('@type' => $e3_contact_type->type, '%title' => $e3_contact_type->label));
+  drupal_set_message(t('@type %title has been deleted.', array('@type' => $e3_contact_type->type, '%title' => $e3_contact_type->label)));
 
   $form_state['redirect'] = 'admin/structure/contact-types';
 }
 
 /**
- * Page to select contact Type to add new task.
+ * Page to select E3 Contact type to add new entity.
  */
-function esdportal_contact_admin_add_page() {
+function e3_contact_admin_add_page() {
   $items = array();
-  foreach (esdportal_contact_types() as $contact_type_key => $contact_type) {
-    $items[] = l(entity_label('esdportal_contact_type', $contact_type), 'contact/add/' . $contact_type_key);
+  foreach (e3_contact_types() as $e3_contact_type_key => $e3_contact_type) {
+    $items[] = l(entity_label('e3_contact_type', $e3_contact_type), 'e3-contact/add/' . $e3_contact_type_key);
   }
-  return array('list' => array('#theme' => 'item_list', '#items' => $items, '#title' => t('Select type of contact to create.')));
+  return array('list' => array('#theme' => 'item_list', '#items' => $items, '#title' => t('Select type of E3 Contact to create.')));
 }
 
 /**
- * Add new contact page callback.
+ * Add new E3 Contact page callback.
  */
-function esdportal_contact_add($type) {
-  $contact_type = esdportal_contact_types($type);
+function e3_contact_add($type) {
+  $e3_contact_type = e3_contact_types($type);
 
-  $contact = entity_create('esdportal_contact', array('type' => $type));
-  drupal_set_title(t('Create @name', array('@name' => entity_label('contact_type', $contact_type))));
+  $e3_contact = entity_create('e3_contact', array('type' => $type));
+  drupal_set_title(t('Create @name', array('@name' => entity_label('e3_contact_type', $e3_contact_type))));
 
-  $output = drupal_get_form('esdportal_contact_form', $contact);
+  $output = drupal_get_form('e3_contact_form', $e3_contact);
 
   return $output;
 }
 
 /**
- * Contact Form.
+ * E3 Contact Form.
  */
-function esdportal_contact_form($form, &$form_state, $contact) {
-  $form_state['contact'] = $contact;
+function e3_contact_form($form, &$form_state, $e3_contact) {
+  $form_state['e3_contact'] = $e3_contact;
 
   $form['title'] = array(
     '#type' => 'textfield',
     '#required' => TRUE,
     '#title' => t('Name'),
-    '#default_value' => $contact->title,
+    '#default_value' => $e3_contact->title,
   );
 
   $form['firstname'] = array(
     '#type' => 'textfield',
     '#required' => TRUE,
     '#title' => t('First Name'),
-    '#default_value' => $contact->firstname,
+    '#default_value' => $e3_contact->firstname,
   );
 
   $form['lastname'] = array(
     '#type' => 'textfield',
     '#required' => TRUE,
     '#title' => t('Last Name'),
-    '#default_value' => $contact->lastname,
+    '#default_value' => $e3_contact->lastname,
   );
 
   $form['uid'] = array(
     '#type' => 'value',
-    '#value' => $contact->uid,
+    '#value' => $e3_contact->uid,
   );
 
-  field_attach_form('esdportal_contact', $contact, $form, $form_state);
+  field_attach_form('e3_contact', $e3_contact, $form, $form_state);
 
   $submit = array();
   if (!empty($form['#submit'])) {
@@ -172,63 +172,63 @@ function esdportal_contact_form($form, &$form_state, $contact) {
 
   $form['actions']['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Save contact'),
-    '#submit' => $submit + array('esdportal_contact_form_submit'),
+    '#value' => t('Save E3 Contact'),
+    '#submit' => $submit + array('e3_contact_form_submit'),
   );
 
-  // Show Delete button if we edit contact.
-  $contact_id = entity_id('esdportal_contact' ,$contact);
-  if (!empty($contact_id) && esdportal_contact_access('edit', $contact)) {
+  // Show Delete button if we edit E3 Contact.
+  $e3_contact_id = entity_id('e3_contact' ,$e3_contact);
+  if (!empty($e3_contact_id) && e3_contact_access('edit', $e3_contact)) {
     $form['actions']['delete'] = array(
       '#type' => 'submit',
       '#value' => t('Delete'),
-      '#submit' => array('esdportal_contact_form_submit_delete'),
+      '#submit' => array('e3_contact_form_submit_delete'),
     );
   }
 
-  $form['#validate'][] = 'esdportal_contact_form_validate';
+  $form['#validate'][] = 'e3_contact_form_validate';
 
   return $form;
 }
 
-function esdportal_contact_form_validate($form, &$form_state) {
+function e3_contact_form_validate($form, &$form_state) {
 
 }
 
 /**
- * Contact submit handler.
+ * E3 Contact submit handler.
  */
-function esdportal_contact_form_submit($form, &$form_state) {
-  $contact = $form_state['contact'];
+function e3_contact_form_submit($form, &$form_state) {
+  $e3_contact = $form_state['e3_contact'];
 
-  entity_form_submit_build_entity('esdportal_contact', $contact, $form, $form_state);
+  entity_form_submit_build_entity('e3_contact', $e3_contact, $form, $form_state);
 
-  esdportal_contact_save($contact);
+  e3_contact_save($e3_contact);
 
-  $contact_uri = entity_uri('esdportal_contact', $contact);
+  $e3_contact_uri = entity_uri('e3_contact', $e3_contact);
 
-  $form_state['redirect'] = $contact_uri['path'];
+  $form_state['redirect'] = $e3_contact_uri['path'];
 
-  drupal_set_message(t('Contact %title saved.', array('%title' => entity_label('esdportal_contact', $contact))));
+  drupal_set_message(t('E3 Contact %title saved.', array('%title' => entity_label('e3_contact', $e3_contact))));
 }
 
-function esdportal_contact_form_submit_delete($form, &$form_state) {
-  $contact = $form_state['contact'];
-  $contact_uri = entity_uri('esdportal_contact', $contact);
-  $form_state['redirect'] = $contact_uri['path'] . '/delete';
+function e3_contact_form_submit_delete($form, &$form_state) {
+  $e3_contact = $form_state['e3_contact'];
+  $e3_contact_uri = entity_uri('e3_contact', $e3_contact);
+  $form_state['redirect'] = $e3_contact_uri['path'] . '/delete';
 }
 
 /**
  * Delete confirmation form.
  */
-function esdportal_contact_delete_form($form, &$form_state, $contact) {
-  $form_state['contact'] = $contact;
+function e3_contact_delete_form($form, &$form_state, $e3_contact) {
+  $form_state['e3_contact'] = $e3_contact;
   // Always provide entity id in the same form key as in the entity edit form.
-  $form['contact_type_id'] = array('#type' => 'value', '#value' => entity_id('esdportal_contact' ,$contact));
-  $contact_uri = entity_uri('esdportal_contact', $contact);
+  $form['e3_contact_type_id'] = array('#type' => 'value', '#value' => entity_id('e3_contact' ,$e3_contact));
+  $e3_contact_uri = entity_uri('e3_contact', $e3_contact);
   return confirm_form($form,
-    t('Are you sure you want to delete contact %title?', array('%title' => entity_label('esdportal_contact', $contact))),
-    $contact_uri['path'],
+    t('Are you sure you want to delete E3 Contact %title?', array('%title' => entity_label('e3_contact', $e3_contact))),
+    $e3_contact_uri['path'],
     t('This action cannot be undone.'),
     t('Delete'),
     t('Cancel')
@@ -238,11 +238,11 @@ function esdportal_contact_delete_form($form, &$form_state, $contact) {
 /**
  * Delete form submit handler.
  */
-function esdportal_contact_delete_form_submit($form, &$form_state) {
-  $contact = $form_state['contact'];
-  esdportal_contact_delete($contact);
+function e3_contact_delete_form_submit($form, &$form_state) {
+  $e3_contact = $form_state['e3_contact'];
+  e3_contact_delete($e3_contact);
 
-  drupal_set_message(t('Contact %title deleted.', array('%title' => entity_label('esdportal_contact', $contact))));
+  drupal_set_message(t('E3 Contact %title deleted.', array('%title' => entity_label('e3_contact', $e3_contact))));
 
   $form_state['redirect'] = '<front>';
 }

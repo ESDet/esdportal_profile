@@ -3,7 +3,7 @@
 /**
  * Contact view callback.
  */
-function esdportal_contact_view($contact) {
-  drupal_set_title(entity_label('esdportal_contact', $contact));
-  return entity_view('esdportal_contact', array(entity_id('esdportal_contact', $contact) => $contact), 'full');
+function e3_contact_view($contact) {
+  drupal_set_title(entity_label('e3_contact', $contact));
+  return entity_view('e3_contact', array(entity_id('e3_contact', $contact) => $contact), 'full');
 }

@@ -5,21 +5,21 @@
  */
 function esdportal_e3_entity_info() {
   $return = array(
-    'esdportal_contact' => array(
-      'label' => t('Contact'),
-      'entity class' => 'EsdportalContact',
-      'controller class' => 'EsdportalContactController',
-      'base table' => 'esdportal_contact',
+    'e3_contact' => array(
+      'label' => t('E3 Contact'),
+      'entity class' => 'E3Contact',
+      'controller class' => 'E3ContactController',
+      'base table' => 'e3_contact',
       'fieldable' => TRUE,
       'entity keys' => array(
-        'id' => 'cid',
+        'id' => 'id',
         'bundle' => 'type',
       ),
       'bundle keys' => array(
         'bundle' => 'type',
       ),
       'bundles' => array(),
-      'load hook' => 'esdportal_contact_load',
+      'load hook' => 'e3_contact_load',
       'view modes' => array(
         'full' => array(
           'label' => t('Default'),
@@ -29,16 +29,16 @@ function esdportal_e3_entity_info() {
       'label callback' => 'entity_class_label',
       'uri callback' => 'entity_class_uri',
       'module' => 'esdportal_e3',
-      'access callback' => 'esdportal_contact_access',
+      'access callback' => 'e3_contact_access',
     ),
   );
-  $return['esdportal_contact_type'] = array(
-    'label' => t('Contact Type'),
-    'entity class' => 'EsdportalContactType',
-    'controller class' => 'EsdportalContactTypeController',
-    'base table' => 'esdportal_contact_type',
+  $return['e3_contact_type'] = array(
+    'label' => t('E3 Contact Type'),
+    'entity class' => 'E3ContactType',
+    'controller class' => 'E3ContactTypeController',
+    'base table' => 'e3_contact_type',
     'fieldable' => FALSE,
-    'bundle of' => 'esdportal_contact',
+    'bundle of' => 'e3_contact',
     'exportable' => TRUE,
     'entity keys' => array(
       'id' => 'id',
@@ -48,11 +48,11 @@ function esdportal_e3_entity_info() {
     'module' => 'esdportal_e3',
     // Enable the entity API's admin UI.
     'admin ui' => array(
-      'path' => 'admin/structure/contact-types',
+      'path' => 'admin/structure/e3-contact-types',
       'file' => 'esdportal_e3.admin.inc',
-      'controller class' => 'EsdportalContactTypeUIController',
+      'controller class' => 'E3ContactTypeUIController',
     ),
-    'access callback' => 'esdportal_contact_type_access',
+    'access callback' => 'e3_contact_type_access',
   );
 
   return $return;
@@ -62,12 +62,12 @@ function esdportal_e3_entity_info() {
  * Implements hook_entity_info_alter().
  */
 function esdportal_e3_entity_info_alter(&$entity_info) {
-  foreach (esdportal_contact_types() as $type => $info) {
-    $entity_info['esdportal_contact']['bundles'][$type] = array(
+  foreach (e3_contact_types() as $type => $info) {
+    $entity_info['e3_contact']['bundles'][$type] = array(
       'label' => $info->label,
       'admin' => array(
-        'path' => 'admin/structure/contact-types/manage/%esdportal_contact_type',
-        'real path' => 'admin/structure/contact-types/manage/' . $type,
+        'path' => 'admin/structure/e3-contact-types/manage/%e3_contact_type',
+        'real path' => 'admin/structure/e3-contact-types/manage/' . $type,
         'bundle argument' => 4,
       ),
     );
@@ -80,73 +80,73 @@ function esdportal_e3_entity_info_alter(&$entity_info) {
 function esdportal_e3_menu() {
   $items = array();
 
-  $items['contact/add'] = array(
+  $items['e3-contact/add'] = array(
     'title' => 'Add contact',
-    'page callback' => 'esdportal_contact_admin_add_page',
-    'access arguments' => array('administer esdportal_contact entities'),
+    'page callback' => 'e3_contact_admin_add_page',
+    'access arguments' => array('administer e3_contact entities'),
     'file' => 'esdportal_e3.admin.inc',
     'type' => MENU_LOCAL_ACTION,
-    'tab_parent' => 'contact',
-    'tab_root' => 'contact',
+    'tab_parent' => 'e3-contact',
+    'tab_root' => 'e3-contact',
   );
 
-  $contact_uri = 'contact/%esdportal_contact';
-  $contact_uri_argument_position = 1;
+  $e3_contact_uri = 'e3-contact/%e3_contact';
+  $e3_contact_uri_argument_position = 1;
 
-  $items[$contact_uri] = array(
+  $items[$e3_contact_uri] = array(
     'title callback' => 'entity_label',
-    'title arguments' => array('esdportal_contact', $contact_uri_argument_position),
-    'page callback' => 'esdportal_contact_view',
-    'page arguments' => array($contact_uri_argument_position),
+    'title arguments' => array('e3_contact', $e3_contact_uri_argument_position),
+    'page callback' => 'e3_contact_view',
+    'page arguments' => array($e3_contact_uri_argument_position),
     'access callback' => 'entity_access',
-    'access arguments' => array('view', 'esdportal_contact', $contact_uri_argument_position),
+    'aentityccess arguments' => array('view', 'e3_contact', $e3_contact_uri_argument_position),
     'file' => 'esdportal_e3.pages.inc',
   );
 
-  $items[$contact_uri . '/view'] = array(
+  $items[$e3_contact_uri . '/view'] = array(
     'title' => 'View',
     'type' => MENU_DEFAULT_LOCAL_TASK,
     'weight' => -10,
   );
 
-  $items[$contact_uri . '/delete'] = array(
+  $items[$e3_contact_uri . '/delete'] = array(
     'title' => 'Delete contact',
-    'title callback' => 'esdportal_contact_label',
-    'title arguments' => array($contact_uri_argument_position),
+    'title callback' => 'e3_contact_label',
+    'title arguments' => array($e3_contact_uri_argument_position),
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('esdportal_contact_delete_form', $contact_uri_argument_position),
+    'page arguments' => array('e3_contact_delete_form', $e3_contact_uri_argument_position),
     'access callback' => 'entity_access',
-    'access arguments' => array('edit', 'esdportal_contact', $contact_uri_argument_position),
+    'access arguments' => array('edit', 'e3_contact', $e3_contact_uri_argument_position),
     'file' => 'esdportal_e3.admin.inc',
   );
 
-  $items[$contact_uri . '/edit'] = array(
+  $items[$e3_contact_uri . '/edit'] = array(
     'title' => 'Edit',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('esdportal_contact_form', $contact_uri_argument_position),
+    'page arguments' => array('e3_contact_form', $e3_contact_uri_argument_position),
     'access callback' => 'entity_access',
-    'access arguments' => array('edit', 'esdportal_contact', $contact_uri_argument_position),
+    'access arguments' => array('edit', 'e3_contact', $e3_contact_uri_argument_position),
     'file' => 'esdportal_e3.admin.inc',
     'type' => MENU_LOCAL_TASK,
     'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
   );
 
-  foreach (esdportal_contact_types() as $type => $info) {
-    $items['contact/add/' . $type] = array(
+  foreach (e3_contact_types() as $type => $info) {
+    $items['e3-contact/add/' . $type] = array(
       'title' => 'Add contact',
-      'page callback' => 'esdportal_contact_add',
+      'page callback' => 'e3_contact_add',
       'page arguments' => array(2),
       'access callback' => 'entity_access',
-      'access arguments' => array('create', 'esdportal_contact', $type),
+      'access arguments' => array('create', 'e3_contact', $type),
       'file' => 'esdportal_e3.admin.inc',
     );
   }
 
-  $items['admin/structure/contact-types/%esdportal_contact_type/delete'] = array(
+  $items['admin/structure/e3-contact-types/%e3_contact_type/delete'] = array(
     'title' => 'Delete',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('esdportal_contact_type_form_delete_confirm', 4),
-    'access arguments' => array('administer esdportal_contact types'),
+    'page arguments' => array('e3_contact_type_form_delete_confirm', 4),
+    'access arguments' => array('administer e3_contact types'),
     'weight' => 1,
     'type' => MENU_NORMAL_ITEM,
     'file' => 'esdportal_e3.admin.inc',
@@ -160,12 +160,12 @@ function esdportal_e3_menu() {
  */
 function esdportal_e3_permission() {
   $permissions = array(
-    'administer esdportal_contact types' => array(
+    'administer e3_contact types' => array(
       'title' => t('Administer contact types'),
       'description' => t('Allows users to configure contact types and their fields.'),
       'restrict access' => TRUE,
     ),
-    'create esdportal_contact entities' => array(
+    'create e3_contact entities' => array(
       'title' => t('Create contacts'),
       'description' => t('Allows users to create contacts.'),
       'restrict access' => TRUE,
@@ -175,12 +175,12 @@ function esdportal_e3_permission() {
       'description' => t('Allows users to view contacts.'),
       'restrict access' => TRUE,
     ),
-    'edit any esdportal_contact entities' => array(
+    'edit any e3_contact entities' => array(
       'title' => t('Edit any contacts'),
       'description' => t('Allows users to edit any contacts.'),
       'restrict access' => TRUE,
     ),
-    'edit own esdportal_contact entities' => array(
+    'edit own e3_contact entities' => array(
       'title' => t('Edit own contacts'),
       'description' => t('Allows users to edit own contacts.'),
       'restrict access' => TRUE,
@@ -195,7 +195,7 @@ function esdportal_e3_permission() {
  * Implements hook_entity_property_info_alter().
  */
 function esdportal_e3_entity_property_info_alter(&$info) {
-  $properties = &$info['esdportal_contact']['properties'];
+  $properties = &$info['e3_contact']['properties'];
   $properties['created'] = array(
     'label' => t("Date created"),
     'type' => 'date',
@@ -211,34 +211,37 @@ function esdportal_e3_entity_property_info_alter(&$info) {
     'description' => t("The date the node was most recently updated."),
   );
   $properties['firstname'] = array(
-    'label' => t("Contact First Name"),
+    'label' => t("E3 Contact First Name"),
     'type' => 'varchar',
     'length' => 255,
     'setter callback' => 'entity_property_verbatim_set',
-    'setter permission' => 'administer esdportal_contact entities',
+    'setter permission' => 'administer e3_contact entities',
     'schema field' => 'firstname',
-    'description' => t("The first name of the contact."),
+    'description' => t("The first name of the E3 Contact."),
   );
   $properties['uid'] = array(
     'label' => t("Author"),
     'type' => 'user',
-    'description' => t("The author of the contact."),
+    'description' => t("The author of the E3 Contact."),
     'setter callback' => 'entity_property_verbatim_set',
-    'setter permission' => 'administer esdportal_contact entities',
+    'setter permission' => 'administer e3_contact entities',
     'required' => TRUE,
     'schema field' => 'uid',
   );
 }
 
 
-/*******************************************************************************
- ********************************* Contact API's **********************************
- ******************************************************************************/
+/**
+ * @defgroup e3_contact_api E3 Contact API
+ * @{
+ * CRUD E3 Contacts
+ * @}
+ */
 
 /**
- * Access callback for contact.
+ * Access callback for E3 Contact.
  */
-function esdportal_contact_access($op, $contact, $account = NULL, $entity_type = NULL) {
+function e3_contact_access($op, $e3_contact, $account = NULL, $entity_type = NULL) {
   global $user;
 
   if (!isset($account)) {
@@ -246,101 +249,111 @@ function esdportal_contact_access($op, $contact, $account = NULL, $entity_type =
   }
   switch ($op) {
     case 'create':
-      return user_access('administer esdportal_contact entities', $account)
-          || user_access('create esdportal_contact entities', $account);
+      return user_access('administer e3_contact entities', $account)
+          || user_access('create e3_contact entities', $account);
     case 'view':
-      return user_access('administer esdportal_contact entities', $account)
-          || user_access('view esdportal_contact entities', $account);
+      return user_access('administer e3_contact entities', $account)
+          || user_access('view e3_contact entities', $account);
     case 'edit':
-      return user_access('administer esdportal_contact entities')
-          || user_access('edit any esdportal_contact entities')
-          || (user_access('edit own esdportal_contact entities') && ($contact->uid == $account->uid));
+      return user_access('administer e3_contact entities')
+          || user_access('edit any e3_contact entities')
+          || (user_access('edit own e3_contact entities') && ($e3_contact->uid == $account->uid));
   }
 }
 
 /**
- * Load a contact.
+ * Load an E3 Contact.
  */
-function esdportal_contact_load($cid, $reset = FALSE) {
-  $contacts = esdportal_contact_load_multiple(array($cid), array(), $reset);
-  return reset($contacts);
+function e3_contact_load($id, $reset = FALSE) {
+  $e3_contacts = e3_contact_load_multiple(array($id), array(), $reset);
+  return reset($e3_contacts);
 }
 
 /**
- * Load multiple contacts based on certain conditions.
+ * Load multiple E3 Contacts based on certain conditions.
  */
-function esdportal_contact_load_multiple($cids = array(), $conditions = array(), $reset = FALSE) {
-  return entity_load('esdportal_contact', $cids, $conditions, $reset);
+function e3_contact_load_multiple($ids = array(), $conditions = array(), $reset = FALSE) {
+  return entity_load('e3_contact', $ids, $conditions, $reset);
 }
 
 /**
- * Save contact.
+ * Save an E3 Contact.
  */
-function esdportal_contact_save($contact) {
-  entity_save('esdportal_contact', $contact);
+function e3_contact_save($e3_contact) {
+  entity_save('e3_contact', $e3_contact);
 }
 
 /**
- * Delete single contact.
+ * Delete an E3 Contact.
  */
-function esdportal_contact_delete($contact) {
-  entity_delete('esdportal_contact', entity_id('esdportal_contact' ,$contact));
+function e3_contact_delete($e3_contact) {
+  entity_delete('e3_contact', entity_id('e3_contact', $e3_contact));
 }
 
 /**
- * Delete multiple contacts.
+ * Delete multiple E3 Contacts.
  */
-function esdportal_contact_delete_multiple($contact_ids) {
-  entity_delete_multiple('esdportal_contact', $contact_ids);
-}
-
-
-/*******************************************************************************
- ****************************** Contact Type API's ********************************
- ******************************************************************************/
-
-/**
- * Access callback for contact Type.
- */
-function esdportal_contact_type_access($op, $entity = NULL) {
-  return user_access('administer esdportal_contact types');
+function e3_contact_delete_multiple($e3_contact_ids) {
+  entity_delete_multiple('e3_contact', $e3_contact_ids);
 }
 
 /**
- * Load contact Type.
+ * @} End of "defgroup e3_contact_type_api".
  */
-function esdportal_contact_type_load($contact_type) {
-  return esdportal_contact_types($contact_type);
+
+/**
+ * @defgroup e3_contact_type_api E3 Contact Type API
+ * @{
+ * CRUD E3 Contact Types
+ * @}
+ */
+
+/**
+ * Access callback for E3 Contact type.
+ */
+function e3_contact_type_access($op, $entity = NULL) {
+  return user_access('administer e3_contact types');
+}
+
+/**
+ * Load an E3 Contact Type.
+ */
+function e3_contact_type_load($e3_contact_type) {
+  return e3_contact_types($e3_contact_type);
 }
 
 /**
  * List of contact Types.
  */
-function esdportal_contact_types($type_name = NULL) {
-  $types = entity_load_multiple_by_name('esdportal_contact_type', isset($type_name) ? array($type_name) : FALSE);
+function e3_contact_types($type_name = NULL) {
+  $types = entity_load_multiple_by_name('e3_contact_type', isset($type_name) ? array($type_name) : FALSE);
   return isset($type_name) ? reset($types) : $types;
 }
 
 /**
- * Save contact type entity.
+ * Save E3 Contact Type.
  */
-function esdportal_contact_type_save($contact_type) {
-  entity_save('esdportal_contact_type', $contact_type);
+function e3_contact_type_save($e3_contact_type) {
+  entity_save('e3_contact_type', $e3_contact_type);
 }
 
 /**
- * Delete single case type.
+ * Delete single E3 Contact Type.
  */
-function esdportal_contact_type_delete($contact_type) {
-  entity_delete('esdportal_contact_type', entity_id('esdportal_contact_type' ,$contact_type));
+function e3_contact_type_delete($e3_contact_type) {
+  entity_delete('e3_contact_type', entity_id('e3_contact_type' ,$e3_contact_type));
 }
 
 /**
- * Delete multiple case types.
+ * Delete multiple E3 Contact Types.
  */
-function esdportal_contact_type_delete_multiple($contact_type_ids) {
-  entity_delete_multiple('esdportal_contact_type', $contact_type_ids);
+function e3_contact_type_delete_multiple($e3_contact_type_ids) {
+  entity_delete_multiple('e3_contact_type', $e3_contact_type_ids);
 }
+
+/**
+ * @} End of "defgroup e3_contact_type_api".
+ */
 
 /**
   * Implements hook_views_api().

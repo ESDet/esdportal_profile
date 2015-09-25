@@ -1,7 +1,7 @@
-name = Contact Entity
-description = Custom module defines the Contact entity and Teacher bundle.
+name = Entities for E3 data
+description = Provides special entities and bundles for the E3 database.
 package = Other
-version = VERSION
+version = 1.0
 core = 7.x
 
 dependencies[] = entity

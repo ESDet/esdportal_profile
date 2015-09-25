@@ -5,11 +5,11 @@
  */
 
 /**
- * Implements hook_default_esdportal_contact_type().
+ * Implements hook_default_e3_contact_type().
  */
-function esdportal_e3_feature_default_esdportal_contact_type() {
+function esdportal_e3_feature_default_e3_contact_type() {
   $items = array();
-  $items['teacher'] = entity_import('esdportal_contact_type', '{
+  $items['teacher'] = entity_import('e3_contact_type', '{
     "type" : "teacher",
     "label" : "Teacher",
     "weight" : 0,

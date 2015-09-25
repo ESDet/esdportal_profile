@@ -1,6 +1,6 @@
 <?php
 
-class EsdportalContactController extends EntityAPIController {
+class E3ContactController extends EntityAPIController {
 
   public function create(array $values = array()) {
     global $user;
@@ -17,7 +17,7 @@ class EsdportalContactController extends EntityAPIController {
   }
 
   public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
-    $wrapper = entity_metadata_wrapper('esdportal_contact', $entity);
+    $wrapper = entity_metadata_wrapper('e3_contact', $entity);
 //    Un Comment to display node author - defaults to admin if importer script was used
 //    $content['author'] = array('#markup' => t('Created by: !author', array('!author' => $wrapper->uid->name->value(array('sanitize' => TRUE)))));
 
@@ -32,7 +32,7 @@ class EsdportalContactController extends EntityAPIController {
       '#language' => LANGUAGE_NONE,
       '#field_name' => 'field_fake_description',
       '#field_type' => 'text',
-      '#entity_type' => 'esdportal_contact',
+      '#entity_type' => 'e3_contact',
       '#bundle' => $entity->type,
       '#items' => array(array('value' => $entity->firstname)),
       '#formatter' => 'text_default',
@@ -48,7 +48,7 @@ class EsdportalContactController extends EntityAPIController {
       '#language' => LANGUAGE_NONE,
       '#field_name' => 'field_fake_description',
       '#field_type' => 'text',
-      '#entity_type' => 'esdportal_contact',
+      '#entity_type' => 'e3_contact',
       '#bundle' => $entity->type,
       '#items' => array(array('value' => $entity->lastname)),
       '#formatter' => 'text_default',
@@ -59,7 +59,7 @@ class EsdportalContactController extends EntityAPIController {
   }
 }
 
- class EsdportalContactTypeController extends EntityAPIControllerExportable {
+ class E3ContactTypeController extends EntityAPIControllerExportable {
    public function create(array $values = array()) {
     $values += array(
       'label' => '',
@@ -83,7 +83,7 @@ class EsdportalContactController extends EntityAPIController {
 /**
  * UI controller for Contact Type.
  */
-class EsdportalContactTypeUIController extends EntityDefaultUIController {
+class E3ContactTypeUIController extends EntityDefaultUIController {
   /**
    * Overrides hook_menu() defaults.
    */
@@ -97,26 +97,26 @@ class EsdportalContactTypeUIController extends EntityDefaultUIController {
 /**
  * Contact class.
  */
-class EsdportalContact extends Entity {
+class E3Contact extends Entity {
   protected function defaultLabel() {
     return $this->title;
   }
 
   protected function defaultUri() {
-    return array('path' => 'contact/' . $this->identifier());
+    return array('path' => 'e3-contact/' . $this->identifier());
   }
 }
 
 /**
  * Contact Type class.
  */
-class EsdportalContactType extends Entity {
+class E3ContactType extends Entity {
   public $type;
   public $label;
   public $weight = 0;
 
   public function __construct($values = array()) {
-    parent::__construct($values, 'esdportal_contact_type');
+    parent::__construct($values, 'e3_contact_type');
   }
 
   function isLocked() {
