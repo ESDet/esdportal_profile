@@ -7,4 +7,4 @@ core = 7.x
 dependencies[] = entity
 dependencies[] = views
 
-files[] = esdportal_e3.controller.inc
+files[] = esdportal_e3.e3_contact.controller.inc

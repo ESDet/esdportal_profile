@@ -49,7 +49,7 @@ function esdportal_e3_entity_info() {
     // Enable the entity API's admin UI.
     'admin ui' => array(
       'path' => 'admin/structure/e3-contact-types',
-      'file' => 'esdportal_e3.admin.inc',
+      'file' => 'esdportal_e3.e3_contact.admin.inc',
       'controller class' => 'E3ContactTypeUIController',
     ),
     'access callback' => 'e3_contact_type_access',
@@ -84,7 +84,7 @@ function esdportal_e3_menu() {
     'title' => 'Add contact',
     'page callback' => 'e3_contact_admin_add_page',
     'access arguments' => array('administer e3_contact entities'),
-    'file' => 'esdportal_e3.admin.inc',
+    'file' => 'esdportal_e3.e3_contact.admin.inc',
     'type' => MENU_LOCAL_ACTION,
     'tab_parent' => 'e3-contact',
     'tab_root' => 'e3-contact',
@@ -100,7 +100,7 @@ function esdportal_e3_menu() {
     'page arguments' => array($e3_contact_uri_argument_position),
     'access callback' => 'entity_access',
     'aentityccess arguments' => array('view', 'e3_contact', $e3_contact_uri_argument_position),
-    'file' => 'esdportal_e3.pages.inc',
+    'file' => 'esdportal_e3.e3_contact.pages.inc',
   );
 
   $items[$e3_contact_uri . '/view'] = array(
@@ -117,7 +117,7 @@ function esdportal_e3_menu() {
     'page arguments' => array('e3_contact_delete_form', $e3_contact_uri_argument_position),
     'access callback' => 'entity_access',
     'access arguments' => array('edit', 'e3_contact', $e3_contact_uri_argument_position),
-    'file' => 'esdportal_e3.admin.inc',
+    'file' => 'esdportal_e3.e3_contact.admin.inc',
   );
 
   $items[$e3_contact_uri . '/edit'] = array(
@@ -126,7 +126,7 @@ function esdportal_e3_menu() {
     'page arguments' => array('e3_contact_form', $e3_contact_uri_argument_position),
     'access callback' => 'entity_access',
     'access arguments' => array('edit', 'e3_contact', $e3_contact_uri_argument_position),
-    'file' => 'esdportal_e3.admin.inc',
+    'file' => 'esdportal_e3.e3_contact.admin.inc',
     'type' => MENU_LOCAL_TASK,
     'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
   );
@@ -138,7 +138,7 @@ function esdportal_e3_menu() {
       'page arguments' => array(2),
       'access callback' => 'entity_access',
       'access arguments' => array('create', 'e3_contact', $type),
-      'file' => 'esdportal_e3.admin.inc',
+      'file' => 'esdportal_e3.e3_contact.admin.inc',
     );
   }
 
@@ -149,7 +149,7 @@ function esdportal_e3_menu() {
     'access arguments' => array('administer e3_contact types'),
     'weight' => 1,
     'type' => MENU_NORMAL_ITEM,
-    'file' => 'esdportal_e3.admin.inc',
+    'file' => 'esdportal_e3.e3_contact.admin.inc',
   );
 
   return $items;
