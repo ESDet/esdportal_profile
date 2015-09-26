@@ -14,6 +14,7 @@ function e3_contact_coach_autocomplete($coachname = '') {
   $matches = [];
 
   if ($coachname) {
+    // @todo limit to users with coach role, which doesn't exist yet
     $result = db_select('users')
       ->fields('users', array('name', 'uid'))
       ->condition('name', db_like($coachname) . '%', 'LIKE')
