@@ -144,7 +144,7 @@ class E3Contact extends Entity {
    *
    */
   protected function defaultLabel() {
-    return "todo";
+    return $this->fullname;
   }
 
   /**
