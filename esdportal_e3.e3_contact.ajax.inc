@@ -28,4 +28,3 @@ function e3_contact_coach_autocomplete($coachname = '') {
 
   drupal_json_output($matches);
 }
-

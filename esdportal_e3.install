@@ -1,6 +1,10 @@
 <?php
 
 /**
+ * @file
+ */
+
+/**
  * Implements hook_schema().
  */
 function esdportal_e3_schema() {
@@ -118,7 +122,6 @@ function esdportal_e3_schema() {
     ),
     'primary key' => array('id'),
   );
-
 
   $schema['e3_contact_type'] = array(
     'description' => 'Stores information about all defined E3 Contact Types.',
