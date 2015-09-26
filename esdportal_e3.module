@@ -457,6 +457,46 @@ function e3_contact_access($op, $e3_contact, $account = NULL, $entity_type = NUL
 }
 
 /**
+ * Loads an E3 Contact.
+ */
+function e3_contact_load($id, $reset = FALSE) {
+  $e3_contacts = e3_contact_load_multiple(array($id), array(), $reset);
+  return reset($e3_contacts);
+}
+
+/**
+ * Loads multiple E3 Contacts based on certain conditions.
+ */
+function e3_contact_load_multiple($ids = array(), $conditions = array(), $reset = FALSE) {
+  return entity_load('e3_contact', $ids, $conditions, $reset);
+}
+
+/**
+ * Saves an E3 Contact.
+ */
+function e3_contact_save($e3_contact) {
+  entity_save('e3_contact', $e3_contact);
+}
+
+/**
+ * Deletes an E3 Contact.
+ */
+function e3_contact_delete($e3_contact) {
+  entity_delete('e3_contact', entity_id('e3_contact', $e3_contact));
+}
+
+/**
+ * Deletes multiple E3 Contacts.
+ */
+function e3_contact_delete_multiple($e3_contact_ids) {
+  entity_delete_multiple('e3_contact', $e3_contact_ids);
+}
+
+/**
+ * @} End of "defgroup e3_contact_api".
+ */
+
+/**
  * @defgroup e3_note_api E3 Contact API
  * @{
  * CRUD E3 Notes
@@ -487,15 +527,7 @@ function e3_note_access($op, $e3_note, $account = NULL, $entity_type = NULL) {
 }
 
 /**
- * Load an E3 Contact.
- */
-function e3_contact_load($id, $reset = FALSE) {
-  $e3_contacts = e3_contact_load_multiple(array($id), array(), $reset);
-  return reset($e3_contacts);
-}
-
-/**
- * Load an E3 Note.
+ * Loads an E3 Note.
  */
 function e3_note_load($id, $reset = FALSE) {
   $e3_notes = e3_note_load_multiple(array($id), array(), $reset);
@@ -503,63 +535,35 @@ function e3_note_load($id, $reset = FALSE) {
 }
 
 /**
- * Load multiple E3 Contacts based on certain conditions.
- */
-function e3_contact_load_multiple($ids = array(), $conditions = array(), $reset = FALSE) {
-  return entity_load('e3_contact', $ids, $conditions, $reset);
-}
-
-/**
- * Load multiple E3 Notes based on certain conditions.
+ * Loads multiple E3 Notes based on certain conditions.
  */
 function e3_note_load_multiple($ids = array(), $conditions = array(), $reset = FALSE) {
   return entity_load('e3_note', $ids, $conditions, $reset);
 }
 
 /**
- * Save an E3 Contact.
- */
-function e3_contact_save($e3_contact) {
-  entity_save('e3_contact', $e3_contact);
-}
-
-/**
- * Save an E3 Note.
+ * Saves an E3 Note.
  */
 function e3_note_save($e3_note) {
   entity_save('e3_note', $e3_note);
 }
 
 /**
- * Delete an E3 Contact.
- */
-function e3_contact_delete($e3_contact) {
-  entity_delete('e3_contact', entity_id('e3_contact', $e3_contact));
-}
-
-/**
- * Delete an E3 Note.
+ * Deletes an E3 Note.
  */
 function e3_note_delete($e3_note) {
   entity_delete('e3_note', entity_id('e3_note', $e3_note));
 }
 
 /**
- * Delete multiple E3 Contacts.
- */
-function e3_contact_delete_multiple($e3_contact_ids) {
-  entity_delete_multiple('e3_contact', $e3_contact_ids);
-}
-
-/**
- * Delete multiple E3 Notess.
+ * Deletes multiple E3 Notes.
  */
 function e3_note_delete_multiple($e3_note_ids) {
   entity_delete_multiple('e3_note', $e3_note_ids);
 }
 
 /**
- * @} End of "defgroup e3_contact_type_api".
+ * @} End of "defgroup e3_note_api".
  */
 
 /**
@@ -570,46 +574,24 @@ function e3_note_delete_multiple($e3_note_ids) {
  */
 
 /**
- * Access callback for E3 Contact type.
+ * Access callback for E3 Contact Type.
  */
 function e3_contact_type_access($op, $entity = NULL) {
   return user_access('administer e3_contact types');
 }
 
 /**
- * Access callback for E3 Note type.
- */
-function e3_note_type_access($op, $entity = NULL) {
-  return user_access('administer e3_note types');
-}
-
-/**
- * Load an E3 Contact Type.
+ * Loads an E3 Contact Type.
  */
 function e3_contact_type_load($e3_contact_type) {
   return e3_contact_types($e3_contact_type);
 }
 
 /**
- * Load an E3 Note Type.
- */
-function e3_note_type_load($e3_note_type) {
-  return e3_note_types($e3_note_type);
-}
-
-/**
- * List of contact Types.
+ * Lists E3 Contact Types.
  */
 function e3_contact_types($type_name = NULL) {
   $types = entity_load_multiple_by_name('e3_contact_type', isset($type_name) ? array($type_name) : FALSE);
-  return isset($type_name) ? reset($types) : $types;
-}
-
-/**
- * List of note Types.
- */
-function e3_note_types($type_name = NULL) {
-  $types = entity_load_multiple_by_name('e3_note_type', isset($type_name) ? array($type_name) : FALSE);
   return isset($type_name) ? reset($types) : $types;
 }
 
@@ -621,43 +603,77 @@ function e3_contact_type_save($e3_contact_type) {
 }
 
 /**
- * Save E3 Note Type.
- */
-function e3_note_type_save($e3_note_type) {
-  entity_save('e3_note_type', $e3_note_type);
-}
-
-/**
- * Delete single E3 Contact Type.
+ * Deletes single E3 Contact Type.
  */
 function e3_contact_type_delete($e3_contact_type) {
   entity_delete('e3_contact_type', entity_id('e3_contact_type' ,$e3_contact_type));
 }
 
 /**
- * Delete single E3 Note Type.
- */
-function e3_note_type_delete($e3_note_type) {
-  entity_delete('e3_note_type', entity_id('e3_note_type' ,$e3_note_type));
-}
-
-/**
- * Delete multiple E3 Contact Types.
+ * Deletes multiple E3 Contact Types.
  */
 function e3_contact_type_delete_multiple($e3_contact_type_ids) {
   entity_delete_multiple('e3_contact_type', $e3_contact_type_ids);
 }
 
 /**
- * Delete multiple E3 Note Types.
+ * @} End of "defgroup e3_contact_type_api".
+ */
+
+/**
+ * @defgroup e3_note_type_api E3 Note Type API
+ * @{
+ * CRUD E3 Note Types
+ * @}
+ */
+
+/**
+ * Access callback for E3 Note Type.
+ */
+function e3_note_type_access($op, $entity = NULL) {
+  return user_access('administer e3_note types');
+}
+
+/**
+ * Loads an E3 Note Type.
+ */
+function e3_note_type_load($e3_note_type) {
+  return e3_note_types($e3_note_type);
+}
+
+/**
+ * Lists E3 Note Types.
+ */
+function e3_note_types($type_name = NULL) {
+  $types = entity_load_multiple_by_name('e3_note_type', isset($type_name) ? array($type_name) : FALSE);
+  return isset($type_name) ? reset($types) : $types;
+}
+
+/**
+ * Saves an E3 Note Type.
+ */
+function e3_note_type_save($e3_note_type) {
+  entity_save('e3_note_type', $e3_note_type);
+}
+
+/**
+ * Deletes a single E3 Note Type.
+ */
+function e3_note_type_delete($e3_note_type) {
+  entity_delete('e3_note_type', entity_id('e3_note_type' ,$e3_note_type));
+}
+
+/**
+ * Deletes multiple E3 Note Types.
  */
 function e3_note_type_delete_multiple($e3_note_type_ids) {
   entity_delete_multiple('e3_note_type', $e3_note_type_ids);
 }
 
 /**
- * @} End of "defgroup e3_contact_type_api".
+ * @} End of "defgroup e3_note_type_api".
  */
+
 
 /**
   * Implements hook_views_api().
@@ -672,7 +688,6 @@ function esdportal_e3_views_api() {
 /**
  * Implements callback entity_info_label.
  */
-
 function e3_note_label($e3_note, $e3_note_type) {
   return "Hello World";
 }
