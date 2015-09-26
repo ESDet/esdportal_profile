@@ -1,6 +1,10 @@
 <?php
 
 /**
+ * @file
+ */
+
+/**
  * Implements hook_entity_info().
  */
 function esdportal_e3_entity_info() {
@@ -14,6 +18,7 @@ function esdportal_e3_entity_info() {
       'entity keys' => array(
         'id' => 'id',
         'bundle' => 'type',
+        'label' => 'fullname',
       ),
       'bundle keys' => array(
         'bundle' => 'type',
@@ -43,7 +48,7 @@ function esdportal_e3_entity_info() {
     'entity keys' => array(
       'id' => 'id',
       'name' => 'type',
-      'label' => 'label',
+      'label' => 'type',
     ),
     'module' => 'esdportal_e3',
     // Enable the entity API's admin UI.
@@ -55,6 +60,54 @@ function esdportal_e3_entity_info() {
     'access callback' => 'e3_contact_type_access',
   );
 
+  $return['e3_note'] = array(
+    'label' => t('E3 Experience Note'),
+    'entity class' => 'E3Note',
+    'controller class' => 'E3NoteController',
+    'base table' => 'e3_note',
+    'fieldable' => TRUE,
+    'entity keys' => array(
+      'id' => 'id',
+      'bundle' => 'type',
+    ),
+    'bundle keys' => array(
+      'bundle' => 'type',
+    ),
+    'bundles' => array(),
+    'load hook' => 'e3_note_load',
+    'view modes' => array(
+      'full' => array(
+        'label' => t('Default'),
+        'custom settings' => FALSE,
+      ),
+    ),
+    'label callback' => 'e3_note_label',
+    'uri callback' => 'entity_class_uri',
+    'module' => 'esdportal_e3',
+    'access callback' => 'e3_note_access',
+  );
+  $return['e3_note_type'] = array(
+    'label' => t('E3 Experience Note Type'),
+    'entity class' => 'E3NoteType',
+    'controller class' => 'E3NoteTypeController',
+    'base table' => 'e3_note_type',
+    'fieldable' => FALSE,
+    'bundle of' => 'e3_note',
+    'exportable' => TRUE,
+    'entity keys' => array(
+      'id' => 'id',
+      'name' => 'type',
+      'label' => 'type',
+    ),
+    'module' => 'esdportal_e3',
+    // Enable the entity API's admin UI.
+    'admin ui' => array(
+      'path' => 'admin/structure/e3-note-types',
+      'file' => 'esdportal_e3.e3_note.admin.inc',
+      'controller class' => 'E3NoteTypeUIController',
+    ),
+    'access callback' => 'e3_note_type_access',
+  );
   return $return;
 }
 
@@ -68,6 +121,16 @@ function esdportal_e3_entity_info_alter(&$entity_info) {
       'admin' => array(
         'path' => 'admin/structure/e3-contact-types/manage/%e3_contact_type',
         'real path' => 'admin/structure/e3-contact-types/manage/' . $type,
+        'bundle argument' => 4,
+      ),
+    );
+  }
+  foreach (e3_note_types() as $type => $info) {
+    $entity_info['e3_note']['bundles'][$type] = array(
+      'label' => $info->label,
+      'admin' => array(
+        'path' => 'admin/structure/e3-note-types/manage/%e3_note_type',
+        'real path' => 'admin/structure/e3-note-types/manage/' . $type,
         'bundle argument' => 4,
       ),
     );
@@ -99,7 +162,7 @@ function esdportal_e3_menu() {
     'page callback' => 'e3_contact_view',
     'page arguments' => array($e3_contact_uri_argument_position),
     'access callback' => 'entity_access',
-    'aentityccess arguments' => array('view', 'e3_contact', $e3_contact_uri_argument_position),
+    'access arguments' => array('view', 'e3_contact', $e3_contact_uri_argument_position),
     'file' => 'esdportal_e3.e3_contact.pages.inc',
   );
 
@@ -152,6 +215,85 @@ function esdportal_e3_menu() {
     'file' => 'esdportal_e3.e3_contact.admin.inc',
   );
 
+  $items['e3-contact/coach_autocomplete'] = array(
+    'page callback' => 'e3_contact_coach_autocomplete',
+    'file' => 'esdportal_e3.e3_contact.ajax.inc',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('create e3_contact entities'),
+  );
+
+  $items['e3-note/add'] = array(
+    'title' => 'Add experience note',
+    'page callback' => 'e3_note_admin_add_page',
+    'access arguments' => array('administer e3_note entities'),
+    'file' => 'esdportal_e3.e3_note.admin.inc',
+    'type' => MENU_LOCAL_ACTION,
+    'tab_parent' => 'e3-note',
+    'tab_root' => 'e3-note',
+  );
+
+  $e3_contact_uri = 'e3-note/%e3_note';
+  $e3_contact_uri_argument_position = 1;
+
+  $items[$e3_note_uri] = array(
+    'title callback' => 'entity_label',
+    'title arguments' => array('e3_note', $e3_note_uri_argument_position),
+    'page callback' => 'e3_note_view',
+    'page arguments' => array($e3_note_uri_argument_position),
+    'access callback' => 'entity_access',
+    'access arguments' => array('view', 'e3_note', $e3_note_uri_argument_position),
+    'file' => 'esdportal_e3.e3_note.pages.inc',
+  );
+
+  $items[$e3_note_uri . '/view'] = array(
+    'title' => 'View',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+  );
+
+  $items[$e3_note_uri . '/delete'] = array(
+    'title' => 'Delete contact',
+    'title callback' => 'e3_note_label',
+    'title arguments' => array($e3_note_uri_argument_position),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('e3_note_delete_form', $e3_note_uri_argument_position),
+    'access callback' => 'entity_access',
+    'access arguments' => array('edit', 'e3_note', $e3_note_uri_argument_position),
+    'file' => 'esdportal_e3.e3_note.admin.inc',
+  );
+
+  $items[$e3_note_uri . '/edit'] = array(
+    'title' => 'Edit',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('e3_note_form', $e3_note_uri_argument_position),
+    'access callback' => 'entity_access',
+    'access arguments' => array('edit', 'e3_note', $e3_note_uri_argument_position),
+    'file' => 'esdportal_e3.e3_note.admin.inc',
+    'type' => MENU_LOCAL_TASK,
+    'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+  );
+
+  foreach (e3_note_types() as $type => $info) {
+    $items['e3-note/add/' . $type] = array(
+      'title' => 'Add note',
+      'page callback' => 'e3_note_add',
+      'page arguments' => array(2),
+      'access callback' => 'entity_access',
+      'access arguments' => array('create', 'e3_note', $type),
+      'file' => 'esdportal_e3.e3_note.admin.inc',
+    );
+  }
+
+  $items['admin/structure/e3-note-types/%e3_note_type/delete'] = array(
+    'title' => 'Delete',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('e3_note_type_form_delete_confirm', 4),
+    'access arguments' => array('administer e3_note types'),
+    'weight' => 1,
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'esdportal_e3.e3_note.admin.inc',
+  );
+
   return $items;
 }
 
@@ -160,6 +302,7 @@ function esdportal_e3_menu() {
  */
 function esdportal_e3_permission() {
   $permissions = array(
+    // Contact entity permissions.
     'administer e3_contact types' => array(
       'title' => t('Administer contact types'),
       'description' => t('Allows users to configure contact types and their fields.'),
@@ -170,7 +313,7 @@ function esdportal_e3_permission() {
       'description' => t('Allows users to create contacts.'),
       'restrict access' => TRUE,
     ),
-    'view esdpotal_contact entities' => array(
+    'view e3_contact entities' => array(
       'title' => t('View contacts'),
       'description' => t('Allows users to view contacts.'),
       'restrict access' => TRUE,
@@ -185,8 +328,33 @@ function esdportal_e3_permission() {
       'description' => t('Allows users to edit own contacts.'),
       'restrict access' => TRUE,
     ),
+    // Note entity permissions.
+    'administer e3_note types' => array(
+      'title' => t('Administer experience note types'),
+      'description' => t('Allows users to configure note types and their fields.'),
+      'restrict access' => TRUE,
+    ),
+    'create e3_note entities' => array(
+      'title' => t('Create experience notes'),
+      'description' => t('Allows users to create notes.'),
+      'restrict access' => TRUE,
+    ),
+    'view e3_note entities' => array(
+      'title' => t('View experience notes'),
+      'description' => t('Allows users to view notes.'),
+      'restrict access' => TRUE,
+    ),
+    'edit any e3_note entities' => array(
+      'title' => t('Edit any experience notes'),
+      'description' => t('Allows users to edit any notes.'),
+      'restrict access' => TRUE,
+    ),
+    'edit own e3_note entities' => array(
+      'title' => t('Edit own experience notes'),
+      'description' => t('Allows users to edit own notes.'),
+      'restrict access' => TRUE,
+    ),
   );
-
   return $permissions;
 }
 
@@ -195,6 +363,7 @@ function esdportal_e3_permission() {
  * Implements hook_entity_property_info_alter().
  */
 function esdportal_e3_entity_property_info_alter(&$info) {
+  // Contact entity.
   $properties = &$info['e3_contact']['properties'];
   $properties['created'] = array(
     'label' => t("Date created"),
@@ -228,6 +397,43 @@ function esdportal_e3_entity_property_info_alter(&$info) {
     'required' => TRUE,
     'schema field' => 'uid',
   );
+  // Experience Note entity.
+  $note_properties = &$info['e3_note']['properties'];
+  $note_properties['created'] = array(
+    'label' => t("Date created"),
+    'type' => 'date',
+    'description' => t("The date the note was posted."),
+    'setter callback' => 'entity_property_verbatim_set',
+    'setter permission' => 'administer nodes',
+    'schema field' => 'created',
+  );
+  $note_properties['changed'] = array(
+    'label' => t("Date changed"),
+    'type' => 'date',
+    'schema field' => 'changed',
+    'description' => t("The date the node was most recently updated."),
+  );
+  $note_properties['starttime'] = array(
+    'label' => t("Start time"),
+    'type' => 'date',
+    'schema field' => 'starttime',
+    'description' => t("The start time of the note."),
+  );
+  $note_properties['endtime'] = array(
+    'label' => t("End time"),
+    'type' => 'date',
+    'schema field' => 'endtime',
+    'description' => t("The start time of the note."),
+  );
+  $note_properties['uid'] = array(
+    'label' => t("Coach"),
+    'type' => 'user',
+    'description' => t("The author of the E3 Note."),
+    'setter callback' => 'entity_property_verbatim_set',
+    'setter permission' => 'administer e3_note entities',
+    'required' => TRUE,
+    'schema field' => 'uid',
+  );
 }
 
 
@@ -251,9 +457,11 @@ function e3_contact_access($op, $e3_contact, $account = NULL, $entity_type = NUL
     case 'create':
       return user_access('administer e3_contact entities', $account)
           || user_access('create e3_contact entities', $account);
+
     case 'view':
       return user_access('administer e3_contact entities', $account)
           || user_access('view e3_contact entities', $account);
+
     case 'edit':
       return user_access('administer e3_contact entities')
           || user_access('edit any e3_contact entities')
@@ -262,7 +470,7 @@ function e3_contact_access($op, $e3_contact, $account = NULL, $entity_type = NUL
 }
 
 /**
- * Load an E3 Contact.
+ * Loads an E3 Contact.
  */
 function e3_contact_load($id, $reset = FALSE) {
   $e3_contacts = e3_contact_load_multiple(array($id), array(), $reset);
@@ -270,35 +478,107 @@ function e3_contact_load($id, $reset = FALSE) {
 }
 
 /**
- * Load multiple E3 Contacts based on certain conditions.
+ * Loads multiple E3 Contacts based on certain conditions.
  */
 function e3_contact_load_multiple($ids = array(), $conditions = array(), $reset = FALSE) {
   return entity_load('e3_contact', $ids, $conditions, $reset);
 }
 
 /**
- * Save an E3 Contact.
+ * Saves an E3 Contact.
  */
 function e3_contact_save($e3_contact) {
   entity_save('e3_contact', $e3_contact);
 }
 
 /**
- * Delete an E3 Contact.
+ * Deletes an E3 Contact.
  */
 function e3_contact_delete($e3_contact) {
   entity_delete('e3_contact', entity_id('e3_contact', $e3_contact));
 }
 
 /**
- * Delete multiple E3 Contacts.
+ * Deletes multiple E3 Contacts.
  */
 function e3_contact_delete_multiple($e3_contact_ids) {
   entity_delete_multiple('e3_contact', $e3_contact_ids);
 }
 
 /**
- * @} End of "defgroup e3_contact_type_api".
+ * @} End of "defgroup e3_contact_api".
+ */
+
+/**
+ * @defgroup e3_note_api E3 Contact API
+ * @{
+ * CRUD E3 Notes
+ * @}
+ */
+
+/**
+ * Access callback for E3 Note.
+ */
+function e3_note_access($op, $e3_note, $account = NULL, $entity_type = NULL) {
+  global $user;
+
+  if (!isset($account)) {
+    $account = $user;
+  }
+  switch ($op) {
+    case 'create':
+      return user_access('administer e3_note entities', $account)
+          || user_access('create e3_note entities', $account);
+
+    case 'view':
+      return user_access('administer e3_note entities', $account)
+          || user_access('view e3_note entities', $account);
+
+    case 'edit':
+      return user_access('administer e3_note entities')
+          || user_access('edit any e3_note entities')
+          || (user_access('edit own e3_note entities') && ($e3_note->uid == $account->uid));
+  }
+}
+
+/**
+ * Loads an E3 Note.
+ */
+function e3_note_load($id, $reset = FALSE) {
+  $e3_notes = e3_note_load_multiple(array($id), array(), $reset);
+  return reset($e3_notes);
+}
+
+/**
+ * Loads multiple E3 Notes based on certain conditions.
+ */
+function e3_note_load_multiple($ids = array(), $conditions = array(), $reset = FALSE) {
+  return entity_load('e3_note', $ids, $conditions, $reset);
+}
+
+/**
+ * Saves an E3 Note.
+ */
+function e3_note_save($e3_note) {
+  entity_save('e3_note', $e3_note);
+}
+
+/**
+ * Deletes an E3 Note.
+ */
+function e3_note_delete($e3_note) {
+  entity_delete('e3_note', entity_id('e3_note', $e3_note));
+}
+
+/**
+ * Deletes multiple E3 Notes.
+ */
+function e3_note_delete_multiple($e3_note_ids) {
+  entity_delete_multiple('e3_note', $e3_note_ids);
+}
+
+/**
+ * @} End of "defgroup e3_note_api".
  */
 
 /**
@@ -309,21 +589,21 @@ function e3_contact_delete_multiple($e3_contact_ids) {
  */
 
 /**
- * Access callback for E3 Contact type.
+ * Access callback for E3 Contact Type.
  */
 function e3_contact_type_access($op, $entity = NULL) {
   return user_access('administer e3_contact types');
 }
 
 /**
- * Load an E3 Contact Type.
+ * Loads an E3 Contact Type.
  */
 function e3_contact_type_load($e3_contact_type) {
   return e3_contact_types($e3_contact_type);
 }
 
 /**
- * List of contact Types.
+ * Lists E3 Contact Types.
  */
 function e3_contact_types($type_name = NULL) {
   $types = entity_load_multiple_by_name('e3_contact_type', isset($type_name) ? array($type_name) : FALSE);
@@ -338,14 +618,14 @@ function e3_contact_type_save($e3_contact_type) {
 }
 
 /**
- * Delete single E3 Contact Type.
+ * Deletes single E3 Contact Type.
  */
 function e3_contact_type_delete($e3_contact_type) {
-  entity_delete('e3_contact_type', entity_id('e3_contact_type' ,$e3_contact_type));
+  entity_delete('e3_contact_type', entity_id('e3_contact_type', $e3_contact_type));
 }
 
 /**
- * Delete multiple E3 Contact Types.
+ * Deletes multiple E3 Contact Types.
  */
 function e3_contact_type_delete_multiple($e3_contact_type_ids) {
   entity_delete_multiple('e3_contact_type', $e3_contact_type_ids);
@@ -356,8 +636,63 @@ function e3_contact_type_delete_multiple($e3_contact_type_ids) {
  */
 
 /**
-  * Implements hook_views_api().
-  */
+ * @defgroup e3_note_type_api E3 Note Type API
+ * @{
+ * CRUD E3 Note Types
+ * @}
+ */
+
+/**
+ * Access callback for E3 Note Type.
+ */
+function e3_note_type_access($op, $entity = NULL) {
+  return user_access('administer e3_note types');
+}
+
+/**
+ * Loads an E3 Note Type.
+ */
+function e3_note_type_load($e3_note_type) {
+  return e3_note_types($e3_note_type);
+}
+
+/**
+ * Lists E3 Note Types.
+ */
+function e3_note_types($type_name = NULL) {
+  $types = entity_load_multiple_by_name('e3_note_type', isset($type_name) ? array($type_name) : FALSE);
+  return isset($type_name) ? reset($types) : $types;
+}
+
+/**
+ * Saves an E3 Note Type.
+ */
+function e3_note_type_save($e3_note_type) {
+  entity_save('e3_note_type', $e3_note_type);
+}
+
+/**
+ * Deletes a single E3 Note Type.
+ */
+function e3_note_type_delete($e3_note_type) {
+  entity_delete('e3_note_type', entity_id('e3_note_type', $e3_note_type));
+}
+
+/**
+ * Deletes multiple E3 Note Types.
+ */
+function e3_note_type_delete_multiple($e3_note_type_ids) {
+  entity_delete_multiple('e3_note_type', $e3_note_type_ids);
+}
+
+/**
+ * @} End of "defgroup e3_note_type_api".
+ */
+
+
+/**
+ * Implements hook_views_api().
+ */
 function esdportal_e3_views_api() {
   return array(
     'api' => 3,
@@ -365,3 +700,9 @@ function esdportal_e3_views_api() {
   );
 }
 
+/**
+ * Implements callback entity_info_label.
+ */
+function e3_note_label($e3_note, $e3_note_type) {
+  return "Hello World";
+}

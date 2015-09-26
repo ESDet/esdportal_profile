@@ -1,6 +1,6 @@
 name = Entities for E3 data
 description = Provides special entities and bundles for the E3 database.
-package = Other
+package = E3
 version = 1.0
 core = 7.x
 
@@ -8,3 +8,4 @@ dependencies[] = entity
 dependencies[] = views
 
 files[] = esdportal_e3.e3_contact.controller.inc
+files[] = esdportal_e3.e3_note.controller.inc
