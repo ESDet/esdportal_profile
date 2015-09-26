@@ -140,13 +140,6 @@ function e3_contact_add($type) {
 function e3_contact_form($form, &$form_state, $e3_contact) {
   $form_state['e3_contact'] = $e3_contact;
 
-  $form['title'] = array(
-    '#type' => 'textfield',
-    '#required' => TRUE,
-    '#title' => t('Name'),
-    '#default_value' => $e3_contact->title,
-  );
-
   $form['firstname'] = array(
     '#type' => 'textfield',
     '#required' => TRUE,
