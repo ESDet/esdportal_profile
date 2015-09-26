@@ -70,6 +70,38 @@ function esdportal_e3_feature_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'e3_contact-teacher-field_ec'
+  $field_instances['e3_contact-teacher-field_ec'] = array(
+    'bundle' => 'teacher',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'taxonomy',
+        'settings' => array(),
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 3,
+      ),
+    ),
+    'entity_type' => 'e3_contact',
+    'field_name' => 'field_ec',
+    'label' => 'related Early Childchood Center',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 5,
+    ),
+  );
+
   // Exported field_instance: 'e3_contact-teacher-field_email'
   $field_instances['e3_contact-teacher-field_email'] = array(
     'bundle' => 'teacher',
@@ -105,10 +137,119 @@ function esdportal_e3_feature_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'e3_contact-teacher-field_teacher_ec_role'
+  $field_instances['e3_contact-teacher-field_teacher_ec_role'] = array(
+    'bundle' => 'teacher',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 4,
+      ),
+    ),
+    'entity_type' => 'e3_contact',
+    'field_name' => 'field_teacher_ec_role',
+    'label' => 'Position / role',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 6,
+    ),
+  );
+
+  // Exported field_instance: 'e3_contact-teacher-field_work_email'
+  $field_instances['e3_contact-teacher-field_work_email'] = array(
+    'bundle' => 'teacher',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 5,
+      ),
+    ),
+    'entity_type' => 'e3_contact',
+    'field_name' => 'field_work_email',
+    'label' => 'Work email',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 7,
+    ),
+  );
+
+  // Exported field_instance: 'e3_contact-teacher-field_work_phone'
+  $field_instances['e3_contact-teacher-field_work_phone'] = array(
+    'bundle' => 'teacher',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 6,
+      ),
+    ),
+    'entity_type' => 'e3_contact',
+    'field_name' => 'field_work_phone',
+    'label' => 'Work phone',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 8,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('Email');
   t('Home address');
+  t('Position / role');
+  t('Work email');
+  t('Work phone');
+  t('related Early Childchood Center');
 
   return $field_instances;
 }
