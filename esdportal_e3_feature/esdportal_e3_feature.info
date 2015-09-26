@@ -1,7 +1,7 @@
 name = esdportal_e3_feature
 description = esdportal_e3_feature
 core = 7.x
-package = Features
+package = E3
 php = 5.2.4
 dependencies[] = addressfield
 dependencies[] = entity

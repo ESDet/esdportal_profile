@@ -1,6 +1,6 @@
 name = Entities for E3 data
 description = Provides special entities and bundles for the E3 database.
-package = Other
+package = E3
 version = 1.0
 core = 7.x
 
