@@ -211,6 +211,13 @@ function esdportal_e3_menu() {
     'file' => 'esdportal_e3.e3_contact.admin.inc',
   );
 
+  $items['e3-contact/coach_autocomplete'] = array(
+    'page callback' => 'e3_contact_coach_autocomplete',
+    'file' => 'esdportal_e3.e3_contact.ajax.inc',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('create e3_contact entities'),
+  );
+
   $items['e3-note/add'] = array(
     'title' => 'Add experience note',
     'page callback' => 'e3_note_admin_add_page',

@@ -162,8 +162,12 @@ function e3_contact_form($form, &$form_state, $e3_contact) {
   );
 
   $form['uid'] = array(
-    '#type' => 'value',
-    '#value' => $e3_contact->uid,
+    '#type' => 'textfield',
+    '#title' => t('Coach'),
+    '#size' => 30,
+    '#maxlength' => 60,
+    '#autocomplete_path' => 'e3-contact/coach_autocomplete',
+    '#default_value' => $e3_contact->uid,
   );
 
   field_attach_form('e3_contact', $e3_contact, $form, $form_state);
