@@ -105,20 +105,6 @@ function esdportal_e3_schema() {
         'not null' => TRUE,
         'default' => 0,
       ),
-      'starttime' => array(
-        'description' => 'The start time of the note.',
-        'type' => 'varchar',
-        'length' => 255,
-        'not null' => TRUE,
-        'default' => '',
-      ),
-      'endtime' => array(
-        'description' => 'The end time of the note.',
-        'type' => 'varchar',
-        'length' => 255,
-        'not null' => TRUE,
-        'default' => '',
-      ),
     ),
     'primary key' => array('id'),
   );

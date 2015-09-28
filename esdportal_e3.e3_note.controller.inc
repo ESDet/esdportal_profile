@@ -24,8 +24,6 @@ class E3NoteController extends EntityAPIController {
       'uid' => $user->uid,
       'created' => REQUEST_TIME,
       'changed' => REQUEST_TIME,
-      'starttime' => '',
-      'endtime' => '',
     );
     return parent::create($values);
   }
@@ -42,40 +40,6 @@ class E3NoteController extends EntityAPIController {
 
     $content['author'] = array(
       '#markup' => t('Created by: !author', array('!author' => $wrapper->uid->name->value(array('sanitize' => TRUE)))),
-    );
-
-    // Make firstname and lastname themed like default fields.
-    $content['starttime'] = array(
-      '#theme' => 'field',
-      '#weight' => 0,
-      '#title' => t('Start Time'),
-      '#access' => TRUE,
-      '#label_display' => 'above',
-      '#view_mode' => 'full',
-      '#language' => LANGUAGE_NONE,
-      '#field_name' => 'field_starttime',
-      '#field_type' => 'text',
-      '#entity_type' => 'e3_note',
-      '#bundle' => $entity->type,
-      '#items' => array(array('value' => $entity->starttime)),
-      '#formatter' => 'text_default',
-      0 => array('#markup' => check_plain($entity->starttime)),
-    );
-    $content['endtime'] = array(
-      '#theme' => 'field',
-      '#weight' => 0,
-      '#title' => t('End Time'),
-      '#access' => TRUE,
-      '#label_display' => 'above',
-      '#view_mode' => 'full',
-      '#language' => LANGUAGE_NONE,
-      '#field_name' => 'field_endtime',
-      '#field_type' => 'text',
-      '#entity_type' => 'e3_note',
-      '#bundle' => $entity->type,
-      '#items' => array(array('value' => $entity->endtime)),
-      '#formatter' => 'text_default',
-      0 => array('#markup' => check_plain($entity->endname)),
     );
 
     return parent::buildContent($entity, $view_mode, $langcode, $content);

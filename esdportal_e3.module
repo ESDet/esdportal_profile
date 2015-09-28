@@ -413,18 +413,6 @@ function esdportal_e3_entity_property_info_alter(&$info) {
     'schema field' => 'changed',
     'description' => t("The date the node was most recently updated."),
   );
-  $note_properties['starttime'] = array(
-    'label' => t("Start time"),
-    'type' => 'date',
-    'schema field' => 'starttime',
-    'description' => t("The start time of the note."),
-  );
-  $note_properties['endtime'] = array(
-    'label' => t("End time"),
-    'type' => 'date',
-    'schema field' => 'endtime',
-    'description' => t("The start time of the note."),
-  );
   $note_properties['uid'] = array(
     'label' => t("Coach"),
     'type' => 'user',

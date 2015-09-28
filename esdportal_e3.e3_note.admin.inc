@@ -140,20 +140,6 @@ function e3_note_add($type) {
 function e3_note_form($form, &$form_state, $e3_note) {
   $form_state['e3_note'] = $e3_note;
 
-  $form['starttime'] = array(
-    '#type' => 'textfield',
-    '#required' => TRUE,
-    '#title' => t('Start Time'),
-    '#default_value' => $e3_note->starttime,
-  );
-
-  $form['endtime'] = array(
-    '#type' => 'textfield',
-    '#required' => TRUE,
-    '#title' => t('End Time'),
-    '#default_value' => $e3_note->endtime,
-  );
-
   $form['uid'] = array(
     '#type' => 'value',
     '#value' => $e3_note->uid,
