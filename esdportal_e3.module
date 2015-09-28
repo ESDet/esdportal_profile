@@ -232,8 +232,8 @@ function esdportal_e3_menu() {
     'tab_root' => 'e3-note',
   );
 
-  $e3_contact_uri = 'e3-note/%e3_note';
-  $e3_contact_uri_argument_position = 1;
+  $e3_note_uri = 'e3-note/%e3_note';
+  $e3_note_uri_argument_position = 1;
 
   $items[$e3_note_uri] = array(
     'title callback' => 'entity_label',
@@ -252,7 +252,7 @@ function esdportal_e3_menu() {
   );
 
   $items[$e3_note_uri . '/delete'] = array(
-    'title' => 'Delete contact',
+    'title' => 'Delete E3 Note',
     'title callback' => 'e3_note_label',
     'title arguments' => array($e3_note_uri_argument_position),
     'page callback' => 'drupal_get_form',
