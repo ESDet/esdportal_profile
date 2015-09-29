@@ -27,7 +27,7 @@ function esdportal_e3_feature_field_default_field_instances() {
           'use_widget_handlers' => 1,
         ),
         'type' => 'addressfield_default',
-        'weight' => 2,
+        'weight' => 1,
       ),
     ),
     'entity_type' => 'e3_contact',
@@ -87,7 +87,7 @@ function esdportal_e3_feature_field_default_field_instances() {
     ),
     'entity_type' => 'e3_contact',
     'field_name' => 'field_ec',
-    'label' => 'related Early Childchood Center',
+    'label' => 'Employing Early Childhood Center',
     'required' => 0,
     'settings' => array(
       'entity_translation_sync' => FALSE,
@@ -110,11 +110,11 @@ function esdportal_e3_feature_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 1,
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'e3_contact',
@@ -145,7 +145,7 @@ function esdportal_e3_feature_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
@@ -180,7 +180,7 @@ function esdportal_e3_feature_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
@@ -215,7 +215,7 @@ function esdportal_e3_feature_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
@@ -245,11 +245,11 @@ function esdportal_e3_feature_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Email');
+  t('Employing Early Childhood Center');
   t('Home address');
   t('Position / role');
   t('Work email');
   t('Work phone');
-  t('related Early Childchood Center');
 
   return $field_instances;
 }

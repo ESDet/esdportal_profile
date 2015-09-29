@@ -10,6 +10,24 @@
 function esdportal_e3_fieldbases_field_default_field_bases() {
   $field_bases = array();
 
+  // Exported field_base: 'field_adults_present'
+  $field_bases['field_adults_present'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_adults_present',
+    'foreign keys' => array(),
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'number_integer',
+  );
+
   // Exported field_base: 'field_bm_expectations'
   $field_bases['field_bm_expectations'] = array(
     'active' => 1,
@@ -40,6 +58,35 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_bm_notes'
+  $field_bases['field_bm_notes'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_bm_notes',
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'text_long',
   );
 
   // Exported field_base: 'field_bm_proactive'
@@ -266,6 +313,35 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'type' => 'list_integer',
   );
 
+  // Exported field_base: 'field_cd_notes'
+  $field_bases['field_cd_notes'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_cd_notes',
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'text_long',
+  );
+
   // Exported field_base: 'field_cd_reasoning'
   $field_bases['field_cd_reasoning'] = array(
     'active' => 1,
@@ -348,13 +424,43 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'type' => 'number_integer',
   );
 
-  // Exported field_base: 'field_coaching_strategy'
-  $field_bases['field_coaching_strategy'] = array(
+  // Exported field_base: 'field_class_content'
+  $field_bases['field_class_content'] = array(
     'active' => 1,
     'cardinality' => -1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_coaching_strategy',
+    'field_name' => 'field_class_content',
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'max_length' => 255,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
+  );
+
+  // Exported field_base: 'field_class_format'
+  $field_bases['field_class_format'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_class_format',
     'foreign keys' => array(),
     'indexes' => array(
       'value' => array(
@@ -365,22 +471,48 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        'onmodel' => 'On-stage modeling',
-        'offmodel' => 'Off-stage modeling w/practice',
-        'practice' => 'Guided practice (w/o modeling)',
-        'coclass' => 'Co-investigation - classroom (in-person or video)',
-        'costrat' => 'Co-investigation - instructional strategy/skill',
-        'corsrc' => 'Co-investigation - planning resource(s)',
-        'coplan' => 'Co-planning',
-        'sideby' => 'Side-by-side teaching',
-        'cue' => 'Cue-coaching',
-        'shift' => 'Shifting underlying cause conversation',
+        'rout' => 'Routine',
+        'meal' => 'Meals/snacks',
+        'whole' => 'Whole group',
+        'small' => 'Small group',
+        'indv' => 'Individual time',
+        'free' => 'Free choice/centers',
       ),
       'allowed_values_function' => '',
       'entity_translation_sync' => FALSE,
     ),
     'translatable' => 0,
     'type' => 'list_text',
+  );
+
+  // Exported field_base: 'field_coaching_strategy'
+  $field_bases['field_coaching_strategy'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_coaching_strategy',
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'max_length' => 255,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
   );
 
   // Exported field_base: 'field_ec_employer'
@@ -425,7 +557,14 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_ec_teacher',
-    'foreign keys' => array(),
+    'foreign keys' => array(
+      'e3_contact' => array(
+        'columns' => array(
+          'target_id' => 'id',
+        ),
+        'table' => 'e3_contact',
+      ),
+    ),
     'indexes' => array(
       'target_id' => array(
         0 => 'target_id',
@@ -446,10 +585,10 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
           'type' => 'none',
         ),
         'target_bundles' => array(
-          'ec' => 'ec',
+          'teacher' => 'teacher',
         ),
       ),
-      'target_type' => 'teacher',
+      'target_type' => 'e3_contact',
     ),
     'translatable' => 0,
     'type' => 'entityreference',
@@ -462,32 +601,27 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_focus_area',
-    'foreign keys' => array(),
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
     'indexes' => array(
-      'value' => array(
-        0 => 'value',
+      'format' => array(
+        0 => 'format',
       ),
     ),
     'locked' => 0,
-    'module' => 'list',
+    'module' => 'text',
     'settings' => array(
-      'allowed_values' => array(
-        'pc' => 'Positive Climate',
-        'nc' => 'Negative Climate.',
-        'ts' => 'Teacher Sensitivity',
-        'rsp' => 'Regard for Student Perspectives',
-        'bm' => 'Behavior Management',
-        'p' => 'Productivity',
-        'ilf' => 'Instructional Learning Formats',
-        'cd' => 'Concept Development',
-        'qf' => 'Quality of Feedback',
-        'lm' => 'Language Modeling',
-      ),
-      'allowed_values_function' => '',
       'entity_translation_sync' => FALSE,
+      'max_length' => 255,
     ),
     'translatable' => 0,
-    'type' => 'list_text',
+    'type' => 'text',
   );
 
   // Exported field_base: 'field_ilf_facilitation'
@@ -520,6 +654,35 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_ilf_notes'
+  $field_bases['field_ilf_notes'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_ilf_notes',
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'text_long',
   );
 
   // Exported field_base: 'field_ilf_objectives'
@@ -741,6 +904,35 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_lm_notes'
+  $field_bases['field_lm_notes'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_lm_notes',
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'text_long',
   );
 
   // Exported field_base: 'field_lm_questions'
@@ -967,6 +1159,35 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'type' => 'list_integer',
   );
 
+  // Exported field_base: 'field_nc_notes'
+  $field_bases['field_nc_notes'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_nc_notes',
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'text_long',
+  );
+
   // Exported field_base: 'field_nc_punitive_control'
   $field_bases['field_nc_punitive_control'] = array(
     'active' => 1,
@@ -1091,38 +1312,6 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_observe_date'
-  $field_bases['field_observe_date'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_observe_date',
-    'foreign keys' => array(),
-    'indexes' => array(),
-    'locked' => 0,
-    'module' => 'date',
-    'settings' => array(
-      'cache_count' => 4,
-      'cache_enabled' => 0,
-      'entity_translation_sync' => FALSE,
-      'granularity' => array(
-        'day' => 'day',
-        'hour' => 0,
-        'minute' => 0,
-        'month' => 'month',
-        'second' => 0,
-        'year' => 'year',
-      ),
-      'repeat' => 0,
-      'timezone_db' => '',
-      'todate' => '',
-      'tz_handling' => 'none',
-    ),
-    'translatable' => 0,
-    'type' => 'datetime',
-  );
-
   // Exported field_base: 'field_p_maximizing'
   $field_bases['field_p_maximizing'] = array(
     'active' => 1,
@@ -1153,6 +1342,35 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_p_notes'
+  $field_bases['field_p_notes'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_p_notes',
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'text_long',
   );
 
   // Exported field_base: 'field_p_preparation'
@@ -1281,6 +1499,35 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_pc_notes'
+  $field_bases['field_pc_notes'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_pc_notes',
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'text_long',
   );
 
   // Exported field_base: 'field_pc_positive_affect'
@@ -1507,6 +1754,35 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'type' => 'list_integer',
   );
 
+  // Exported field_base: 'field_qf_notes'
+  $field_bases['field_qf_notes'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_qf_notes',
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'text_long',
+  );
+
   // Exported field_base: 'field_qf_prompting'
   $field_bases['field_qf_prompting'] = array(
     'active' => 1,
@@ -1731,6 +2007,35 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'type' => 'list_integer',
   );
 
+  // Exported field_base: 'field_rsp_notes'
+  $field_bases['field_rsp_notes'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_rsp_notes',
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'text_long',
+  );
+
   // Exported field_base: 'field_rsp_score'
   $field_bases['field_rsp_score'] = array(
     'active' => 1,
@@ -1793,6 +2098,35 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_session_challenges'
+  $field_bases['field_session_challenges'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_session_challenges',
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'text_long',
   );
 
   // Exported field_base: 'field_session_notes'
@@ -2135,6 +2469,35 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_ts_notes'
+  $field_bases['field_ts_notes'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_ts_notes',
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'text_long',
   );
 
   // Exported field_base: 'field_ts_responsiveness'

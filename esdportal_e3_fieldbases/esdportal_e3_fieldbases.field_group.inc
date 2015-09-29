@@ -26,8 +26,9 @@ function esdportal_e3_fieldbases_field_group_info() {
       0 => 'field_bm_expectations',
       1 => 'field_bm_proactive',
       2 => 'field_bm_redirection',
-      3 => 'field_bm_student_behavior',
-      4 => 'field_bm_score',
+      3 => 'field_bm_score',
+      4 => 'field_bm_student_behavior',
+      5 => 'field_bm_notes',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -54,11 +55,12 @@ function esdportal_e3_fieldbases_field_group_info() {
     'label' => 'Concept Development',
     'weight' => '13',
     'children' => array(
-      0 => 'field_cd_reasoning',
+      0 => 'field_cd_connections',
       1 => 'field_cd_creating',
       2 => 'field_cd_integration',
-      3 => 'field_cd_connections',
+      3 => 'field_cd_reasoning',
       4 => 'field_cd_score',
+      5 => 'field_cd_notes',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -85,16 +87,16 @@ function esdportal_e3_fieldbases_field_group_info() {
     'label' => 'Dimensions',
     'weight' => '5',
     'children' => array(
-      0 => 'group_pc',
-      1 => 'group_nc',
-      2 => 'group_ts',
-      3 => 'group_rsp',
-      4 => 'group_bm',
-      5 => 'group_p',
-      6 => 'group_ilf',
-      7 => 'group_cd',
-      8 => 'group_qf',
-      9 => 'group_lm',
+      0 => 'group_bm',
+      1 => 'group_cd',
+      2 => 'group_ilf',
+      3 => 'group_lm',
+      4 => 'group_nc',
+      5 => 'group_pc',
+      6 => 'group_p',
+      7 => 'group_qf',
+      8 => 'group_rsp',
+      9 => 'group_ts',
     ),
     'format_type' => 'accordion',
     'format_settings' => array(
@@ -110,6 +112,33 @@ function esdportal_e3_fieldbases_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_e3_tracker|e3_contact|teacher|form';
+  $field_group->group_name = 'group_e3_tracker';
+  $field_group->entity_type = 'e3_contact';
+  $field_group->bundle = 'teacher';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'E3 Tracker',
+    'weight' => '12',
+    'children' => array(
+      0 => 'field_assigned_coach',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'formatter' => 'collapsible',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-e3-tracker field-group-fieldset',
+        'required_fields' => 1,
+      ),
+    ),
+  );
+  $export['group_e3_tracker|e3_contact|teacher|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_ilf|e3_note|observation_log|form';
   $field_group->group_name = 'group_ilf';
   $field_group->entity_type = 'e3_note';
@@ -121,10 +150,11 @@ function esdportal_e3_fieldbases_field_group_info() {
     'weight' => '12',
     'children' => array(
       0 => 'field_ilf_facilitation',
-      1 => 'field_ilf_variety',
-      2 => 'field_ilf_student_interest',
-      3 => 'field_ilf_objectives',
-      4 => 'field_ilf_score',
+      1 => 'field_ilf_objectives',
+      2 => 'field_ilf_score',
+      3 => 'field_ilf_student_interest',
+      4 => 'field_ilf_variety',
+      5 => 'field_ilf_notes',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -151,12 +181,13 @@ function esdportal_e3_fieldbases_field_group_info() {
     'label' => 'Language Modeling',
     'weight' => '15',
     'children' => array(
-      0 => 'field_lm_conversations',
-      1 => 'field_lm_questions',
-      2 => 'field_lm_repetition',
-      3 => 'field_lm_talk',
-      4 => 'field_lm_advanced',
-      5 => 'field_lm_score',
+      0 => 'field_lm_advanced',
+      1 => 'field_lm_conversations',
+      2 => 'field_lm_questions',
+      3 => 'field_lm_repetition',
+      4 => 'field_lm_score',
+      5 => 'field_lm_talk',
+      6 => 'field_lm_notes',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -183,11 +214,12 @@ function esdportal_e3_fieldbases_field_group_info() {
     'label' => 'Negative Climate',
     'weight' => '7',
     'children' => array(
-      0 => 'field_nc_negative_affect',
-      1 => 'field_nc_punitive_control',
-      2 => 'field_nc_disrespect',
-      3 => 'field_nc_negativity',
+      0 => 'field_nc_disrespect',
+      1 => 'field_nc_negative_affect',
+      2 => 'field_nc_negativity',
+      3 => 'field_nc_punitive_control',
       4 => 'field_nc_score',
+      5 => 'field_nc_notes',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -212,14 +244,14 @@ function esdportal_e3_fieldbases_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Next Steps',
-    'weight' => '11',
+    'weight' => '10',
     'children' => array(
-      0 => 'field_target_date_2',
-      1 => 'field_next_step_1',
-      2 => 'field_next_step_2',
-      3 => 'field_target_date_1',
-      4 => 'field_step_complete_1',
-      5 => 'field_step_complete_2',
+      0 => 'field_next_step_1',
+      1 => 'field_next_step_2',
+      2 => 'field_step_complete_1',
+      3 => 'field_step_complete_2',
+      4 => 'field_target_date_1',
+      5 => 'field_target_date_2',
     ),
     'format_type' => 'div',
     'format_settings' => array(
@@ -251,11 +283,12 @@ function esdportal_e3_fieldbases_field_group_info() {
     'label' => 'Positive Climate',
     'weight' => '6',
     'children' => array(
-      0 => 'field_pc_relationships',
-      1 => 'field_pc_positive_affect',
-      2 => 'field_pc_positive_communication',
+      0 => 'field_pc_positive_affect',
+      1 => 'field_pc_positive_communication',
+      2 => 'field_pc_relationships',
       3 => 'field_pc_respect',
       4 => 'field_pc_score',
+      5 => 'field_pc_notes',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -283,10 +316,11 @@ function esdportal_e3_fieldbases_field_group_info() {
     'weight' => '11',
     'children' => array(
       0 => 'field_p_maximizing',
-      1 => 'field_p_routines',
-      2 => 'field_p_transitions',
-      3 => 'field_p_preparation',
-      4 => 'field_p_score',
+      1 => 'field_p_preparation',
+      2 => 'field_p_routines',
+      3 => 'field_p_score',
+      4 => 'field_p_transitions',
+      5 => 'field_p_notes',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -313,12 +347,13 @@ function esdportal_e3_fieldbases_field_group_info() {
     'label' => 'Quality of Feedback',
     'weight' => '14',
     'children' => array(
-      0 => 'field_qf_scaffolding',
+      0 => 'field_qf_encouragement',
       1 => 'field_qf_feedback_loops',
       2 => 'field_qf_prompting',
       3 => 'field_qf_providing_info',
-      4 => 'field_qf_encouragement',
+      4 => 'field_qf_scaffolding',
       5 => 'field_qf_score',
+      6 => 'field_qf_notes',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -345,11 +380,12 @@ function esdportal_e3_fieldbases_field_group_info() {
     'label' => 'Regard for Student Perspectives',
     'weight' => '9',
     'children' => array(
-      0 => 'field_rsp_flexibility',
-      1 => 'field_rsp_support',
-      2 => 'field_rsp_expression',
-      3 => 'field_rsp_movement',
-      4 => 'field_rsp_score',
+      0 => 'field_rsp_expression',
+      1 => 'field_rsp_flexibility',
+      2 => 'field_rsp_movement',
+      3 => 'field_rsp_score',
+      4 => 'field_rsp_support',
+      5 => 'field_rsp_notes',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -376,11 +412,12 @@ function esdportal_e3_fieldbases_field_group_info() {
     'label' => 'Teacher Sensitivity',
     'weight' => '8',
     'children' => array(
-      0 => 'field_ts_awareness',
-      1 => 'field_ts_responsiveness',
-      2 => 'field_ts_addresses_problems',
-      3 => 'field_ts_student_comfort',
-      4 => 'field_ts_score',
+      0 => 'field_ts_addresses_problems',
+      1 => 'field_ts_awareness',
+      2 => 'field_ts_responsiveness',
+      3 => 'field_ts_score',
+      4 => 'field_ts_student_comfort',
+      5 => 'field_ts_notes',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
