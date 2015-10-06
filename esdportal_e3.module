@@ -379,15 +379,6 @@ function esdportal_e3_entity_property_info_alter(&$info) {
     'schema field' => 'changed',
     'description' => t("The date the node was most recently updated."),
   );
-  $properties['firstname'] = array(
-    'label' => t("E3 Contact First Name"),
-    'type' => 'varchar',
-    'length' => 255,
-    'setter callback' => 'entity_property_verbatim_set',
-    'setter permission' => 'administer e3_contact entities',
-    'schema field' => 'firstname',
-    'description' => t("The first name of the E3 Contact."),
-  );
   $properties['uid'] = array(
     'label' => t("Author"),
     'type' => 'user',
