@@ -64,10 +64,6 @@ function esdportal_e3_schema() {
         'not null' => TRUE,
         'default' => 0,
       ),
-      'description' => array(
-        'description' => 'E3 Contact description.',
-        'type' => 'text',
-      ),
     ),
     'primary key' => array('id'),
   );

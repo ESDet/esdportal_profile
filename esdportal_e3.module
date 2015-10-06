@@ -685,3 +685,12 @@ function esdportal_e3_views_api() {
 function e3_note_label($e3_note, $e3_note_type) {
   return t('Note: ') . date('m-d-Y', $e3_note->changed);
 }
+
+/**
+ * Remove description column from the database.
+ */
+
+function esdportal_e3_update_7001() {
+// Drop the description field from the {e3_contact} table.
+  db_drop_field('e3_contact','description');
+}
