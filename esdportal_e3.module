@@ -360,12 +360,12 @@ function esdportal_e3_permission() {
 
 
 /**
- * Implements hook_entity_property_info_alter().
+ * Implements hook_entity_property_info().
  */
-function esdportal_e3_entity_property_info_alter(&$info) {
-  // Contact entity.
-  $properties = &$info['e3_contact']['properties'];
-  $properties['created'] = array(
+function esdportal_e3_entity_property_info() {
+
+  $properties = array();
+  $properties['e3_contact']['properties']['created'] = array(
     'label' => t("Date created"),
     'type' => 'date',
     'description' => t("The date the node was posted."),
@@ -373,24 +373,56 @@ function esdportal_e3_entity_property_info_alter(&$info) {
     'setter permission' => 'administer nodes',
     'schema field' => 'created',
   );
-  $properties['changed'] = array(
+  $properties['e3_contact']['properties']['changed'] = array(
     'label' => t("Date changed"),
     'type' => 'date',
     'schema field' => 'changed',
     'description' => t("The date the node was most recently updated."),
   );
-  $properties['uid'] = array(
+  $properties['e3_contact']['properties']['uid'] = array(
     'label' => t("Author"),
     'type' => 'user',
     'description' => t("The author of the E3 Contact."),
-    'setter callback' => 'entity_property_verbatim_set',
-    'setter permission' => 'administer e3_contact entities',
     'required' => TRUE,
     'schema field' => 'uid',
   );
+  $properties['e3_contact']['properties']['fullname'] = array(
+    'label' => t("Full Name"),
+    'type' => 'text',
+    'description' => t("The fullname of the E3 Contact."),
+    'required' => TRUE,
+    'schema field' => 'fullname',
+  );
+  $properties['e3_contact']['properties']['firstname'] = array(
+    'label' => t("First Name"),
+    'type' => 'text',
+    'description' => t("The firstname of the E3 Contact."),
+    'required' => TRUE,
+    'schema field' => 'firstname',
+  );
+  $properties['e3_contact']['properties']['lastname'] = array(
+    'label' => t("Last Name"),
+    'type' => 'text',
+    'description' => t("The lastname of the E3 Contact."),
+    'required' => TRUE,
+    'schema field' => 'lastname',
+  );
+  $properties['e3_contact']['properties']['id'] = array(
+    'label' => t("id"),
+    'type' => 'integer',
+    'description' => t("The id of the E3 Contact entity."),
+    'required' => TRUE,
+    'schema field' => 'id',
+  );
+
+return $properties;
+
   // Experience Note entity.
-  $note_properties = &$info['e3_note']['properties'];
-  $note_properties['created'] = array(
+  //  $note_properties = &$info['e3_note']['properties'];
+  
+  $note_properties = array();
+  
+  $note_properties['e3_note']['properties']['created'] = array(
     'label' => t("Date created"),
     'type' => 'date',
     'description' => t("The date the note was posted."),
@@ -398,13 +430,13 @@ function esdportal_e3_entity_property_info_alter(&$info) {
     'setter permission' => 'administer nodes',
     'schema field' => 'created',
   );
-  $note_properties['changed'] = array(
+  $note_properties['e3_note']['properties']['changed'] = array(
     'label' => t("Date changed"),
     'type' => 'date',
     'schema field' => 'changed',
     'description' => t("The date the node was most recently updated."),
   );
-  $note_properties['uid'] = array(
+  $note_properties['e3_note']['properties']['uid'] = array(
     'label' => t("Coach"),
     'type' => 'user',
     'description' => t("The author of the E3 Note."),
@@ -413,6 +445,14 @@ function esdportal_e3_entity_property_info_alter(&$info) {
     'required' => TRUE,
     'schema field' => 'uid',
   );
+  $properties['e3_note']['properties']['id'] = array(
+    'label' => t("id"),
+    'type' => 'integer',
+    'description' => t("The id of the E3 Note entity."),
+    'required' => TRUE,
+    'schema field' => 'id',
+  );
+  return $note_properties;
 }
 
 
