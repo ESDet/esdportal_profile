@@ -177,3 +177,13 @@ function esdportal_e3_schema() {
 
   return $schema;
 }
+
+/**
+ * Remove description column from the database.
+ */
+
+function esdportal_e3_update_7001() {
+// Drop the description field from the {e3_contact} table.
+  db_drop_field('e3_contact','description');
+}
+
