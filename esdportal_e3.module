@@ -368,16 +368,16 @@ function esdportal_e3_entity_property_info_alter(&$info) {
   $properties['created'] = array(
     'label' => t("Date created"),
     'type' => 'date',
-    'description' => t("The date the node was posted."),
+    'description' => t("The date the contact was posted."),
     'setter callback' => 'entity_property_verbatim_set',
-    'setter permission' => 'administer nodes',
+    'setter permission' => 'administer e3_contact entities',
     'schema field' => 'created',
   );
   $properties['changed'] = array(
     'label' => t("Date changed"),
     'type' => 'date',
     'schema field' => 'changed',
-    'description' => t("The date the node was most recently updated."),
+    'description' => t("The date the contact was most recently updated."),
   );
   $properties['uid'] = array(
     'label' => t("Author"),
@@ -395,14 +395,14 @@ function esdportal_e3_entity_property_info_alter(&$info) {
     'type' => 'date',
     'description' => t("The date the note was posted."),
     'setter callback' => 'entity_property_verbatim_set',
-    'setter permission' => 'administer nodes',
+    'setter permission' => 'administer e3_note entities',
     'schema field' => 'created',
   );
   $note_properties['changed'] = array(
     'label' => t("Date changed"),
     'type' => 'date',
     'schema field' => 'changed',
-    'description' => t("The date the node was most recently updated."),
+    'description' => t("The date the note was most recently updated."),
   );
   $note_properties['uid'] = array(
     'label' => t("Coach"),
@@ -693,11 +693,80 @@ function esdportal_e3_action_info() {
   return array(
     'esdportal_e3_contact_assign_coach_action' => array(
       'type' => 'e3_contact',
-      'label' => t('Change the author of a contact, nb. author = coach'),
-      'configurable' => FALSE,
+      'label' => t('Change the author(aka coach) for a contact.'),
       'behavior' => array('changes_property'),
+      'configurable' => TRUE,
       'vbo_configurable' => FALSE,
       'triggers' => array('any'),
       ),
     );
 }
+
+function esdportal_e3_contact_assign_coach_action_form() {
+ /*
+function esdportal_e3_contact_assign_coach_action_form($context) {
+  $description = t('The username of the user who you would like to make the coach.');
+  $count = db_result(db_query("SELECT COUNT(*) FROM {users}"));
+  $coach_name = '';
+  if (isset($context['coach_uid'])) {
+    $coach_name = db_result(db_query("SELECT name FROM {users} WHERE uid = %d", $context['coach_uid']));
+  }
+
+  // Use dropdown for fewer than 200 users; textbox for more than that.
+  if (intval($count) < 200) {
+    $options = array();
+    $result = db_query("SELECT uid, name FROM {users} WHERE uid > 0 ORDER BY name");
+    while ($data = db_fetch_object($result)) {
+      $options[$data->name] = $data->name;
+    }
+
+    $form['coach_name'] = array(
+      '#type' => 'select',
+      '#title' => t('Username'),
+      '#default_value' => $coach_name,
+      '#options' => $options,
+      '#description' => $description,
+    );
+  }
+  else {
+
+*/
+    $form['coach_name'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Username'),
+//      '#default_value' => $coach_name,
+      '#autocomplete_path' => 'e3-contact/coach_autocomplete',
+      '#size' => '10',
+      '#maxlength' => '60',
+//      '#description' => $description,
+    );
+  
+    return $form;
+}
+
+
+/**
+ * Implementation of a configurable Drupal action.
+ * Assigns coach of a e3_contact to a user.
+ */
+
+/*
+function esdportal_e3_contact_assign_coach_action(&$e3_contact, $context) {
+  $e3_contact->uid = $context['coach_uid'];
+  $coach_name = db_result(db_query("SELECT name FROM {users} WHERE uid = %d", $context['coach_uid']));
+  watchdog('action', t('Changed coach of @type %title to uid %name.', array('@type' => $e3_contact->type, '%title' => $e3_contact->fullname, '%name' => $coach_name)));
+}
+
+function esdportal_e3_contact_assign_coach_action_validate($form_id, $form_values) {
+  $count = db_result(db_query("SELECT COUNT(*) FROM {users} WHERE name = '%s'", $form_values['coach_name']));
+  if (intval($count) != 1) {
+    form_set_error('coach_name', t('Please enter a valid username.'));
+  }
+}
+
+function esdportal_e3_contact_assign_coach_action_submit($form_id, $form_values) {
+  // Username can change, so we need to store the ID, not the username.
+  $uid = db_result(db_query("SELECT uid from {users} WHERE name = '%s'", $form_values['coach_name']));
+  return array('coach_uid' => $uid);
+}
+*/
