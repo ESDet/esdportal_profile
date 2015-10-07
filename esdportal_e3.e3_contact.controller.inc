@@ -22,7 +22,6 @@ class E3ContactController extends EntityAPIController {
     global $user;
     $values += array(
       'fullname' => '',
-      'description' => '',
       'firstname' => '',
       'lastname' => '',
       'created' => REQUEST_TIME,

@@ -379,15 +379,6 @@ function esdportal_e3_entity_property_info_alter(&$info) {
     'schema field' => 'changed',
     'description' => t("The date the node was most recently updated."),
   );
-  $properties['fullname'] = array(
-    'label' => t("E3 Contact Full Name"),
-    'type' => 'varchar',
-    'length' => 255,
-    'setter callback' => 'entity_property_verbatim_set',
-    'setter permission' => 'administer nodes',
-    'schema field' => 'fullname',
-    'description' => t("The full name of the E3 Contact."),
-  );
   $properties['uid'] = array(
     'label' => t("Author"),
     'type' => 'user',
@@ -695,3 +686,18 @@ function e3_note_label($e3_note, $e3_note_type) {
   return t('Note: ') . date('m-d-Y', $e3_note->changed);
 }
 
+/**
+ * Implements hook_action_info().
+ */
+function esdportal_e3_action_info() {
+  return array(
+    'esdportal_e3_contact_assign_coach_action' => array(
+      'type' => 'e3_contact',
+      'label' => t('Change the author of a contact, nb. author = coach'),
+      'configurable' => FALSE,
+      'behavior' => array('changes_property'),
+      'vbo_configurable' => FALSE,
+      'triggers' => array('any'),
+      ),
+    );
+}
