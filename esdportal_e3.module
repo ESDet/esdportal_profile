@@ -688,13 +688,19 @@ function e3_note_label($e3_note, $e3_note_type) {
 
 /**
  * Implements hook_action_info().
+ *
+ * Because VBO does not support actions for users we need to define a custom action
+ * to assign coach users to teacher entity-types.
  */
 function esdportal_e3_action_info() {
   return array(
-    'esdportal_e3_contact_assign_coach_action' => array(
+    'esdportal_e3_assign_coach_action' => array(
+      //make action available to be triggered on e3_contact entity types 
       'type' => 'e3_contact',
-      'label' => t('Change the author(aka coach) for a contact.'),
+      'label' => t('Change the coach.'),
+      //acts as a property changer.
       'behavior' => array('changes_property'),
+//configurable': If FALSE, then the action doesn't require any extra configuration. If TRUE, then your module must define a form function with the same name as the action function with '_form' appended (e.g., the form for 'node_assign_owner_action' is 'node_assign_owner_action_form'.) This function takes $context as its only parameter, and is paired with a _submit function, and possibly a _validate function.
       'configurable' => TRUE,
       'vbo_configurable' => FALSE,
       'triggers' => array('any'),
@@ -702,71 +708,50 @@ function esdportal_e3_action_info() {
     );
 }
 
-function esdportal_e3_contact_assign_coach_action_form() {
- /*
-function esdportal_e3_contact_assign_coach_action_form($context) {
-  $description = t('The username of the user who you would like to make the coach.');
-  $count = db_result(db_query("SELECT COUNT(*) FROM {users}"));
-  $coach_name = '';
-  if (isset($context['coach_uid'])) {
-    $coach_name = db_result(db_query("SELECT name FROM {users} WHERE uid = %d", $context['coach_uid']));
-  }
-
-  // Use dropdown for fewer than 200 users; textbox for more than that.
-  if (intval($count) < 200) {
-    $options = array();
-    $result = db_query("SELECT uid, name FROM {users} WHERE uid > 0 ORDER BY name");
-    while ($data = db_fetch_object($result)) {
-      $options[$data->name] = $data->name;
-    }
-
-    $form['coach_name'] = array(
-      '#type' => 'select',
-      '#title' => t('Username'),
-      '#default_value' => $coach_name,
-      '#options' => $options,
-      '#description' => $description,
-    );
-  }
-  else {
-
-*/
-    $form['coach_name'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Username'),
-//      '#default_value' => $coach_name,
-      '#autocomplete_path' => 'e3-contact/coach_autocomplete',
-      '#size' => '10',
-      '#maxlength' => '60',
-//      '#description' => $description,
-    );
-  
-    return $form;
+/**
+ * Action function.
+ */
+function esdportal_e3_assign_coach_action($e3_contact, $context) {
+  $e3_contact->uid = $context['coach_uid'];
 }
-
 
 /**
- * Implementation of a configurable Drupal action.
- * Assigns coach of a e3_contact to a user.
+ * Action form function.
+ *
+ * Build the form that users will be presented with when they choose to bulk assign coach to teachers.
  */
 
-/*
-function esdportal_e3_contact_assign_coach_action(&$e3_contact, $context) {
-  $e3_contact->uid = $context['coach_uid'];
-  $coach_name = db_result(db_query("SELECT name FROM {users} WHERE uid = %d", $context['coach_uid']));
-  watchdog('action', t('Changed coach of @type %title to uid %name.', array('@type' => $e3_contact->type, '%title' => $e3_contact->fullname, '%name' => $coach_name)));
+function esdportal_e3_assign_coach_action_form($context) {
+  $form['coach_username'] = array(
+    '#type' => 'textfield',
+    '#maxlength' => USERNAME_MAX_LENGTH,
+    '#title' => t('Username'),
+    '#autocomplete_path' => 'user/autocomplete',
+    '#required' => TRUE,
+    '#size' => '10',
+    '#description' => t('The username of the coach.'),
+  );
+  return $form;
 }
 
-function esdportal_e3_contact_assign_coach_action_validate($form_id, $form_values) {
-  $count = db_result(db_query("SELECT COUNT(*) FROM {users} WHERE name = '%s'", $form_values['coach_name']));
-  if (intval($count) != 1) {
-    form_set_error('coach_name', t('Please enter a valid username.'));
+/**
+ * Action form validate function.
+ *
+ * Checks that the submitted text is a valid username.
+ */
+
+function esdportal_e3_assign_coach_action_validate($form, $form_state) {
+  if (!user_load_by_name($form_state['values']['coach_username'])) {
+    form_set_error('coach_username', t('Valid username required.'));
   }
 }
 
-function esdportal_e3_contact_assign_coach_action_submit($form_id, $form_values) {
-  // Username can change, so we need to store the ID, not the username.
-  $uid = db_result(db_query("SELECT uid from {users} WHERE name = '%s'", $form_values['coach_name']));
-  return array('coach_uid' => $uid);
+/**
+ * Action form submit function.
+ *
+ * Pass submitted username back to esdportal_e3_contact_assign_coach.
+ */
+function esdportal_e3_assign_coach_action_submit($form, $form_state) {
+  $user = user_load_by_name($form_state['values']['coach_username']);
+  return array('coach_uid' => $user->uid);
 }
-*/
