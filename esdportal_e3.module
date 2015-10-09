@@ -694,7 +694,7 @@ function e3_note_label($e3_note, $e3_note_type) {
  */
 function esdportal_e3_action_info() {
   return array(
-    'esdportal_e3_assign_coach_action' => array(
+    'assign_coach_action' => array(
       //make action available to be triggered on e3_contact entity types 
       'type' => 'e3_contact',
       'label' => t('Change the coach.'),
@@ -702,7 +702,7 @@ function esdportal_e3_action_info() {
       'behavior' => array('changes_property'),
 //configurable': If FALSE, then the action doesn't require any extra configuration. If TRUE, then your module must define a form function with the same name as the action function with '_form' appended (e.g., the form for 'node_assign_owner_action' is 'node_assign_owner_action_form'.) This function takes $context as its only parameter, and is paired with a _submit function, and possibly a _validate function.
       'configurable' => TRUE,
-      'vbo_configurable' => FALSE,
+//      'vbo_configurable' => FALSE,
       'triggers' => array('any'),
       ),
     );
@@ -711,8 +711,9 @@ function esdportal_e3_action_info() {
 /**
  * Action function.
  */
-function esdportal_e3_assign_coach_action($e3_contact, $context) {
+function assign_coach_action($e3_contact, $context) {  
   $e3_contact->uid = $context['coach_uid'];
+  entity_save('e3_contact', $e3_contact);
 }
 
 /**
@@ -721,7 +722,7 @@ function esdportal_e3_assign_coach_action($e3_contact, $context) {
  * Build the form that users will be presented with when they choose to bulk assign coach to teachers.
  */
 
-function esdportal_e3_assign_coach_action_form($context) {
+function assign_coach_action_form($context) {
   $form['coach_username'] = array(
     '#type' => 'textfield',
     '#maxlength' => USERNAME_MAX_LENGTH,
@@ -739,8 +740,7 @@ function esdportal_e3_assign_coach_action_form($context) {
  *
  * Checks that the submitted text is a valid username.
  */
-
-function esdportal_e3_assign_coach_action_validate($form, $form_state) {
+function assign_coach_action_validate($form, $form_state) {
   if (!user_load_by_name($form_state['values']['coach_username'])) {
     form_set_error('coach_username', t('Valid username required.'));
   }
@@ -751,7 +751,7 @@ function esdportal_e3_assign_coach_action_validate($form, $form_state) {
  *
  * Pass submitted username back to esdportal_e3_contact_assign_coach.
  */
-function esdportal_e3_assign_coach_action_submit($form, $form_state) {
+function assign_coach_action_submit($form, $form_state) {
   $user = user_load_by_name($form_state['values']['coach_username']);
   return array('coach_uid' => $user->uid);
 }
