@@ -713,7 +713,7 @@ function esdportal_e3_action_info() {
  */
 function assign_coach_action($e3_contact, $context) {  
   $e3_contact->uid = $context['coach_uid'];
-  entity_save('e3_contact', $e3_contact);
+//  entity_save('e3_contact', $e3_contact);
 }
 
 /**
