@@ -769,9 +769,6 @@ function esdportal_e3_assign_coach_action_form($context) {
  * Checks that the submitted text is a valid username.
  */
 function esdportal_e3_assign_coach_action_validate($form, $form_state) {
-  if (!user_load_by_name($form_state['values']['coach_username'])) {
-    form_set_error('coach_username', t('Valid username required.'));
-  }
 }
 
 /**
