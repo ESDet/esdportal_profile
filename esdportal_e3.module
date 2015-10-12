@@ -683,7 +683,7 @@ function esdportal_e3_views_api() {
  * Implements callback entity_info_label.
  */
 function e3_note_label($e3_note, $e3_note_type) {
-  return t('Note: ') . date('m-d-Y', $e3_note->changed);
+  return t('Note: @note', ['@note' => date('m-d-Y', $e3_note->changed)]);
 }
 
 /**
