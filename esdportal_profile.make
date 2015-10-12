@@ -147,6 +147,9 @@ projects[google_analytics][version] = "1.3"
 projects[hidden_captcha][subdir] = "contrib"
 projects[hidden_captcha][version] = "1.0"
 
+projects[hms_field][subdir] = "contrib"
+projects[hms_field][version] = "1.2"
+
 projects[i18n][subdir] = "contrib"
 projects[i18n][version] = "1.10"
 
