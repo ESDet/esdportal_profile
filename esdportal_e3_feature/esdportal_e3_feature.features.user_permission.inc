@@ -33,6 +33,7 @@ function esdportal_e3_feature_user_default_permissions() {
     'name' => 'create e3_contact entities',
     'roles' => array(
       'Coach' => 'Coach',
+      'E3 Admin' => 'E3 Admin',
       'administrator' => 'administrator',
     ),
     'module' => 'esdportal_e3',
@@ -43,6 +44,7 @@ function esdportal_e3_feature_user_default_permissions() {
     'name' => 'create e3_note entities',
     'roles' => array(
       'Coach' => 'Coach',
+      'E3 Admin' => 'E3 Admin',
       'administrator' => 'administrator',
     ),
     'module' => 'esdportal_e3',
@@ -53,6 +55,7 @@ function esdportal_e3_feature_user_default_permissions() {
     'name' => 'edit any e3_contact entities',
     'roles' => array(
       'Coach' => 'Coach',
+      'E3 Admin' => 'E3 Admin',
       'administrator' => 'administrator',
     ),
     'module' => 'esdportal_e3',
@@ -62,6 +65,7 @@ function esdportal_e3_feature_user_default_permissions() {
   $permissions['edit any e3_note entities'] = array(
     'name' => 'edit any e3_note entities',
     'roles' => array(
+      'E3 Admin' => 'E3 Admin',
       'administrator' => 'administrator',
     ),
     'module' => 'esdportal_e3',
@@ -72,6 +76,7 @@ function esdportal_e3_feature_user_default_permissions() {
     'name' => 'edit own e3_contact entities',
     'roles' => array(
       'Coach' => 'Coach',
+      'E3 Admin' => 'E3 Admin',
       'administrator' => 'administrator',
     ),
     'module' => 'esdportal_e3',
@@ -82,6 +87,7 @@ function esdportal_e3_feature_user_default_permissions() {
     'name' => 'edit own e3_note entities',
     'roles' => array(
       'Coach' => 'Coach',
+      'E3 Admin' => 'E3 Admin',
       'administrator' => 'administrator',
     ),
     'module' => 'esdportal_e3',
@@ -92,6 +98,7 @@ function esdportal_e3_feature_user_default_permissions() {
     'name' => 'view e3_contact entities',
     'roles' => array(
       'Coach' => 'Coach',
+      'E3 Admin' => 'E3 Admin',
       'administrator' => 'administrator',
     ),
     'module' => 'esdportal_e3',
@@ -102,6 +109,7 @@ function esdportal_e3_feature_user_default_permissions() {
     'name' => 'view e3_note entities',
     'roles' => array(
       'Coach' => 'Coach',
+      'E3 Admin' => 'E3 Admin',
       'administrator' => 'administrator',
     ),
     'module' => 'esdportal_e3',
