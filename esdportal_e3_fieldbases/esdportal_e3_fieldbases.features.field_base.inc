@@ -28,6 +28,134 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'type' => 'number_integer',
   );
 
+  // Exported field_base: 'field_bm_cycle_1'
+  $field_bases['field_bm_cycle_1'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_bm_cycle_1',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_bm_cycle_2'
+  $field_bases['field_bm_cycle_2'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_bm_cycle_2',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_bm_cycle_3'
+  $field_bases['field_bm_cycle_3'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_bm_cycle_3',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_bm_cycle_4'
+  $field_bases['field_bm_cycle_4'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_bm_cycle_4',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
   // Exported field_base: 'field_bm_expectations'
   $field_bases['field_bm_expectations'] = array(
     'active' => 1,
@@ -256,6 +384,134 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_cd_creating',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_cd_cycle_1'
+  $field_bases['field_cd_cycle_1'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_cd_cycle_1',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_cd_cycle_2'
+  $field_bases['field_cd_cycle_2'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_cd_cycle_2',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_cd_cycle_3'
+  $field_bases['field_cd_cycle_3'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_cd_cycle_3',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_cd_cycle_4'
+  $field_bases['field_cd_cycle_4'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_cd_cycle_4',
     'foreign keys' => array(),
     'indexes' => array(
       'value' => array(
@@ -624,6 +880,126 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_ilf_cycle_1'
+  $field_bases['field_ilf_cycle_1'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_ilf_cycle_1',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_ilf_cycle_2'
+  $field_bases['field_ilf_cycle_2'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_ilf_cycle_2',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_ilf_cycle_3'
+  $field_bases['field_ilf_cycle_3'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_ilf_cycle_3',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_ilf_cycle_4'
+  $field_bases['field_ilf_cycle_4'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_ilf_cycle_4',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
   // Exported field_base: 'field_ilf_facilitation'
   $field_bases['field_ilf_facilitation'] = array(
     'active' => 1,
@@ -906,6 +1282,134 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'type' => 'list_integer',
   );
 
+  // Exported field_base: 'field_lm_cycle_1'
+  $field_bases['field_lm_cycle_1'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_lm_cycle_1',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_lm_cycle_2'
+  $field_bases['field_lm_cycle_2'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_lm_cycle_2',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_lm_cycle_3'
+  $field_bases['field_lm_cycle_3'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_lm_cycle_3',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_lm_cycle_4'
+  $field_bases['field_lm_cycle_4'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_lm_cycle_4',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
   // Exported field_base: 'field_lm_notes'
   $field_bases['field_lm_notes'] = array(
     'active' => 1,
@@ -1038,6 +1542,134 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_lm_talk',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_nc_cycle_1'
+  $field_bases['field_nc_cycle_1'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_nc_cycle_1',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_nc_cycle_2'
+  $field_bases['field_nc_cycle_2'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_nc_cycle_2',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_nc_cycle_3'
+  $field_bases['field_nc_cycle_3'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_nc_cycle_3',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_nc_cycle_4'
+  $field_bases['field_nc_cycle_4'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_nc_cycle_4',
     'foreign keys' => array(),
     'indexes' => array(
       'value' => array(
@@ -1312,6 +1944,134 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_p_cycle_1'
+  $field_bases['field_p_cycle_1'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_p_cycle_1',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_p_cycle_2'
+  $field_bases['field_p_cycle_2'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_p_cycle_2',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_p_cycle_3'
+  $field_bases['field_p_cycle_3'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_p_cycle_3',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_p_cycle_4'
+  $field_bases['field_p_cycle_4'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_p_cycle_4',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
   // Exported field_base: 'field_p_maximizing'
   $field_bases['field_p_maximizing'] = array(
     'active' => 1,
@@ -1501,6 +2261,134 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'type' => 'list_integer',
   );
 
+  // Exported field_base: 'field_pc_cycle_1'
+  $field_bases['field_pc_cycle_1'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_pc_cycle_1',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_pc_cycle_2'
+  $field_bases['field_pc_cycle_2'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_pc_cycle_2',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_pc_cycle_3'
+  $field_bases['field_pc_cycle_3'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_pc_cycle_3',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_pc_cycle_4'
+  $field_bases['field_pc_cycle_4'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_pc_cycle_4',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
   // Exported field_base: 'field_pc_notes'
   $field_bases['field_pc_notes'] = array(
     'active' => 1,
@@ -1665,6 +2553,134 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_pc_score',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_qf_cycle_1'
+  $field_bases['field_qf_cycle_1'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_qf_cycle_1',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_qf_cycle_2'
+  $field_bases['field_qf_cycle_2'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_qf_cycle_2',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_qf_cycle_3'
+  $field_bases['field_qf_cycle_3'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_qf_cycle_3',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_qf_cycle_4'
+  $field_bases['field_qf_cycle_4'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_qf_cycle_4',
     'foreign keys' => array(),
     'indexes' => array(
       'value' => array(
@@ -1886,6 +2902,134 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_qf_score',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_rsp_cycle_1'
+  $field_bases['field_rsp_cycle_1'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_rsp_cycle_1',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_rsp_cycle_2'
+  $field_bases['field_rsp_cycle_2'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_rsp_cycle_2',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_rsp_cycle_3'
+  $field_bases['field_rsp_cycle_3'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_rsp_cycle_3',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_rsp_cycle_4'
+  $field_bases['field_rsp_cycle_4'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_rsp_cycle_4',
     'foreign keys' => array(),
     'indexes' => array(
       'value' => array(
@@ -2176,7 +3320,7 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'settings' => array(
       'allowed_values' => array(
         0 => '',
-        1 => '',
+        1 => 'Complete',
       ),
       'allowed_values_function' => '',
       'entity_translation_sync' => FALSE,
@@ -2203,7 +3347,7 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'settings' => array(
       'allowed_values' => array(
         0 => '',
-        1 => '',
+        1 => 'Complete',
       ),
       'allowed_values_function' => '',
       'entity_translation_sync' => FALSE,
@@ -2446,6 +3590,134 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_ts_awareness',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_ts_cycle_1'
+  $field_bases['field_ts_cycle_1'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_ts_cycle_1',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_ts_cycle_2'
+  $field_bases['field_ts_cycle_2'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_ts_cycle_2',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_ts_cycle_3'
+  $field_bases['field_ts_cycle_3'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_ts_cycle_3',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_ts_cycle_4'
+  $field_bases['field_ts_cycle_4'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_ts_cycle_4',
     'foreign keys' => array(),
     'indexes' => array(
       'value' => array(
