@@ -12,7 +12,7 @@ Build
 -----
 
 ```shell
-drush make --working-copy https://raw.github.com/esdet/esdportal_profile/2015scorecard/notplatform.make DEST_DIR
+drush make --working-copy https://raw.githubusercontent.com/esdet/esdportal_profile/master/notplatform.make DEST_DIR
 cd DEST_DIR
 mysql -uroot -e 'create database portal_dev'
 drush site-install esdportal_profile  --account-name=admin --account-pass=admin --db-url=mysql://root@localhost/portal_dev --yes
