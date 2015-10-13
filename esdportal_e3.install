@@ -64,10 +64,6 @@ function esdportal_e3_schema() {
         'not null' => TRUE,
         'default' => 0,
       ),
-      'description' => array(
-        'description' => 'E3 Contact description.',
-        'type' => 'text',
-      ),
     ),
     'primary key' => array('id'),
   );
@@ -181,3 +177,13 @@ function esdportal_e3_schema() {
 
   return $schema;
 }
+
+/**
+ * Remove description column from the database.
+ */
+
+function esdportal_e3_update_7001() {
+// Drop the description field from the {e3_contact} table.
+  db_drop_field('e3_contact','description');
+}
+

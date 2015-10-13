@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * E3 module.
  */
 
 /**
@@ -162,7 +163,11 @@ function esdportal_e3_menu() {
     'page callback' => 'e3_contact_view',
     'page arguments' => array($e3_contact_uri_argument_position),
     'access callback' => 'entity_access',
-    'access arguments' => array('view', 'e3_contact', $e3_contact_uri_argument_position),
+    'access arguments' => array(
+      'view',
+      'e3_contact',
+      $e3_contact_uri_argument_position,
+    ),
     'file' => 'esdportal_e3.e3_contact.pages.inc',
   );
 
@@ -177,18 +182,32 @@ function esdportal_e3_menu() {
     'title callback' => 'e3_contact_label',
     'title arguments' => array($e3_contact_uri_argument_position),
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('e3_contact_delete_form', $e3_contact_uri_argument_position),
+    'page arguments' => array(
+      'e3_contact_delete_form',
+      $e3_contact_uri_argument_position,
+    ),
     'access callback' => 'entity_access',
-    'access arguments' => array('edit', 'e3_contact', $e3_contact_uri_argument_position),
+    'access arguments' => array(
+      'edit',
+      'e3_contact',
+      $e3_contact_uri_argument_position,
+    ),
     'file' => 'esdportal_e3.e3_contact.admin.inc',
   );
 
   $items[$e3_contact_uri . '/edit'] = array(
     'title' => 'Edit',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('e3_contact_form', $e3_contact_uri_argument_position),
+    'page arguments' => array(
+      'e3_contact_form',
+      $e3_contact_uri_argument_position,
+    ),
     'access callback' => 'entity_access',
-    'access arguments' => array('edit', 'e3_contact', $e3_contact_uri_argument_position),
+    'access arguments' => array(
+      'edit',
+      'e3_contact',
+      $e3_contact_uri_argument_position,
+    ),
     'file' => 'esdportal_e3.e3_contact.admin.inc',
     'type' => MENU_LOCAL_TASK,
     'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
@@ -241,7 +260,11 @@ function esdportal_e3_menu() {
     'page callback' => 'e3_note_view',
     'page arguments' => array($e3_note_uri_argument_position),
     'access callback' => 'entity_access',
-    'access arguments' => array('view', 'e3_note', $e3_note_uri_argument_position),
+    'access arguments' => array(
+      'view',
+      'e3_note',
+      $e3_note_uri_argument_position,
+    ),
     'file' => 'esdportal_e3.e3_note.pages.inc',
   );
 
@@ -258,7 +281,11 @@ function esdportal_e3_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('e3_note_delete_form', $e3_note_uri_argument_position),
     'access callback' => 'entity_access',
-    'access arguments' => array('edit', 'e3_note', $e3_note_uri_argument_position),
+    'access arguments' => array(
+      'edit',
+      'e3_note',
+      $e3_note_uri_argument_position,
+    ),
     'file' => 'esdportal_e3.e3_note.admin.inc',
   );
 
@@ -267,7 +294,11 @@ function esdportal_e3_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('e3_note_form', $e3_note_uri_argument_position),
     'access callback' => 'entity_access',
-    'access arguments' => array('edit', 'e3_note', $e3_note_uri_argument_position),
+    'access arguments' => array(
+      'edit',
+      'e3_note',
+      $e3_note_uri_argument_position,
+    ),
     'file' => 'esdportal_e3.e3_note.admin.inc',
     'type' => MENU_LOCAL_TASK,
     'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
@@ -368,25 +399,16 @@ function esdportal_e3_entity_property_info_alter(&$info) {
   $properties['created'] = array(
     'label' => t("Date created"),
     'type' => 'date',
-    'description' => t("The date the node was posted."),
+    'description' => t("The date the contact was posted."),
     'setter callback' => 'entity_property_verbatim_set',
-    'setter permission' => 'administer nodes',
+    'setter permission' => 'administer e3_contact entities',
     'schema field' => 'created',
   );
   $properties['changed'] = array(
     'label' => t("Date changed"),
     'type' => 'date',
     'schema field' => 'changed',
-    'description' => t("The date the node was most recently updated."),
-  );
-  $properties['firstname'] = array(
-    'label' => t("E3 Contact First Name"),
-    'type' => 'varchar',
-    'length' => 255,
-    'setter callback' => 'entity_property_verbatim_set',
-    'setter permission' => 'administer e3_contact entities',
-    'schema field' => 'firstname',
-    'description' => t("The first name of the E3 Contact."),
+    'description' => t("The date the contact was most recently updated."),
   );
   $properties['uid'] = array(
     'label' => t("Author"),
@@ -404,14 +426,14 @@ function esdportal_e3_entity_property_info_alter(&$info) {
     'type' => 'date',
     'description' => t("The date the note was posted."),
     'setter callback' => 'entity_property_verbatim_set',
-    'setter permission' => 'administer nodes',
+    'setter permission' => 'administer e3_note entities',
     'schema field' => 'created',
   );
   $note_properties['changed'] = array(
     'label' => t("Date changed"),
     'type' => 'date',
     'schema field' => 'changed',
-    'description' => t("The date the node was most recently updated."),
+    'description' => t("The date the note was most recently updated."),
   );
   $note_properties['uid'] = array(
     'label' => t("Coach"),
@@ -692,5 +714,69 @@ function esdportal_e3_views_api() {
  * Implements callback entity_info_label.
  */
 function e3_note_label($e3_note, $e3_note_type) {
-  return t('Note: ') . date('m-d-Y', $e3_note->changed);
+  return t('Note: @note', ['@note' => date('m-d-Y', $e3_note->changed)]);
+}
+
+/**
+ * Implements hook_action_info().
+ *
+ * Because VBO does not support actions for users we need to define a custom
+ * action to assign coach users to teacher entity-types.
+ */
+function esdportal_e3_action_info() {
+  return array(
+    'esdportal_e3_assign_coach_action' => array(
+      'type' => 'entity',
+      'label' => t('Change the coach.'),
+      'behavior' => array('views_property'),
+      'configurable' => TRUE,
+      'triggers' => array('any'),
+      'permissions' => array('edit any e3_contact entities'),
+    ),
+  );
+}
+
+/**
+ * Action function.
+ */
+function esdportal_e3_assign_coach_action($e3_contact, $context) {
+  $e3_contact->uid = $context['coach_uid'];
+  $e3_contact->save();
+}
+
+/**
+ * Action form function.
+ *
+ * Build the form that users will be presented with when they choose to bulk
+ * assign coach to teachers.
+ */
+function esdportal_e3_assign_coach_action_form($context) {
+  $form['coach_username'] = array(
+    '#type' => 'textfield',
+    '#maxlength' => USERNAME_MAX_LENGTH,
+    '#title' => t('Username'),
+    '#autocomplete_path' => 'user/autocomplete',
+    '#required' => TRUE,
+    '#size' => '10',
+    '#description' => t('The username of the coach.'),
+  );
+  return $form;
+}
+
+/**
+ * Action form validate function.
+ *
+ * Checks that the submitted text is a valid username.
+ */
+function esdportal_e3_assign_coach_action_validate($form, $form_state) {
+}
+
+/**
+ * Action form submit function.
+ *
+ * Pass submitted username back to esdportal_e3_contact_assign_coach.
+ */
+function esdportal_e3_assign_coach_action_submit($form, $form_state) {
+  $user = user_load_by_name($form_state['values']['coach_username']);
+  return array('coach_uid' => $user->uid);
 }
