@@ -781,6 +781,9 @@ function esdportal_e3_assign_coach_action_submit($form, $form_state) {
   return array('coach_uid' => $user->uid);
 }
 
+/**
+ * Implements hook_form_alter().
+ */
 
 function esdportal_e3_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'e3_note_form') {
