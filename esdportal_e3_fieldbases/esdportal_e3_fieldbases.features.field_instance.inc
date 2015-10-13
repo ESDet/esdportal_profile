@@ -51,6 +51,134 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'e3_note-class_assessment-field_bm_cycle_1'
+  $field_instances['e3_note-class_assessment-field_bm_cycle_1'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 43,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_bm_cycle_1',
+    'label' => 'Behavior Management Cycle 1',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 37,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_bm_cycle_2'
+  $field_instances['e3_note-class_assessment-field_bm_cycle_2'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 44,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_bm_cycle_2',
+    'label' => 'Behavior Management Cycle 2',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 38,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_bm_cycle_3'
+  $field_instances['e3_note-class_assessment-field_bm_cycle_3'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 45,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_bm_cycle_3',
+    'label' => 'Behavior Management Cycle 3',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 39,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_bm_cycle_4'
+  $field_instances['e3_note-class_assessment-field_bm_cycle_4'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 46,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_bm_cycle_4',
+    'label' => 'Behavior Management Cycle 4',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 40,
+    ),
+  );
+
   // Exported field_instance: 'e3_note-class_assessment-field_bm_notes'
   $field_instances['e3_note-class_assessment-field_bm_notes'] = array(
     'bundle' => 'class_assessment',
@@ -82,7 +210,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 16,
+      'weight' => 41,
     ),
   );
 
@@ -114,7 +242,135 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 15,
+      'weight' => 11,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_cd_cycle_1'
+  $field_instances['e3_note-class_assessment-field_cd_cycle_1'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 55,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_cd_cycle_1',
+    'label' => 'Concept Development Cycle 1',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 52,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_cd_cycle_2'
+  $field_instances['e3_note-class_assessment-field_cd_cycle_2'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 56,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_cd_cycle_2',
+    'label' => 'Concept Development Cycle 2',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 53,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_cd_cycle_3'
+  $field_instances['e3_note-class_assessment-field_cd_cycle_3'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 57,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_cd_cycle_3',
+    'label' => 'Concept Development Cycle 3',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 54,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_cd_cycle_4'
+  $field_instances['e3_note-class_assessment-field_cd_cycle_4'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 58,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_cd_cycle_4',
+    'label' => 'Concept Development Cycle 4',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 55,
     ),
   );
 
@@ -149,7 +405,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 22,
+      'weight' => 56,
     ),
   );
 
@@ -181,7 +437,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 21,
+      'weight' => 14,
     ),
   );
 
@@ -373,6 +629,140 @@ sci|Science',
     ),
   );
 
+  // Exported field_instance: 'e3_note-class_assessment-field_ilf_cycle_1'
+  $field_instances['e3_note-class_assessment-field_ilf_cycle_1'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 51,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_ilf_cycle_1',
+    'label' => 'Instructional Learning Formats Cycle 1',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 47,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_ilf_cycle_2'
+  $field_instances['e3_note-class_assessment-field_ilf_cycle_2'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '1|1 - Low -
+2|2 - Low +
+3|3 - Middle -
+4|4 - Middle
+5|5 - Middle +
+6|6 - High -
+7|7 - High +',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 52,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_ilf_cycle_2',
+    'label' => 'Instructional Learning Formats Cycle 2',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 48,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_ilf_cycle_3'
+  $field_instances['e3_note-class_assessment-field_ilf_cycle_3'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 53,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_ilf_cycle_3',
+    'label' => 'Instructional Learning Formats Cycle 3',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 49,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_ilf_cycle_4'
+  $field_instances['e3_note-class_assessment-field_ilf_cycle_4'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 54,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_ilf_cycle_4',
+    'label' => 'Instructional Learning Formats Cycle 4',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 50,
+    ),
+  );
+
   // Exported field_instance: 'e3_note-class_assessment-field_ilf_notes'
   $field_instances['e3_note-class_assessment-field_ilf_notes'] = array(
     'bundle' => 'class_assessment',
@@ -404,7 +794,7 @@ sci|Science',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 20,
+      'weight' => 51,
     ),
   );
 
@@ -436,7 +826,135 @@ sci|Science',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 19,
+      'weight' => 13,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_lm_cycle_1'
+  $field_instances['e3_note-class_assessment-field_lm_cycle_1'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 63,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_lm_cycle_1',
+    'label' => 'Language Modeling Cycle 1',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 62,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_lm_cycle_2'
+  $field_instances['e3_note-class_assessment-field_lm_cycle_2'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 64,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_lm_cycle_2',
+    'label' => 'Language Modeling Cycle 2',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 63,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_lm_cycle_3'
+  $field_instances['e3_note-class_assessment-field_lm_cycle_3'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 65,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_lm_cycle_3',
+    'label' => 'Language Modeling Cycle 3',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 64,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_lm_cycle_4'
+  $field_instances['e3_note-class_assessment-field_lm_cycle_4'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 66,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_lm_cycle_4',
+    'label' => 'Language Modeling Cycle 4',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 65,
     ),
   );
 
@@ -471,7 +989,7 @@ sci|Science',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 26,
+      'weight' => 66,
     ),
   );
 
@@ -493,6 +1011,134 @@ sci|Science',
     'entity_type' => 'e3_note',
     'field_name' => 'field_lm_score',
     'label' => 'Language Modeling Score',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 16,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_nc_cycle_1'
+  $field_instances['e3_note-class_assessment-field_nc_cycle_1'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 31,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_nc_cycle_1',
+    'label' => 'Negative Climate Cycle 1',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 22,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_nc_cycle_2'
+  $field_instances['e3_note-class_assessment-field_nc_cycle_2'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 32,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_nc_cycle_2',
+    'label' => 'Negative Climate Cycle 2',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 23,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_nc_cycle_3'
+  $field_instances['e3_note-class_assessment-field_nc_cycle_3'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 33,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_nc_cycle_3',
+    'label' => 'Negative Climate Cycle 3',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 24,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_nc_cycle_4'
+  $field_instances['e3_note-class_assessment-field_nc_cycle_4'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 34,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_nc_cycle_4',
+    'label' => 'Negative Climate Cycle 4',
     'required' => 0,
     'settings' => array(
       'entity_translation_sync' => FALSE,
@@ -538,7 +1184,7 @@ sci|Science',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 10,
+      'weight' => 26,
     ),
   );
 
@@ -570,7 +1216,135 @@ sci|Science',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 9,
+      'weight' => 8,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_p_cycle_1'
+  $field_instances['e3_note-class_assessment-field_p_cycle_1'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 47,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_p_cycle_1',
+    'label' => 'Productivity Cycle 1',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 42,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_p_cycle_2'
+  $field_instances['e3_note-class_assessment-field_p_cycle_2'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 48,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_p_cycle_2',
+    'label' => 'Productivity Cycle 2',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 43,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_p_cycle_3'
+  $field_instances['e3_note-class_assessment-field_p_cycle_3'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 49,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_p_cycle_3',
+    'label' => 'Productivity Cycle 3',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 44,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_p_cycle_4'
+  $field_instances['e3_note-class_assessment-field_p_cycle_4'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 50,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_p_cycle_4',
+    'label' => 'Productivity Cycle 4',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 45,
     ),
   );
 
@@ -605,7 +1379,7 @@ sci|Science',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 18,
+      'weight' => 46,
     ),
   );
 
@@ -637,7 +1411,135 @@ sci|Science',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
+      'weight' => 12,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_pc_cycle_1'
+  $field_instances['e3_note-class_assessment-field_pc_cycle_1'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 28,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_pc_cycle_1',
+    'label' => 'Positive Climate Cycle 1',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
       'weight' => 17,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_pc_cycle_2'
+  $field_instances['e3_note-class_assessment-field_pc_cycle_2'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 27,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_pc_cycle_2',
+    'label' => 'Positive Climate Cycle 2',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 18,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_pc_cycle_3'
+  $field_instances['e3_note-class_assessment-field_pc_cycle_3'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 29,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_pc_cycle_3',
+    'label' => 'Positive Climate Cycle 3',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 19,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_pc_cycle_4'
+  $field_instances['e3_note-class_assessment-field_pc_cycle_4'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 30,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_pc_cycle_4',
+    'label' => 'Positive Climate Cycle 4',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 20,
     ),
   );
 
@@ -672,7 +1574,7 @@ sci|Science',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 8,
+      'weight' => 21,
     ),
   );
 
@@ -708,6 +1610,134 @@ sci|Science',
     ),
   );
 
+  // Exported field_instance: 'e3_note-class_assessment-field_qf_cycle_1'
+  $field_instances['e3_note-class_assessment-field_qf_cycle_1'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 59,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_qf_cycle_1',
+    'label' => 'Quality of Feedback Cycle 1',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 57,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_qf_cycle_2'
+  $field_instances['e3_note-class_assessment-field_qf_cycle_2'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 60,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_qf_cycle_2',
+    'label' => 'Quality of Feedback Cycle 2',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 58,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_qf_cycle_3'
+  $field_instances['e3_note-class_assessment-field_qf_cycle_3'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 61,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_qf_cycle_3',
+    'label' => 'Quality of Feedback Cycle 3',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 59,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_qf_cycle_4'
+  $field_instances['e3_note-class_assessment-field_qf_cycle_4'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 62,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_qf_cycle_4',
+    'label' => 'Quality of Feedback Cycle 4',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 60,
+    ),
+  );
+
   // Exported field_instance: 'e3_note-class_assessment-field_qf_notes'
   $field_instances['e3_note-class_assessment-field_qf_notes'] = array(
     'bundle' => 'class_assessment',
@@ -739,7 +1769,7 @@ sci|Science',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 24,
+      'weight' => 61,
     ),
   );
 
@@ -771,7 +1801,135 @@ sci|Science',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 23,
+      'weight' => 15,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_rsp_cycle_1'
+  $field_instances['e3_note-class_assessment-field_rsp_cycle_1'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 39,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_rsp_cycle_1',
+    'label' => 'Regard for Student Perspectives Cycle 1',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 32,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_rsp_cycle_2'
+  $field_instances['e3_note-class_assessment-field_rsp_cycle_2'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 40,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_rsp_cycle_2',
+    'label' => 'Regard for Student Perspectives Cycle 2',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 33,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_rsp_cycle_3'
+  $field_instances['e3_note-class_assessment-field_rsp_cycle_3'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 41,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_rsp_cycle_3',
+    'label' => 'Regard for Student Perspectives Cycle 3',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 34,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_rsp_cycle_4'
+  $field_instances['e3_note-class_assessment-field_rsp_cycle_4'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 42,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_rsp_cycle_4',
+    'label' => 'Regard for Student Perspectives Cycle 4',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 35,
     ),
   );
 
@@ -806,7 +1964,7 @@ sci|Science',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 14,
+      'weight' => 36,
     ),
   );
 
@@ -838,7 +1996,7 @@ sci|Science',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 13,
+      'weight' => 10,
     ),
   );
 
@@ -942,13 +2100,141 @@ sci|Science',
         'input_format' => 'm/d/Y - g:i:sa',
         'input_format_custom' => '',
         'label_position' => 'above',
-        'no_fieldset' => 0,
+        'no_fieldset' => 1,
         'repeat_collapsed' => 0,
         'text_parts' => array(),
         'year_range' => '-1:+1',
       ),
       'type' => 'date_popup',
       'weight' => 0,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_ts_cycle_1'
+  $field_instances['e3_note-class_assessment-field_ts_cycle_1'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 35,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_ts_cycle_1',
+    'label' => 'Teacher Sensitivity Cycle 1',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 27,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_ts_cycle_2'
+  $field_instances['e3_note-class_assessment-field_ts_cycle_2'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 36,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_ts_cycle_2',
+    'label' => 'Teacher Sensitivity Cycle 2',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 28,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_ts_cycle_3'
+  $field_instances['e3_note-class_assessment-field_ts_cycle_3'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 37,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_ts_cycle_3',
+    'label' => 'Teacher Sensitivity Cycle 3',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 29,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_ts_cycle_4'
+  $field_instances['e3_note-class_assessment-field_ts_cycle_4'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 38,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_ts_cycle_4',
+    'label' => 'Teacher Sensitivity Cycle 4',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 30,
     ),
   );
 
@@ -983,7 +2269,7 @@ sci|Science',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 12,
+      'weight' => 31,
     ),
   );
 
@@ -1015,7 +2301,7 @@ sci|Science',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 11,
+      'weight' => 9,
     ),
   );
 
@@ -3400,7 +4686,7 @@ sci|Science',
         'input_format' => 'm/d/Y - g:i:sa',
         'input_format_custom' => '',
         'label_position' => 'above',
-        'no_fieldset' => 0,
+        'no_fieldset' => 1,
         'repeat_collapsed' => 0,
         'text_parts' => array(),
         'year_range' => '-1:+1',
@@ -4159,7 +5445,7 @@ lm|Language Modeling',
           ),
           'host_entity_date' => array(
             'end_date' => 0,
-            'field' => 'e3_note:session_log:field_observe_date',
+            'field' => 'e3_note:session_log:field_target_date_2',
           ),
           'type' => 'disabled',
         ),
@@ -4171,7 +5457,7 @@ lm|Language Modeling',
           ),
           'host_entity_date' => array(
             'end_date' => 0,
-            'field' => 'e3_note:session_log:field_observe_date',
+            'field' => 'e3_note:session_log:field_target_date_2',
           ),
           'type' => 'disabled',
         ),
@@ -4211,11 +5497,11 @@ lm|Language Modeling',
       'active' => 1,
       'module' => 'date',
       'settings' => array(
-        'increment' => 15,
-        'input_format' => 'm/d/Y - H:i:s',
+        'increment' => 5,
+        'input_format' => 'm/d/Y - g:i:sa',
         'input_format_custom' => '',
         'label_position' => 'above',
-        'no_fieldset' => 0,
+        'no_fieldset' => 1,
         'repeat_collapsed' => 0,
         'text_parts' => array(),
         'year_range' => '-1:+1',
@@ -4275,7 +5561,7 @@ lm|Language Modeling',
           ),
           'host_entity_date' => array(
             'end_date' => 0,
-            'field' => 'e3_note:session_log:field_observe_date',
+            'field' => 'e3_note:session_log:field_target_date_1',
           ),
           'type' => 'disabled',
         ),
@@ -4287,7 +5573,7 @@ lm|Language Modeling',
           ),
           'host_entity_date' => array(
             'end_date' => 0,
-            'field' => 'e3_note:session_log:field_observe_date',
+            'field' => 'e3_note:session_log:field_target_date_1',
           ),
           'type' => 'disabled',
         ),
@@ -4327,14 +5613,14 @@ lm|Language Modeling',
       'active' => 1,
       'module' => 'date',
       'settings' => array(
-        'increment' => 15,
-        'input_format' => 'm/d/Y - H:i:s',
+        'increment' => 5,
+        'input_format' => 'm/d/Y - g:i:sa',
         'input_format_custom' => '',
         'label_position' => 'above',
-        'no_fieldset' => 0,
+        'no_fieldset' => 1,
         'repeat_collapsed' => 0,
         'text_parts' => array(),
-        'year_range' => '-3:+3',
+        'year_range' => '-1:+1',
       ),
       'type' => 'date_popup',
       'weight' => 16,
@@ -4517,7 +5803,7 @@ lm|Language Modeling',
         'input_format' => 'm/d/Y - g:i:sa',
         'input_format_custom' => '',
         'label_position' => 'above',
-        'no_fieldset' => 0,
+        'no_fieldset' => 1,
         'repeat_collapsed' => 0,
         'text_parts' => array(),
         'year_range' => '-1:+1',
@@ -4532,6 +5818,13 @@ lm|Language Modeling',
   t('1st Next Step');
   t('1st Step Complete');
   t('1st Target Completion Date');
+  t('1|1 - Low -
+2|2 - Low +
+3|3 - Middle -
+4|4 - Middle
+5|5 - Middle +
+6|6 - High -
+7|7 - High +');
   t('2nd Next Step');
   t('2nd Step Complete');
   t('2nd Target Completion Date');
@@ -4539,10 +5832,18 @@ lm|Language Modeling',
   t('Advanced Language');
   t('Analysis and Reasoning');
   t('Awareness');
+  t('Behavior Management Cycle 1');
+  t('Behavior Management Cycle 2');
+  t('Behavior Management Cycle 3');
+  t('Behavior Management Cycle 4');
   t('Behavior Management Score');
   t('Clarity of Learning Objectives');
   t('Clear Behavior Expectations');
   t('Coaching strategies used');
+  t('Concept Development Cycle 1');
+  t('Concept Development Cycle 2');
+  t('Concept Development Cycle 3');
+  t('Concept Development Cycle 4');
   t('Concept Development Score');
   t('Connections to Real World');
   t('Content');
@@ -4555,28 +5856,56 @@ lm|Language Modeling',
   t('Format');
   t('Frequent Conversations');
   t('How you plan to achieve target');
+  t('Instructional Learning Formats Cycle 1');
+  t('Instructional Learning Formats Cycle 2');
+  t('Instructional Learning Formats Cycle 3');
+  t('Instructional Learning Formats Cycle 4');
   t('Instructional Learning Formats Score');
   t('Integration');
+  t('Language Modeling Cycle 1');
+  t('Language Modeling Cycle 2');
+  t('Language Modeling Cycle 3');
+  t('Language Modeling Cycle 4');
   t('Language Modeling Score');
   t('Maximizing Learning Time');
   t('Negative Affect');
+  t('Negative Climate Cycle 1');
+  t('Negative Climate Cycle 2');
+  t('Negative Climate Cycle 3');
+  t('Negative Climate Cycle 4');
   t('Negative Climate Score');
   t('Notes');
   t('Number of adults in classroon');
   t('Number of children in classroom');
   t('Open-Ended Questions');
   t('Positive Affect');
+  t('Positive Climate Cycle 1');
+  t('Positive Climate Cycle 2');
+  t('Positive Climate Cycle 3');
+  t('Positive Climate Cycle 4');
   t('Positive Climate Score');
   t('Positive Communication');
   t('Preparation');
   t('Proactive');
+  t('Productivity Cycle 1');
+  t('Productivity Cycle 2');
+  t('Productivity Cycle 3');
+  t('Productivity Cycle 4');
   t('Productivity Score');
   t('Program');
   t('Prompting Thought Processes');
   t('Providing Information');
   t('Punitive Control');
+  t('Quality of Feedback Cycle 1');
+  t('Quality of Feedback Cycle 2');
+  t('Quality of Feedback Cycle 3');
+  t('Quality of Feedback Cycle 4');
   t('Quality of Feedback Score');
   t('Redirection of Misbehavior');
+  t('Regard for Student Perspectives Cycle 1');
+  t('Regard for Student Perspectives Cycle 2');
+  t('Regard for Student Perspectives Cycle 3');
+  t('Regard for Student Perspectives Cycle 4');
   t('Regard for Student Perspectives Score');
   t('Relationships');
   t('Repetition and Extension');
@@ -4596,6 +5925,10 @@ lm|Language Modeling',
   t('Target Focus Area');
   t('Target Score');
   t('Teacher');
+  t('Teacher Sensitivity Cycle 1');
+  t('Teacher Sensitivity Cycle 2');
+  t('Teacher Sensitivity Cycle 3');
+  t('Teacher Sensitivity Cycle 4');
   t('Teacher Sensitivity Score');
   t('Time of Observation');
   t('Time of Session');
