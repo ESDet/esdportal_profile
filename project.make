@@ -147,6 +147,9 @@ projects[google_analytics][version] = "1.3"
 projects[hidden_captcha][subdir] = "contrib"
 projects[hidden_captcha][version] = "1.0"
 
+projects[hms_field][subdir] = "contrib"
+projects[hms_field][version] = "1.2"
+
 projects[i18n][subdir] = "contrib"
 projects[i18n][version] = "1.10"
 
@@ -182,6 +185,9 @@ projects[loadtermnames][download][branch] = "7.x-1.x"
 
 projects[mailsystem][subdir] = "contrib"
 projects[mailsystem][version] = "2.34"
+
+projects[mathfield][subdir] = "contrib"
+projects[mathfield][version] = "1.0"
 
 projects[mimemail][subdir] = "contrib"
 projects[mimemail][version] = "1.0-alpha2"
