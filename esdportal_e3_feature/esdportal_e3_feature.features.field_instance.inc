@@ -242,6 +242,126 @@ function esdportal_e3_feature_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'e3_note-class_assessment-field_classroom_organization'
+  $field_instances['e3_note-class_assessment-field_classroom_organization'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Automatically calculated from bm, p, and ilf cycle values.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 75,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_classroom_organization',
+    'label' => 'Classroom Organization Score',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'prefix' => '',
+      'read-only' => FALSE,
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'mathfield',
+      'settings' => array(),
+      'type' => 'mathfield_markup',
+      'weight' => 75,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_emotional_support_score'
+  $field_instances['e3_note-class_assessment-field_emotional_support_score'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Automatically calculated from pc, nc, ts and rsp cycle values.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 74,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_emotional_support_score',
+    'label' => 'Emotional Support Score',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'prefix' => '',
+      'read-only' => FALSE,
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'mathfield',
+      'settings' => array(),
+      'type' => 'mathfield_markup',
+      'weight' => 74,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_instructional_support'
+  $field_instances['e3_note-class_assessment-field_instructional_support'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Automatically calculated from cd, qf, and lm cycle values',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 76,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_instructional_support',
+    'label' => 'Instructional Support Score',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'prefix' => '',
+      'read-only' => FALSE,
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'mathfield',
+      'settings' => array(),
+      'type' => 'mathfield_markup',
+      'weight' => 76,
+    ),
+  );
+
   // Exported field_instance: 'e3_note-observation_log-field_observation_duration'
   $field_instances['e3_note-observation_log-field_observation_duration'] = array(
     'bundle' => 'observation_log',
@@ -318,9 +438,15 @@ function esdportal_e3_feature_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Automatically calculated from bm, p, and ilf cycle values.');
+  t('Automatically calculated from cd, qf, and lm cycle values');
+  t('Automatically calculated from pc, nc, ts and rsp cycle values.');
+  t('Classroom Organization Score');
   t('Email');
+  t('Emotional Support Score');
   t('Employing Early Childhood Center');
   t('Home address');
+  t('Instructional Support Score');
   t('Observation Duration');
   t('Position / role');
   t('Session Duration');
