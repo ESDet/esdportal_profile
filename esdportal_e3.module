@@ -780,3 +780,10 @@ function esdportal_e3_assign_coach_action_submit($form, $form_state) {
   $user = user_load_by_name($form_state['values']['coach_username']);
   return array('coach_uid' => $user->uid);
 }
+
+
+function esdportal_e3_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'e3_note_form') {
+    unset($form['field_observation_duration']);
+  }
+}
