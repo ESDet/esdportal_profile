@@ -3,6 +3,7 @@
  * @file
  * esdportal_e3_feature.rules_defaults.inc
  */
+
 /**
  * Implements hook_default_rules_configuration().
  */
@@ -16,7 +17,7 @@ function esdportal_e3_feature_default_rules_configuration() {
       "ON" : { "e3_note_insert" : [], "e3_note_update" : [] },
       "IF" : [
         { "entity_has_field" : { "entity" : [ "e3-note" ], "field" : "field_time_of_observation" } },
-        { "entity_has_field" : { "entity" : [ "e3-note" ], "field" : "field_note_duration" } }
+        { "entity_has_field" : { "entity" : [ "e3-note" ], "field" : "field_observation_duration" } }
       ],
       "DO" : [
         { "variable_add" : {
@@ -28,7 +29,7 @@ function esdportal_e3_feature_default_rules_configuration() {
           }
         },
         { "data_set" : {
-            "data" : [ "e3-note:field-note-duration" ],
+            "data" : [ "e3-note:field-observation-duration" ],
             "value" : [ "duration-seconds" ]
           }
         }

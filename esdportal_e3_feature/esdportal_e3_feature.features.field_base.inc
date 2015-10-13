@@ -28,6 +28,24 @@ function esdportal_e3_feature_field_default_field_bases() {
     'type' => 'addressfield',
   );
 
+  // Exported field_base: 'field_observation_duration'
+  $field_bases['field_observation_duration'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_observation_duration',
+    'foreign keys' => array(),
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'hms_field',
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'hms_field',
+  );
+
   // Exported field_base: 'field_teacher_ec_role'
   $field_bases['field_teacher_ec_role'] = array(
     'active' => 1,
