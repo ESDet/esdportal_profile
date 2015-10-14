@@ -198,6 +198,9 @@ projects[pathauto][version] = "1.2"
 projects[redirect][subdir] = "contrib"
 projects[redirect][version] = "1.0-rc1"
 
+projects[rules][subdir] = "contrib"
+projects[rules][version] = "2.9"
+
 projects[select_or_other][subdir] = "contrib"
 projects[select_or_other][version] = "2.22"
 
