@@ -325,7 +325,36 @@ function esdportal_e3_menu() {
     'file' => 'esdportal_e3.e3_note.admin.inc',
   );
 
+
+
+ $items['e3-contact/%/teacher_report'] = array(
+    'title' => 'Teacher Report',
+    'page arguments' => array(1),
+    'page callback' => '_esdportal_e3_teacher_report',
+    'access arguments' => array('access content'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 11,
+  );
+
+ $items['e3-contact/%/observation_log'] = array(
+    'title' => 'Add observation log',
+    'page callback' => '_esdportal_e3_add_log',
+    'access arguments' => array('access content'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 12,
+  );
+
   return $items;
+}
+
+function _esdportal_e3_teacher_report($teacher_id = 1) {
+  drupal_goto('teacher-report/1/' . $teacher_id);
+}
+
+
+//ToDo install prepopulate module and pass teacher id to appropriate field.
+function _esdportal_e3_add_log() {
+  drupal_goto('e3-note/add/observation_log');
 }
 
 /**
@@ -779,4 +808,16 @@ function esdportal_e3_assign_coach_action_validate($form, $form_state) {
 function esdportal_e3_assign_coach_action_submit($form, $form_state) {
   $user = user_load_by_name($form_state['values']['coach_username']);
   return array('coach_uid' => $user->uid);
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Hide the duration field for note add/edit, display when viewing the note.
+ */
+
+function esdportal_e3_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'e3_note_form') {
+    unset($form['field_observation_duration']);
+  }
 }
