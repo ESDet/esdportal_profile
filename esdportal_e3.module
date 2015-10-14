@@ -325,7 +325,19 @@ function esdportal_e3_menu() {
     'file' => 'esdportal_e3.e3_note.admin.inc',
   );
 
+ $items['e3-contact/%/teacher_report'] = array(
+    'title' => 'Teacher Report',
+    'page arguments' => array(1),
+    'page callback' => '_esdportal_e3_teacher_report',
+    'access arguments' => array('access content'),
+    'type' => MENU_LOCAL_TASK,
+  );
+
   return $items;
+}
+
+function _esdportal_e3_teacher_report($teacher_id = 1) {
+  drupal_goto('teacher-report/1/' . $teacher_id);
 }
 
 /**
@@ -783,6 +795,8 @@ function esdportal_e3_assign_coach_action_submit($form, $form_state) {
 
 /**
  * Implements hook_form_alter().
+ *
+ * Hide the duration field for note add/edit, display when viewing the note.
  */
 
 function esdportal_e3_form_alter(&$form, &$form_state, $form_id) {
