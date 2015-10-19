@@ -832,9 +832,6 @@ function esdportal_e3_form_alter(&$form, &$form_state, $form_id) {
     unset($form['field_es_score']);
     unset($form['field_co_score']);
     unset($form['field_is_score']);
-
-
-
   }
 }
 
@@ -861,7 +858,9 @@ function esdportal_e3_entity_presave ($entity) {
         $pc_values[] = $wrapper->field_pc_cycle_4->value();
       }
     $pc_average = round ((array_sum($pc_values) / count($pc_values)), 2);
-    $wrapper->field_pc_average->set($pc_average);
+    if ($pc_average > 0) {
+      $wrapper->field_pc_average->set($pc_average);
+    }
     //Negative Climate average.
     $nc_values = array();
       if (null !== $wrapper->field_nc_cycle_1->value())  {
@@ -877,7 +876,9 @@ function esdportal_e3_entity_presave ($entity) {
         $nc_values[] = $wrapper->field_nc_cycle_4->value();
       }
     $nc_average = round ((array_sum($nc_values) / count($nc_values)), 2);
-    $wrapper->field_nc_average->set($nc_average);
+    if ($nc_average > 0) {
+      $wrapper->field_nc_average->set($nc_average);
+    }
     //Teacher Sensitivity average.
     $ts_values = array();
       if (null !== $wrapper->field_ts_cycle_1->value())  {
@@ -893,7 +894,9 @@ function esdportal_e3_entity_presave ($entity) {
         $ts_values[] = $wrapper->field_ts_cycle_4->value();
       }
     $ts_average = round ((array_sum($ts_values) / count($ts_values)), 2);
-    $wrapper->field_ts_average->set($ts_average);
+    if ($ts_average > 0) {
+      $wrapper->field_ts_average->set($ts_average);
+    }
     //Regard for Student Perspective average.
     $rsp_values = array();
       if (null !== $wrapper->field_rsp_cycle_1->value())  {
@@ -909,7 +912,9 @@ function esdportal_e3_entity_presave ($entity) {
         $rsp_values[] = $wrapper->field_rsp_cycle_4->value();
       }
     $rsp_average = round ((array_sum($rsp_values) / count($rsp_values)), 2);
-    $wrapper->field_rsp_average->set($rsp_average);
+    if ($rsp_average > 0) {
+      $wrapper->field_rsp_average->set($rsp_average);
+    }
     //Behaviour Management average.
     $bm_values = array();
       if (null !== $wrapper->field_bm_cycle_1->value())  {
@@ -925,7 +930,9 @@ function esdportal_e3_entity_presave ($entity) {
         $bm_values[] = $wrapper->field_bm_cycle_4->value();
       }
     $bm_average = round ((array_sum($bm_values) / count($bm_values)), 2);
-    $wrapper->field_bm_average->set($bm_average);
+    if ($bm_average > 0) {
+      $wrapper->field_bm_average->set($bm_average);
+    }
     //Productivity average.
     $p_values = array();
       if (null !== $wrapper->field_p_cycle_1->value())  {
@@ -941,7 +948,9 @@ function esdportal_e3_entity_presave ($entity) {
         $p_values[] = $wrapper->field_p_cycle_4->value();
       }
     $p_average = round ((array_sum($p_values) / count($p_values)), 2);
-    $wrapper->field_p_average->set($p_average);
+    if ($p_average > 0) {
+      $wrapper->field_p_average->set($p_average);
+    }
     //Instructional Learning Formats average.
     $ilf_values = array();
       if (null !== $wrapper->field_ilf_cycle_1->value())  {
@@ -957,7 +966,9 @@ function esdportal_e3_entity_presave ($entity) {
         $ilf_values[] = $wrapper->field_ilf_cycle_4->value();
       }
     $ilf_average = round ((array_sum($ilf_values) / count($ilf_values)), 2);
-    $wrapper->field_ilf_average->set($ilf_average);
+    if ($ilf_average > 0) {
+      $wrapper->field_ilf_average->set($ilf_average);
+    }
     //Concept Development average.
     $cd_values = array();
       if (null !== $wrapper->field_cd_cycle_1->value())  {
@@ -973,7 +984,9 @@ function esdportal_e3_entity_presave ($entity) {
         $cd_values[] = $wrapper->field_cd_cycle_4->value();
       }
     $cd_average = round ((array_sum($cd_values) / count($cd_values)), 2);
-    $wrapper->field_cd_average->set($cd_average);
+    if ($cd_average > 0) {
+      $wrapper->field_cd_average->set($cd_average);
+    }
     //Quality of Feedback average.
     $qf_values = array();
       if (null !== $wrapper->field_qf_cycle_1->value())  {
@@ -989,7 +1002,9 @@ function esdportal_e3_entity_presave ($entity) {
         $qf_values[] = $wrapper->field_qf_cycle_4->value();
       }
     $qf_average = round ((array_sum($qf_values) / count($qf_values)), 2);
-    $wrapper->field_qf_average->set($qf_average);
+    if ($qf_average > 0) {
+      $wrapper->field_qf_average->set($qf_average);
+    }
     //Language Modeling average. 
     $lm_values = array();
       if (null !== $wrapper->field_lm_cycle_1->value())  {
@@ -1005,16 +1020,23 @@ function esdportal_e3_entity_presave ($entity) {
         $lm_values[] = $wrapper->field_lm_cycle_4->value();
       }
     $lm_average = round ((array_sum($lm_values) / count($lm_values)), 2);
-    $wrapper->field_lm_average->set($lm_average);
+    if ($lm_average > 0) {
+      $wrapper->field_lm_average->set($lm_average);
+    }
     //Emotional Support score.
     $es_score = round((($pc_average + (8 -$nc_average) + $ts_average + $rsp_average) / 4), 2);
-    $wrapper->field_es_score->set($es_score);
+    if ($es_score > 0) {
+      $wrapper->field_es_score->set($es_score);
+    }
     //Classroom Organization score.
     $co_score = round((($bm_average + $pm_average + $ilf_average) / 3 ), 2);
-    $wrapper->field_co_score->set($co_score);
+    if ($co_score > 0) {
+      $wrapper->field_co_score->set($co_score);
+    }
     //Instructional Support score.
     $is_score = round((($cd_average + $qf_average + $lm_average) / 3), 2);
-    $wrapper->field_is_score->set($is_score);
-    
+    if ($is_score > 0) {
+      $wrapper->field_is_score->set($is_score);
     }
+  }
 }
