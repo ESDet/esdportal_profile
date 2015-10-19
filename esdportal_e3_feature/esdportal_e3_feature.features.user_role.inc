@@ -16,5 +16,11 @@ function esdportal_e3_feature_user_default_roles() {
     'weight' => 8,
   );
 
+  // Exported role: E3 Admin.
+  $roles['E3 Admin'] = array(
+    'name' => 'E3 Admin',
+    'weight' => 7,
+  );
+
   return $roles;
 }

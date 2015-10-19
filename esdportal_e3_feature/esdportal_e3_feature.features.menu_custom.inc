@@ -16,9 +16,16 @@ function esdportal_e3_feature_menu_default_menu_custom() {
     'title' => 'Coach Menu',
     'description' => '',
   );
+  // Exported menu: menu-e3-admin.
+  $menus['menu-e3-admin'] = array(
+    'menu_name' => 'menu-e3-admin',
+    'title' => 'E3 Admin',
+    'description' => '',
+  );
   // Translatables
   // Included for use with string extractors like potx.
   t('Coach Menu');
+  t('E3 Admin');
 
 
   return $menus;
