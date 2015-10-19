@@ -821,3 +821,30 @@ function esdportal_e3_form_alter(&$form, &$form_state, $form_id) {
     unset($form['field_observation_duration']);
   }
 }
+
+/**
+ * Implements hook_entity_presave().
+ *
+ * Calculate average field values.
+ */
+function esdportal_e3_entity_presave ($entity) {
+  if ($entity->type == 'class_assessment') {
+    $wrapper = entity_metadata_wrapper('e3_note', $entity);
+    $pc_values = array();
+      if (null !== $wrapper->field_pc_cycle_1->value())  {
+        $pc_values[] = $wrapper->field_pc_cycle_1->value();
+      }
+      if (null !== $wrapper->field_pc_cycle_2->value())  {
+        $pc_values[] = $wrapper->field_pc_cycle_2->value();
+      }
+      if (null !== $wrapper->field_pc_cycle_3->value())  {
+        $pc_values[] = $wrapper->field_pc_cycle_3->value();
+      }
+      if (null !== $wrapper->field_pc_cycle_4->value())  {
+        $pc_values[] = $wrapper->field_pc_cycle_4->value();
+      }
+    $pc_average = round ((array_sum($pc_values) / count($pc_values)), 2);
+    dsm($pc_average);
+    $wrapper->field_pc_average->set($pc_average);
+    }
+}
