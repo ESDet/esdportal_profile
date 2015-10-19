@@ -82,7 +82,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 59,
+      'weight' => 33,
     ),
   );
 
@@ -114,7 +114,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 25,
+      'weight' => 29,
     ),
   );
 
@@ -146,7 +146,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 26,
+      'weight' => 30,
     ),
   );
 
@@ -178,7 +178,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 27,
+      'weight' => 31,
     ),
   );
 
@@ -210,7 +210,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 28,
+      'weight' => 32,
     ),
   );
 
@@ -245,7 +245,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 29,
+      'weight' => 34,
     ),
   );
 
@@ -280,7 +280,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 62,
+      'weight' => 51,
     ),
   );
 
@@ -312,7 +312,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 40,
+      'weight' => 47,
     ),
   );
 
@@ -344,7 +344,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 41,
+      'weight' => 48,
     ),
   );
 
@@ -376,7 +376,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 42,
+      'weight' => 49,
     ),
   );
 
@@ -408,7 +408,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 43,
+      'weight' => 50,
     ),
   );
 
@@ -443,7 +443,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 44,
+      'weight' => 52,
     ),
   );
 
@@ -609,7 +609,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     ),
     'entity_type' => 'e3_note',
     'field_name' => 'field_es_score',
-    'label' => 'Emotional support score',
+    'label' => 'Emotional Support score',
     'required' => 0,
     'settings' => array(
       'entity_translation_sync' => FALSE,
@@ -644,7 +644,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     ),
     'entity_type' => 'e3_note',
     'field_name' => 'field_ilf_average',
-    'label' => 'Instructional Learning Formats',
+    'label' => 'Instructional Learning Formats Average',
     'required' => 0,
     'settings' => array(
       'entity_translation_sync' => FALSE,
@@ -658,7 +658,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 61,
+      'weight' => 46,
     ),
   );
 
@@ -690,7 +690,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 35,
+      'weight' => 41,
     ),
   );
 
@@ -722,7 +722,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 36,
+      'weight' => 42,
     ),
   );
 
@@ -754,7 +754,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 37,
+      'weight' => 43,
     ),
   );
 
@@ -786,7 +786,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 38,
+      'weight' => 44,
     ),
   );
 
@@ -821,7 +821,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 39,
+      'weight' => 45,
     ),
   );
 
@@ -891,7 +891,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 64,
+      'weight' => 63,
     ),
   );
 
@@ -923,7 +923,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 50,
+      'weight' => 59,
     ),
   );
 
@@ -955,7 +955,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 51,
+      'weight' => 60,
     ),
   );
 
@@ -987,7 +987,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 52,
+      'weight' => 61,
     ),
   );
 
@@ -1019,7 +1019,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 53,
+      'weight' => 62,
     ),
   );
 
@@ -1054,7 +1054,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 54,
+      'weight' => 64,
     ),
   );
 
@@ -1089,7 +1089,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 56,
+      'weight' => 15,
     ),
   );
 
@@ -1121,7 +1121,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 10,
+      'weight' => 11,
     ),
   );
 
@@ -1153,7 +1153,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 11,
+      'weight' => 12,
     ),
   );
 
@@ -1185,7 +1185,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 12,
+      'weight' => 13,
     ),
   );
 
@@ -1217,7 +1217,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 13,
+      'weight' => 14,
     ),
   );
 
@@ -1252,7 +1252,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 14,
+      'weight' => 16,
     ),
   );
 
@@ -1287,7 +1287,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 60,
+      'weight' => 39,
     ),
   );
 
@@ -1319,7 +1319,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 30,
+      'weight' => 35,
     ),
   );
 
@@ -1351,7 +1351,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 31,
+      'weight' => 36,
     ),
   );
 
@@ -1383,7 +1383,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 32,
+      'weight' => 37,
     ),
   );
 
@@ -1415,7 +1415,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 33,
+      'weight' => 38,
     ),
   );
 
@@ -1450,7 +1450,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 34,
+      'weight' => 40,
     ),
   );
 
@@ -1485,7 +1485,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 55,
+      'weight' => 9,
     ),
   );
 
@@ -1648,7 +1648,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 9,
+      'weight' => 10,
     ),
   );
 
@@ -1683,7 +1683,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 63,
+      'weight' => 57,
     ),
   );
 
@@ -1715,7 +1715,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 45,
+      'weight' => 53,
     ),
   );
 
@@ -1747,7 +1747,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 46,
+      'weight' => 54,
     ),
   );
 
@@ -1779,7 +1779,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 47,
+      'weight' => 55,
     ),
   );
 
@@ -1811,7 +1811,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 48,
+      'weight' => 56,
     ),
   );
 
@@ -1846,7 +1846,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 49,
+      'weight' => 58,
     ),
   );
 
@@ -1881,7 +1881,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 58,
+      'weight' => 27,
     ),
   );
 
@@ -1913,7 +1913,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 20,
+      'weight' => 23,
     ),
   );
 
@@ -1945,7 +1945,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 21,
+      'weight' => 24,
     ),
   );
 
@@ -1977,7 +1977,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 22,
+      'weight' => 25,
     ),
   );
 
@@ -2009,7 +2009,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 23,
+      'weight' => 26,
     ),
   );
 
@@ -2044,7 +2044,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 24,
+      'weight' => 28,
     ),
   );
 
@@ -2189,7 +2189,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 57,
+      'weight' => 21,
     ),
   );
 
@@ -2221,7 +2221,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 15,
+      'weight' => 17,
     ),
   );
 
@@ -2253,7 +2253,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 16,
+      'weight' => 18,
     ),
   );
 
@@ -2285,7 +2285,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 17,
+      'weight' => 19,
     ),
   );
 
@@ -2317,7 +2317,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 18,
+      'weight' => 20,
     ),
   );
 
@@ -2352,7 +2352,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 19,
+      'weight' => 22,
     ),
   );
 
@@ -5895,14 +5895,14 @@ lm|Language Modeling',
   t('Connections to Real World');
   t('Creating');
   t('Effective Facilitation');
-  t('Emotional support score');
+  t('Emotional Support score');
   t('Encouragement and Affirmation');
   t('Feedback Loops');
   t('Flexibility and Student Focus');
   t('Focus areas worked on');
   t('Frequent Conversations');
   t('How you plan to achieve target');
-  t('Instructional Learning Formats');
+  t('Instructional Learning Formats Average');
   t('Instructional Learning Formats Cycle 1');
   t('Instructional Learning Formats Cycle 2');
   t('Instructional Learning Formats Cycle 3');
