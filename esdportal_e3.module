@@ -819,17 +819,28 @@ function esdportal_e3_assign_coach_action_submit($form, $form_state) {
 function esdportal_e3_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'e3_note_form') {
     unset($form['field_observation_duration']);
+    unset($form['field_pc_average']);
+    unset($form['field_nc_average']);
+    unset($form['field_ts_average']);
+    unset($form['field_rsp_average']);
+    unset($form['field_bm_average']);
+    unset($form['field_p_average']);
+    unset($form['field_ilf_average']);
+    unset($form['field_cd_average']);
+    unset($form['field_qf_average']);
+    unset($form['field_lm_average']);
   }
 }
 
 /**
  * Implements hook_entity_presave().
  *
- * Calculate average field values.
+ * Calculate average(mean, 2 d.p.) field values, and associated scores.
  */
 function esdportal_e3_entity_presave ($entity) {
   if ($entity->type == 'class_assessment') {
     $wrapper = entity_metadata_wrapper('e3_note', $entity);
+    //Positive Climate average.
     $pc_values = array();
       if (null !== $wrapper->field_pc_cycle_1->value())  {
         $pc_values[] = $wrapper->field_pc_cycle_1->value();
@@ -844,7 +855,160 @@ function esdportal_e3_entity_presave ($entity) {
         $pc_values[] = $wrapper->field_pc_cycle_4->value();
       }
     $pc_average = round ((array_sum($pc_values) / count($pc_values)), 2);
-    dsm($pc_average);
     $wrapper->field_pc_average->set($pc_average);
+    //Negative Climate average.
+    $nc_values = array();
+      if (null !== $wrapper->field_nc_cycle_1->value())  {
+        $nc_values[] = $wrapper->field_nc_cycle_1->value();
+      }
+      if (null !== $wrapper->field_nc_cycle_2->value())  {
+        $nc_values[] = $wrapper->field_nc_cycle_2->value();
+      }
+      if (null !== $wrapper->field_nc_cycle_3->value())  {
+        $nc_values[] = $wrapper->field_nc_cycle_3->value();
+      }
+      if (null !== $wrapper->field_nc_cycle_4->value())  {
+        $nc_values[] = $wrapper->field_nc_cycle_4->value();
+      }
+    $nc_average = round ((array_sum($nc_values) / count($nc_values)), 2);
+    $wrapper->field_nc_average->set($nc_average);
+    //Teacher Sensitivity average.
+    $ts_values = array();
+      if (null !== $wrapper->field_ts_cycle_1->value())  {
+        $ts_values[] = $wrapper->field_ts_cycle_1->value();
+      }
+      if (null !== $wrapper->field_ts_cycle_2->value())  {
+        $ts_values[] = $wrapper->field_ts_cycle_2->value();
+      }
+      if (null !== $wrapper->field_ts_cycle_3->value())  {
+        $ts_values[] = $wrapper->field_ts_cycle_3->value();
+      }
+      if (null !== $wrapper->field_ts_cycle_4->value())  {
+        $ts_values[] = $wrapper->field_ts_cycle_4->value();
+      }
+    $ts_average = round ((array_sum($ts_values) / count($ts_values)), 2);
+    $wrapper->field_ts_average->set($ts_average);
+    //Regard for Student Perspective average.
+    $rsp_values = array();
+      if (null !== $wrapper->field_rsp_cycle_1->value())  {
+        $rsp_values[] = $wrapper->field_rsp_cycle_1->value();
+      }
+      if (null !== $wrapper->field_rsp_cycle_2->value())  {
+        $rsp_values[] = $wrapper->field_rsp_cycle_2->value();
+      }
+      if (null !== $wrapper->field_rsp_cycle_3->value())  {
+        $rsp_values[] = $wrapper->field_rsp_cycle_3->value();
+      }
+      if (null !== $wrapper->field_rsp_cycle_4->value())  {
+        $rsp_values[] = $wrapper->field_rsp_cycle_4->value();
+      }
+    $rsp_average = round ((array_sum($rsp_values) / count($rsp_values)), 2);
+    $wrapper->field_rsp_average->set($rsp_average);
+    //Behaviour Management average.
+    $bm_values = array();
+      if (null !== $wrapper->field_bm_cycle_1->value())  {
+        $bm_values[] = $wrapper->field_bm_cycle_1->value();
+      }
+      if (null !== $wrapper->field_bm_cycle_2->value())  {
+        $bm_values[] = $wrapper->field_bm_cycle_2->value();
+      }
+      if (null !== $wrapper->field_bm_cycle_3->value())  {
+        $bm_values[] = $wrapper->field_bm_cycle_3->value();
+      }
+      if (null !== $wrapper->field_bm_cycle_4->value())  {
+        $bm_values[] = $wrapper->field_bm_cycle_4->value();
+      }
+    $bm_average = round ((array_sum($bm_values) / count($bm_values)), 2);
+    $wrapper->field_bm_average->set($bm_average);
+    //Productivity average.
+    $p_values = array();
+      if (null !== $wrapper->field_p_cycle_1->value())  {
+        $p_values[] = $wrapper->field_p_cycle_1->value();
+      }
+      if (null !== $wrapper->field_p_cycle_2->value())  {
+        $p_values[] = $wrapper->field_p_cycle_2->value();
+      }
+      if (null !== $wrapper->field_p_cycle_3->value())  {
+        $p_values[] = $wrapper->field_p_cycle_3->value();
+      }
+      if (null !== $wrapper->field_p_cycle_4->value())  {
+        $p_values[] = $wrapper->field_p_cycle_4->value();
+      }
+    $p_average = round ((array_sum($p_values) / count($p_values)), 2);
+    $wrapper->field_p_average->set($p_average);
+    //Instructional Learning Formats average.
+    $ilf_values = array();
+      if (null !== $wrapper->field_ilf_cycle_1->value())  {
+        $ilf_values[] = $wrapper->field_ilf_cycle_1->value();
+      }
+      if (null !== $wrapper->field_ilf_cycle_2->value())  {
+        $ilf_values[] = $wrapper->field_ilf_cycle_2->value();
+      }
+      if (null !== $wrapper->field_ilf_cycle_3->value())  {
+        $ilf_values[] = $wrapper->field_ilf_cycle_3->value();
+      }
+      if (null !== $wrapper->field_ilf_cycle_4->value())  {
+        $ilf_values[] = $wrapper->field_ilf_cycle_4->value();
+      }
+    $ilf_average = round ((array_sum($ilf_values) / count($ilf_values)), 2);
+    $wrapper->field_ilf_average->set($ilf_average);
+    //Concept Development average.
+    $cd_values = array();
+      if (null !== $wrapper->field_cd_cycle_1->value())  {
+        $cd_values[] = $wrapper->field_cd_cycle_1->value();
+      }
+      if (null !== $wrapper->field_cd_cycle_2->value())  {
+        $cd_values[] = $wrapper->field_cd_cycle_2->value();
+      }
+      if (null !== $wrapper->field_cd_cycle_3->value())  {
+        $cd_values[] = $wrapper->field_cd_cycle_3->value();
+      }
+      if (null !== $wrapper->field_cd_cycle_4->value())  {
+        $cd_values[] = $wrapper->field_cd_cycle_4->value();
+      }
+    $cd_average = round ((array_sum($cd_values) / count($cd_values)), 2);
+    $wrapper->field_cd_average->set($cd_average);
+    //Quality of Feedback average.
+    $qf_values = array();
+      if (null !== $wrapper->field_qf_cycle_1->value())  {
+        $qf_values[] = $wrapper->field_qf_cycle_1->value();
+      }
+      if (null !== $wrapper->field_qf_cycle_2->value())  {
+        $qf_values[] = $wrapper->field_qf_cycle_2->value();
+      }
+      if (null !== $wrapper->field_qf_cycle_3->value())  {
+        $qf_values[] = $wrapper->field_qf_cycle_3->value();
+      }
+      if (null !== $wrapper->field_qf_cycle_4->value())  {
+        $qf_values[] = $wrapper->field_qf_cycle_4->value();
+      }
+    $qf_average = round ((array_sum($qf_values) / count($qf_values)), 2);
+    $wrapper->field_qf_average->set($qf_average);
+    //Language Modeling average. 
+    $lm_values = array();
+      if (null !== $wrapper->field_lm_cycle_1->value())  {
+        $lm_values[] = $wrapper->field_lm_cycle_1->value();
+      }
+      if (null !== $wrapper->field_lm_cycle_2->value())  {
+        $lm_values[] = $wrapper->field_lm_cycle_2->value();
+      }
+      if (null !== $wrapper->field_lm_cycle_3->value())  {
+        $lm_values[] = $wrapper->field_lm_cycle_3->value();
+      }
+      if (null !== $wrapper->field_lm_cycle_4->value())  {
+        $lm_values[] = $wrapper->field_lm_cycle_4->value();
+      }
+    $lm_average = round ((array_sum($lm_values) / count($lm_values)), 2);
+    $wrapper->field_lm_average->set($lm_average);
+    //Emotional Support score.
+    $es_score = round((($pc_average + (8 -$nc_average) + $ts_average + $rsp_average) / 4), 2);
+    $wrapper->field_es_score->set($es_score);
+    //Classroom Organization score.
+    $co_score = round((($bm_average + $pm_average + $ilf_average) / 3 ), 2);
+    $wrapper->field_co_score->set($co_score);
+    //Instructional Support score.
+    $is_score = round((($cd_average + $qf_average + $lm_average) / 3), 2);
+    $wrapper->field_is_score->set($is_score);
+    
     }
 }
