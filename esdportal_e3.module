@@ -829,6 +829,12 @@ function esdportal_e3_form_alter(&$form, &$form_state, $form_id) {
     unset($form['field_cd_average']);
     unset($form['field_qf_average']);
     unset($form['field_lm_average']);
+    unset($form['field_es_score']);
+    unset($form['field_co_score']);
+    unset($form['field_is_score']);
+
+
+
   }
 }
 
