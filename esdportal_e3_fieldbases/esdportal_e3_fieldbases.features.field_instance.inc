@@ -51,6 +51,41 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'e3_note-class_assessment-field_bm_average'
+  $field_instances['e3_note-class_assessment-field_bm_average'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 71,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_bm_average',
+    'label' => 'Behaviour Management Average',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 5,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 59,
+    ),
+  );
+
   // Exported field_instance: 'e3_note-class_assessment-field_bm_cycle_1'
   $field_instances['e3_note-class_assessment-field_bm_cycle_1'] = array(
     'bundle' => 'class_assessment',
@@ -79,7 +114,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 37,
+      'weight' => 25,
     ),
   );
 
@@ -111,7 +146,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 38,
+      'weight' => 26,
     ),
   );
 
@@ -143,7 +178,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 39,
+      'weight' => 27,
     ),
   );
 
@@ -175,7 +210,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 40,
+      'weight' => 28,
     ),
   );
 
@@ -210,7 +245,42 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 41,
+      'weight' => 29,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_cd_average'
+  $field_instances['e3_note-class_assessment-field_cd_average'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 74,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_cd_average',
+    'label' => 'Concept Development Average',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 5,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 62,
     ),
   );
 
@@ -242,7 +312,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 52,
+      'weight' => 40,
     ),
   );
 
@@ -274,7 +344,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 53,
+      'weight' => 41,
     ),
   );
 
@@ -306,7 +376,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 54,
+      'weight' => 42,
     ),
   );
 
@@ -338,7 +408,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 55,
+      'weight' => 43,
     ),
   );
 
@@ -373,7 +443,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 56,
+      'weight' => 44,
     ),
   );
 
@@ -415,6 +485,41 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'settings' => array(),
       'type' => 'number',
       'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_co_score'
+  $field_instances['e3_note-class_assessment-field_co_score'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 78,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_co_score',
+    'label' => 'Classroom Organization Score',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 5,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 66,
     ),
   );
 
@@ -487,6 +592,76 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'e3_note-class_assessment-field_es_score'
+  $field_instances['e3_note-class_assessment-field_es_score'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 77,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_es_score',
+    'label' => 'Emotional support score',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 5,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 65,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_ilf_average'
+  $field_instances['e3_note-class_assessment-field_ilf_average'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 73,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_ilf_average',
+    'label' => 'Instructional Learning Formats',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 5,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 61,
+    ),
+  );
+
   // Exported field_instance: 'e3_note-class_assessment-field_ilf_cycle_1'
   $field_instances['e3_note-class_assessment-field_ilf_cycle_1'] = array(
     'bundle' => 'class_assessment',
@@ -515,7 +690,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 47,
+      'weight' => 35,
     ),
   );
 
@@ -547,7 +722,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 48,
+      'weight' => 36,
     ),
   );
 
@@ -579,7 +754,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 49,
+      'weight' => 37,
     ),
   );
 
@@ -611,7 +786,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 50,
+      'weight' => 38,
     ),
   );
 
@@ -646,7 +821,77 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 51,
+      'weight' => 39,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_is_score'
+  $field_instances['e3_note-class_assessment-field_is_score'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 79,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_is_score',
+    'label' => 'Instructional Support Score',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 5,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 67,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_lm_average'
+  $field_instances['e3_note-class_assessment-field_lm_average'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 76,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_lm_average',
+    'label' => 'Language Modeling Average',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 5,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 64,
     ),
   );
 
@@ -678,7 +923,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 62,
+      'weight' => 50,
     ),
   );
 
@@ -710,7 +955,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 63,
+      'weight' => 51,
     ),
   );
 
@@ -742,7 +987,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 64,
+      'weight' => 52,
     ),
   );
 
@@ -774,7 +1019,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 65,
+      'weight' => 53,
     ),
   );
 
@@ -809,7 +1054,42 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 66,
+      'weight' => 54,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_nc_average'
+  $field_instances['e3_note-class_assessment-field_nc_average'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 68,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_nc_average',
+    'label' => 'Negative Climate Average',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 5,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 56,
     ),
   );
 
@@ -841,7 +1121,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 22,
+      'weight' => 10,
     ),
   );
 
@@ -873,7 +1153,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 23,
+      'weight' => 11,
     ),
   );
 
@@ -905,7 +1185,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 24,
+      'weight' => 12,
     ),
   );
 
@@ -937,7 +1217,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 25,
+      'weight' => 13,
     ),
   );
 
@@ -972,7 +1252,42 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 26,
+      'weight' => 14,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_p_average'
+  $field_instances['e3_note-class_assessment-field_p_average'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 72,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_p_average',
+    'label' => 'Productivity Average',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 5,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 60,
     ),
   );
 
@@ -1004,7 +1319,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 42,
+      'weight' => 30,
     ),
   );
 
@@ -1036,7 +1351,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 43,
+      'weight' => 31,
     ),
   );
 
@@ -1068,7 +1383,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 44,
+      'weight' => 32,
     ),
   );
 
@@ -1100,7 +1415,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 45,
+      'weight' => 33,
     ),
   );
 
@@ -1135,7 +1450,42 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 46,
+      'weight' => 34,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_pc_average'
+  $field_instances['e3_note-class_assessment-field_pc_average'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 67,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_pc_average',
+    'label' => 'Positive Climate Average',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 5,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 55,
     ),
   );
 
@@ -1167,7 +1517,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 17,
+      'weight' => 5,
     ),
   );
 
@@ -1199,7 +1549,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 18,
+      'weight' => 6,
     ),
   );
 
@@ -1231,7 +1581,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 19,
+      'weight' => 7,
     ),
   );
 
@@ -1263,7 +1613,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 20,
+      'weight' => 8,
     ),
   );
 
@@ -1298,7 +1648,42 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 21,
+      'weight' => 9,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_qf_average'
+  $field_instances['e3_note-class_assessment-field_qf_average'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 75,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_qf_average',
+    'label' => 'Quality of Feedback Average',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 5,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 63,
     ),
   );
 
@@ -1330,7 +1715,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 57,
+      'weight' => 45,
     ),
   );
 
@@ -1362,7 +1747,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 58,
+      'weight' => 46,
     ),
   );
 
@@ -1394,7 +1779,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 59,
+      'weight' => 47,
     ),
   );
 
@@ -1426,7 +1811,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 60,
+      'weight' => 48,
     ),
   );
 
@@ -1461,7 +1846,42 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 61,
+      'weight' => 49,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment-field_rsp_average'
+  $field_instances['e3_note-class_assessment-field_rsp_average'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 70,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_rsp_average',
+    'label' => 'Regard for Student Perspective Average',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 5,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 58,
     ),
   );
 
@@ -1493,7 +1913,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 32,
+      'weight' => 20,
     ),
   );
 
@@ -1525,7 +1945,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 33,
+      'weight' => 21,
     ),
   );
 
@@ -1557,7 +1977,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 34,
+      'weight' => 22,
     ),
   );
 
@@ -1589,7 +2009,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 35,
+      'weight' => 23,
     ),
   );
 
@@ -1624,7 +2044,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 36,
+      'weight' => 24,
     ),
   );
 
@@ -1738,6 +2158,41 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'e3_note-class_assessment-field_ts_average'
+  $field_instances['e3_note-class_assessment-field_ts_average'] = array(
+    'bundle' => 'class_assessment',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 69,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_ts_average',
+    'label' => 'Teacher Sensitivity Average',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 5,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 57,
+    ),
+  );
+
   // Exported field_instance: 'e3_note-class_assessment-field_ts_cycle_1'
   $field_instances['e3_note-class_assessment-field_ts_cycle_1'] = array(
     'bundle' => 'class_assessment',
@@ -1766,7 +2221,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 27,
+      'weight' => 15,
     ),
   );
 
@@ -1798,7 +2253,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 28,
+      'weight' => 16,
     ),
   );
 
@@ -1830,7 +2285,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 29,
+      'weight' => 17,
     ),
   );
 
@@ -1862,7 +2317,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 30,
+      'weight' => 18,
     ),
   );
 
@@ -1897,7 +2352,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 31,
+      'weight' => 19,
     ),
   );
 
@@ -5426,9 +5881,12 @@ lm|Language Modeling',
   t('Behavior Management Cycle 3');
   t('Behavior Management Cycle 4');
   t('Behavior Management Score');
+  t('Behaviour Management Average');
   t('Clarity of Learning Objectives');
+  t('Classroom Organization Score');
   t('Clear Behavior Expectations');
   t('Coaching strategies used');
+  t('Concept Development Average');
   t('Concept Development Cycle 1');
   t('Concept Development Cycle 2');
   t('Concept Development Cycle 3');
@@ -5437,18 +5895,22 @@ lm|Language Modeling',
   t('Connections to Real World');
   t('Creating');
   t('Effective Facilitation');
+  t('Emotional support score');
   t('Encouragement and Affirmation');
   t('Feedback Loops');
   t('Flexibility and Student Focus');
   t('Focus areas worked on');
   t('Frequent Conversations');
   t('How you plan to achieve target');
+  t('Instructional Learning Formats');
   t('Instructional Learning Formats Cycle 1');
   t('Instructional Learning Formats Cycle 2');
   t('Instructional Learning Formats Cycle 3');
   t('Instructional Learning Formats Cycle 4');
   t('Instructional Learning Formats Score');
+  t('Instructional Support Score');
   t('Integration');
+  t('Language Modeling Average');
   t('Language Modeling Cycle 1');
   t('Language Modeling Cycle 2');
   t('Language Modeling Cycle 3');
@@ -5456,6 +5918,7 @@ lm|Language Modeling',
   t('Language Modeling Score');
   t('Maximizing Learning Time');
   t('Negative Affect');
+  t('Negative Climate Average');
   t('Negative Climate Cycle 1');
   t('Negative Climate Cycle 2');
   t('Negative Climate Cycle 3');
@@ -5466,6 +5929,7 @@ lm|Language Modeling',
   t('Number of children in classroom');
   t('Open-Ended Questions');
   t('Positive Affect');
+  t('Positive Climate Average');
   t('Positive Climate Cycle 1');
   t('Positive Climate Cycle 2');
   t('Positive Climate Cycle 3');
@@ -5474,6 +5938,7 @@ lm|Language Modeling',
   t('Positive Communication');
   t('Preparation');
   t('Proactive');
+  t('Productivity Average');
   t('Productivity Cycle 1');
   t('Productivity Cycle 2');
   t('Productivity Cycle 3');
@@ -5483,12 +5948,14 @@ lm|Language Modeling',
   t('Prompting Thought Processes');
   t('Providing Information');
   t('Punitive Control');
+  t('Quality of Feedback Average');
   t('Quality of Feedback Cycle 1');
   t('Quality of Feedback Cycle 2');
   t('Quality of Feedback Cycle 3');
   t('Quality of Feedback Cycle 4');
   t('Quality of Feedback Score');
   t('Redirection of Misbehavior');
+  t('Regard for Student Perspective Average');
   t('Regard for Student Perspectives Cycle 1');
   t('Regard for Student Perspectives Cycle 2');
   t('Regard for Student Perspectives Cycle 3');
@@ -5512,6 +5979,7 @@ lm|Language Modeling',
   t('Target Focus Area');
   t('Target Score');
   t('Teacher');
+  t('Teacher Sensitivity Average');
   t('Teacher Sensitivity Cycle 1');
   t('Teacher Sensitivity Cycle 2');
   t('Teacher Sensitivity Cycle 3');
