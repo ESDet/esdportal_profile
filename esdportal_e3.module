@@ -1004,7 +1004,7 @@ function esdportal_e3_entity_presave($entity) {
     }
     if (NULL !== $wrapper->field_qf_cycle_3->value()) {
       $qf_values[] = $wrapper->field_qf_cycle_3->value();
-    }i
+    }
     if (NULL !== $wrapper->field_qf_cycle_4->value()) {
       $qf_values[] = $wrapper->field_qf_cycle_4->value();
     }
