@@ -680,67 +680,6 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'type' => 'number_integer',
   );
 
-  // Exported field_base: 'field_class_content'
-  $field_bases['field_class_content'] = array(
-    'active' => 1,
-    'cardinality' => -1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_class_content',
-    'foreign keys' => array(
-      'format' => array(
-        'columns' => array(
-          'format' => 'format',
-        ),
-        'table' => 'filter_format',
-      ),
-    ),
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'max_length' => 255,
-    ),
-    'translatable' => 0,
-    'type' => 'text',
-  );
-
-  // Exported field_base: 'field_class_format'
-  $field_bases['field_class_format'] = array(
-    'active' => 1,
-    'cardinality' => -1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_class_format',
-    'foreign keys' => array(),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        'rout' => 'Routine',
-        'meal' => 'Meals/snacks',
-        'whole' => 'Whole group',
-        'small' => 'Small group',
-        'indv' => 'Individual time',
-        'free' => 'Free choice/centers',
-      ),
-      'allowed_values_function' => '',
-      'entity_translation_sync' => FALSE,
-    ),
-    'translatable' => 0,
-    'type' => 'list_text',
-  );
-
   // Exported field_base: 'field_coaching_strategy'
   $field_bases['field_coaching_strategy'] = array(
     'active' => 1,
@@ -928,7 +867,15 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'locked' => 0,
     'module' => 'list',
     'settings' => array(
-      'allowed_values' => array(),
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
       'allowed_values_function' => '',
       'entity_translation_sync' => FALSE,
     ),
