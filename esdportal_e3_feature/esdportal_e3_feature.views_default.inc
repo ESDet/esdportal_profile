@@ -940,35 +940,6 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['id']['table'] = 'e3_contact';
   $handler->display->display_options['fields']['id']['field'] = 'id';
   $handler->display->display_options['fields']['id']['exclude'] = TRUE;
-  /* Field: E3 Experience Note: Emotional Support Score */
-  $handler->display->display_options['fields']['field_emotional_support_score']['id'] = 'field_emotional_support_score';
-  $handler->display->display_options['fields']['field_emotional_support_score']['table'] = 'field_data_field_emotional_support_score';
-  $handler->display->display_options['fields']['field_emotional_support_score']['field'] = 'field_emotional_support_score';
-  $handler->display->display_options['fields']['field_emotional_support_score']['relationship'] = 'reverse_field_ec_teacher_e3_note';
-  $handler->display->display_options['fields']['field_emotional_support_score']['label'] = 'Emotional Support';
-  $handler->display->display_options['fields']['field_emotional_support_score']['settings'] = array(
-    'thousand_separator' => '',
-    'decimal_separator' => '.',
-    'scale' => '2',
-    'prefix_suffix' => 1,
-  );
-  /* Field: E3 Experience Note: Classroom Organization Score */
-  $handler->display->display_options['fields']['field_classroom_organization']['id'] = 'field_classroom_organization';
-  $handler->display->display_options['fields']['field_classroom_organization']['table'] = 'field_data_field_classroom_organization';
-  $handler->display->display_options['fields']['field_classroom_organization']['field'] = 'field_classroom_organization';
-  $handler->display->display_options['fields']['field_classroom_organization']['relationship'] = 'reverse_field_ec_teacher_e3_note';
-  /* Field: E3 Experience Note: Instructional Support Score */
-  $handler->display->display_options['fields']['field_instructional_support']['id'] = 'field_instructional_support';
-  $handler->display->display_options['fields']['field_instructional_support']['table'] = 'field_data_field_instructional_support';
-  $handler->display->display_options['fields']['field_instructional_support']['field'] = 'field_instructional_support';
-  $handler->display->display_options['fields']['field_instructional_support']['relationship'] = 'reverse_field_ec_teacher_e3_note';
-  $handler->display->display_options['fields']['field_instructional_support']['label'] = 'Instructional Support';
-  $handler->display->display_options['fields']['field_instructional_support']['settings'] = array(
-    'thousand_separator' => '',
-    'decimal_separator' => '.',
-    'scale' => '2',
-    'prefix_suffix' => 1,
-  );
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: E3 Contact: Type */
@@ -3986,9 +3957,6 @@ function esdportal_e3_feature_views_default_views() {
     t('Domains'),
     t('CLASS Header'),
     t('<h2>CLASS Baseline Assessment</h2>'),
-    t('Emotional Support'),
-    t('Classroom Organization Score'),
-    t('Instructional Support'),
     t('CLASS Ave'),
     t('Count/Menu'),
     t('Number of times observed'),
