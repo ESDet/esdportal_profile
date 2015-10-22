@@ -1036,7 +1036,7 @@ function esdportal_e3_entity_presave($entity) {
       $wrapper->field_es_score->set($es_score);
     }
     // Classroom Organization score.
-    $co_score = round((($bm_average + $pm_average + $ilf_average) / 3), 2);
+    $co_score = round((($bm_average + $p_average + $ilf_average) / 3), 2);
     if ($co_score > 0) {
       $wrapper->field_co_score->set($co_score);
     }
