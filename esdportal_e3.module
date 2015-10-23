@@ -504,10 +504,12 @@ function e3_contact_access($op, $e3_contact, $account = NULL, $entity_type = NUL
     case 'create':
       return user_access('administer e3_contact entities', $account)
           || user_access('create e3_contact entities', $account);
+      break;
 
     case 'view':
       return user_access('administer e3_contact entities', $account)
           || user_access('view e3_contact entities', $account);
+      break;
 
     case 'edit':
     case 'update':
@@ -515,6 +517,7 @@ function e3_contact_access($op, $e3_contact, $account = NULL, $entity_type = NUL
       return user_access('administer e3_contact entities')
           || user_access('edit any e3_contact entities')
           || (user_access('edit own e3_contact entities') && ($e3_contact->uid == $account->uid));
+      break;
   }
 }
 
