@@ -32,31 +32,19 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '20';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
-    'views_bulk_operations' => 'views_bulk_operations',
     'field_time_of_observation' => 'field_time_of_observation',
-    'id' => 'id',
     'field_fname' => 'field_fname',
     'field_lname' => 'field_fname',
     'type' => 'type',
     'field_ec_teacher' => 'field_ec_teacher',
     'created' => 'created',
+    'id_1' => 'id_1',
+    'id' => 'id',
   );
-  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['default'] = 'created';
   $handler->display->display_options['style_options']['info'] = array(
-    'views_bulk_operations' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
     'field_time_of_observation' => array(
       'sortable' => 1,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'id' => array(
-      'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
@@ -91,6 +79,20 @@ function esdportal_e3_feature_views_default_views() {
       'empty_column' => 0,
     ),
     'created' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'id_1' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'id' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -198,17 +200,19 @@ function esdportal_e3_feature_views_default_views() {
     19 => 0,
     20 => 0,
   );
-  /* Filter criterion: E3 Experience Note: Coach */
-  $handler->display->display_options['filters']['uid']['id'] = 'uid';
-  $handler->display->display_options['filters']['uid']['table'] = 'e3_note';
-  $handler->display->display_options['filters']['uid']['field'] = 'uid';
-  $handler->display->display_options['filters']['uid']['group'] = 1;
-  $handler->display->display_options['filters']['uid']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['uid']['expose']['operator_id'] = 'uid_op';
-  $handler->display->display_options['filters']['uid']['expose']['label'] = 'Coach';
-  $handler->display->display_options['filters']['uid']['expose']['operator'] = 'uid_op';
-  $handler->display->display_options['filters']['uid']['expose']['identifier'] = 'uid';
-  $handler->display->display_options['filters']['uid']['expose']['remember_roles'] = array(
+  /* Filter criterion: User: Name */
+  $handler->display->display_options['filters']['uid_2']['id'] = 'uid_2';
+  $handler->display->display_options['filters']['uid_2']['table'] = 'users';
+  $handler->display->display_options['filters']['uid_2']['field'] = 'uid';
+  $handler->display->display_options['filters']['uid_2']['relationship'] = 'uid';
+  $handler->display->display_options['filters']['uid_2']['value'] = '';
+  $handler->display->display_options['filters']['uid_2']['group'] = 1;
+  $handler->display->display_options['filters']['uid_2']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['uid_2']['expose']['operator_id'] = 'uid_2_op';
+  $handler->display->display_options['filters']['uid_2']['expose']['label'] = 'Coach User Name';
+  $handler->display->display_options['filters']['uid_2']['expose']['operator'] = 'uid_2_op';
+  $handler->display->display_options['filters']['uid_2']['expose']['identifier'] = 'uid_2';
+  $handler->display->display_options['filters']['uid_2']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     4 => 0,
@@ -217,6 +221,7 @@ function esdportal_e3_feature_views_default_views() {
     18 => 0,
     6 => 0,
     19 => 0,
+    21 => 0,
     20 => 0,
   );
 
@@ -250,6 +255,7 @@ function esdportal_e3_feature_views_default_views() {
     t('Edit'),
     t('All'),
     t('Type'),
+    t('Coach User Name'),
     t('Page'),
   );
   $export['e3_log_entry_management'] = $view;
@@ -268,7 +274,11 @@ function esdportal_e3_feature_views_default_views() {
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'E3 Teacher Management';
   $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['access']['type'] = 'none';
+  $handler->display->display_options['access']['type'] = 'role';
+  $handler->display->display_options['access']['role'] = array(
+    4 => '4',
+    21 => '21',
+  );
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
@@ -276,10 +286,10 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '20';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
+    'views_bulk_operations' => 'views_bulk_operations',
     'id' => 'id',
-    'uid' => 'uid',
-    'field_contact_addy_first_name' => 'field_contact_addy_first_name',
-    'field_contact_addy_last_name' => 'field_contact_addy_last_name',
+    'firstname' => 'firstname',
+    'lastname' => 'lastname',
     'fullname' => 'fullname',
     'field_ec' => 'field_ec',
     'field_fname' => 'field_fname',
@@ -287,6 +297,11 @@ function esdportal_e3_feature_views_default_views() {
   );
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
+    'views_bulk_operations' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'id' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
@@ -294,22 +309,15 @@ function esdportal_e3_feature_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'uid' => array(
-      'sortable' => 0,
+    'firstname' => array(
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_contact_addy_first_name' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_contact_addy_last_name' => array(
-      'sortable' => 0,
+    'lastname' => array(
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
@@ -323,14 +331,14 @@ function esdportal_e3_feature_views_default_views() {
       'empty_column' => 0,
     ),
     'field_ec' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_fname' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => ' ',
@@ -388,7 +396,19 @@ function esdportal_e3_feature_views_default_views() {
       'settings' => array(
         'show_all_tokens' => 1,
         'display_values' => array(
-          '_all_' => '_all_',
+          'teacher::field_ec' => 'teacher::field_ec',
+          'teacher::field_e3_cohort' => 'teacher::field_e3_cohort',
+          'teacher::field_e3_status' => 'teacher::field_e3_status',
+          'teacher::field_training_attendance' => 'teacher::field_training_attendance',
+          'teacher::field_training_hours_f1' => 'teacher::field_training_hours_f1',
+          'teacher::field_training_hours_f2' => 'teacher::field_training_hours_f2',
+          'teacher::field_training_hours_f3' => 'teacher::field_training_hours_f3',
+          'teacher::field_training_hours_m1' => 'teacher::field_training_hours_m1',
+          'teacher::field_training_hours_m2' => 'teacher::field_training_hours_m2',
+          'teacher::field_training_hours_s1' => 'teacher::field_training_hours_s1',
+          'teacher::field_training_hours_s2' => 'teacher::field_training_hours_s2',
+          'teacher::field_training_hours_w1' => 'teacher::field_training_hours_w1',
+          'teacher::field_training_hours_w2' => 'teacher::field_training_hours_w2',
         ),
       ),
     ),
@@ -438,11 +458,11 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['fullname']['id'] = 'fullname';
   $handler->display->display_options['fields']['fullname']['table'] = 'e3_contact';
   $handler->display->display_options['fields']['fullname']['field'] = 'fullname';
-  $handler->display->display_options['fields']['fullname']['label'] = 'Name';
+  $handler->display->display_options['fields']['fullname']['label'] = 'Link';
   $handler->display->display_options['fields']['fullname']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['fullname']['alter']['text'] = 'View';
+  $handler->display->display_options['fields']['fullname']['alter']['text'] = 'View Report';
   $handler->display->display_options['fields']['fullname']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['fullname']['alter']['path'] = '/e3-contact/[id]';
+  $handler->display->display_options['fields']['fullname']['alter']['path'] = 'teacher-report/[id]';
   /* Field: Field: Employing Early Childhood Center */
   $handler->display->display_options['fields']['field_ec']['id'] = 'field_ec';
   $handler->display->display_options['fields']['field_ec']['table'] = 'field_data_field_ec';
@@ -508,16 +528,16 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['id']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['id']['alter']['path'] = 'e3-contact/[id]/edit';
   $handler->display->display_options['fields']['id']['separator'] = '';
+  /* Field: E3 Contact: Firstname */
+  $handler->display->display_options['fields']['firstname']['id'] = 'firstname';
+  $handler->display->display_options['fields']['firstname']['table'] = 'e3_contact';
+  $handler->display->display_options['fields']['firstname']['field'] = 'firstname';
+  $handler->display->display_options['fields']['firstname']['label'] = 'First Name';
   /* Field: E3 Contact: Lastname */
   $handler->display->display_options['fields']['lastname']['id'] = 'lastname';
   $handler->display->display_options['fields']['lastname']['table'] = 'e3_contact';
   $handler->display->display_options['fields']['lastname']['field'] = 'lastname';
-  /* Field: E3 Contact: Label */
-  $handler->display->display_options['fields']['fullname']['id'] = 'fullname';
-  $handler->display->display_options['fields']['fullname']['table'] = 'e3_contact';
-  $handler->display->display_options['fields']['fullname']['field'] = 'fullname';
-  $handler->display->display_options['fields']['fullname']['label'] = 'Name';
-  $handler->display->display_options['fields']['fullname']['alter']['path'] = '/e3-contact/[id]/edit';
+  $handler->display->display_options['fields']['lastname']['label'] = 'Last Name';
   /* Field: Field: Email */
   $handler->display->display_options['fields']['field_email']['id'] = 'field_email';
   $handler->display->display_options['fields']['field_email']['table'] = 'field_data_field_email';
@@ -531,6 +551,14 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['field_teacher_ec_role']['id'] = 'field_teacher_ec_role';
   $handler->display->display_options['fields']['field_teacher_ec_role']['table'] = 'field_data_field_teacher_ec_role';
   $handler->display->display_options['fields']['field_teacher_ec_role']['field'] = 'field_teacher_ec_role';
+  /* Field: E3 Contact: Cohort */
+  $handler->display->display_options['fields']['field_e3_cohort']['id'] = 'field_e3_cohort';
+  $handler->display->display_options['fields']['field_e3_cohort']['table'] = 'field_data_field_e3_cohort';
+  $handler->display->display_options['fields']['field_e3_cohort']['field'] = 'field_e3_cohort';
+  /* Field: E3 Contact: Status */
+  $handler->display->display_options['fields']['field_e3_status']['id'] = 'field_e3_status';
+  $handler->display->display_options['fields']['field_e3_status']['table'] = 'field_data_field_e3_status';
+  $handler->display->display_options['fields']['field_e3_status']['field'] = 'field_e3_status';
   /* Field: User: First Name */
   $handler->display->display_options['fields']['field_fname']['id'] = 'field_fname';
   $handler->display->display_options['fields']['field_fname']['table'] = 'field_data_field_fname';
@@ -550,11 +578,296 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['label'] = 'Assigned Coach';
   $handler->display->display_options['fields']['nothing']['alter']['text'] = '[field_fname] [field_lname]';
+  /* Field: E3 Contact: Training Attendance */
+  $handler->display->display_options['fields']['field_training_attendance']['id'] = 'field_training_attendance';
+  $handler->display->display_options['fields']['field_training_attendance']['table'] = 'field_data_field_training_attendance';
+  $handler->display->display_options['fields']['field_training_attendance']['field'] = 'field_training_attendance';
+  $handler->display->display_options['fields']['field_training_attendance']['delta_offset'] = '0';
+  /* Field: E3 Contact: Total Training Hours Complete */
+  $handler->display->display_options['fields']['field_training_hours_total']['id'] = 'field_training_hours_total';
+  $handler->display->display_options['fields']['field_training_hours_total']['table'] = 'field_data_field_training_hours_total';
+  $handler->display->display_options['fields']['field_training_hours_total']['field'] = 'field_training_hours_total';
+  $handler->display->display_options['fields']['field_training_hours_total']['settings'] = array(
+    'thousand_separator' => ' ',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+  );
+  /* Field: E3 Contact: Fall Training Day 1 Hours */
+  $handler->display->display_options['fields']['field_training_hours_f1']['id'] = 'field_training_hours_f1';
+  $handler->display->display_options['fields']['field_training_hours_f1']['table'] = 'field_data_field_training_hours_f1';
+  $handler->display->display_options['fields']['field_training_hours_f1']['field'] = 'field_training_hours_f1';
+  $handler->display->display_options['fields']['field_training_hours_f1']['settings'] = array(
+    'thousand_separator' => ' ',
+    'prefix_suffix' => 1,
+  );
+  /* Field: E3 Contact: Fall Training Day 2 Hours */
+  $handler->display->display_options['fields']['field_training_hours_f2']['id'] = 'field_training_hours_f2';
+  $handler->display->display_options['fields']['field_training_hours_f2']['table'] = 'field_data_field_training_hours_f2';
+  $handler->display->display_options['fields']['field_training_hours_f2']['field'] = 'field_training_hours_f2';
+  $handler->display->display_options['fields']['field_training_hours_f2']['settings'] = array(
+    'thousand_separator' => ' ',
+    'prefix_suffix' => 1,
+  );
+  /* Field: E3 Contact: Fall Training Day 3 Hours */
+  $handler->display->display_options['fields']['field_training_hours_f3']['id'] = 'field_training_hours_f3';
+  $handler->display->display_options['fields']['field_training_hours_f3']['table'] = 'field_data_field_training_hours_f3';
+  $handler->display->display_options['fields']['field_training_hours_f3']['field'] = 'field_training_hours_f3';
+  $handler->display->display_options['fields']['field_training_hours_f3']['settings'] = array(
+    'thousand_separator' => ' ',
+    'prefix_suffix' => 1,
+  );
+  /* Field: E3 Contact: Mid-Fall Training Day 1 Hours */
+  $handler->display->display_options['fields']['field_training_hours_m1']['id'] = 'field_training_hours_m1';
+  $handler->display->display_options['fields']['field_training_hours_m1']['table'] = 'field_data_field_training_hours_m1';
+  $handler->display->display_options['fields']['field_training_hours_m1']['field'] = 'field_training_hours_m1';
+  $handler->display->display_options['fields']['field_training_hours_m1']['settings'] = array(
+    'thousand_separator' => ' ',
+    'prefix_suffix' => 1,
+  );
+  /* Field: E3 Contact: Mid-Fall Training Day 2 Hours */
+  $handler->display->display_options['fields']['field_training_hours_m2']['id'] = 'field_training_hours_m2';
+  $handler->display->display_options['fields']['field_training_hours_m2']['table'] = 'field_data_field_training_hours_m2';
+  $handler->display->display_options['fields']['field_training_hours_m2']['field'] = 'field_training_hours_m2';
+  $handler->display->display_options['fields']['field_training_hours_m2']['settings'] = array(
+    'thousand_separator' => ' ',
+    'prefix_suffix' => 1,
+  );
+  /* Field: E3 Contact: Winter Training Day 1 Hours */
+  $handler->display->display_options['fields']['field_training_hours_w1']['id'] = 'field_training_hours_w1';
+  $handler->display->display_options['fields']['field_training_hours_w1']['table'] = 'field_data_field_training_hours_w1';
+  $handler->display->display_options['fields']['field_training_hours_w1']['field'] = 'field_training_hours_w1';
+  $handler->display->display_options['fields']['field_training_hours_w1']['settings'] = array(
+    'thousand_separator' => ' ',
+    'prefix_suffix' => 1,
+  );
+  /* Field: E3 Contact: Winter Training Day 2 Hours */
+  $handler->display->display_options['fields']['field_training_hours_w2']['id'] = 'field_training_hours_w2';
+  $handler->display->display_options['fields']['field_training_hours_w2']['table'] = 'field_data_field_training_hours_w2';
+  $handler->display->display_options['fields']['field_training_hours_w2']['field'] = 'field_training_hours_w2';
+  $handler->display->display_options['fields']['field_training_hours_w2']['settings'] = array(
+    'thousand_separator' => ' ',
+    'prefix_suffix' => 1,
+  );
+  /* Field: E3 Contact: Spring Training Day 1 Hours */
+  $handler->display->display_options['fields']['field_training_hours_s1']['id'] = 'field_training_hours_s1';
+  $handler->display->display_options['fields']['field_training_hours_s1']['table'] = 'field_data_field_training_hours_s1';
+  $handler->display->display_options['fields']['field_training_hours_s1']['field'] = 'field_training_hours_s1';
+  $handler->display->display_options['fields']['field_training_hours_s1']['settings'] = array(
+    'thousand_separator' => ' ',
+    'prefix_suffix' => 1,
+  );
+  /* Field: E3 Contact: Spring Training Day 2 Hours */
+  $handler->display->display_options['fields']['field_training_hours_s2']['id'] = 'field_training_hours_s2';
+  $handler->display->display_options['fields']['field_training_hours_s2']['table'] = 'field_data_field_training_hours_s2';
+  $handler->display->display_options['fields']['field_training_hours_s2']['field'] = 'field_training_hours_s2';
+  $handler->display->display_options['fields']['field_training_hours_s2']['settings'] = array(
+    'thousand_separator' => ' ',
+    'prefix_suffix' => 1,
+  );
   $handler->display->display_options['path'] = 'e3-teachers-export';
   $handler->display->display_options['displays'] = array(
     'page' => 'page',
     'default' => 0,
   );
+
+  /* Display: Editor */
+  $handler = $view->new_display('page', 'Editor', 'page_1');
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Bulk operations: E3 Contact */
+  $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
+  $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'e3_contact';
+  $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['display_type'] = '0';
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['enable_select_all_pages'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['force_single'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['entity_load_capacity'] = '10';
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_operations'] = array(
+    'action::esdportal_e3_assign_coach_action' => array(
+      'selected' => 1,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::views_bulk_operations_delete_item' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::views_bulk_operations_script_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::views_bulk_operations_modify_action' => array(
+      'selected' => 1,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+      'settings' => array(
+        'show_all_tokens' => 1,
+        'display_values' => array(
+          'teacher::field_ec' => 'teacher::field_ec',
+          'teacher::field_e3_cohort' => 'teacher::field_e3_cohort',
+          'teacher::field_e3_status' => 'teacher::field_e3_status',
+          'teacher::field_training_attendance' => 'teacher::field_training_attendance',
+          'teacher::field_training_hours_f1' => 'teacher::field_training_hours_f1',
+          'teacher::field_training_hours_f2' => 'teacher::field_training_hours_f2',
+          'teacher::field_training_hours_f3' => 'teacher::field_training_hours_f3',
+          'teacher::field_training_hours_m1' => 'teacher::field_training_hours_m1',
+          'teacher::field_training_hours_m2' => 'teacher::field_training_hours_m2',
+          'teacher::field_training_hours_s1' => 'teacher::field_training_hours_s1',
+          'teacher::field_training_hours_s2' => 'teacher::field_training_hours_s2',
+          'teacher::field_training_hours_w1' => 'teacher::field_training_hours_w1',
+          'teacher::field_training_hours_w2' => 'teacher::field_training_hours_w2',
+        ),
+      ),
+    ),
+    'action::views_bulk_operations_argument_selector_action' => array(
+      'selected' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+      'settings' => array(
+        'url' => '',
+      ),
+    ),
+    'action::system_send_email_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::esdportal_str_send_unsafe_email_action' => array(
+      'selected' => 0,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+  );
+  /* Field: E3 Contact: E3 contact ID */
+  $handler->display->display_options['fields']['id']['id'] = 'id';
+  $handler->display->display_options['fields']['id']['table'] = 'e3_contact';
+  $handler->display->display_options['fields']['id']['field'] = 'id';
+  $handler->display->display_options['fields']['id']['label'] = 'E3 ID';
+  $handler->display->display_options['fields']['id']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['id']['alter']['path'] = 'e3-contact/[id]/edit';
+  $handler->display->display_options['fields']['id']['separator'] = '';
+  /* Field: E3 Contact: Firstname */
+  $handler->display->display_options['fields']['firstname']['id'] = 'firstname';
+  $handler->display->display_options['fields']['firstname']['table'] = 'e3_contact';
+  $handler->display->display_options['fields']['firstname']['field'] = 'firstname';
+  $handler->display->display_options['fields']['firstname']['label'] = 'First name';
+  /* Field: E3 Contact: Lastname */
+  $handler->display->display_options['fields']['lastname']['id'] = 'lastname';
+  $handler->display->display_options['fields']['lastname']['table'] = 'e3_contact';
+  $handler->display->display_options['fields']['lastname']['field'] = 'lastname';
+  $handler->display->display_options['fields']['lastname']['label'] = 'Last name';
+  /* Field: E3 Contact: Mid-Fall Training Day 1 Hours */
+  $handler->display->display_options['fields']['field_training_hours_m1']['id'] = 'field_training_hours_m1';
+  $handler->display->display_options['fields']['field_training_hours_m1']['table'] = 'field_data_field_training_hours_m1';
+  $handler->display->display_options['fields']['field_training_hours_m1']['field'] = 'field_training_hours_m1';
+  $handler->display->display_options['fields']['field_training_hours_m1']['label'] = 'Mid-Year Training Hours 1';
+  $handler->display->display_options['fields']['field_training_hours_m1']['type'] = 'editable';
+  $handler->display->display_options['fields']['field_training_hours_m1']['settings'] = array(
+    'click_to_edit' => 0,
+    'click_to_edit_style' => 'button',
+    'empty_text' => '',
+    'fallback_format' => 'number_integer',
+    'fallback_settings' => array(
+      'thousand_separator' => '',
+      'prefix_suffix' => 1,
+    ),
+  );
+  /* Field: E3 Contact: Mid-Fall Training Day 2 Hours */
+  $handler->display->display_options['fields']['field_training_hours_m2']['id'] = 'field_training_hours_m2';
+  $handler->display->display_options['fields']['field_training_hours_m2']['table'] = 'field_data_field_training_hours_m2';
+  $handler->display->display_options['fields']['field_training_hours_m2']['field'] = 'field_training_hours_m2';
+  $handler->display->display_options['fields']['field_training_hours_m2']['label'] = 'Mid-Fall Training Hours 2';
+  $handler->display->display_options['fields']['field_training_hours_m2']['type'] = 'editable';
+  $handler->display->display_options['fields']['field_training_hours_m2']['settings'] = array(
+    'click_to_edit' => 0,
+    'click_to_edit_style' => 'button',
+    'empty_text' => '',
+    'fallback_format' => 'number_integer',
+    'fallback_settings' => array(
+      'thousand_separator' => '',
+      'prefix_suffix' => 1,
+    ),
+  );
+  /* Field: E3 Contact: Training Attendance */
+  $handler->display->display_options['fields']['field_training_attendance']['id'] = 'field_training_attendance';
+  $handler->display->display_options['fields']['field_training_attendance']['table'] = 'field_data_field_training_attendance';
+  $handler->display->display_options['fields']['field_training_attendance']['field'] = 'field_training_attendance';
+  $handler->display->display_options['fields']['field_training_attendance']['type'] = 'editable';
+  $handler->display->display_options['fields']['field_training_attendance']['settings'] = array(
+    'click_to_edit' => 0,
+    'click_to_edit_style' => 'button',
+    'empty_text' => '',
+    'fallback_format' => 'list_default',
+  );
+  $handler->display->display_options['fields']['field_training_attendance']['delta_offset'] = '0';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: User: Name */
+  $handler->display->display_options['filters']['uid']['id'] = 'uid';
+  $handler->display->display_options['filters']['uid']['table'] = 'users';
+  $handler->display->display_options['filters']['uid']['field'] = 'uid';
+  $handler->display->display_options['filters']['uid']['relationship'] = 'uid';
+  $handler->display->display_options['filters']['uid']['value'] = '';
+  $handler->display->display_options['filters']['uid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['uid']['expose']['operator_id'] = 'uid_op';
+  $handler->display->display_options['filters']['uid']['expose']['label'] = 'Coach';
+  $handler->display->display_options['filters']['uid']['expose']['operator'] = 'uid_op';
+  $handler->display->display_options['filters']['uid']['expose']['identifier'] = 'uid';
+  $handler->display->display_options['filters']['uid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    4 => 0,
+    17 => 0,
+    7 => 0,
+    18 => 0,
+    6 => 0,
+    19 => 0,
+    20 => 0,
+  );
+  /* Filter criterion: E3 Contact: Label */
+  $handler->display->display_options['filters']['fullname']['id'] = 'fullname';
+  $handler->display->display_options['filters']['fullname']['table'] = 'e3_contact';
+  $handler->display->display_options['filters']['fullname']['field'] = 'fullname';
+  $handler->display->display_options['filters']['fullname']['operator'] = 'contains';
+  $handler->display->display_options['filters']['fullname']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['fullname']['expose']['operator_id'] = 'fullname_op';
+  $handler->display->display_options['filters']['fullname']['expose']['label'] = 'Teacher';
+  $handler->display->display_options['filters']['fullname']['expose']['operator'] = 'fullname_op';
+  $handler->display->display_options['filters']['fullname']['expose']['identifier'] = 'fullname';
+  $handler->display->display_options['filters']['fullname']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    4 => 0,
+    17 => 0,
+    7 => 0,
+    18 => 0,
+    6 => 0,
+    19 => 0,
+    21 => 0,
+    20 => 0,
+  );
+  $handler->display->display_options['path'] = 'e3-teachers/editor';
   $translatables['e3_teacher_management'] = array(
     t('Master'),
     t('E3 Teacher Management'),
@@ -577,17 +890,34 @@ function esdportal_e3_feature_views_default_views() {
     t('.'),
     t('First name'),
     t('Last name'),
-    t('Name'),
-    t('View'),
+    t('Link'),
+    t('View Report'),
     t('Program'),
     t('Last Name'),
     t('Page'),
     t('Data export'),
-    t('Lastname'),
+    t('First Name'),
     t('Email'),
     t('Position / role'),
+    t('Cohort'),
+    t('Status'),
     t('Assigned Coach'),
     t('[field_fname] [field_lname]'),
+    t('Training Attendance'),
+    t('Total Training Hours Complete'),
+    t('Fall Training Day 1 Hours'),
+    t('Fall Training Day 2 Hours'),
+    t('Fall Training Day 3 Hours'),
+    t('Mid-Fall Training Day 1 Hours'),
+    t('Mid-Fall Training Day 2 Hours'),
+    t('Winter Training Day 1 Hours'),
+    t('Winter Training Day 2 Hours'),
+    t('Spring Training Day 1 Hours'),
+    t('Spring Training Day 2 Hours'),
+    t('Editor'),
+    t('Mid-Year Training Hours 1'),
+    t('Mid-Fall Training Hours 2'),
+    t('Teacher'),
   );
   $export['e3_teacher_management'] = $view;
 
@@ -609,6 +939,7 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['access']['role'] = array(
     4 => '4',
     20 => '20',
+    21 => '21',
   );
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
@@ -804,6 +1135,17 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['field_ec']['table'] = 'field_data_field_ec';
   $handler->display->display_options['fields']['field_ec']['field'] = 'field_ec';
   $handler->display->display_options['fields']['field_ec']['label'] = 'Program';
+  /* Field: E3 Contact: E3 contact ID */
+  $handler->display->display_options['fields']['id_1']['id'] = 'id_1';
+  $handler->display->display_options['fields']['id_1']['table'] = 'e3_contact';
+  $handler->display->display_options['fields']['id_1']['field'] = 'id';
+  $handler->display->display_options['fields']['id_1']['label'] = '';
+  $handler->display->display_options['fields']['id_1']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['id_1']['alter']['text'] = 'View all log entries';
+  $handler->display->display_options['fields']['id_1']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['id_1']['alter']['path'] = 'e3-logs/[id_1]';
+  $handler->display->display_options['fields']['id_1']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['id_1']['separator'] = '';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: E3 Contact: Author */
   $handler->display->display_options['arguments']['uid']['id'] = 'uid';
@@ -940,6 +1282,170 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['id']['table'] = 'e3_contact';
   $handler->display->display_options['fields']['id']['field'] = 'id';
   $handler->display->display_options['fields']['id']['exclude'] = TRUE;
+  /* Field: E3 Experience Note: Emotional Support score */
+  $handler->display->display_options['fields']['field_es_score']['id'] = 'field_es_score';
+  $handler->display->display_options['fields']['field_es_score']['table'] = 'field_data_field_es_score';
+  $handler->display->display_options['fields']['field_es_score']['field'] = 'field_es_score';
+  $handler->display->display_options['fields']['field_es_score']['relationship'] = 'reverse_field_ec_teacher_e3_note';
+  $handler->display->display_options['fields']['field_es_score']['label'] = 'Emotional Support';
+  /* Field: E3 Experience Note: Classroom Organization Score */
+  $handler->display->display_options['fields']['field_co_score']['id'] = 'field_co_score';
+  $handler->display->display_options['fields']['field_co_score']['table'] = 'field_data_field_co_score';
+  $handler->display->display_options['fields']['field_co_score']['field'] = 'field_co_score';
+  $handler->display->display_options['fields']['field_co_score']['relationship'] = 'reverse_field_ec_teacher_e3_note';
+  /* Field: E3 Experience Note: Instructional Support Score */
+  $handler->display->display_options['fields']['field_is_score']['id'] = 'field_is_score';
+  $handler->display->display_options['fields']['field_is_score']['table'] = 'field_data_field_is_score';
+  $handler->display->display_options['fields']['field_is_score']['field'] = 'field_is_score';
+  $handler->display->display_options['fields']['field_is_score']['relationship'] = 'reverse_field_ec_teacher_e3_note';
+  $handler->display->display_options['fields']['field_is_score']['label'] = 'Instructional Support';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: E3 Contact: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'e3_contact';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'teacher' => 'teacher',
+  );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: E3 Experience Note: Type */
+  $handler->display->display_options['filters']['type_1']['id'] = 'type_1';
+  $handler->display->display_options['filters']['type_1']['table'] = 'e3_note';
+  $handler->display->display_options['filters']['type_1']['field'] = 'type';
+  $handler->display->display_options['filters']['type_1']['relationship'] = 'reverse_field_ec_teacher_e3_note';
+  $handler->display->display_options['filters']['type_1']['value'] = array(
+    'class_assessment' => 'class_assessment',
+  );
+  $handler->display->display_options['filters']['type_1']['group'] = 1;
+  $handler->display->display_options['displays'] = array(
+    'page' => 'page',
+    'default' => 0,
+    'page_1' => 0,
+    'page_2' => 0,
+    'page_3' => 0,
+    'page_4' => 0,
+    'page_5' => 0,
+    'page_6' => 0,
+    'page_7' => 0,
+    'page_8' => 0,
+    'page_11' => 0,
+    'page_10' => 0,
+    'page_9' => 0,
+  );
+  $handler->display->display_options['attachment_position'] = 'after';
+
+  /* Display: CLASS Ave */
+  $handler = $view->new_display('attachment', 'CLASS Ave', 'attachment_1');
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'chart';
+  $handler->display->display_options['style_options']['type'] = 'column';
+  $handler->display->display_options['style_options']['library'] = '';
+  $handler->display->display_options['style_options']['label_field'] = '';
+  $handler->display->display_options['style_options']['data_fields'] = array(
+    'field_pc_average' => 'field_pc_average',
+    'field_nc_average' => 'field_nc_average',
+    'field_ts_average' => 'field_ts_average',
+    'field_rsp_average' => 'field_rsp_average',
+    'field_bm_average' => 'field_bm_average',
+    'field_p_average' => 'field_p_average',
+    'field_ilf_average' => 'field_ilf_average',
+    'field_cd_average' => 'field_cd_average',
+    'field_qf_average' => 'field_qf_average',
+    'field_lm_average' => 'field_lm_average',
+    'id' => 0,
+  );
+  $handler->display->display_options['style_options']['field_colors'] = array(
+    'id' => '#2f7ed8',
+    'field_pc_average' => '#134370',
+    'field_nc_average' => '#134370',
+    'field_ts_average' => '#134370',
+    'field_rsp_average' => '#134370',
+    'field_bm_average' => '#29b573',
+    'field_p_average' => '#29b573',
+    'field_ilf_average' => '#29b573',
+    'field_cd_average' => '#00aff0',
+    'field_qf_average' => '#00aff0',
+    'field_lm_average' => '#00aff0',
+  );
+  $handler->display->display_options['style_options']['title'] = 'CLASS Dimension Averages';
+  $handler->display->display_options['style_options']['legend_position'] = '';
+  $handler->display->display_options['style_options']['width'] = '';
+  $handler->display->display_options['style_options']['height'] = '';
+  $handler->display->display_options['style_options']['xaxis_labels_rotation'] = '30';
+  $handler->display->display_options['style_options']['yaxis_min'] = '0';
+  $handler->display->display_options['style_options']['yaxis_max'] = '7';
+  $handler->display->display_options['style_options']['yaxis_decimal_count'] = '1';
+  $handler->display->display_options['style_options']['yaxis_labels_rotation'] = '0';
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: E3 Contact: E3 contact ID */
+  $handler->display->display_options['fields']['id']['id'] = 'id';
+  $handler->display->display_options['fields']['id']['table'] = 'e3_contact';
+  $handler->display->display_options['fields']['id']['field'] = 'id';
+  /* Field: E3 Experience Note: Positive Climate Average */
+  $handler->display->display_options['fields']['field_pc_average']['id'] = 'field_pc_average';
+  $handler->display->display_options['fields']['field_pc_average']['table'] = 'field_data_field_pc_average';
+  $handler->display->display_options['fields']['field_pc_average']['field'] = 'field_pc_average';
+  $handler->display->display_options['fields']['field_pc_average']['relationship'] = 'reverse_field_ec_teacher_e3_note';
+  $handler->display->display_options['fields']['field_pc_average']['label'] = 'Positive Climate';
+  /* Field: E3 Experience Note: Negative Climate Average */
+  $handler->display->display_options['fields']['field_nc_average']['id'] = 'field_nc_average';
+  $handler->display->display_options['fields']['field_nc_average']['table'] = 'field_data_field_nc_average';
+  $handler->display->display_options['fields']['field_nc_average']['field'] = 'field_nc_average';
+  $handler->display->display_options['fields']['field_nc_average']['relationship'] = 'reverse_field_ec_teacher_e3_note';
+  $handler->display->display_options['fields']['field_nc_average']['label'] = 'Negative Climate';
+  /* Field: E3 Experience Note: Teacher Sensitivity Average */
+  $handler->display->display_options['fields']['field_ts_average']['id'] = 'field_ts_average';
+  $handler->display->display_options['fields']['field_ts_average']['table'] = 'field_data_field_ts_average';
+  $handler->display->display_options['fields']['field_ts_average']['field'] = 'field_ts_average';
+  $handler->display->display_options['fields']['field_ts_average']['relationship'] = 'reverse_field_ec_teacher_e3_note';
+  $handler->display->display_options['fields']['field_ts_average']['label'] = 'Teacher Sensitivity';
+  /* Field: E3 Experience Note: Regard for Student Perspective Average */
+  $handler->display->display_options['fields']['field_rsp_average']['id'] = 'field_rsp_average';
+  $handler->display->display_options['fields']['field_rsp_average']['table'] = 'field_data_field_rsp_average';
+  $handler->display->display_options['fields']['field_rsp_average']['field'] = 'field_rsp_average';
+  $handler->display->display_options['fields']['field_rsp_average']['relationship'] = 'reverse_field_ec_teacher_e3_note';
+  $handler->display->display_options['fields']['field_rsp_average']['label'] = 'Regard for Student Perspective';
+  /* Field: E3 Experience Note: Behaviour Management Average */
+  $handler->display->display_options['fields']['field_bm_average']['id'] = 'field_bm_average';
+  $handler->display->display_options['fields']['field_bm_average']['table'] = 'field_data_field_bm_average';
+  $handler->display->display_options['fields']['field_bm_average']['field'] = 'field_bm_average';
+  $handler->display->display_options['fields']['field_bm_average']['relationship'] = 'reverse_field_ec_teacher_e3_note';
+  $handler->display->display_options['fields']['field_bm_average']['label'] = 'Behaviour Management';
+  /* Field: E3 Experience Note: Productivity Average */
+  $handler->display->display_options['fields']['field_p_average']['id'] = 'field_p_average';
+  $handler->display->display_options['fields']['field_p_average']['table'] = 'field_data_field_p_average';
+  $handler->display->display_options['fields']['field_p_average']['field'] = 'field_p_average';
+  $handler->display->display_options['fields']['field_p_average']['relationship'] = 'reverse_field_ec_teacher_e3_note';
+  $handler->display->display_options['fields']['field_p_average']['label'] = 'Productivity';
+  /* Field: E3 Experience Note: Instructional Learning Formats Average */
+  $handler->display->display_options['fields']['field_ilf_average']['id'] = 'field_ilf_average';
+  $handler->display->display_options['fields']['field_ilf_average']['table'] = 'field_data_field_ilf_average';
+  $handler->display->display_options['fields']['field_ilf_average']['field'] = 'field_ilf_average';
+  $handler->display->display_options['fields']['field_ilf_average']['relationship'] = 'reverse_field_ec_teacher_e3_note';
+  $handler->display->display_options['fields']['field_ilf_average']['label'] = 'Instructional Learning Formats';
+  /* Field: E3 Experience Note: Concept Development Average */
+  $handler->display->display_options['fields']['field_cd_average']['id'] = 'field_cd_average';
+  $handler->display->display_options['fields']['field_cd_average']['table'] = 'field_data_field_cd_average';
+  $handler->display->display_options['fields']['field_cd_average']['field'] = 'field_cd_average';
+  $handler->display->display_options['fields']['field_cd_average']['relationship'] = 'reverse_field_ec_teacher_e3_note';
+  $handler->display->display_options['fields']['field_cd_average']['label'] = 'Concept Development';
+  /* Field: E3 Experience Note: Quality of Feedback Average */
+  $handler->display->display_options['fields']['field_qf_average']['id'] = 'field_qf_average';
+  $handler->display->display_options['fields']['field_qf_average']['table'] = 'field_data_field_qf_average';
+  $handler->display->display_options['fields']['field_qf_average']['field'] = 'field_qf_average';
+  $handler->display->display_options['fields']['field_qf_average']['relationship'] = 'reverse_field_ec_teacher_e3_note';
+  $handler->display->display_options['fields']['field_qf_average']['label'] = 'Quality of Feedback';
+  /* Field: E3 Experience Note: Language Modeling Average */
+  $handler->display->display_options['fields']['field_lm_average']['id'] = 'field_lm_average';
+  $handler->display->display_options['fields']['field_lm_average']['table'] = 'field_data_field_lm_average';
+  $handler->display->display_options['fields']['field_lm_average']['field'] = 'field_lm_average';
+  $handler->display->display_options['fields']['field_lm_average']['relationship'] = 'reverse_field_ec_teacher_e3_note';
+  $handler->display->display_options['fields']['field_lm_average']['label'] = 'Language Modeling';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: E3 Contact: Type */
@@ -962,55 +1468,6 @@ function esdportal_e3_feature_views_default_views() {
     'page' => 'page',
     'default' => 0,
     'page_1' => 0,
-    'page_2' => 0,
-    'page_3' => 0,
-    'page_4' => 0,
-    'page_5' => 0,
-    'page_6' => 0,
-    'page_7' => 0,
-    'page_8' => 0,
-    'page_11' => 0,
-    'page_10' => 0,
-    'page_9' => 0,
-  );
-  $handler->display->display_options['attachment_position'] = 'after';
-
-  /* Display: CLASS Ave */
-  $handler = $view->new_display('attachment', 'CLASS Ave', 'attachment_1');
-  $handler->display->display_options['defaults']['group_by'] = FALSE;
-  $handler->display->display_options['group_by'] = TRUE;
-  $handler->display->display_options['pager']['type'] = 'some';
-  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
-  $handler->display->display_options['style_plugin'] = 'chart';
-  $handler->display->display_options['style_options']['type'] = 'column';
-  $handler->display->display_options['style_options']['library'] = '';
-  $handler->display->display_options['style_options']['label_field'] = '';
-  $handler->display->display_options['style_options']['data_fields'] = array(
-    'id' => 'id',
-  );
-  $handler->display->display_options['style_options']['field_colors'] = array(
-    'id' => '#2f7ed8',
-  );
-  $handler->display->display_options['style_options']['title'] = 'CLASS Assessment Baseline';
-  $handler->display->display_options['style_options']['legend_position'] = '';
-  $handler->display->display_options['style_options']['width'] = '';
-  $handler->display->display_options['style_options']['height'] = '';
-  $handler->display->display_options['style_options']['xaxis_labels_rotation'] = '30';
-  $handler->display->display_options['style_options']['yaxis_min'] = '0';
-  $handler->display->display_options['style_options']['yaxis_max'] = '7';
-  $handler->display->display_options['style_options']['yaxis_labels_rotation'] = '0';
-  $handler->display->display_options['defaults']['style_options'] = FALSE;
-  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
-  $handler->display->display_options['defaults']['row_options'] = FALSE;
-  $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: E3 Contact: E3 contact ID */
-  $handler->display->display_options['fields']['id']['id'] = 'id';
-  $handler->display->display_options['fields']['id']['table'] = 'e3_contact';
-  $handler->display->display_options['fields']['id']['field'] = 'id';
-  $handler->display->display_options['displays'] = array(
-    'default' => 0,
-    'page_1' => 0,
-    'page' => 0,
     'page_2' => 0,
     'page_3' => 0,
     'page_4' => 0,
@@ -1145,7 +1602,7 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['field_pc_score']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_pc_score']['alter']['text'] = '[field_pc_score] &ndash; Click to view details';
   $handler->display->display_options['fields']['field_pc_score']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['field_pc_score']['alter']['path'] = 'teacher-report/[id]/pc';
+  $handler->display->display_options['fields']['field_pc_score']['alter']['path'] = 'teacher-report/!1/pc';
   $handler->display->display_options['fields']['field_pc_score']['empty'] = 'Not yet observed';
   $handler->display->display_options['fields']['field_pc_score']['empty_zero'] = TRUE;
   $handler->display->display_options['fields']['field_pc_score']['separator'] = ', ';
@@ -1159,7 +1616,7 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['field_nc_score']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_nc_score']['alter']['text'] = '[field_nc_score] &ndash; Click to view details';
   $handler->display->display_options['fields']['field_nc_score']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['field_nc_score']['alter']['path'] = 'teacher-report/[id]/nc';
+  $handler->display->display_options['fields']['field_nc_score']['alter']['path'] = 'teacher-report/!1/nc';
   $handler->display->display_options['fields']['field_nc_score']['empty'] = 'Not yet observed';
   $handler->display->display_options['fields']['field_nc_score']['empty_zero'] = TRUE;
   $handler->display->display_options['fields']['field_nc_score']['separator'] = ', ';
@@ -1173,7 +1630,7 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['field_ts_score']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_ts_score']['alter']['text'] = '[field_ts_score] &ndash; Click to view details';
   $handler->display->display_options['fields']['field_ts_score']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['field_ts_score']['alter']['path'] = 'teacher-report/[id]/ts';
+  $handler->display->display_options['fields']['field_ts_score']['alter']['path'] = 'teacher-report/!1/ts';
   $handler->display->display_options['fields']['field_ts_score']['empty'] = 'Not yet observed';
   $handler->display->display_options['fields']['field_ts_score']['empty_zero'] = TRUE;
   $handler->display->display_options['fields']['field_ts_score']['separator'] = ', ';
@@ -1187,7 +1644,7 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['field_rsp_score']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_rsp_score']['alter']['text'] = '[field_rsp_score] &ndash; Click to view details';
   $handler->display->display_options['fields']['field_rsp_score']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['field_rsp_score']['alter']['path'] = 'teacher-report/[id]/rsp';
+  $handler->display->display_options['fields']['field_rsp_score']['alter']['path'] = 'teacher-report/!1/rsp';
   $handler->display->display_options['fields']['field_rsp_score']['empty'] = 'Not yet observed';
   $handler->display->display_options['fields']['field_rsp_score']['empty_zero'] = TRUE;
   $handler->display->display_options['fields']['field_rsp_score']['separator'] = ', ';
@@ -1201,7 +1658,7 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['field_bm_score']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_bm_score']['alter']['text'] = '[field_bm_score] &ndash; Click to view details';
   $handler->display->display_options['fields']['field_bm_score']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['field_bm_score']['alter']['path'] = 'teacher-report/[id]/bm';
+  $handler->display->display_options['fields']['field_bm_score']['alter']['path'] = 'teacher-report/!1/bm';
   $handler->display->display_options['fields']['field_bm_score']['empty'] = 'Not yet observed';
   $handler->display->display_options['fields']['field_bm_score']['empty_zero'] = TRUE;
   $handler->display->display_options['fields']['field_bm_score']['separator'] = ', ';
@@ -1215,7 +1672,7 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['field_p_score']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_p_score']['alter']['text'] = '[field_p_score] &ndash; Click to view details';
   $handler->display->display_options['fields']['field_p_score']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['field_p_score']['alter']['path'] = 'teacher-report/[id]/p';
+  $handler->display->display_options['fields']['field_p_score']['alter']['path'] = 'teacher-report/!1/p';
   $handler->display->display_options['fields']['field_p_score']['empty'] = 'Not yet observed';
   $handler->display->display_options['fields']['field_p_score']['empty_zero'] = TRUE;
   $handler->display->display_options['fields']['field_p_score']['separator'] = ', ';
@@ -1229,7 +1686,7 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['field_ilf_score']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_ilf_score']['alter']['text'] = '[field_ilf_score] &ndash; Click to view details';
   $handler->display->display_options['fields']['field_ilf_score']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['field_ilf_score']['alter']['path'] = 'teacher-report/[id]/ilf';
+  $handler->display->display_options['fields']['field_ilf_score']['alter']['path'] = 'teacher-report/!1/ilf';
   $handler->display->display_options['fields']['field_ilf_score']['empty'] = 'Not yet observed';
   $handler->display->display_options['fields']['field_ilf_score']['empty_zero'] = TRUE;
   $handler->display->display_options['fields']['field_ilf_score']['separator'] = ', ';
@@ -1243,7 +1700,7 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['field_cd_score']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_cd_score']['alter']['text'] = '[field_cd_score] &ndash; Click to view details';
   $handler->display->display_options['fields']['field_cd_score']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['field_cd_score']['alter']['path'] = 'teacher-report/[id]/cd';
+  $handler->display->display_options['fields']['field_cd_score']['alter']['path'] = 'teacher-report/!1/cd';
   $handler->display->display_options['fields']['field_cd_score']['empty'] = 'Not yet observed';
   $handler->display->display_options['fields']['field_cd_score']['empty_zero'] = TRUE;
   $handler->display->display_options['fields']['field_cd_score']['separator'] = ', ';
@@ -1257,7 +1714,7 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['field_qf_score']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_qf_score']['alter']['text'] = '[field_qf_score] &ndash; Click to view details';
   $handler->display->display_options['fields']['field_qf_score']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['field_qf_score']['alter']['path'] = 'teacher-report/[id]/qf';
+  $handler->display->display_options['fields']['field_qf_score']['alter']['path'] = 'teacher-report/!1/qf';
   $handler->display->display_options['fields']['field_qf_score']['empty'] = 'Not yet observed';
   $handler->display->display_options['fields']['field_qf_score']['empty_zero'] = TRUE;
   $handler->display->display_options['fields']['field_qf_score']['separator'] = ', ';
@@ -1271,7 +1728,7 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['field_lm_score']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_lm_score']['alter']['text'] = '[field_lm_score] &ndash; Click to view details';
   $handler->display->display_options['fields']['field_lm_score']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['field_lm_score']['alter']['path'] = 'teacher-report/[id]/lm';
+  $handler->display->display_options['fields']['field_lm_score']['alter']['path'] = 'teacher-report/!1/lm';
   $handler->display->display_options['fields']['field_lm_score']['empty'] = 'Not yet observed';
   $handler->display->display_options['fields']['field_lm_score']['empty_zero'] = TRUE;
   $handler->display->display_options['fields']['field_lm_score']['separator'] = ', ';
@@ -3946,6 +4403,7 @@ function esdportal_e3_feature_views_default_views() {
     t('First name'),
     t('Last name'),
     t('Program'),
+    t('View all log entries'),
     t('Teacher Report'),
     t('E3 Teacher Report'),
     t('<a href="/my-teachers" style="color:white; background:#f05a28; display:inline; padding:10px; border:solid white 2px; font-weight:bold">Back to Teacher List</a><a href="/e3-note/add/observation_log" style="color:white; background:#f05a28; display:inline; padding:10px; border:solid white 2px">Add Log Entry</a>'),
@@ -3957,29 +4415,34 @@ function esdportal_e3_feature_views_default_views() {
     t('Domains'),
     t('CLASS Header'),
     t('<h2>CLASS Baseline Assessment</h2>'),
+    t('Emotional Support'),
+    t('Classroom Organization Score'),
+    t('Instructional Support'),
     t('CLASS Ave'),
+    t('Positive Climate'),
+    t('Negative Climate'),
+    t('Teacher Sensitivity'),
+    t('Regard for Student Perspective'),
+    t('Behaviour Management'),
+    t('Productivity'),
+    t('Instructional Learning Formats'),
+    t('Concept Development'),
+    t('Quality of Feedback'),
+    t('Language Modeling'),
     t('Count/Menu'),
     t('Number of times observed'),
-    t('Positive Climate'),
     t('[field_pc_score] &ndash; Click to view details'),
     t('Not yet observed'),
-    t('Negative Climate'),
     t('[field_nc_score] &ndash; Click to view details'),
-    t('Teacher Sensitivity'),
     t('[field_ts_score] &ndash; Click to view details'),
     t('Regard for Student Perspectives'),
     t('[field_rsp_score] &ndash; Click to view details'),
     t('Behavior Management'),
     t('[field_bm_score] &ndash; Click to view details'),
-    t('Productivity'),
     t('[field_p_score] &ndash; Click to view details'),
-    t('Instructional Learning Formats'),
     t('[field_ilf_score] &ndash; Click to view details'),
-    t('Concept Development'),
     t('[field_cd_score] &ndash; Click to view details'),
-    t('Quality of Feedback'),
     t('[field_qf_score] &ndash; Click to view details'),
-    t('Language Modeling'),
     t('[field_lm_score] &ndash; Click to view details'),
     t('Target Practice'),
     t('Planning and Strategy'),

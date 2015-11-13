@@ -26,7 +26,7 @@ function esdportal_e3_feature_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -46,
+    'weight' => -45,
   );
   // Exported menu link: menu-coach-menu:e3-note/add/class_assessment
   $menu_links['menu-coach-menu:e3-note/add/class_assessment'] = array(
@@ -62,7 +62,7 @@ function esdportal_e3_feature_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -48,
+    'weight' => -47,
   );
   // Exported menu link: menu-coach-menu:e3-note/add/session_log
   $menu_links['menu-coach-menu:e3-note/add/session_log'] = array(
@@ -80,7 +80,7 @@ function esdportal_e3_feature_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -47,
+    'weight' => -46,
   );
   // Exported menu link: menu-coach-menu:my-teachers
   $menu_links['menu-coach-menu:my-teachers'] = array(

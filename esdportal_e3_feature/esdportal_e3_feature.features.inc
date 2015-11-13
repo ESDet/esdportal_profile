@@ -54,6 +54,12 @@ function esdportal_e3_feature_default_e3_note_type() {
     "weight" : 0,
     "description" : ""
   }');
+  $items['class_assessment_it'] = entity_import('e3_note_type', '{
+    "type" : "class_assessment_it",
+    "label" : "CLASS Assessment (Infant\\/Toddler)",
+    "weight" : 0,
+    "description" : "CLASS Assessment specific to teachers that work with Infants and Toddlers."
+  }');
   $items['observation_log'] = entity_import('e3_note_type', '{
     "type" : "observation_log",
     "label" : "Observation Log",
