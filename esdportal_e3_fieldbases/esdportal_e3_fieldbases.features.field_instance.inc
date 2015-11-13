@@ -27,12 +27,12 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
           'thousand_separator' => ' ',
         ),
         'type' => 'number_integer',
-        'weight' => 3,
+        'weight' => 5,
       ),
     ),
     'entity_type' => 'e3_note',
     'field_name' => 'field_adults_present',
-    'label' => 'Number of adults in classroon',
+    'label' => 'Number of adults in classroom',
     'required' => 0,
     'settings' => array(
       'entity_translation_sync' => FALSE,
@@ -63,7 +63,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 35,
+        'weight' => 26,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -82,7 +82,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 35,
+      'weight' => 39,
     ),
   );
 
@@ -95,10 +95,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 31,
+        'type' => 'hidden',
+        'weight' => 22,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -114,7 +113,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 31,
+      'weight' => 35,
     ),
   );
 
@@ -127,10 +126,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 32,
+        'type' => 'hidden',
+        'weight' => 23,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -146,7 +144,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 32,
+      'weight' => 36,
     ),
   );
 
@@ -159,10 +157,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 33,
+        'type' => 'hidden',
+        'weight' => 24,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -178,7 +175,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 33,
+      'weight' => 37,
     ),
   );
 
@@ -191,10 +188,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 34,
+        'type' => 'hidden',
+        'weight' => 25,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -210,7 +206,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 34,
+      'weight' => 38,
     ),
   );
 
@@ -226,7 +222,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 36,
+        'weight' => 27,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -245,7 +241,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 36,
+      'weight' => 40,
     ),
   );
 
@@ -261,7 +257,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 53,
+        'weight' => 44,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -280,7 +276,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 53,
+      'weight' => 60,
     ),
   );
 
@@ -293,10 +289,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 49,
+        'type' => 'hidden',
+        'weight' => 40,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -312,7 +307,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 49,
+      'weight' => 56,
     ),
   );
 
@@ -325,10 +320,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 50,
+        'type' => 'hidden',
+        'weight' => 41,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -344,7 +338,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 50,
+      'weight' => 57,
     ),
   );
 
@@ -357,10 +351,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 51,
+        'type' => 'hidden',
+        'weight' => 42,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -376,7 +369,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 51,
+      'weight' => 58,
     ),
   );
 
@@ -389,10 +382,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 52,
+        'type' => 'hidden',
+        'weight' => 43,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -408,7 +400,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 52,
+      'weight' => 59,
     ),
   );
 
@@ -424,7 +416,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 54,
+        'weight' => 45,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -443,7 +435,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 54,
+      'weight' => 61,
     ),
   );
 
@@ -464,7 +456,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
           'thousand_separator' => ' ',
         ),
         'type' => 'number_integer',
-        'weight' => 2,
+        'weight' => 4,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -500,7 +492,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 68,
+        'weight' => 59,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -519,7 +511,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 68,
+      'weight' => 78,
     ),
   );
 
@@ -604,7 +596,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 67,
+        'weight' => 58,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -623,7 +615,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 67,
+      'weight' => 77,
     ),
   );
 
@@ -639,7 +631,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 47,
+        'weight' => 38,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -658,7 +650,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 47,
+      'weight' => 53,
     ),
   );
 
@@ -671,10 +663,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 43,
+        'type' => 'hidden',
+        'weight' => 34,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -690,7 +681,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 43,
+      'weight' => 49,
     ),
   );
 
@@ -703,10 +694,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 44,
+        'type' => 'hidden',
+        'weight' => 35,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -722,7 +712,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 44,
+      'weight' => 50,
     ),
   );
 
@@ -735,10 +725,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 45,
+        'type' => 'hidden',
+        'weight' => 36,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -754,7 +743,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 45,
+      'weight' => 51,
     ),
   );
 
@@ -767,10 +756,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 46,
+        'type' => 'hidden',
+        'weight' => 37,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -786,7 +774,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 46,
+      'weight' => 52,
     ),
   );
 
@@ -802,7 +790,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 48,
+        'weight' => 39,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -821,7 +809,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 48,
+      'weight' => 54,
     ),
   );
 
@@ -837,7 +825,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 69,
+        'weight' => 60,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -856,7 +844,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 69,
+      'weight' => 79,
     ),
   );
 
@@ -872,7 +860,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 65,
+        'weight' => 56,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -891,7 +879,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 65,
+      'weight' => 74,
     ),
   );
 
@@ -904,10 +892,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 61,
+        'type' => 'hidden',
+        'weight' => 52,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -923,7 +910,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 61,
+      'weight' => 70,
     ),
   );
 
@@ -936,10 +923,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 62,
+        'type' => 'hidden',
+        'weight' => 53,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -955,7 +941,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 62,
+      'weight' => 71,
     ),
   );
 
@@ -968,10 +954,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 63,
+        'type' => 'hidden',
+        'weight' => 54,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -987,7 +972,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 63,
+      'weight' => 72,
     ),
   );
 
@@ -1000,10 +985,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 64,
+        'type' => 'hidden',
+        'weight' => 55,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1019,7 +1003,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 64,
+      'weight' => 73,
     ),
   );
 
@@ -1035,7 +1019,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 66,
+        'weight' => 57,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1054,7 +1038,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 66,
+      'weight' => 75,
     ),
   );
 
@@ -1070,7 +1054,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 17,
+        'weight' => 9,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1089,7 +1073,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 17,
+      'weight' => 18,
     ),
   );
 
@@ -1102,10 +1086,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 13,
+        'type' => 'hidden',
+        'weight' => 65,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1121,7 +1104,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 13,
+      'weight' => 14,
     ),
   );
 
@@ -1134,10 +1117,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 14,
+        'type' => 'hidden',
+        'weight' => 66,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1153,7 +1135,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 14,
+      'weight' => 15,
     ),
   );
 
@@ -1166,10 +1148,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 15,
+        'type' => 'hidden',
+        'weight' => 67,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1185,7 +1166,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 15,
+      'weight' => 16,
     ),
   );
 
@@ -1198,10 +1179,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 16,
+        'type' => 'hidden',
+        'weight' => 68,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1217,7 +1197,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 16,
+      'weight' => 17,
     ),
   );
 
@@ -1233,7 +1213,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 18,
+        'weight' => 10,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1252,7 +1232,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 18,
+      'weight' => 19,
     ),
   );
 
@@ -1268,7 +1248,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 41,
+        'weight' => 32,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1287,7 +1267,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 41,
+      'weight' => 46,
     ),
   );
 
@@ -1300,10 +1280,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 37,
+        'type' => 'hidden',
+        'weight' => 28,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1319,7 +1298,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 37,
+      'weight' => 42,
     ),
   );
 
@@ -1332,10 +1311,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 38,
+        'type' => 'hidden',
+        'weight' => 29,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1351,7 +1329,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 38,
+      'weight' => 43,
     ),
   );
 
@@ -1364,10 +1342,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 39,
+        'type' => 'hidden',
+        'weight' => 30,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1383,7 +1360,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 39,
+      'weight' => 44,
     ),
   );
 
@@ -1396,10 +1373,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 40,
+        'type' => 'hidden',
+        'weight' => 31,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1415,7 +1391,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 40,
+      'weight' => 45,
     ),
   );
 
@@ -1431,7 +1407,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 42,
+        'weight' => 33,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1450,7 +1426,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 42,
+      'weight' => 47,
     ),
   );
 
@@ -1466,7 +1442,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 11,
+        'weight' => 7,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1498,10 +1474,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 7,
+        'type' => 'hidden',
+        'weight' => 61,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1530,10 +1505,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 8,
+        'type' => 'hidden',
+        'weight' => 62,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1562,10 +1536,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 9,
+        'type' => 'hidden',
+        'weight' => 63,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1594,10 +1567,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 10,
+        'type' => 'hidden',
+        'weight' => 64,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1629,7 +1601,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 12,
+        'weight' => 8,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1664,7 +1636,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 59,
+        'weight' => 50,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1683,7 +1655,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 59,
+      'weight' => 67,
     ),
   );
 
@@ -1696,10 +1668,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 55,
+        'type' => 'hidden',
+        'weight' => 46,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1715,7 +1686,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 55,
+      'weight' => 63,
     ),
   );
 
@@ -1728,10 +1699,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 56,
+        'type' => 'hidden',
+        'weight' => 47,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1747,7 +1717,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 56,
+      'weight' => 64,
     ),
   );
 
@@ -1760,10 +1730,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 57,
+        'type' => 'hidden',
+        'weight' => 48,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1779,7 +1748,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 57,
+      'weight' => 65,
     ),
   );
 
@@ -1792,10 +1761,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 58,
+        'type' => 'hidden',
+        'weight' => 49,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1811,7 +1779,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 58,
+      'weight' => 66,
     ),
   );
 
@@ -1827,7 +1795,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 60,
+        'weight' => 51,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1846,7 +1814,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 60,
+      'weight' => 68,
     ),
   );
 
@@ -1862,7 +1830,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 29,
+        'weight' => 20,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1881,7 +1849,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 29,
+      'weight' => 32,
     ),
   );
 
@@ -1894,10 +1862,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 25,
+        'type' => 'hidden',
+        'weight' => 16,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1913,7 +1880,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 25,
+      'weight' => 28,
     ),
   );
 
@@ -1926,10 +1893,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 26,
+        'type' => 'hidden',
+        'weight' => 17,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1945,7 +1911,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 26,
+      'weight' => 29,
     ),
   );
 
@@ -1958,10 +1924,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 27,
+        'type' => 'hidden',
+        'weight' => 18,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -1977,7 +1942,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 27,
+      'weight' => 30,
     ),
   );
 
@@ -1990,10 +1955,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 28,
+        'type' => 'hidden',
+        'weight' => 19,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -2009,7 +1973,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 28,
+      'weight' => 31,
     ),
   );
 
@@ -2025,7 +1989,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 30,
+        'weight' => 21,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -2044,7 +2008,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 30,
+      'weight' => 33,
     ),
   );
 
@@ -2067,7 +2031,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
           'show_repeat_rule' => 'show',
         ),
         'type' => 'date_default',
-        'weight' => 4,
+        'weight' => 6,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -2170,7 +2134,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 23,
+        'weight' => 14,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -2189,7 +2153,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 5,
       ),
       'type' => 'text_textfield',
-      'weight' => 23,
+      'weight' => 25,
     ),
   );
 
@@ -2202,10 +2166,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 19,
+        'type' => 'hidden',
+        'weight' => 69,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -2221,7 +2184,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 19,
+      'weight' => 21,
     ),
   );
 
@@ -2234,10 +2197,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 20,
+        'type' => 'hidden',
+        'weight' => 11,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -2253,7 +2215,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 20,
+      'weight' => 22,
     ),
   );
 
@@ -2266,10 +2228,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 21,
+        'type' => 'hidden',
+        'weight' => 12,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -2285,7 +2246,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 21,
+      'weight' => 23,
     ),
   );
 
@@ -2298,10 +2259,9 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
         'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 22,
+        'type' => 'hidden',
+        'weight' => 13,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -2317,7 +2277,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 22,
+      'weight' => 24,
     ),
   );
 
@@ -2333,7 +2293,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 24,
+        'weight' => 15,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -2352,7 +2312,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 24,
+      'weight' => 26,
     ),
   );
 
@@ -5930,6 +5890,7 @@ lm|Language Modeling',
   t('Negative Climate Notes');
   t('Negative Climate Score');
   t('Notes');
+  t('Number of adults in classroom');
   t('Number of adults in classroon');
   t('Number of children in classroom');
   t('Open-Ended Questions');

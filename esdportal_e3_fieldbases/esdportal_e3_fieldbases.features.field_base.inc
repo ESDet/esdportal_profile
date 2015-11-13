@@ -867,7 +867,9 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
           ),
         ),
         'sort' => array(
-          'type' => 'none',
+          'direction' => 'ASC',
+          'property' => 'lastname',
+          'type' => 'property',
         ),
         'target_bundles' => array(
           'teacher' => 'teacher',
