@@ -881,6 +881,134 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'type' => 'entityreference',
   );
 
+  // Exported field_base: 'field_els_communication'
+  $field_bases['field_els_communication'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_els_communication',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_els_extension'
+  $field_bases['field_els_extension'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_els_extension',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_els_score'
+  $field_bases['field_els_score'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_els_score',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_els_talk'
+  $field_bases['field_els_talk'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_els_talk',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
   // Exported field_base: 'field_es_score'
   $field_bases['field_es_score'] = array(
     'active' => 1,
@@ -909,6 +1037,134 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'text',
+  );
+
+  // Exported field_base: 'field_fe_expansion'
+  $field_bases['field_fe_expansion'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_fe_expansion',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_fe_focused'
+  $field_bases['field_fe_focused'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_fe_focused',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_fe_involvement'
+  $field_bases['field_fe_involvement'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_fe_involvement',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_fe_score'
+  $field_bases['field_fe_score'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_fe_score',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
   );
 
   // Exported field_base: 'field_focus_area'
@@ -3206,6 +3462,166 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'type' => 'list_integer',
   );
 
+  // Exported field_base: 'field_rc_behaviors'
+  $field_bases['field_rc_behaviors'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_rc_behaviors',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_rc_expression'
+  $field_bases['field_rc_expression'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_rc_expression',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_rc_lack_negativity'
+  $field_bases['field_rc_lack_negativity'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_rc_lack_negativity',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_rc_respect'
+  $field_bases['field_rc_respect'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_rc_respect',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_rc_score'
+  $field_bases['field_rc_score'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_rc_score',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
   // Exported field_base: 'field_rsp_average'
   $field_bases['field_rsp_average'] = array(
     'active' => 1,
@@ -3788,6 +4204,10 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
         'cd' => 'Concept Development',
         'qf' => 'Quality of Feedback',
         'lm' => 'Language Modeling',
+        'rc' => 'Relational Climate (Inf/Tod)',
+        'tsit' => 'Teacher Sensitivity (Inf/Tod)',
+        'fe' => 'Facilitated Exploration (Inf/Tod)',
+        'els' => 'Early Language Support (Inf/Tod)',
       ),
       'allowed_values_function' => '',
       'entity_translation_sync' => FALSE,
@@ -4182,6 +4602,163 @@ function esdportal_e3_fieldbases_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_ts_student_comfort',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_tsit_awareness'
+  $field_bases['field_tsit_awareness'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_tsit_awareness',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_tsit_comfort'
+  $field_bases['field_tsit_comfort'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_tsit_comfort',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_tsit_notes'
+  $field_bases['field_tsit_notes'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_tsit_notes',
+    'foreign keys' => array(
+      'format' => array(
+        'columns' => array(
+          'format' => 'format',
+        ),
+        'table' => 'filter_format',
+      ),
+    ),
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'text_long',
+  );
+
+  // Exported field_base: 'field_tsit_responsiveness'
+  $field_bases['field_tsit_responsiveness'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_tsit_responsiveness',
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => '1 - Low -',
+        2 => '2 - Low +',
+        3 => '3 - Middle -',
+        4 => '4 - Middle',
+        5 => '5 - Middle +',
+        6 => '6 - High -',
+        7 => '7 - High +',
+      ),
+      'allowed_values_function' => '',
+      'entity_translation_sync' => FALSE,
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_tsit_score'
+  $field_bases['field_tsit_score'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_tsit_score',
     'foreign keys' => array(),
     'indexes' => array(
       'value' => array(

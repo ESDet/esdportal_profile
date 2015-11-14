@@ -2353,7 +2353,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
@@ -2850,7 +2850,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -2891,7 +2891,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 2,
+      'weight' => 3,
     ),
   );
 
@@ -2935,7 +2935,333 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'options_select',
-      'weight' => 1,
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_els_communication'
+  $field_instances['e3_note-observation_log-field_els_communication'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 102,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_els_communication',
+    'label' => 'Communication Support',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 52,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_els_extension'
+  $field_instances['e3_note-observation_log-field_els_extension'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 103,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_els_extension',
+    'label' => 'Communication Extension',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 53,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_els_notes'
+  $field_instances['e3_note-observation_log-field_els_notes'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 105,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_els_notes',
+    'label' => 'Notes',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 55,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_els_score'
+  $field_instances['e3_note-observation_log-field_els_score'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 104,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_els_score',
+    'label' => 'Early Language Support Score',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 54,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_els_talk'
+  $field_instances['e3_note-observation_log-field_els_talk'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 101,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_els_talk',
+    'label' => 'Teacher Talk',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 51,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_fe_expansion'
+  $field_instances['e3_note-observation_log-field_fe_expansion'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 98,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_fe_expansion',
+    'label' => 'Expansion of Infants\' Experience',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 48,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_fe_focused'
+  $field_instances['e3_note-observation_log-field_fe_focused'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 97,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_fe_focused',
+    'label' => 'Infant Focused',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 47,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_fe_involvement'
+  $field_instances['e3_note-observation_log-field_fe_involvement'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 96,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_fe_involvement',
+    'label' => 'Involvement',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 46,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_fe_notes'
+  $field_instances['e3_note-observation_log-field_fe_notes'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 100,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_fe_notes',
+    'label' => 'Notes',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 50,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_fe_score'
+  $field_instances['e3_note-observation_log-field_fe_score'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 99,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_fe_score',
+    'label' => 'Facilitated Exploration Score',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 49,
     ),
   );
 
@@ -4365,6 +4691,201 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'e3_note-observation_log-field_rc_behaviors'
+  $field_instances['e3_note-observation_log-field_rc_behaviors'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 85,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_rc_behaviors',
+    'label' => 'Relational Behaviors',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 35,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_rc_expression'
+  $field_instances['e3_note-observation_log-field_rc_expression'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 86,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_rc_expression',
+    'label' => 'Emotional Expression',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 36,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_rc_lack_negativity'
+  $field_instances['e3_note-observation_log-field_rc_lack_negativity'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 88,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_rc_lack_negativity',
+    'label' => 'Lack of Adult Negativity',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 38,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_rc_notes'
+  $field_instances['e3_note-observation_log-field_rc_notes'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 89,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_rc_notes',
+    'label' => 'Notes',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 40,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_rc_respect'
+  $field_instances['e3_note-observation_log-field_rc_respect'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 87,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_rc_respect',
+    'label' => 'Respect for Infants\' State',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 37,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_rc_score'
+  $field_instances['e3_note-observation_log-field_rc_score'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 90,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_rc_score',
+    'label' => 'Relational Climate Score',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 39,
+    ),
+  );
+
   // Exported field_instance: 'e3_note-observation_log-field_rsp_expression'
   $field_instances['e3_note-observation_log-field_rsp_expression'] = array(
     'bundle' => 'observation_log',
@@ -4932,6 +5453,169 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'e3_note-observation_log-field_tsit_awareness'
+  $field_instances['e3_note-observation_log-field_tsit_awareness'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 91,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_tsit_awareness',
+    'label' => 'Awareness and Cue Detection',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 41,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_tsit_comfort'
+  $field_instances['e3_note-observation_log-field_tsit_comfort'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 93,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_tsit_comfort',
+    'label' => 'Infant Comfort',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 43,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_tsit_notes'
+  $field_instances['e3_note-observation_log-field_tsit_notes'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 95,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_tsit_notes',
+    'label' => 'Notes',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => 5,
+      ),
+      'type' => 'text_textarea',
+      'weight' => 45,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_tsit_responsiveness'
+  $field_instances['e3_note-observation_log-field_tsit_responsiveness'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 92,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_tsit_responsiveness',
+    'label' => 'Responsiveness',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 42,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-observation_log-field_tsit_score'
+  $field_instances['e3_note-observation_log-field_tsit_score'] = array(
+    'bundle' => 'observation_log',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 94,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_tsit_score',
+    'label' => 'Teacher Sensitivity Score',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 44,
+    ),
+  );
+
   // Exported field_instance: 'e3_note-session_log-field_coaching_strategy'
   $field_instances['e3_note-session_log-field_coaching_strategy'] = array(
     'bundle' => 'session_log',
@@ -5105,7 +5789,11 @@ p|Productivity
 ilf|Instructional Learning Formats
 cd|Concept Development
 qf|Quality of Feedback
-lm|Language Modeling',
+lm|Language Modeling
+rc|Relational Climate (Inf/Tod)
+tsit|Teacher Sensitivity (Inf/Tod)
+fe|Facilitated Exploration (Inf/Tod)
+els|Early Language Support (Inf/Tod)',
         'available_options_php' => '',
         'markup_available_options_php' => '&lt;none&gt;',
         'other' => 'Other',
@@ -5836,6 +6524,7 @@ lm|Language Modeling',
   t('Advanced Language');
   t('Analysis and Reasoning');
   t('Awareness');
+  t('Awareness and Cue Detection');
   t('Behavior Management Cycle 1');
   t('Behavior Management Cycle 2');
   t('Behavior Management Cycle 3');
@@ -5847,6 +6536,8 @@ lm|Language Modeling',
   t('Classroom Organization Score');
   t('Clear Behavior Expectations');
   t('Coaching strategies used');
+  t('Communication Extension');
+  t('Communication Support');
   t('Concept Development Average');
   t('Concept Development Cycle 1');
   t('Concept Development Cycle 2');
@@ -5856,14 +6547,20 @@ lm|Language Modeling',
   t('Concept Development Score');
   t('Connections to Real World');
   t('Creating');
+  t('Early Language Support Score');
   t('Effective Facilitation');
+  t('Emotional Expression');
   t('Emotional Support score');
   t('Encouragement and Affirmation');
+  t('Expansion of Infants\' Experience');
+  t('Facilitated Exploration Score');
   t('Feedback Loops');
   t('Flexibility and Student Focus');
   t('Focus areas worked on');
   t('Frequent Conversations');
   t('How you plan to achieve target');
+  t('Infant Comfort');
+  t('Infant Focused');
   t('Instructional Learning Formats Average');
   t('Instructional Learning Formats Cycle 1');
   t('Instructional Learning Formats Cycle 2');
@@ -5873,6 +6570,8 @@ lm|Language Modeling',
   t('Instructional Learning Formats Score');
   t('Instructional Support Score');
   t('Integration');
+  t('Involvement');
+  t('Lack of Adult Negativity');
   t('Language Modeling Average');
   t('Language Modeling Cycle 1');
   t('Language Modeling Cycle 2');
@@ -5931,9 +6630,12 @@ lm|Language Modeling',
   t('Regard for Student Perspectives Cycle 3');
   t('Regard for Student Perspectives Cycle 4');
   t('Regard for Student Perspectives Score');
+  t('Relational Behaviors');
+  t('Relational Climate Score');
   t('Relationships');
   t('Repetition and Extension');
   t('Respect');
+  t('Respect for Infants\' State');
   t('Responsiveness');
   t('Restriction of Movement');
   t('Routines');
@@ -5956,6 +6658,7 @@ lm|Language Modeling',
   t('Teacher Sensitivity Cycle 4');
   t('Teacher Sensitivity Notes');
   t('Teacher Sensitivity Score');
+  t('Teacher Talk');
   t('Time of Observation');
   t('Time of Session');
   t('Transitions');

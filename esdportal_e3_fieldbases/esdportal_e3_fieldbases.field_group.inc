@@ -24,11 +24,11 @@ function esdportal_e3_fieldbases_field_group_info() {
     'weight' => '10',
     'children' => array(
       0 => 'field_bm_expectations',
-      1 => 'field_bm_proactive',
-      2 => 'field_bm_redirection',
-      3 => 'field_bm_score',
-      4 => 'field_bm_student_behavior',
-      5 => 'field_bm_notes',
+      1 => 'field_bm_notes',
+      2 => 'field_bm_proactive',
+      3 => 'field_bm_redirection',
+      4 => 'field_bm_score',
+      5 => 'field_bm_student_behavior',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -58,9 +58,9 @@ function esdportal_e3_fieldbases_field_group_info() {
       0 => 'field_cd_connections',
       1 => 'field_cd_creating',
       2 => 'field_cd_integration',
-      3 => 'field_cd_reasoning',
-      4 => 'field_cd_score',
-      5 => 'field_cd_notes',
+      3 => 'field_cd_notes',
+      4 => 'field_cd_reasoning',
+      5 => 'field_cd_score',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -85,18 +85,22 @@ function esdportal_e3_fieldbases_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Dimensions',
-    'weight' => '5',
+    'weight' => '6',
     'children' => array(
-      0 => 'group_bm',
-      1 => 'group_cd',
-      2 => 'group_ilf',
-      3 => 'group_lm',
-      4 => 'group_nc',
-      5 => 'group_pc',
-      6 => 'group_p',
-      7 => 'group_qf',
-      8 => 'group_rsp',
-      9 => 'group_ts',
+      0 => 'group_rc',
+      1 => 'group_bm',
+      2 => 'group_cd',
+      3 => 'group_ilf',
+      4 => 'group_lm',
+      5 => 'group_nc',
+      6 => 'group_pc',
+      7 => 'group_p',
+      8 => 'group_qf',
+      9 => 'group_rsp',
+      10 => 'group_ts',
+      11 => 'group_tsit',
+      12 => 'group_fe',
+      13 => 'group_els',
     ),
     'format_type' => 'accordion',
     'format_settings' => array(
@@ -151,6 +155,68 @@ function esdportal_e3_fieldbases_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_els|e3_note|observation_log|form';
+  $field_group->group_name = 'group_els';
+  $field_group->entity_type = 'e3_note';
+  $field_group->bundle = 'observation_log';
+  $field_group->mode = 'form';
+  $field_group->parent_name = 'group_dimensions';
+  $field_group->data = array(
+    'label' => 'Early Language Support (Inf/Tod)',
+    'weight' => '19',
+    'children' => array(
+      0 => 'field_els_talk',
+      1 => 'field_els_communication',
+      2 => 'field_els_extension',
+      3 => 'field_els_score',
+      4 => 'field_els_notes',
+    ),
+    'format_type' => 'accordion-item',
+    'format_settings' => array(
+      'formatter' => 'closed',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-els field-group-accordion-item',
+        'required_fields' => 1,
+      ),
+    ),
+  );
+  $export['group_els|e3_note|observation_log|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_fe|e3_note|observation_log|form';
+  $field_group->group_name = 'group_fe';
+  $field_group->entity_type = 'e3_note';
+  $field_group->bundle = 'observation_log';
+  $field_group->mode = 'form';
+  $field_group->parent_name = 'group_dimensions';
+  $field_group->data = array(
+    'label' => 'Facilitated Exploration (Inf/Tod)',
+    'weight' => '18',
+    'children' => array(
+      0 => 'field_fe_involvement',
+      1 => 'field_fe_focused',
+      2 => 'field_fe_expansion',
+      3 => 'field_fe_score',
+      4 => 'field_fe_notes',
+    ),
+    'format_type' => 'accordion-item',
+    'format_settings' => array(
+      'formatter' => 'closed',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-fe field-group-accordion-item',
+        'required_fields' => 1,
+      ),
+    ),
+  );
+  $export['group_fe|e3_note|observation_log|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_ilf|e3_note|observation_log|form';
   $field_group->group_name = 'group_ilf';
   $field_group->entity_type = 'e3_note';
@@ -162,11 +228,11 @@ function esdportal_e3_fieldbases_field_group_info() {
     'weight' => '12',
     'children' => array(
       0 => 'field_ilf_facilitation',
-      1 => 'field_ilf_objectives',
-      2 => 'field_ilf_score',
-      3 => 'field_ilf_student_interest',
-      4 => 'field_ilf_variety',
-      5 => 'field_ilf_notes',
+      1 => 'field_ilf_notes',
+      2 => 'field_ilf_objectives',
+      3 => 'field_ilf_score',
+      4 => 'field_ilf_student_interest',
+      5 => 'field_ilf_variety',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -195,11 +261,11 @@ function esdportal_e3_fieldbases_field_group_info() {
     'children' => array(
       0 => 'field_lm_advanced',
       1 => 'field_lm_conversations',
-      2 => 'field_lm_questions',
-      3 => 'field_lm_repetition',
-      4 => 'field_lm_score',
-      5 => 'field_lm_talk',
-      6 => 'field_lm_notes',
+      2 => 'field_lm_notes',
+      3 => 'field_lm_questions',
+      4 => 'field_lm_repetition',
+      5 => 'field_lm_score',
+      6 => 'field_lm_talk',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -229,9 +295,9 @@ function esdportal_e3_fieldbases_field_group_info() {
       0 => 'field_nc_disrespect',
       1 => 'field_nc_negative_affect',
       2 => 'field_nc_negativity',
-      3 => 'field_nc_punitive_control',
-      4 => 'field_nc_score',
-      5 => 'field_nc_notes',
+      3 => 'field_nc_notes',
+      4 => 'field_nc_punitive_control',
+      5 => 'field_nc_score',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -295,12 +361,12 @@ function esdportal_e3_fieldbases_field_group_info() {
     'label' => 'Positive Climate',
     'weight' => '6',
     'children' => array(
-      0 => 'field_pc_positive_affect',
-      1 => 'field_pc_positive_communication',
-      2 => 'field_pc_relationships',
-      3 => 'field_pc_respect',
-      4 => 'field_pc_score',
-      5 => 'field_pc_notes',
+      0 => 'field_pc_notes',
+      1 => 'field_pc_positive_affect',
+      2 => 'field_pc_positive_communication',
+      3 => 'field_pc_relationships',
+      4 => 'field_pc_respect',
+      5 => 'field_pc_score',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -328,11 +394,11 @@ function esdportal_e3_fieldbases_field_group_info() {
     'weight' => '11',
     'children' => array(
       0 => 'field_p_maximizing',
-      1 => 'field_p_preparation',
-      2 => 'field_p_routines',
-      3 => 'field_p_score',
-      4 => 'field_p_transitions',
-      5 => 'field_p_notes',
+      1 => 'field_p_notes',
+      2 => 'field_p_preparation',
+      3 => 'field_p_routines',
+      4 => 'field_p_score',
+      5 => 'field_p_transitions',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -361,11 +427,11 @@ function esdportal_e3_fieldbases_field_group_info() {
     'children' => array(
       0 => 'field_qf_encouragement',
       1 => 'field_qf_feedback_loops',
-      2 => 'field_qf_prompting',
-      3 => 'field_qf_providing_info',
-      4 => 'field_qf_scaffolding',
-      5 => 'field_qf_score',
-      6 => 'field_qf_notes',
+      2 => 'field_qf_notes',
+      3 => 'field_qf_prompting',
+      4 => 'field_qf_providing_info',
+      5 => 'field_qf_scaffolding',
+      6 => 'field_qf_score',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -378,6 +444,38 @@ function esdportal_e3_fieldbases_field_group_info() {
     ),
   );
   $export['group_qf|e3_note|observation_log|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_rc|e3_note|observation_log|form';
+  $field_group->group_name = 'group_rc';
+  $field_group->entity_type = 'e3_note';
+  $field_group->bundle = 'observation_log';
+  $field_group->mode = 'form';
+  $field_group->parent_name = 'group_dimensions';
+  $field_group->data = array(
+    'label' => 'Relational Climate',
+    'weight' => '16',
+    'children' => array(
+      0 => 'field_rc_behaviors',
+      1 => 'field_rc_expression',
+      2 => 'field_rc_respect',
+      3 => 'field_rc_lack_negativity',
+      4 => 'field_rc_notes',
+      5 => 'field_rc_score',
+    ),
+    'format_type' => 'accordion-item',
+    'format_settings' => array(
+      'formatter' => 'closed',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-rc field-group-accordion-item',
+        'required_fields' => 1,
+      ),
+    ),
+  );
+  $export['group_rc|e3_note|observation_log|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -395,9 +493,9 @@ function esdportal_e3_fieldbases_field_group_info() {
       0 => 'field_rsp_expression',
       1 => 'field_rsp_flexibility',
       2 => 'field_rsp_movement',
-      3 => 'field_rsp_score',
-      4 => 'field_rsp_support',
-      5 => 'field_rsp_notes',
+      3 => 'field_rsp_notes',
+      4 => 'field_rsp_score',
+      5 => 'field_rsp_support',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
@@ -414,6 +512,37 @@ function esdportal_e3_fieldbases_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_tsit|e3_note|observation_log|form';
+  $field_group->group_name = 'group_tsit';
+  $field_group->entity_type = 'e3_note';
+  $field_group->bundle = 'observation_log';
+  $field_group->mode = 'form';
+  $field_group->parent_name = 'group_dimensions';
+  $field_group->data = array(
+    'label' => 'Teacher Sensitivity (Inf/Tod)',
+    'weight' => '17',
+    'children' => array(
+      0 => 'field_tsit_awareness',
+      1 => 'field_tsit_responsiveness',
+      2 => 'field_tsit_comfort',
+      3 => 'field_tsit_score',
+      4 => 'field_tsit_notes',
+    ),
+    'format_type' => 'accordion-item',
+    'format_settings' => array(
+      'formatter' => 'closed',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => '',
+        'required_fields' => 1,
+      ),
+    ),
+  );
+  $export['group_tsit|e3_note|observation_log|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_ts|e3_note|observation_log|form';
   $field_group->group_name = 'group_ts';
   $field_group->entity_type = 'e3_note';
@@ -426,10 +555,10 @@ function esdportal_e3_fieldbases_field_group_info() {
     'children' => array(
       0 => 'field_ts_addresses_problems',
       1 => 'field_ts_awareness',
-      2 => 'field_ts_responsiveness',
-      3 => 'field_ts_score',
-      4 => 'field_ts_student_comfort',
-      5 => 'field_ts_notes',
+      2 => 'field_ts_notes',
+      3 => 'field_ts_responsiveness',
+      4 => 'field_ts_score',
+      5 => 'field_ts_student_comfort',
     ),
     'format_type' => 'accordion-item',
     'format_settings' => array(
