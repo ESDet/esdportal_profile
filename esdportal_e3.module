@@ -1149,7 +1149,6 @@ function esdportal_e3_entity_presave($entity) {
 
     // Responsive Caregiving Score.
     $rspc_average = round((($rc_average + $tsit_average + $fe_average + $els_average) / 4), 2);
-    xdebug_break();
     if ($rspc_average > 0) {
       $wrapper->field_rspc_average->set($rspc_average);
     }
