@@ -1124,7 +1124,7 @@ outside|Outside',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 23,
+      'weight' => 26,
     ),
   );
 
@@ -1156,7 +1156,7 @@ outside|Outside',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 24,
+      'weight' => 27,
     ),
   );
 
@@ -1188,7 +1188,7 @@ outside|Outside',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 25,
+      'weight' => 28,
     ),
   );
 
@@ -1220,7 +1220,7 @@ outside|Outside',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 26,
+      'weight' => 29,
     ),
   );
 
@@ -1255,7 +1255,7 @@ outside|Outside',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 27,
+      'weight' => 31,
     ),
   );
 
@@ -1287,7 +1287,7 @@ outside|Outside',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 18,
+      'weight' => 20,
     ),
   );
 
@@ -1319,7 +1319,7 @@ outside|Outside',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 19,
+      'weight' => 21,
     ),
   );
 
@@ -1351,7 +1351,7 @@ outside|Outside',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 20,
+      'weight' => 22,
     ),
   );
 
@@ -1383,7 +1383,7 @@ outside|Outside',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 21,
+      'weight' => 23,
     ),
   );
 
@@ -1418,7 +1418,7 @@ outside|Outside',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 22,
+      'weight' => 25,
     ),
   );
 
@@ -1581,7 +1581,7 @@ outside|Outside',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 12,
+      'weight' => 13,
     ),
   );
 
@@ -1723,7 +1723,7 @@ outside|Outside',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 13,
+      'weight' => 14,
     ),
   );
 
@@ -1755,7 +1755,7 @@ outside|Outside',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 14,
+      'weight' => 15,
     ),
   );
 
@@ -1787,7 +1787,7 @@ outside|Outside',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 15,
+      'weight' => 16,
     ),
   );
 
@@ -1819,7 +1819,7 @@ outside|Outside',
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 16,
+      'weight' => 17,
     ),
   );
 
@@ -1854,7 +1854,7 @@ outside|Outside',
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 17,
+      'weight' => 19,
     ),
   );
 

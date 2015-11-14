@@ -463,7 +463,7 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['fullname']['alter']['text'] = 'View Report';
   $handler->display->display_options['fields']['fullname']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['fullname']['alter']['path'] = 'teacher-report/[id]';
-  /* Field: Field: Employing Early Childhood Center */
+  /* Field: Field: related Early Childchood Center record */
   $handler->display->display_options['fields']['field_ec']['id'] = 'field_ec';
   $handler->display->display_options['fields']['field_ec']['table'] = 'field_data_field_ec';
   $handler->display->display_options['fields']['field_ec']['field'] = 'field_ec';
@@ -542,7 +542,7 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['field_email']['id'] = 'field_email';
   $handler->display->display_options['fields']['field_email']['table'] = 'field_data_field_email';
   $handler->display->display_options['fields']['field_email']['field'] = 'field_email';
-  /* Field: Field: Employing Early Childhood Center */
+  /* Field: Field: related Early Childchood Center record */
   $handler->display->display_options['fields']['field_ec']['id'] = 'field_ec';
   $handler->display->display_options['fields']['field_ec']['table'] = 'field_data_field_ec';
   $handler->display->display_options['fields']['field_ec']['field'] = 'field_ec';
@@ -1130,7 +1130,7 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['lastname']['table'] = 'e3_contact';
   $handler->display->display_options['fields']['lastname']['field'] = 'lastname';
   $handler->display->display_options['fields']['lastname']['label'] = 'Last name';
-  /* Field: Field: Employing Early Childhood Center */
+  /* Field: Field: related Early Childchood Center record */
   $handler->display->display_options['fields']['field_ec']['id'] = 'field_ec';
   $handler->display->display_options['fields']['field_ec']['table'] = 'field_data_field_ec';
   $handler->display->display_options['fields']['field_ec']['field'] = 'field_ec';
@@ -1236,7 +1236,7 @@ function esdportal_e3_feature_views_default_views() {
   $handler->display->display_options['fields']['id']['field'] = 'id';
   $handler->display->display_options['fields']['id']['exclude'] = TRUE;
   $handler->display->display_options['fields']['id']['separator'] = '';
-  /* Field: Field: Employing Early Childhood Center */
+  /* Field: Field: related Early Childchood Center record */
   $handler->display->display_options['fields']['field_ec']['id'] = 'field_ec';
   $handler->display->display_options['fields']['field_ec']['table'] = 'field_data_field_ec';
   $handler->display->display_options['fields']['field_ec']['field'] = 'field_ec';

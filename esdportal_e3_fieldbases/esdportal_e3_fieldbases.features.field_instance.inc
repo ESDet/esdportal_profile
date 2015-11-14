@@ -2316,6 +2316,211 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'e3_note-class_assessment_it-field_els_average'
+  $field_instances['e3_note-class_assessment_it-field_els_average'] = array(
+    'bundle' => 'class_assessment_it',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 31,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_els_average',
+    'label' => 'Early Language Support average',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 30,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment_it-field_fe_average'
+  $field_instances['e3_note-class_assessment_it-field_fe_average'] = array(
+    'bundle' => 'class_assessment_it',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 30,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_fe_average',
+    'label' => 'Facilitated Exploration average',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 24,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment_it-field_rc_average'
+  $field_instances['e3_note-class_assessment_it-field_rc_average'] = array(
+    'bundle' => 'class_assessment_it',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 28,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_rc_average',
+    'label' => 'Relational Climate average',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 12,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment_it-field_rspc_average'
+  $field_instances['e3_note-class_assessment_it-field_rspc_average'] = array(
+    'bundle' => 'class_assessment_it',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 32,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_rspc_average',
+    'label' => 'Responsive Caregiving Score',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 32,
+    ),
+  );
+
+  // Exported field_instance: 'e3_note-class_assessment_it-field_tsit_average'
+  $field_instances['e3_note-class_assessment_it-field_tsit_average'] = array(
+    'bundle' => 'class_assessment_it',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 29,
+      ),
+    ),
+    'entity_type' => 'e3_note',
+    'field_name' => 'field_tsit_average',
+    'label' => 'Teacher Sensitivity average',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 18,
+    ),
+  );
+
   // Exported field_instance: 'e3_note-observation_log-field_adults_present'
   $field_instances['e3_note-observation_log-field_adults_present'] = array(
     'bundle' => 'observation_log',
@@ -6548,12 +6753,14 @@ els|Early Language Support (Inf/Tod)',
   t('Connections to Real World');
   t('Creating');
   t('Early Language Support Score');
+  t('Early Language Support average');
   t('Effective Facilitation');
   t('Emotional Expression');
   t('Emotional Support score');
   t('Encouragement and Affirmation');
   t('Expansion of Infants\' Experience');
   t('Facilitated Exploration Score');
+  t('Facilitated Exploration average');
   t('Feedback Loops');
   t('Flexibility and Student Focus');
   t('Focus areas worked on');
@@ -6632,10 +6839,12 @@ els|Early Language Support (Inf/Tod)',
   t('Regard for Student Perspectives Score');
   t('Relational Behaviors');
   t('Relational Climate Score');
+  t('Relational Climate average');
   t('Relationships');
   t('Repetition and Extension');
   t('Respect');
   t('Respect for Infants\' State');
+  t('Responsive Caregiving Score');
   t('Responsiveness');
   t('Restriction of Movement');
   t('Routines');
@@ -6658,6 +6867,7 @@ els|Early Language Support (Inf/Tod)',
   t('Teacher Sensitivity Cycle 4');
   t('Teacher Sensitivity Notes');
   t('Teacher Sensitivity Score');
+  t('Teacher Sensitivity average');
   t('Teacher Talk');
   t('Time of Observation');
   t('Time of Session');
