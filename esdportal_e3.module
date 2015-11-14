@@ -832,6 +832,7 @@ function esdportal_e3_assign_coach_action_submit($form, $form_state) {
  */
 function esdportal_e3_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'e3_note_form') {
+    // CLASS assessment:
     unset($form['field_observation_duration']);
     unset($form['field_pc_average']);
     unset($form['field_nc_average']);
@@ -846,6 +847,13 @@ function esdportal_e3_form_alter(&$form, &$form_state, $form_id) {
     unset($form['field_es_score']);
     unset($form['field_co_score']);
     unset($form['field_is_score']);
+
+    // CLASS assessment Infant & Toddler:
+    unset($form['field_rc_average']);
+    unset($form['field_tsit_average']);
+    unset($form['field_fe_average']);
+    unset($form['field_els_average']);
+    unset($form['field_rspc_average']);
   }
 }
 
@@ -1052,5 +1060,99 @@ function esdportal_e3_entity_presave($entity) {
     if ($is_score > 0) {
       $wrapper->field_is_score->set($is_score);
     }
+  }
+
+  // field_rc_average = The average of all COMPLETED rc_cycle fields
+  // field_tsit_average = The average of all COMPLETED ts_cycle fields
+  // field_fe_average = The average of all COMPLETED fe_cycle fields
+  // field_els_average = The average of all COMPLETED els_cycle fields
+  // These can be placed before their respective xx_notes fields.
+  // field_rspc_score = average of the four above averages
+  if ($entity->type == 'class_assessment_it') {
+    $wrapper = entity_metadata_wrapper('e3_note', $entity);
+
+    // field_rc_average
+    $rc_values = array();
+    if (NULL !== $wrapper->field_rc_cycle_1->value()) {
+      $rc_values[] = $wrapper->field_rc_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_rc_cycle_2->value()) {
+      $rc_values[] = $wrapper->field_rc_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_rc_cycle_3->value()) {
+      $rc_values[] = $wrapper->field_rc_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_rc_cycle_4->value()) {
+      $rc_values[] = $wrapper->field_rc_cycle_4->value();
+    }
+    $rc_average = round((array_sum($rc_values) / count($rc_values)), 2);
+    if ($rc_average > 0) {
+      $wrapper->field_rc_average->set($rc_average);
+    }
+
+    // field_tsit_average
+    $ts_values = array();
+    if (NULL !== $wrapper->field_ts_cycle_1->value()) {
+      $ts_values[] = $wrapper->field_ts_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_ts_cycle_2->value()) {
+      $ts_values[] = $wrapper->field_ts_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_ts_cycle_3->value()) {
+      $ts_values[] = $wrapper->field_ts_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_ts_cycle_4->value()) {
+      $ts_values[] = $wrapper->field_ts_cycle_4->value();
+    }
+    $ts_average = round((array_sum($ts_values) / count($ts_values)), 2);
+    if ($ts_average > 0) {
+      $wrapper->field_tsit_average->set($ts_average);
+    }
+
+    // field_fe_average
+    $fe_values = array();
+    if (NULL !== $wrapper->field_fe_cycle_1->value()) {
+      $fe_values[] = $wrapper->field_fe_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_fe_cycle_2->value()) {
+      $fe_values[] = $wrapper->field_fe_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_fe_cycle_3->value()) {
+      $fe_values[] = $wrapper->field_fe_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_fe_cycle_4->value()) {
+      $fe_values[] = $wrapper->field_fe_cycle_4->value();
+    }
+    $fe_average = round((array_sum($fe_values) / count($fe_values)), 2);
+    if ($fe_average > 0) {
+      $wrapper->field_fe_average->set($fe_average);
+    }
+
+    // field_els_average
+    $els_values = array();
+    if (NULL !== $wrapper->field_els_cycle_1->value()) {
+      $els_values[] = $wrapper->field_els_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_els_cycle_2->value()) {
+      $els_values[] = $wrapper->field_els_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_els_cycle_3->value()) {
+      $els_values[] = $wrapper->field_els_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_els_cycle_4->value()) {
+      $els_values[] = $wrapper->field_els_cycle_4->value();
+    }
+    $els_average = round((array_sum($els_values) / count($els_values)), 2);
+    if ($els_average > 0) {
+      $wrapper->field_els_average->set($els_average);
+    }
+
+    // Responsive Caregiving Score.
+    $rspc_average = round((($rc_average + $tsit_average + $fe_average + $els_average) / 4), 2);
+    xdebug_break();
+    if ($rspc_average > 0) {
+      $wrapper->field_rspc_average->set($rspc_average);
+    }
+
   }
 }
