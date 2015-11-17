@@ -46,6 +46,24 @@ function esdportal_e3_feature_menu_default_menu_links() {
     'expanded' => 0,
     'weight' => -49,
   );
+  // Exported menu link: menu-coach-menu:e3-note/add/class_assessment_it
+  $menu_links['menu-coach-menu:e3-note/add/class_assessment_it'] = array(
+    'menu_name' => 'menu-coach-menu',
+    'link_path' => 'e3-note/add/class_assessment_it',
+    'router_path' => 'e3-note/add/class_assessment_it',
+    'link_title' => 'Add CLASS Infant/Toddler',
+    'options' => array(
+      'attributes' => array(
+        'title' => 'Add CLASS Assessment for an Infant/Toddler teacher.',
+      ),
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => -48,
+  );
   // Exported menu link: menu-coach-menu:e3-note/add/observation_log
   $menu_links['menu-coach-menu:e3-note/add/observation_log'] = array(
     'menu_name' => 'menu-coach-menu',
@@ -103,6 +121,7 @@ function esdportal_e3_feature_menu_default_menu_links() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Add CLASS Assessment');
+  t('Add CLASS Infant/Toddler');
   t('Add Observation Log');
   t('Add Session Log');
   t('Add Teacher');
