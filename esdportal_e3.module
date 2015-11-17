@@ -351,7 +351,7 @@ function esdportal_e3_menu() {
  * Provides the page callback for e3-contact/%/teacher_report.
  */
 function _esdportal_e3_teacher_report($teacher_id = 1) {
-  drupal_goto('teacher-report/1/' . $teacher_id);
+  drupal_goto('teacher-report/' . $teacher_id);
 }
 
 
