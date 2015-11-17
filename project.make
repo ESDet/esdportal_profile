@@ -381,7 +381,7 @@ projects[webform_term_opts][patch][relatable_tid][md5] = "fbf90c283fe9e02116093b
 projects[esd][type] = "theme"
 projects[esd][download][type] = "git"
 projects[esd][download][url] = "https://github.com/ESDet/esd.git"
-projects[esd][download][revision] = "4329801b7c62966727dab2ca18352b639fa9de32"
+projects[esd][download][revision] = "0b342e708100c0d07124f506bc15dd8482b2ee0c"
 
 projects[omega][type] = "theme"
 projects[omega][download][type] = "git"
