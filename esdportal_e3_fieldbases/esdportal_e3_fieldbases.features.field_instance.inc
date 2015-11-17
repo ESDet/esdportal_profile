@@ -2324,7 +2324,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'number',
         'settings' => array(
           'decimal_separator' => '.',
@@ -2333,7 +2333,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
           'thousand_separator' => ' ',
         ),
         'type' => 'number_decimal',
-        'weight' => 31,
+        'weight' => 15,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -2365,7 +2365,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'number',
         'settings' => array(
           'decimal_separator' => '.',
@@ -2374,7 +2374,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
           'thousand_separator' => ' ',
         ),
         'type' => 'number_decimal',
-        'weight' => 30,
+        'weight' => 14,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -2406,7 +2406,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'number',
         'settings' => array(
           'decimal_separator' => '.',
@@ -2415,7 +2415,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
           'thousand_separator' => ' ',
         ),
         'type' => 'number_decimal',
-        'weight' => 28,
+        'weight' => 12,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -2447,7 +2447,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'number',
         'settings' => array(
           'decimal_separator' => '.',
@@ -2456,7 +2456,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
           'thousand_separator' => ' ',
         ),
         'type' => 'number_decimal',
-        'weight' => 32,
+        'weight' => 16,
       ),
     ),
     'entity_type' => 'e3_note',
@@ -2488,7 +2488,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'number',
         'settings' => array(
           'decimal_separator' => '.',
@@ -2497,7 +2497,7 @@ function esdportal_e3_fieldbases_field_default_field_instances() {
           'thousand_separator' => ' ',
         ),
         'type' => 'number_decimal',
-        'weight' => 29,
+        'weight' => 13,
       ),
     ),
     'entity_type' => 'e3_note',
