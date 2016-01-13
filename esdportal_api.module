@@ -15,7 +15,7 @@ define("ESDPORTAL_API_MAX_LIMIT", 1000);
 
 // Define any filter_special query_TAG_alters here:
 define("ESDPORTAL_API_SPECIALTAGS_SCHOOLS", "school_profile_has_specialed, school_profile_has_arts, school_profile_has_sports, school_profile_has_transportation, school_profile_has_before_after_care, school_profile_application_required, school_profile_collegereadiness, esd_k8hs_2015_highscore");
-define("ESDPORTAL_API_SPECIALTAGS_ECS", "ec_profile_is_free_or_reduced_cost, ec_profile_has_transportation, ec_profile_has_special_needs_experience, ec_profile_has_meals, has_esd_el_2014, has_esd_el_2015, esd_el_2015_highscore");
+define("ESDPORTAL_API_SPECIALTAGS_ECS", "ec_profile_is_free_or_reduced_cost, ec_profile_has_transportation, ec_profile_has_special_needs_experience, ec_profile_has_meals, has_esd_el_2014, has_esd_el_2015, esd_el_highscore");
 
 // Do the same for special sorts:
 // These sorts are defined as query tags with names "sort_tag_[asc|desc]".
@@ -338,6 +338,23 @@ function esdportal_api_services_resources() {
               'commerce_services_explode' => ',',
             ),
             array(
+              'name' => 'near_latlon',
+              'type' => 'string',
+              'description' => 'A comma separated pair of decimal latitude and longitude to use as a geo-spatial filter, along with near_miles.',
+              'optional' => TRUE,
+              'source' => array('param' => 'near_latlon'),
+              'default value' => NULL,
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'near_miles',
+              'type' => 'string',
+              'description' => 'Radius in miles to include in a geo-spatial query originating at coordinates specified in near_latlon.',
+              'optional' => TRUE,
+              'source' => array('param' => 'near_miles'),
+              'default value' => NULL,
+            ),
+            array(
               'name' => 'limit',
               'type' => 'int',
               'description' => 'Limit response count (default ' . ESDPORTAL_API_DEFAULT_LIMIT . ')',
@@ -482,10 +499,10 @@ function _esdportal_api_get_related_nid($bundle, $term) {
  * @return array
  *   JSON-API data.
  */
-function _esdportal_api_index_ecs($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $sort_by_special = FALSE, $sort_order_special = FALSE, $limit = NULL, $offset = 0) {
+function _esdportal_api_index_ecs($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $sort_by_special = FALSE, $sort_order_special = FALSE, $near_latlon = FALSE, $near_miles = FALSE, $limit = NULL, $offset = 0) {
   $document = new Document();
 
-  list($ecs, $total) = _esdportal_api_taxonomy_get_tree(19, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $sort_by_special, $sort_order_special, $limit, $offset);
+  list($ecs, $total) = _esdportal_api_taxonomy_get_tree(19, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $sort_by_special, $sort_order_special, $near_latlon, $near_miles, $limit, $offset);
 
   $link_to_self = $_SERVER['REQUEST_URI'];
 
@@ -651,6 +668,11 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE)
  * @param array|bool $sort_order_special
  *   The corresponding sort orders for the fields specified in the
  *   array; one of either 'DESC' or 'ASC'.
+ * @param array|bool $near_latlon
+ *   A pair of latitude & longitude coordinates to use in a geoquery along with
+ *   the following param.
+ * @param float|bool $near_miles
+ *   Distance in miles to include in a geospatial query.
  * @param int $limit
  *   If null, return all results.
  * @param int $offset
@@ -659,10 +681,10 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE)
  * @return array
  *   JSON-API data.
  */
-function _esdportal_api_index_schools($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $sort_by_special = FALSE, $sort_order_special = FALSE, $limit = NULL, $offset = 0) {
+function _esdportal_api_index_schools($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $sort_by_special = FALSE, $sort_order_special = FALSE, $near_latlon = FALSE, $near_miles = FALSE, $limit = NULL, $offset = 0) {
   $document = new Document();
 
-  list($schools, $total) = _esdportal_api_taxonomy_get_tree(4, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $sort_by_special, $sort_order_special, $limit, $offset);
+  list($schools, $total) = _esdportal_api_taxonomy_get_tree(4, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $sort_by_special, $sort_order_special, $near_latlon, $near_miles, $limit, $offset);
 
   $link_to_self = $_SERVER['REQUEST_URI'];
 
@@ -964,6 +986,11 @@ function _esdportal_api_load_includes_for_ecs(array &$ecs, array $includes = [],
  * @param array|bool $sort_order_special
  *   The corresponding sort orders for the fields specified in the
  *   array; one of either 'DESC' or 'ASC'.
+ * @param array|bool $near_latlon
+ *   A pair of latitude & longitude coordinates to use in a geoquery along with
+ *   the following param.
+ * @param $near_miles
+ *   Distance in miles to include in a geospatial query.
  * @param int $limit
  *   The number of entities to retrieve.
  * @param int $offset
@@ -972,7 +999,7 @@ function _esdportal_api_load_includes_for_ecs(array &$ecs, array $includes = [],
  * @return array
  *   Array of term objects & total # of results.
  */
-function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op, array $filter_special, array $sort_by, array $sort_order, array $sort_by_special, array $sort_order_special, $limit, $offset) {
+function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op, array $filter_special, array $sort_by, array $sort_order, array $sort_by_special, array $sort_order_special, array $near_latlon, $near_miles, $limit, $offset) {
   // Start building a query.
   $query = new EntityFieldQuery();
 
@@ -1040,6 +1067,14 @@ function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op,
       $tag = $sort_by_special[$sort_key] . '_' . $direction;
       $query->addTag($tag);
     }
+  }
+
+  // Add proximity
+  if ($near_latlon && $near_miles) {
+    $query->addTag('geoproximity');
+    $query->addMetaData('latitude', $near_latlon[0]);
+    $query->addMetaData('longitude', $near_latlon[1]);
+    $query->addMetaData('miles', $near_miles);
   }
 
   // Execute the query and load the terms it returns, if any.
@@ -1320,7 +1355,12 @@ function esdportal_api_query_ec_profile_has_meals_alter(\QueryAlterableInterface
  * Only return early childhood centers with a record in esd_el_2014.
  */
 function esdportal_api_query_has_esd_el_2014_alter(\QueryAlterableInterface &$query) {
-  $query->join('field_data_field_esd_ec_id', 'ec_id', 'ec_id.entity_id=taxonomy_term_data.tid');
+  // Join with field_data_field_esd_ec_id to get program_id.
+  if (!$query->hasTag('has_esd_ec_id')) {
+    esdportal_api_query_has_esd_ec_id_alter($query);
+    $query->addTag('has_esd_ec_id');
+  }
+
   $query->join('esd_el_2014', 'esd_el_2014', 'esd_el_2014.program_id=ec_id.field_esd_ec_id_value');
 }
 
@@ -1330,8 +1370,37 @@ function esdportal_api_query_has_esd_el_2014_alter(\QueryAlterableInterface &$qu
  * Only return early childhood centers with a record in esd_el_2015.
  */
 function esdportal_api_query_has_esd_el_2015_alter(\QueryAlterableInterface &$query) {
-  $query->join('field_data_field_esd_ec_id', 'ec_id', 'ec_id.entity_id=taxonomy_term_data.tid');
+  // Join with field_data_field_esd_ec_id to get program_id.
+  if (!$query->hasTag('has_esd_ec_id')) {
+    esdportal_api_query_has_esd_ec_id_alter($query);
+    $query->addTag('has_esd_ec_id');
+  }
+
   $query->join('esd_el_2015', 'esd_el_2015', 'esd_el_2015.program_id=ec_id.field_esd_ec_id_value');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * Only return early childhood centers with an ec_id.
+ */
+function esdportal_api_query_has_esd_ec_id_alter(\QueryAlterableInterface &$query) {
+  $query->join('field_data_field_esd_ec_id', 'ec_id', 'ec_id.entity_id=taxonomy_term_data.tid');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * Only return early childhood centers with a record in ec_state_ratings.
+ */
+function esdportal_api_query_has_ec_state_rating_alter(\QueryAlterableInterface &$query) {
+  // Join with field_data_field_esd_ec_id to get program_id.
+  if (!$query->hasTag('has_esd_ec_id')) {
+    esdportal_api_query_has_esd_ec_id_alter($query);
+    $query->addTag('has_esd_ec_id');
+  }
+
+  $query->join('ec_state_ratings', 'esr', 'ec_id.field_esd_ec_id_value=esr.esd_ec_id AND timestamp=(SELECT MAX(ec_state_ratings.timestamp) FROM {ec_state_ratings})');
 }
 
 /**
@@ -1630,15 +1699,15 @@ function esdportal_api_query_school_profile_changed_desc_alter(\QueryAlterableIn
  */
 function esdportal_api_query_ec_total_pts_desc_alter(\QueryAlterableInterface &$query) {
   // Add tag (which also adds needed joins)
-  if (!$query->hasTag('has_esd_el_2015')) {
-    esdportal_api_query_has_esd_el_2015_alter($query);
-    $query->addTag('has_esd_el_2015');
+  if (!$query->hasTag('has_ec_state_rating')) {
+    esdportal_api_query_has_ec_state_rating_alter($query);
+    $query->addTag('has_ec_state_rating');
   }
 
   // Our orderBy comes first.
   $order =& $query->getOrderBy();
   $order = array_reverse($order, TRUE);
-  $order['esd_el_2015.total_points'] = 'DESC';
+  $order['esr.total_points'] = 'DESC';
   $order = array_reverse($order, TRUE);
 }
 
@@ -1650,15 +1719,15 @@ function esdportal_api_query_ec_total_pts_desc_alter(\QueryAlterableInterface &$
  */
 function esdportal_api_query_ec_total_pts_asc_alter(\QueryAlterableInterface &$query) {
   // Add tag (which also adds needed joins)
-  if (!$query->hasTag('has_esd_el_2015')) {
-    esdportal_api_query_has_esd_el_2015_alter($query);
-    $query->addTag('has_esd_el_2015');
+  if (!$query->hasTag('has_ec_state_rating')) {
+    esdportal_api_query_has_ec_state_rating_alter($query);
+    $query->addTag('has_ec_state_rating');
   }
 
   // Our orderBy comes first.
   $order =& $query->getOrderBy();
   $order = array_reverse($order, TRUE);
-  $order['esd_el_2015.total_points'] = 'ASC';
+  $order['esr.total_points'] = 'ASC';
   $order = array_reverse($order, TRUE);
 }
 
@@ -1707,14 +1776,14 @@ function esdportal_api_query_esd_k8hs_2015_highscore_alter(\QueryAlterableInterf
  * @param \QueryAlterableInterface &$query
  *   A query, probably looking for early childhood taxonomy terms.
  */
-function esdportal_api_query_esd_el_2015_highscore_alter(\QueryAlterableInterface &$query) {
-  // Add tag (which also adds needed joins)
-  if (!$query->hasTag('has_esd_el_2015')) {
-    esdportal_api_query_has_esd_el_2015_alter($query);
-    $query->addTag('has_esd_el_2015');
+function esdportal_api_query_esd_el_highscore_alter(\QueryAlterableInterface &$query) {
+  // Join with ec_state_ratings.
+  if (!$query->hasTag('has_ec_state_rating')) {
+    esdportal_api_query_has_ec_state_rating_alter($query);
+    $query->addTag('has_ec_state_rating');
   }
 
-  $query->condition('esd_el_2015.overall_rating', ['Bronze', 'Silver', 'Gold'], 'IN');
+  $query->condition('esr.overall_rating', ['Bronze', 'Silver', 'Gold'], 'IN');
 }
 
 /**
@@ -1783,4 +1852,71 @@ function esdportal_api_query_school_combined_total_pts_asc_alter(\QueryAlterable
   $order = array_reverse($order, TRUE);
   $order['scores.score'] = 'ASC';
   $order = array_reverse($order, TRUE);
+}
+
+/**
+ * Adds a geofield join to a school query.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school or EC taxonomy terms.
+ */
+function esdportal_api_query_has_geo_alter(\QueryAlterableInterface &$query) {
+  $query->join('field_data_field_geo', 'field_geo', 'field_geo.entity_id=taxonomy_term_data.tid');
+}
+
+/**
+ * Adds a proximity filter.
+ *
+ * Expects query metadata:
+ *  - latitude
+ *  - longitude
+ *  - miles
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school or EC taxonomy terms.
+ */
+function esdportal_api_query_geoproximity_alter(\QueryAlterableInterface &$query) {
+  // Add geo join.
+  if (!$query->hasTag('has_geo')) {
+    esdportal_api_query_has_geo_alter($query);
+    $query->addTag('has_geo');
+  }
+
+  $haversine = <<<'EOQ'
+(
+  3959
+  *
+  ACOS(
+    COS(
+      RADIANS(:latitude)
+    )
+    *
+    COS(
+      RADIANS(field_geo.field_geo_lat)
+    )
+    *
+    COS(
+      RADIANS(field_geo.field_geo_lon)
+      -
+      RADIANS(:longitude)
+    )
+    +
+    SIN(
+      RADIANS(:latitude)
+    )
+    *
+    SIN(
+      RADIANS(field_geo.field_geo_lat)
+    )
+  )
+)
+<=
+:miles
+EOQ;
+
+  $query->where($haversine, [
+    ':latitude' => $query->getMetaData('latitude'),
+    ':longitude' => $query->getMetaData('longitude'),
+    ':miles' => $query->getMetaData('miles')
+  ]);
 }
