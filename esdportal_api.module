@@ -355,6 +355,15 @@ function esdportal_api_services_resources() {
               'default value' => NULL,
             ),
             array(
+              'name' => 'filter_values',
+              'type' => 'array',
+              'description' => 'An array of special fields paired with comma-separated values to use to filter the result set. Allowed values for schools: field_special_ed_level (basic,intensive,moderate,none), field_special_ed_programs (autism,blindness,cognitive,deafness,developmental_delay,emotional,ld,multiple,orthopedic,other,speech). Filter values are added to the query using an IN clause (OR).',
+              'optional' => TRUE,
+              'source' => array('param' => 'filter_values'),
+              'default value' => array(),
+              'commerce_services_explode' => ',',
+            ),
+            array(
               'name' => 'limit',
               'type' => 'int',
               'description' => 'Limit response count (default ' . ESDPORTAL_API_DEFAULT_LIMIT . ')',
@@ -491,6 +500,8 @@ function _esdportal_api_get_related_nid($bundle, $term) {
  * @param array|bool $sort_order_special
  *   The corresponding sort orders for the fields specified in the
  *   $sort_by_special array; one of either 'DESC' or 'ASC'.
+ * @param array|bool $filter_values
+ *   Filter with acceptable values. Associative array.
  * @param int $limit
  *   If null, return all results.
  * @param int $offset
@@ -499,10 +510,10 @@ function _esdportal_api_get_related_nid($bundle, $term) {
  * @return array
  *   JSON-API data.
  */
-function _esdportal_api_index_ecs($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $sort_by_special = FALSE, $sort_order_special = FALSE, $near_latlon = FALSE, $near_miles = FALSE, $limit = NULL, $offset = 0) {
+function _esdportal_api_index_ecs($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $sort_by_special = FALSE, $sort_order_special = FALSE, $near_latlon = FALSE, $near_miles = FALSE, $filter_values = FALSE, $limit = NULL, $offset = 0) {
   $document = new Document();
 
-  list($ecs, $total) = _esdportal_api_taxonomy_get_tree(19, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $sort_by_special, $sort_order_special, $near_latlon, $near_miles, $limit, $offset);
+  list($ecs, $total) = _esdportal_api_taxonomy_get_tree(19, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $sort_by_special, $sort_order_special, $near_latlon, $near_miles, $filter_values, $limit, $offset);
 
   $link_to_self = $_SERVER['REQUEST_URI'];
 
@@ -673,6 +684,9 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE)
  *   the following param.
  * @param float|bool $near_miles
  *   Distance in miles to include in a geospatial query.
+ * @param array|bool $filter_values
+ *   Filter with acceptable values. Associative array.
+ * @param int $limit
  * @param int $limit
  *   If null, return all results.
  * @param int $offset
@@ -681,10 +695,10 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE)
  * @return array
  *   JSON-API data.
  */
-function _esdportal_api_index_schools($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $sort_by_special = FALSE, $sort_order_special = FALSE, $near_latlon = FALSE, $near_miles = FALSE, $limit = NULL, $offset = 0) {
+function _esdportal_api_index_schools($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $sort_by_special = FALSE, $sort_order_special = FALSE, $near_latlon = FALSE, $near_miles = FALSE, $filter_values = FALSE, $limit = NULL, $offset = 0) {
   $document = new Document();
 
-  list($schools, $total) = _esdportal_api_taxonomy_get_tree(4, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $sort_by_special, $sort_order_special, $near_latlon, $near_miles, $limit, $offset);
+  list($schools, $total) = _esdportal_api_taxonomy_get_tree(4, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $sort_by_special, $sort_order_special, $near_latlon, $near_miles, $filter_values, $limit, $offset);
 
   $link_to_self = $_SERVER['REQUEST_URI'];
 
@@ -991,6 +1005,8 @@ function _esdportal_api_load_includes_for_ecs(array &$ecs, array $includes = [],
  *   the following param.
  * @param $near_miles
  *   Distance in miles to include in a geospatial query.
+ * @param array|bool $filter_values
+ *   Filter with acceptable values. Associative array.
  * @param int $limit
  *   The number of entities to retrieve.
  * @param int $offset
@@ -999,7 +1015,7 @@ function _esdportal_api_load_includes_for_ecs(array &$ecs, array $includes = [],
  * @return array
  *   Array of term objects & total # of results.
  */
-function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op, array $filter_special, array $sort_by, array $sort_order, array $sort_by_special, array $sort_order_special, array $near_latlon, $near_miles, $limit, $offset) {
+function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op, array $filter_special, array $sort_by, array $sort_order, array $sort_by_special, array $sort_order_special, array $near_latlon, $near_miles, array $filter_values, $limit, $offset) {
   // Start building a query.
   $query = new EntityFieldQuery();
 
@@ -1075,6 +1091,27 @@ function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op,
     $query->addMetaData('latitude', $near_latlon[0]);
     $query->addMetaData('longitude', $near_latlon[1]);
     $query->addMetaData('miles', $near_miles);
+  }
+
+  // Add filters on included resources.
+  if ($filter_values) {
+    foreach ($filter_values as $field => $vals) {
+      switch ($field) {
+        case 'field_special_ed_level':
+          $query->addTag('field_special_ed_level_filter');
+          $query->addMetaData('field_special_ed_level_filter', $vals);
+          break;
+
+        case 'field_special_ed_programs':
+          $query->addTag('field_special_ed_programs_filter');
+          $query->addMetaData('field_special_ed_programs_filter', $vals);
+          break;
+
+        default:
+          services_error(t('unimplemented option for filter_values'), 400);
+          break;
+      }
+    }
   }
 
   // Execute the query and load the terms it returns, if any.
@@ -1430,9 +1467,12 @@ function _esdportal_api_add_ec_ti_join(\QueryAlterableInterface &$query) {
 /**
  * Alters EntityFieldQuery.
  *
- * IF school_profile.field_special_ed_level = moderate OR intensive.
+ * Adds join to field_data_field_special_ed_level.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query.
  */
-function esdportal_api_query_school_profile_has_specialed_alter(\QueryAlterableInterface &$query) {
+function esdportal_api_query_join_special_ed_level_alter(\QueryAlterableInterface &$query) {
   // First, inner join with school_profiles.
   if (!$query->hasTag('has_school_profile')) {
     esdportal_api_query_has_school_profile_alter($query);
@@ -1440,7 +1480,40 @@ function esdportal_api_query_school_profile_has_specialed_alter(\QueryAlterableI
   }
 
   $query->join('field_data_field_special_ed_level', 'special_ed_level', 'special_ed_level.entity_id=school_profile_ref.entity_id');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * Adds join to field_data_field_special_ed_programs.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query.
+ */
+function esdportal_api_query_join_special_ed_programs_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
+
+  $query->join('field_data_field_special_ed_programs', 'special_ed_programs', 'special_ed_programs.entity_id=school_profile_ref.entity_id');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF school_profile.field_special_ed_level = moderate OR intensive.
+ */
+function esdportal_api_query_school_profile_has_specialed_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with field_data_field_special_ed.
+  if (!$query->hasTag('join_special_ed_level')) {
+    esdportal_api_query_join_special_ed_level_alter($query);
+    $query->addTag('join_special_ed_level');
+  }
+
   $query->condition('special_ed_level.field_special_ed_level_value', array('moderate', 'intensive'), 'IN');
+  $query->addTag('school_profile_has_specialed');
 }
 
 /**
@@ -1919,4 +1992,44 @@ EOQ;
     ':longitude' => $query->getMetaData('longitude'),
     ':miles' => $query->getMetaData('miles')
   ]);
+}
+
+/**
+ * Adds a field_special_ed_level filter.
+ */
+function esdportal_api_query_field_special_ed_level_filter_alter(\QueryAlterableInterface &$query) {
+  // Get parameters from query metadata.
+  $levels = $query->getMetaData('field_special_ed_level_filter');
+
+  if (!count($levels)) {
+    return services_error(t('to filter special ed level, please provide some levels!'));
+  }
+
+  // First, inner join with field_data_field_special_ed.
+  if (!$query->hasTag('join_special_ed_level')) {
+    esdportal_api_query_join_special_ed_level_alter($query);
+    $query->addTag('join_special_ed_level');
+  }
+
+  $query->condition('special_ed_level.field_special_ed_level_value', $levels, 'IN');
+}
+
+/**
+ * Adds a field_special_ed_programs filter.
+ */
+function esdportal_api_query_field_special_ed_programs_filter_alter(\QueryAlterableInterface &$query) {
+  // Get parameters from query metadata.
+  $programs = $query->getMetaData('field_special_ed_programs_filter');
+
+  if (!count($programs)) {
+    return services_error(t('to filter special ed programs, please provide some programs!'));
+  }
+
+  // First, inner join with field_data_field_special_ed.
+  if (!$query->hasTag('join_special_ed_programs')) {
+    esdportal_api_query_join_special_ed_programs_alter($query);
+    $query->addTag('join_special_ed_programs');
+  }
+
+  $query->condition('special_ed_programs.field_special_ed_programs_value', $programs, 'IN');
 }
