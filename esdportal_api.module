@@ -1430,9 +1430,12 @@ function _esdportal_api_add_ec_ti_join(\QueryAlterableInterface &$query) {
 /**
  * Alters EntityFieldQuery.
  *
- * IF school_profile.field_special_ed_level = moderate OR intensive.
+ * Adds join to field_data_field_special_ed
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query.
  */
-function esdportal_api_query_school_profile_has_specialed_alter(\QueryAlterableInterface &$query) {
+function esdportal_api_query_join_special_ed_alter(\QueryAlterableInterface &$query) {
   // First, inner join with school_profiles.
   if (!$query->hasTag('has_school_profile')) {
     esdportal_api_query_has_school_profile_alter($query);
@@ -1440,7 +1443,23 @@ function esdportal_api_query_school_profile_has_specialed_alter(\QueryAlterableI
   }
 
   $query->join('field_data_field_special_ed_level', 'special_ed_level', 'special_ed_level.entity_id=school_profile_ref.entity_id');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF school_profile.field_special_ed_level = moderate OR intensive.
+ */
+function esdportal_api_query_school_profile_has_specialed_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with field_data_field_special_ed.
+  if (!$query->hasTag('join_special_ed')) {
+    esdportal_api_query_join_special_ed_alter($query);
+    $query->addTag('join_special_ed');
+  }
+
+  $query->join('field_data_field_special_ed_level', 'special_ed_level', 'special_ed_level.entity_id=school_profile_ref.entity_id');
   $query->condition('special_ed_level.field_special_ed_level_value', array('moderate', 'intensive'), 'IN');
+  $query->addTag('school_profile_has_specialed');
 }
 
 /**
