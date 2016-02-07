@@ -357,7 +357,7 @@ function esdportal_api_services_resources() {
             array(
               'name' => 'filter_values',
               'type' => 'array',
-              'description' => 'An array of special fields paired with comma-separated values to use to filter the result set. Allowed values for schools: field_special_ed_level (basic,intensive,moderate,none).',
+              'description' => 'An array of special fields paired with comma-separated values to use to filter the result set. Allowed values for schools: field_special_ed_level (basic,intensive,moderate,none), field_special_ed_programs (autism,blindness,cognitive,deafness,developmental_delay,emotional,ld,multiple,orthopedic,other,speech). Filter values are added to the query using an IN clause (OR).',
               'optional' => TRUE,
               'source' => array('param' => 'filter_values'),
               'default value' => array(),
@@ -1103,6 +1103,8 @@ function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op,
           break;
 
         case 'field_special_ed_programs':
+          $query->addTag('field_special_ed_programs_filter');
+          $query->addMetaData('field_special_ed_programs_filter', $vals);
           break;
 
         default:
@@ -2010,4 +2012,24 @@ function esdportal_api_query_field_special_ed_level_filter_alter(\QueryAlterable
   }
 
   $query->condition('special_ed_level.field_special_ed_level_value', $levels, 'IN');
+}
+
+/**
+ * Adds a field_special_ed_programs filter.
+ */
+function esdportal_api_query_field_special_ed_programs_filter_alter(\QueryAlterableInterface &$query) {
+  // Get parameters from query metadata.
+  $programs = $query->getMetaData('field_special_ed_programs_filter');
+
+  if (!count($programs)) {
+    return services_error(t('to filter special ed programs, please provide some programs!'));
+  }
+
+  // First, inner join with field_data_field_special_ed.
+  if (!$query->hasTag('join_special_ed_programs')) {
+    esdportal_api_query_join_special_ed_programs_alter($query);
+    $query->addTag('join_special_ed_programs');
+  }
+
+  $query->condition('special_ed_programs.field_special_ed_programs_value', $programs, 'IN');
 }
