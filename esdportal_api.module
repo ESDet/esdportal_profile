@@ -152,6 +152,23 @@ function esdportal_api_services_resources() {
               'commerce_services_explode' => ',',
             ),
             array(
+              'name' => 'near_latlon',
+              'type' => 'string',
+              'description' => 'A comma separated pair of decimal latitude and longitude to use as a geo-spatial filter, along with near_miles.',
+              'optional' => TRUE,
+              'source' => array('param' => 'near_latlon'),
+              'default value' => NULL,
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'near_miles',
+              'type' => 'string',
+              'description' => 'Radius in miles to include in a geo-spatial query originating at coordinates specified in near_latlon.',
+              'optional' => TRUE,
+              'source' => array('param' => 'near_miles'),
+              'default value' => NULL,
+            ),
+            array(
               'name' => 'limit',
               'type' => 'int',
               'description' => 'Limit response count (default ' . ESDPORTAL_API_DEFAULT_LIMIT . ')',
@@ -500,8 +517,11 @@ function _esdportal_api_get_related_nid($bundle, $term) {
  * @param array|bool $sort_order_special
  *   The corresponding sort orders for the fields specified in the
  *   $sort_by_special array; one of either 'DESC' or 'ASC'.
- * @param array|bool $filter_values
- *   Filter with acceptable values. Associative array.
+ * @param array|bool $near_latlon
+ *   A pair of latitude & longitude coordinates to use in a geoquery along with
+ *   the following param.
+ * @param float|bool $near_miles
+ *   Distance in miles to include in a geospatial query.
  * @param int $limit
  *   If null, return all results.
  * @param int $offset
@@ -510,10 +530,10 @@ function _esdportal_api_get_related_nid($bundle, $term) {
  * @return array
  *   JSON-API data.
  */
-function _esdportal_api_index_ecs($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $sort_by_special = FALSE, $sort_order_special = FALSE, $near_latlon = FALSE, $near_miles = FALSE, $filter_values = FALSE, $limit = NULL, $offset = 0) {
+function _esdportal_api_index_ecs($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $sort_by_special = FALSE, $sort_order_special = FALSE, $near_latlon = FALSE, $near_miles = FALSE, $limit = NULL, $offset = 0) {
   $document = new Document();
 
-  list($ecs, $total) = _esdportal_api_taxonomy_get_tree(19, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $sort_by_special, $sort_order_special, $near_latlon, $near_miles, $filter_values, $limit, $offset);
+  list($ecs, $total) = _esdportal_api_taxonomy_get_tree(19, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $sort_by_special, $sort_order_special, $near_latlon, $near_miles, [], $limit, $offset);
 
   $link_to_self = $_SERVER['REQUEST_URI'];
 
@@ -686,7 +706,6 @@ function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE)
  *   Distance in miles to include in a geospatial query.
  * @param array|bool $filter_values
  *   Filter with acceptable values. Associative array.
- * @param int $limit
  * @param int $limit
  *   If null, return all results.
  * @param int $offset
