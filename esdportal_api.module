@@ -1540,7 +1540,7 @@ function esdportal_api_query_school_profile_has_specialed_alter(\QueryAlterableI
  *
  * IF schools.field_arts_media + schools.field_arts_visual +
  * schools.field_arts_music + schools.field_arts.performing_written CONTAINS
- * more than 8 values total
+ * more than 2 values total
  * OR IF schools.field_academic_focus = all_arts OR visual_arts OR
  * performing_arts OR music.
  */
@@ -1577,7 +1577,7 @@ function esdportal_api_query_school_profile_has_arts_alter(\QueryAlterableInterf
   $count_subq->addField('unioned', 'id', 'union_id');
   $count_subq->addExpression('SUM(count)', 'total');
   $count_subq->groupBy('union_id');
-  $count_subq->havingCondition('total', 8, '>');
+  $count_subq->havingCondition('total', 2, '>');
 
   $query->join($count_subq, 'counts', 'union_id=school_profile_ref.entity_id');
 
@@ -1591,8 +1591,8 @@ function esdportal_api_query_school_profile_has_arts_alter(\QueryAlterableInterf
 /**
  * Alters EntityFieldQuery.
  *
- * IF school_profile.field_boys_sports CONTAINS 4 or more values/items
- * AND IF schools.field_girls_sports CONTAINS 4 or more values/items.
+ * IF school_profile.field_boys_sports CONTAINS 3 or more values/items
+ * AND IF schools.field_girls_sports CONTAINS 3 or more values/items.
  */
 function esdportal_api_query_school_profile_has_sports_alter(\QueryAlterableInterface &$query) {
   // First, inner join with school_profiles.
@@ -1606,14 +1606,14 @@ function esdportal_api_query_school_profile_has_sports_alter(\QueryAlterableInte
   $q_boysports->addField('fbs', 'entity_id', 'id');
   $q_boysports->addExpression('COUNT(fbs.field_boys_sports_value)', 'count');
   $q_boysports->groupBy('entity_id');
-  $q_boysports->havingCondition('count', 3, '>');
+  $q_boysports->havingCondition('count', 2, '>');
 
   $q_girlsports = db_select('field_data_field_girls_sports', 'fgs')
     ->condition('field_girls_sports_value', 'none', '!=');
   $q_girlsports->addField('fgs', 'entity_id', 'id');
   $q_girlsports->addExpression('COUNT(fgs.field_girls_sports_value)', 'count');
   $q_girlsports->groupBy('entity_id');
-  $q_girlsports->havingCondition('count', 3, '>');
+  $q_girlsports->havingCondition('count', 2, '>');
 
   $q_boysports->union($q_girlsports);
 
