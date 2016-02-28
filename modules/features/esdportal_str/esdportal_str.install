@@ -1,0 +1,180 @@
+<?php
+
+/**
+ * @file
+ * Defines ESD portal related custom tables, aside from the ones defined as data module entities.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function esdportal_str_schema() {
+  $schema = array();
+
+  $schema['ec_state_ratings'] = array(
+    'description' => 'Table for storing State of Michigan early childhood center ratings, keyed by esd ec id',
+    'fields' => array(
+      'rating_id' => array(
+        'description' => 'The primary identifier for a rating',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'esd_ec_id' => array(
+        'description' => 'State of MI license number minus the letters',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'source' => array(
+        'description' => 'The original source of this datum',
+        'type' => 'text',
+        'not null' => TRUE,
+      ),
+      'timestamp' => array(
+        'description' => 'UNIX timestamp of this datum\'s import batch',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'PublishedRating' => array(
+        'description' => 'Published QRIS (Quality Rating and Improvement System) rating out of 5 stars (or "In Progress" or "Empty Star")',
+        'type' => 'text', // could be "In Progress" or "Empty Star" :(
+        'not null' => FALSE,
+      ),
+      'ptsTotal' => array(
+        'description' => 'Total Points (out of 50)',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'ptsStaff' => array(
+        'description' => 'Staff Qualifications and Professional Development Points (out of 16)',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'ptsFamily' => array(
+        'description' => 'Family and Community Partnership Points (out of 8)',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'ptsAdmin' => array(
+        'description' => 'Administration and Management Points (out of 6)',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'ptsEnv' => array(
+        'description' => 'Environment Points (out of 8)',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'ptsCurr' => array(
+        'description' => 'Curriculum and Instruction Points (out of 12)',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'state_points' => array(
+        'description' => 'based on PublishedRating or most recent score if "In Progress"',
+        'type' => 'int',
+        'size' => 'normal',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'total_points' => array(
+        'description' => 'site_visit_points + staff_points + state_points',
+        'type' => 'int',
+        'size' => 'normal',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ),
+      'overall_rating' => array(
+        'description' => 'Human-readable rating, based on total_points',
+        'type' => 'varchar',
+        'size' => 'normal',
+        'length' => '255',
+        'not null' => FALSE,
+      ),
+    ),
+   'indexes' => array(
+      'timestamp' => array('timestamp'),
+      'esd_ec_id' => array('esd_ec_id'),
+    ),
+    'unique keys' => array(
+      'esd_ec_id_timestamp' => array('esd_ec_id', 'timestamp'),
+      'rating_id' => array('rating_id'),
+    ),
+    'foreign keys' => array(
+      'ec' => array(
+        'table' => 'field_data_field_esd_ec_id',
+        'columns' => array('esd_ec_id' => 'field_esd_ec_id_value'),
+      ),
+    ),
+    'primary key' => array('rating_id'),
+  );
+
+  return $schema;
+}
+
+/**
+ * Create ec_ratings table.
+ */
+function esdportal_str_update_7101() {
+  $schema = esdportal_str_schema();
+
+  db_create_table('ec_state_ratings', $schema['ec_state_ratings']);
+}
+
+/**
+ * Add esd_schid column to esd_k8_2015 and esd_hs_2015.
+ */
+function esdportal_str_update_7102() {
+  db_add_field('esd_k8_2015', 'esd_schid', [
+    'type' => 'varchar',
+    'size' => 'normal',
+    'length' => '255',
+    'not null' => FALSE,
+    'description' => 'ESD internal school ID',
+  ]);
+
+  db_add_field('esd_hs_2015', 'esd_schid', [
+    'type' => 'varchar',
+    'size' => 'normal',
+    'length' => '255',
+    'not null' => FALSE,
+    'description' => 'ESD internal school ID',
+  ]);
+}
+
+/**
+ * Add new state ratings fields to ec_state_ratings.
+ */
+function esdportal_str_update_7105() {
+  db_add_field('ec_state_ratings', 'state_points', [
+    'description' => 'based on PublishedRating or most recent score if "In Progress"',
+    'type' => 'int',
+    'size' => 'normal',
+    'unsigned' => TRUE,
+    'not null' => FALSE,
+  ]);
+
+  db_add_field('ec_state_ratings', 'total_points', [
+    'description' => 'site_visit_points + staff_points + state_points',
+    'type' => 'int',
+    'size' => 'normal',
+    'unsigned' => TRUE,
+    'not null' => FALSE,
+  ]);
+
+  db_add_field('ec_state_ratings', 'overall_rating', [
+    'description' => 'Human-readable rating, based on total_points',
+    'type' => 'varchar',
+    'size' => 'normal',
+    'length' => '255',
+    'not null' => FALSE,
+  ]);
+}
