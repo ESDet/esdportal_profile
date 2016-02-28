@@ -1,0 +1,234 @@
+<?php
+
+/**
+ * @file
+ * Module file for esdportal_scoresbybocode.
+ *
+ * Provide a page listing a certain school's raw test scores for review by a
+ * school administrator.
+ *
+ */
+
+/**
+ * Implements hook_permission().
+ */
+function esdportal_scoresbybcode_permission() {
+  return array(
+    'access school scores' => array(
+      'title' => t('Access school score pages'),
+      'description' => t('Allow users to view school scores by bcode'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function esdportal_scoresbybcode_menu() {
+  $items['schoolscores/2013/%'] = array(
+    'title' => '2013 School scores',
+    'page callback' => 'esdportal_scoresbybcode_page',
+    'page arguments' => array(2, 1),
+    'access arguments' => array('access school scores'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['schoolscores/2014/%'] = array(
+    'title' => '2014 School scores',
+    'page callback' => 'esdportal_scoresbybcode_page',
+    'page arguments' => array(2, 1),
+    'access arguments' => array('access school scores'),
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['schoolscores/contact'] = array(
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('esdportal_scoresbybcode_form'),
+    'access arguments' => array('access school scores'),
+    'title' => 'School score feedback',
+  );
+
+  $items['admin/config/esdportal_scoresbybcode'] = array(
+    'title' => t('School Scores Page Settings'),
+    'description' => t('Change the email destination and alert message at schoolscores/%'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('esdportal_scoresbybcode_admin'),
+    'access arguments' => array('administer nodes'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function esdportal_scoresbybcode_theme() {
+  return array(
+    'esdportal_scoresbybcode_2013' => array(
+      'variables' => array(),
+      'template' => 'esdportal-scoresbybcode-2013',
+    ),
+    'esdportal_scoresbybcode_2014' => array(
+      'variables' => array(),
+      'template' => 'esdportal-scoresbybcode-2014',
+    ),
+  );
+}
+
+/**
+ * Allow for custom top message and email destination.
+ */
+function esdportal_scoresbybcode_admin() {
+  $form = array();
+
+  $form['esdportal_scoresbybcode_alert'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Alert message'),
+    '#description' => t('This message will display above the school scores.'),
+    '#max_length' => 256,
+    '#size' => 20,
+    '#required' => TRUE,
+    '#default_value' => variable_get('esdportal_scoresbybcode_alert', t('Please review these scores.')),
+  );
+
+  $form['esdportal_scoresbybcode_alerttype'] = array(
+    '#type' => 'select',
+    '#title' => t('Alert message type'),
+    '#required' => TRUE,
+    '#options' => array(
+      'instruction' => t('Instruction'),
+      'status' => t('Status'),
+      'warning' => t('Warning'),
+      'error' => t('Error'),
+    ),
+    '#default_value' => variable_get('esdportal_scoresbybcode_alerttype', 'instruction'),
+  );
+
+  $form['esdportal_scoresbybcode_email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Target email'),
+    '#description' => t('Comment form responses will be sent to this email address.'),
+    '#max_length' => 100,
+    '#size' => 20,
+    '#required' => TRUE,
+    '#default_value' => variable_get('esdportal_scoresbybcode_email', 'eanderson@excellentschoolsdetroit.org'),
+  );
+
+  return system_settings_form($form);
+}
+
+function esdportal_scoresbybcode_page($bcode, $year) {
+  // Validate bcode
+  $bcode = intval($bcode);
+  if ($bcode < 1) {
+    return t('Please provide a numeric bcode.');
+  }
+
+  // Validate year
+  $year = intval($year);
+  if ($year < 1) {
+    return t('Please provide a numeric year.');
+  }
+
+  // Load school term by bcode
+  $school_tid = db_query("SELECT ttd.tid FROM {field_data_field_bcode} AS fdfb INNER JOIN {taxonomy_term_data} AS ttd ON fdfb.entity_id=ttd.tid WHERE fdfb.field_bcode_value=:bcode AND fdfb.entity_type='taxonomy_term'", array(':bcode' => $bcode))->fetchField();
+  $school = taxonomy_term_load($school_tid);
+  if (!$school) {
+    return t('Please provide a bcode for an ESD school.');
+  }
+  $school_status = taxonomy_term_load($school->field_school_scorecard_status['und'][0]['tid']);
+
+  // some templates need all years... icky.
+  $data = array(
+    'esd_hs_2013' => db_query("SELECT * FROM {esd_hs_2013} WHERE buildingcode = :bcode", array(':bcode' => $bcode))->fetchAssoc(),
+    'esd_k8_2013' => db_query("SELECT * FROM {esd_k8_2013} WHERE buildingcode = :bcode", array(':bcode' => $bcode))->fetchAssoc(),
+    'esd_k8_2013_r1' => db_query("SELECT * FROM {esd_k8_2013_r1} WHERE buildingcode = :bcode", array(':bcode' => $bcode))->fetchAssoc(),
+    'esd_hs_2014' => db_query("SELECT * FROM {esd_hs_2014} WHERE buildingcode = :bcode", array(':bcode' => $bcode))->fetchAssoc(),
+    'esd_k8_2014' => db_query("SELECT * FROM {esd_k8_2014} WHERE buildingcode = :bcode", array(':bcode' => $bcode))->fetchAssoc(),
+  );
+
+
+  $message = array(
+    'alert' => array(
+      '#type' => 'markup',
+      '#markup' => '<div class="messages ' . variable_get('esdportal_scoresbybcode_alerttype') . '">' . variable_get('esdportal_scoresbybcode_alert') . '</div>',
+    ),
+  );
+  $message = drupal_render($message);
+
+  $form = drupal_render(drupal_get_form('esdportal_scoresbybcode_form'));
+
+  return theme('esdportal_scoresbybcode_' . $year, array('message' => $message, 'year' => $year, 'school' => $school, 'school_status' => $school_status->name, 'school_status_lc' => strtolower($school_status->name), 'data' => $data, 'form' => $form));
+}
+
+/**
+ * Provide a contact form for school score by bcode page
+ * Should only be displayed in block form, for the most part, but also has a menu entry...
+ */
+function esdportal_scoresbybcode_form() {
+  $form['intro'] = array(
+    '#markup' => 'Please use this feedback form if you have any concerns. For immediate assistance, please call 313-285-9156.',
+  );
+  $form['name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Name'),
+    '#required' => TRUE,
+  );
+  $form['email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Email'),
+    '#required' => TRUE,
+  );
+  $form['comments'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Comments'),
+    '#required' => TRUE,
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit'),
+  );
+
+  return $form;
+}
+
+/**
+ * Implements hook_form_validate().
+ */
+function esdportal_scoresbybcode_form_validate($form, &$form_state) {
+  if (!valid_email_address($form_state['values']['email'])) {
+    form_set_error('email', t('Please provide a valid email address.'));
+  }
+}
+
+/**
+ * Implements hook_form_submit().
+ */
+function esdportal_scoresbybcode_form_submit($form, &$form_state) {
+  global $user;
+
+  $vals = $form_state['values'];
+
+  $module = 'esdportal_scoresbybcode';
+  $key = 'school_score_feedback';
+  $to = variable_get('esdportal_scoresbybcode_email', 'eanderson@excellentschoolsdetroit.org');
+  $from = $vals['email'];
+
+  $message = drupal_mail($module, $key, $to, language_default(), $vals, $from, FALSE);
+  $message['subject'] = t('School score feedback from user @username', array('@username' => $user->name));
+  $message['body'] = t('@name <@email> wrote:', array('@name' => $vals['name'], '@email' => $vals['email'])) . "\n\n" . $vals['comments'];
+  $message['body'] .= "\n\n--\n" . t('Submitted by user @user from @url', array('@user' => $user->name, '@url' => $_SERVER['REQUEST_URI']));
+
+  $system = drupal_mail_system($module, $key);
+
+  $message['result'] = $system->mail($message);
+
+
+  if ($message['result'] == TRUE) {
+    drupal_set_message(t('Thank you for providing school score feedback.'));
+  }
+  else {
+    drupal_set_message(t('There was a problem sending your feedback.'), 'error');
+  }
+}
+
