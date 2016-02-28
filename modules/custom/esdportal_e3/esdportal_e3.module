@@ -1154,4 +1154,18 @@ function esdportal_e3_entity_presave($entity) {
     }
 
   }
+
+  // Calculate duration.
+  if ($entity->type === 'session_log' || $entity->type === 'observation_log') {
+    $wrapper = entity_metadata_wrapper('e3_note', $entity);
+
+    $date = $wrapper->field_time_of_observation->value();
+
+    $start = new DateObject($date['value'], $date['timezone']);
+    $end = new DateObject($date['value2'], $date['timezone']);
+
+    $duration = $start->difference($end, 'seconds');
+
+    $wrapper->field_observation_duration->set($duration);
+  }
 }
