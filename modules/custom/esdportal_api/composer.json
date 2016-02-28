@@ -1,0 +1,20 @@
+{
+    "name": "esdet/esdportal_api",
+    "require": {
+        "tobscure/json-api": "dev-master"
+    },
+    "repositories": [
+       {
+         "type": "vcs",
+         "url":  "https://github.com/bnchdrff/json-api.git"
+       }
+    ],
+    "license": "GNU GPLv2",
+    "authors": [
+        {
+            "name": "Benjamin Chodoroff",
+            "email": "bc@thermitic.net"
+        }
+    ],
+    "minimum-stability": "dev"
+}
