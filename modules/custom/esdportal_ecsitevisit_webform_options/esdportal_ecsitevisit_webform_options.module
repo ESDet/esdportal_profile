@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * Implements hook_webform_select_options_info()
+ */
+function esdportal_ecsitevisit_webform_options_webform_select_options_info() {
+  $items = array();
+
+  $items['ec_centers'] = array(
+    'title' => t("Early childhood centers"),
+    'options callback' => 'esdportal_ecsitevisit_webform_options_callback',
+  );
+
+  return $items;
+}
+
+/**
+ * Returns all early childhood centers with a "star" rating of at least 3
+ * and that in the geographic zone of interest.
+ */
+function esdportal_ecsitevisit_webform_options_inzone_centers() {
+  $table_name = variable_get('esdportal_ec_table_name', 'earlychild');
+  $q = sprintf("SELECT * FROM {%s} WHERE InSiteVisitZone = TRUE AND PublishedRating >= 3 ORDER BY BusinessName", $table_name);
+  return db_query($q, array())->fetchAllAssoc('id');
+}
+
+function esdportal_ecsitevisit_webform_options_callback() {
+  $options = array();
+  $centers = esdportal_ecsitevisit_webform_options_inzone_centers();
+
+  foreach ($centers as $id => $center) {
+    $options[$id] = $center->BusinessName;
+  }
+
+  return $options;
+}
