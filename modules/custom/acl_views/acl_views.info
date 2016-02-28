@@ -1,0 +1,4 @@
+name = ACL Views
+description = Describes ACL tables to Views
+core = 7.x
+php = 5.3
