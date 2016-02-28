@@ -1,0 +1,886 @@
+/*******************************************************************************
+<<<<<<< HEAD
+ * _base.scss
+ *
+ * Base styles define the default look for HTML and common Drupal elements.
+ *
+ * These rules will generally be made up of element selectors for HTML elements
+ * such as headings, paragraphs and lists. Common Drupal elements such as form
+ * items, collapsible fieldsets and messages should be included in this partial.
+ *
+ * The styleguide module (http://drupal.org/project/styleguide) gives you a good
+ * overview of Drupal's common elements for styling. By setting a solid baseline
+=======
+ * _base.scss
+
+ * Base styles define the default look for HTML and common Drupal elements.
+ *
+ * These rules will generally be made up of element selectors for HTML elements
+ * such as headings, paragraphs and lists. Common Drupal elements such as form
+ * items, collapsible fieldsets and messages should be included in this partial.
+ *
+ * The styleguide module (http://drupal.org/project/styleguide) gives you a good
+ * overview of Drupals common elements for styling. By setting a solid baseline
+>>>>>>> sandbox/7.x-4.x
+ * before adding any more specific customisations you ensure that as any new
+ * features are added they will be correctly styled without any extra work.
+ ******************************************************************************/
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  margin: 1em 0 .5em 0;
+}
+
+@mixin yellowUnderlineLink {
+  a:link, a:visited {
+    color: black;
+    border-bottom: 2px solid $yellow;
+  }
+  a:active, a:hover {
+    color: black;
+    border-bottom: 2px solid $darkblue;
+  }
+}
+
+.l-content {
+  h1 {
+    margin: 0 0 25px 0;
+    padding: 20px 10px;
+    color: white;
+    font: {
+      size: 35px;
+      weight: normal;
+    }
+    background: {
+      color: $lightblue;
+    }
+    a {
+      color: white;
+    }
+  }
+  h2, h3, h4, h5, h6 {
+    color: $darkblue;
+    font-weight: normal;
+    a {
+      color: $darkblue;
+    }
+    a:hover, a:focus {
+      color: $orange;
+    }
+  }
+  h2 {
+
+  }
+  h3 {
+  }
+}
+.page-node {
+  .l-content {
+    > p:first-child img {
+      margin-top: -1em;
+      margin-bottom: -1em;
+    }
+    .node__content {
+      @include yellowUnderlineLink;
+      p {
+        margin: 10px 0;
+      }
+    }
+    #disqus_thread,
+    .field--socialshareprivacy {
+      img {
+        width: initial;
+      }
+    }
+    .caption {
+      font-style:italic;
+      color: $darkgrey;
+    }
+  }
+}
+
+/* Random elements */
+.italic {
+  font-style: italic;
+}
+
+.links a {
+  color: $darkgrey;
+}
+
+.node-readmore,
+.read-more {
+  @include blackButton;
+}
+.disqus_comments_num {
+  padding: 0 0 10px;
+}
+.mollom-privacy {
+  @include yellowUnderlineLink;
+  font-size: 14px;
+}
+.feed-icon {
+  float: right;
+  padding: 10px 0;
+}
+
+.branding {
+  .site-logo {
+    display: block;
+
+  }
+}
+
+.l-header {
+  .block, .block__content {
+    display: inline-block;
+  }
+}
+
+
+@mixin orangeBlockLink {
+  @include rightWhiteArrowBig;
+  padding: 10px 10px;
+  font: {
+    size: 45px;
+
+  }
+  color: white;
+  background: {
+    color: $orange;
+  }
+}
+
+
+/* Navigation */
+.l-region--branding {
+  @include clearListStyles;
+  margin-bottom: 20px;
+  ul.menu li {
+    margin-bottom: 5px;
+    a {
+      @include linkBlockStyle;
+    }
+    > ul.menu li {
+      @include blueMenu;
+      ul.menu li {
+        margin: 0;
+        a {
+          color: $darkblue;
+          padding: 5px 10px;
+          background: {
+            color: $lightgrey;
+            image: none;
+          }
+        }
+        a.active,
+        a:hover,
+        a:focus {
+          background-color: $grey;
+        }
+      }
+    }
+  }
+  // Magic to hide non-active menu
+  .menu-block-wrapper > ul.menu > li ul.menu > li ul.menu,
+  .menu-block-wrapper > ul.menu > li ul.menu {
+    display: none;
+  }
+  .menu-block-wrapper > ul.menu > li.active-trail ul.menu > li.active-trail ul.menu,
+  .menu-block-wrapper > ul.menu > li.active-trail ul.menu {
+    display: block;
+  }
+  // Learn & Take Action  menu items
+  .menu-block-wrapper > ul.menu > li > a {
+    @include orangeBlockLink;
+  }
+  .menu-block-wrapper > ul.menu > li > a:hover,
+  .menu-block-wrapper > ul.menu > li > a:focus {
+    background-color: $lightorange;
+  }
+  .menu-block-wrapper > ul.menu > li > a.active-trail {
+    @include downBlackArrowBig;
+  }
+  select {
+    @include orangeBlockLink;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 320px;
+    border: 0 none;
+    cursor: pointer;
+    font-size: 16px;
+    option {
+      background-color: $lightorange;
+      color: black;
+    }
+  }
+  .block {
+    margin: 0 0 10px 0;
+    > h2 {
+      @include linkBlockStyle;
+      @include orangeBlockLink;
+      background-image: none;
+      font-size: 19px;
+    }
+    > ul > li {
+      @include blueMenu;
+    }
+  }
+}
+
+.l-region--branding ul.menu li > ul.menu > li.expanded.active-trail > a {
+  background: $lightblue url(../images/blackArrowDown.png) no-repeat 98% center !important;
+}
+
+
+
+
+// overrides
+.node-type-weekly-update #block-menu-block-1 ul.menu,
+.node-type-media-hit #block-menu-block-1 ul.menu {
+  display: block;
+}
+
+.l-region--sidebar-first {
+  .block {
+    margin: 0 0 25px 0;
+    .block__title {
+      border-bottom: 3px solid $darkblue;
+      margin: 0 0 10px;
+      font: {
+        size: 25px;
+      }
+      color: $darkblue;
+    }
+  }
+}
+
+
+/* Footer */
+@mixin footerHeadLink {
+  font: {
+    size: 16px;
+  }
+  color: $orange;
+  border-bottom: 2px solid $orange;
+
+}
+
+.i18n-es .l-footer-wrapper {
+  #block-block-2,
+  #block-locale-language {
+    top: 0;
+    float:none;
+  }
+}
+.l-footer-wrapper {
+  background-color: $lightgrey;
+  padding: 20px 0;
+  a:link, a:visited {
+    color: $orange;
+  }
+  a:active, a:hover {
+    color: darken($orange, 30%);
+  }
+  .l-region--footer-first {
+    h4 {
+      margin-top: 0;
+    }
+  }
+  #block-boxes-school-leaders {
+    display: none;
+  }
+  #block-block-2,
+  #block-locale-language {
+    position: relative;
+    float:right;
+    top: -40px;
+    a {
+      padding: 5px 10px;
+    }
+    margin-bottom: 20px;
+  }
+  #block-search-form {
+    margin: 0;
+    .block__content {
+      margin-left: 50%;
+      form {
+        margin-left: -50%;
+        input[type=text] {
+          min-width: 170px;
+        }
+      }
+    }
+  }
+  #block-menu-block-3,
+  #block-menu-block-4,
+  #block-menu-block-5,
+  #block-menu-menu-footer-links,
+  .l-region--footer-third .block,
+  .l-region--footer-second .block {
+    margin: 0 0 20px;
+    @include clearListStyles;
+    &.block--menu > ul.menu > li a,
+    .menu-block-wrapper > ul.menu > li > a {
+      @include footerHeadLink;
+      @include linkBlockStyle;
+    }
+    ul.menu ul.menu li {
+      a {
+        @include linkBlockStyle;
+        padding: 5px 0 0;
+        color: black;
+      }
+      a:hover,
+      a:focus {
+        color: $darkgrey;
+      }
+    }
+  }
+  #block-menu-menu-footer-links,
+  #block-menu-block-5 {
+    ul.menu li {
+      margin: 0 0 20px;
+    }
+  }
+  #block-menu-menu-footer-links {
+    a {
+      font-size: 18px !important;
+    }
+    li.first {
+      background: transparent url(../images/esd_scorecard_icon.png) 100% 3px no-repeat;
+    }
+    li.last {
+      background: transparent url(../images/esd_main_icon.png) 100% 1px no-repeat;
+    }
+  }
+}
+
+/* Take ACtion & Learn Pages */
+
+.section-tomar-medidas,
+.section-aprenda,
+.section-take-action,
+.section-learn {
+  .l-region--branding {
+    ul.menu ul.menu {
+      display: none !important;
+    }
+  }
+  .l-content-right {
+    @include clearListStyles;
+    ul.menu li {
+      margin-bottom: 5px;
+      @include blueMenu;
+      a {
+        font-size: 25px;
+      }
+
+    }
+  }
+}
+.section-learn .l-content-right h1 {
+  @include bgLightbulb;
+}
+.section-take-action .l-content-right h1 {
+  @include bgActionArrow;
+}
+
+/* Search */
+#search-form #edit-basic,
+#search-block-form {
+  @include arrowLinkSmall;
+  margin: 10px 0 0;
+  div {
+    display: inline-block;
+    margin: 0;
+    input.form-text {
+      width: 158px;
+      padding: 1px 2px 0 20px;
+      background: {
+        image: url(../images/search_icon.png);
+        repeat: no-repeat;
+        position: 0;
+      }
+    }
+  }
+}
+
+/* Search Results Page */
+.page-search {
+  .search-form #edit-basic {
+    div , input {
+      display:inline-block !important;
+    }
+    label {
+      display: none;
+    }
+  }
+  .search-results {
+    .search-result {
+      margin: 0 0 35px;
+      .search-result__snippet {
+        color: $darkergrey;
+        padding: 0;
+        margin: 0;
+        strong {
+          color:black;
+        }
+      }
+      .search-result__info {
+        display:none;
+      }
+    }
+  }
+}
+
+.lang-indicator {
+  span {
+    padding: 1px 2px 0;
+    font-size: 13px;
+  }
+  .es {
+    background-color: $yellow;
+  }
+  .en {
+    background-color: $green;
+  }
+}
+
+/* Pagers */
+ul.pager {
+  text-align: left;
+  li {
+    font: {
+      size: 18px;
+    }
+    a {
+      padding: 2px 3px;
+      color: black;
+    }
+    a:hover, a:focus {
+      color: white;
+      background-color: $darkergrey;
+    }
+  }
+  .pager__ellipsis {
+    display: inline;
+  }
+  .pager__item--current {
+    padding: 2px 3px;
+    color: white;
+    background-color: black;
+  }
+  .pager__item--pager-next,
+  .pager__item--previous,
+  .pager__item--first,
+  .pager__item--last {
+    font: {
+      size: 14px;
+    }
+    a {
+      @extend .pager__item--current;
+      text-transform: capitalize;
+    }
+  }
+}
+
+
+
+/* Nodes */
+.page-node .node--full {
+}
+.node--media-hit,
+.node--blog-entry {
+  .field--media-hit-date,
+  .field--blog-date {
+    color: $darkergrey;
+    margin: 10px 0 5px;
+    display: block;
+  }
+  .node__title {
+    margin: 5px 0;
+  }
+  .submitted {
+    display: inline;
+    color: $darkgrey;
+    font-style: italic;
+    .field--media-author,
+    .field--author,
+    .field--author a:link,
+    .field--author a:visited,
+    .field--author a:active,
+    .field--author a:hover {
+      display: inline;
+      text-transform: uppercase;
+      font-style: normal;
+      color: $darkergrey;
+    }
+  }
+  .node__content {
+    margin: 20px 0;
+    .field--blog-tags {
+      display:inline-block;
+      a:link, a:visited {
+        padding: 4px;
+        color: $lightblue;
+        background-color: black;
+        font: {
+          size: 25px;
+        }
+        border-bottom: 0 none;
+      }
+      a:active, a:hover, a:focus {
+        background-color: $darkergrey;
+      }
+    }
+  }
+  .field--external-url {
+    padding: 10px 0 30px 70px;
+    a {
+      padding: 5px 0 5px 0;
+      border-bottom: 2px solid $yellow;
+      color: $darkgrey;
+    }
+    background: {
+      image: url(../images/newspaper.png);
+      repeat: no-repeat;
+      position: 0 0;
+    }
+  }
+  .field--file {
+    img {
+      vertical-align:middle;
+      padding: 10px 10px 10px 0;
+    }
+    a {
+      padding: 5px 0 5px 0;
+      border-bottom: 2px solid $yellow;
+      color: $darkgrey;
+    }
+  }
+  .field-label {
+    margin: 10px 0;
+  }
+}
+
+/* View's Row */
+@mixin viewRow {
+  margin: 20px 0 0;
+  padding: 0 0 20px;
+  border-bottom: 2px dotted $darkgrey;
+}
+.media-hit-outlet-wrapper {
+  color: $darkergrey;
+  text-transform: uppercase;
+  .italic {
+    color: $darkgrey;
+    text-transform: none;
+  }
+  div {
+    display: inline-block;
+  }
+}
+
+/* Media Hit View */
+.view-media-archive {
+  .media-hit {
+    @include viewRow;
+    .media-hit-title {
+      margin: 5px 0;
+    }
+    .media-hit-summary {
+    }
+  }
+}
+
+/* Blog and Weekly Updates Views */
+.view-weekly-email-updates,
+.view-blog.view-display-id-page_2 {
+  article {
+    @include viewRow;
+    .links li {
+      display: block;
+      clear:both;
+    }
+  }
+}
+
+// generic field styles
+.school-info,
+.node--school-profile {
+  .field {
+    padding: .5em 0;
+  }
+}
+.node-type-school-profile {
+  ul.tabs {
+    //float: left;
+  }
+}
+.school-info {
+  clear: left;
+}
+.school-aside {
+  float: right;
+  width: 220px;
+  .school-downloads {
+    padding: 10px;
+    background-color: $yellow;
+    h2 {
+      color: black;
+      background: transparent url(../images/download_icon.png) 100% 0 no-repeat;
+      border-bottom: 1px solid black;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    img {
+      display: none;
+    }
+  }
+  .school-downloads,
+  .school-score {
+    a {
+      display:block;
+      width: 100%;
+      margin-bottom: 10px;
+      color: black;
+    }
+    a:hover, a:focus {
+      color: black;
+      text-decoration: underline;
+    }
+  }
+  .school-score {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: $yellow;
+    a {
+      margin: 0;
+      font-size: 21px;
+    }
+  }
+}
+
+// messages
+.messages {
+  min-height: 50px;
+  background: transparent url(../images/esd_message.png) 5px 50% no-repeat;
+  border-width: 2px;
+  padding: 14px 10px 10px 66px;
+}
+
+.messages--status, .messages.status {
+  border-color: $lightblue;
+}
+
+.messages--warning, .messages.warning {
+  border-color: $yellow;
+  background-image: url(../images/esd_warning.png);
+}
+
+.messages--error, .messages.error {
+  border-color: $red;
+  background-image: url(../images/esd_error.png);
+}
+
+.messages--instruction, .messages.instruction {
+  border-color: $lightblue;
+  background-image: url(../images/esd_review.png);
+}
+
+// tabs.
+ul.tabs {
+  border: 0 none;
+  display: table;
+  table-layout:fixed;
+  width: 460px;
+  li {
+    float: none;
+    display: table-cell;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border-right: 5px solid white;
+    background-color: $lightgrey;
+    a:visited, a:link {
+      background-color: $lightgrey;
+      color: #424242;
+      border-top: 2px solid #424242;
+      width: 100%;
+      height: 100%;
+      display: block;
+      padding: 10px;
+    }
+    &:hover, &:focus {
+      background-color: #eee;
+      a {
+        background-color: #eee;
+      }
+    }
+    a:hover, a:focus {
+      color: black;
+      border-top: 2px solid black;
+      background-color: #eee;
+    }
+    &.active {
+      background-color: white;
+      a {
+        background-color: transparent;
+        border-top: 2px solid $lightblue;
+      }
+    }
+  }
+}
+
+// User Dashboard.
+.page-user-dash {
+  dl {
+    @include at-breakpoint($desk_break) {
+      @include span-columns(8, 12);
+    }
+    dt {
+      background-color: #eee;
+      padding: 10px;
+      a {
+        font-size: 18px;
+        color: $darkblue;
+      }
+    }
+    dd {
+      background-color: #eee;
+      padding: 10px;
+      margin: 0 0 20px;
+      a {
+        color: $darkergrey;
+        padding-bottom: 10px;
+        display: inline-block;
+      }
+      a:hover, a:focus {
+        text-decoration: underline;
+      }
+      img {
+        display: none;
+      }
+      .taxonomy-term--schools {
+        padding-top: 15px;
+        margin-top: 5px;
+        border-top: 1px solid #a7a09d;
+      }
+    }
+  }
+}
+
+// Remove clearing element from addressfield on school profile page
+.node-type-school-profile div.addressfield-container-inline:after {
+  content: '';
+  clear: none;
+}
+
+// general webform styles
+.node-type-webform {
+  .l-content-left {
+    width: 100%;
+    clear: both;
+  }
+  .l-content-right {
+    width: 100%;
+  }
+  .node--webform {
+    font-size: 1.1em;
+    input[type="radio"] {
+      width: 30px;
+      height: 30px;
+    }
+    label.option {
+      line-height: 1.7em;
+      font-family: 'Arial', serif;
+    }
+    form .form-item label {
+      font-size: 1.1em;
+      color: black;
+    }
+    form fieldset legend .fieldset-legend {
+      padding: 10px;
+      border: none;
+    }
+    form fieldset legend {
+      background: $lightblue;
+      color: white;
+    }
+    button, input, select, textarea {
+      padding: .5em;
+    }
+    .form-radios .form-type-radio {
+      padding-top: .5em;
+    }
+    form .form-actions input.form-submit {
+      padding: 10px;
+    }
+    table {
+      width: 100%;
+    }
+    td {
+      padding: 10px 0;
+    }
+    .sticky-header th {
+      background: black;
+      color: white;
+    }
+    td:first-child {
+      padding-left: 10px;
+    }
+    .webform-datepicker {
+      input[type="image"] {
+        height: 42px;
+      }
+    }
+    .webform-component-grid {
+      label {
+        padding-bottom: 5px;
+      }
+      .webform-grid {
+        th {
+          background: black;
+          color: white;
+        }
+        tr.odd {
+          background: #C0EBFC;
+        }
+        tr.even {
+          background: white;
+        }
+        .webform-grid-question {
+          font-family: 'Arial', sans-serif;
+        }
+      }
+    }
+  }
+}
+
+// hacks for sitevisitask
+// hide fields for non-admin users editing pages via regular theme
+#school-profile-node-form {
+  #edit-field-site-visit-status,
+  #field_site_visit_unavailability-date_restrictions_host_entity,
+  #edit-field-site-visit-reuse-reason {
+    display: none;
+  }
+}
+
+.page-node-1728 {
+  #edit-submitted-school {
+    max-width: 90%;
+  }
+  .webform-component--ready-to-submit {
+    margin: 3em 0;
+  }
+}
