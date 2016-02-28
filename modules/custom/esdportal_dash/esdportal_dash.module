@@ -1,0 +1,362 @@
+<?php
+
+/**
+ * @file
+ * Module file for esdportal_dash.
+ *
+ * Provide a page at user/:uid/dash for school leaders and superintendents
+ * that lists:
+ *   * all school profiles owned by user (for school leaders)
+ *   * or all school profiles that are children of school terms where user is
+ *     specified in the superintendent entityreference field (for superintendents)
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function esdportal_dash_menu() {
+  $items['user/%/dash'] = array(
+    'title' => 'My School Profiles',
+    'page callback' => 'esdportal_dash_page',
+    'page arguments' => array(1),
+    'access callback' => 'esdportal_dash_access',
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['admin/config/esdportal_dash'] = array(
+    'title' => t('Portal User Dashboard Settings'),
+    'description' => t('Change the message at the top of user/%/dash'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('esdportal_dash_admin'),
+    'access arguments' => array('administer users'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+function esdportal_dash_access() {
+  global $user;
+  if (arg(1) != $user->uid) {
+    return FALSE;
+  }
+  return _esdportal_dash_check_user($user);
+}
+
+/**
+ * Implements hook_theme().
+ */
+function esdportal_dash_theme() {
+  return array(
+    'esdportal_dash' => array(
+      'variables' => array(),
+      'template' => 'esdportal-dash',
+    ),
+  );
+}
+
+/**
+ * Implements template_preprocess().
+function template_preprocess_esdportal_dash(&$vars) {
+}
+ */
+
+/**
+ * Render dashboard page.
+ *
+ * @param int $uid
+ *   Drupal user id
+ *
+ * @return string
+ */
+function esdportal_dash_page($uid) {
+  global $user;
+
+  // Validate uid
+  $uid = intval($uid);
+  if ($uid < 1) {
+    return t('Please provide a numeric uid.');
+  }
+
+  $schools = _esdportal_dash_schools_obj($user->uid);
+
+  $message = array(
+    'type' => variable_get('esdportal_dash_alerttype', 'instruction'),
+    'text' => variable_get('esdportal_dash_alert', 'This page lists your school profiles.'),
+  );
+
+  return theme('esdportal_dash', array('message' => $message, 'schools' => $schools));
+}
+
+/**
+ * Implements hook_user_login().
+ *
+ * If user is a superintendent or school leader, redirect to dashboard.
+ */
+function esdportal_dash_user_login(&$edit, $account) {
+  if (!isset($_POST['form_id']) || $_POST['form_id'] != 'user_pass_reset' && _esdportal_dash_check_user($account)) {
+    $_GET['destination'] = 'user/' . $account->uid . '/dash';
+  }
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function esdportal_dash_block_info() {
+  return array(
+    'my_schools' => array(
+      'info' => 'My Schools',
+      'cache' => DRUPAL_NO_CACHE, // all expensive ops are cache_*()ed
+    ),
+    'sitevisitask' => array(
+      'info' => 'Site visit ask',
+      'cache' => DRUPAL_NO_CACHE,
+    ),
+    'growthdataask' => array(
+      'info' => 'Growth data ask',
+      'cache' => DRUPAL_NO_CACHE,
+    ),
+  );
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function esdportal_dash_block_view($delta) {
+  switch ($delta) {
+    case 'sitevisitask':
+      $block = esdportal_dash_block_sitevisitask_content();
+      break;
+    case 'growthdataask':
+      $block = esdportal_dash_block_growthdataask_content();
+      break;
+    case 'my_schools':
+    default:
+      $block = esdportal_dash_block_my_schools_content();
+      break;
+  }
+  return $block;
+}
+
+/**
+ * Create my_schools block content.
+ */
+function esdportal_dash_block_my_schools_content() {
+  global $user;
+
+  $schools = _esdportal_dash_schools_obj($user->uid);
+  $links = array();
+  foreach ($schools as $school => $data) {
+    $links[] = l($data['name'], 'node/' . $data['school_profile_nid']);
+  }
+
+  $block['subject'] = l('My school profiles', 'user/' . $user->uid . '/dash');
+  $block['content'] = array(
+    'school_links' => array(
+      '#items' => $links,
+      '#theme' => 'item_list',
+    ),
+  );
+
+  return $block;
+}
+
+/**
+ * Create sitevisitask block content.
+ */
+function esdportal_dash_block_sitevisitask_content() {
+  global $user;
+
+  $schools = _esdportal_dash_schools_obj($user->uid);
+  $asks = array();
+  foreach ($schools as $school => $data) {
+    $node = node_load($data['school_profile_nid']);
+    $tid = _esdportal_str_get_sitevisitstatus($node);
+    $options = _esdportal_str_get_sitevisitstatus_options($tid);
+    if ($options['showblock']) {
+      $asks[] = node_view($node, 'sitevisitask');
+    }
+  }
+
+  if (count($asks)) {
+    $block['subject'] = null;
+    $block['content'] = array(
+      'asks' => $asks,
+    );
+  } else {
+    $block = null;
+  }
+
+  return $block;
+}
+
+/**
+ * Create growthdataask block content.
+ */
+function esdportal_dash_block_growthdataask_content() {
+  global $user;
+
+  $schools = _esdportal_dash_schools_obj($user->uid);
+  $asks = array();
+  foreach ($schools as $school => $data) {
+    $node = node_load($data['school_profile_nid']);
+    $has_growthdata_file = _esdportal_str_is_growthdata_uploaded($node);
+    if (!$has_growthdata_file) {
+      $asks[] = node_view($node, 'growthdataask');
+    }
+  }
+
+  if (count($asks)) {
+    $block['subject'] = null;
+    $block['content'] = array(
+      'asks' => $asks,
+    );
+  } else {
+    $block = null;
+  }
+
+  return $block;
+}
+
+/**
+ * Get school tids for which $uid is a superintendent
+ *
+ * @param int $uid
+ *
+ * @return
+ *   Array of taxonomy term IDs
+ */
+function _esdportal_dash_superintendented_school_tids($uid) {
+  // Get terms
+  $tids = db_select('field_data_field_superintendents', 'supers')
+            ->fields('supers', array('entity_id'))
+            ->condition('field_superintendents_target_id', $uid)
+            ->execute()
+            ->fetchCol();
+
+  return $tids;
+}
+
+/**
+ * Get parent school tids of school_profiles for which $uid has acl update perms
+ *
+ * @param int $uid
+ *
+ * @return
+ *   Array of taxonomy term IDs
+ */
+function _esdportal_dash_updatable_school_tids($uid) {
+  $acl_granted = db_query("SELECT fdfs.field_school_tid FROM {acl_user} au INNER JOIN {acl_node} an ON au.acl_id = an.acl_id INNER JOIN {field_data_field_school} AS fdfs ON an.nid=fdfs.entity_id WHERE an.grant_update = 1 AND au.uid = :uid", array("uid" => $uid))->fetchCol();
+  $node_owned = db_query('SELECT fdfs.field_school_tid FROM {node} AS n INNER JOIN {field_data_field_school} AS fdfs ON n.nid=fdfs.entity_id WHERE n.uid = :uid', array("uid" => $uid))->fetchCol();
+  return array_merge($acl_granted, $node_owned);
+}
+
+/**
+ * Build schools info thingie.
+ */
+function _esdportal_dash_schools_obj($uid) {
+  if ($cached = cache_get('esdportal_dash_schools_' . $uid, 'cache')) {
+    $schools = $cached->data;
+  }
+  if (empty($schools)) {
+    // Get list of schools for which user is superintendent or leader and attach child items
+    $superintendented_schools = _esdportal_dash_superintendented_school_tids($uid);
+    $updatable_schools = _esdportal_dash_updatable_school_tids($uid);
+    $schools = array_flip(array_unique(array_merge($superintendented_schools, $updatable_schools)));
+    foreach ($schools as $tid => &$data) {
+      $data = array();
+      $term = taxonomy_term_load($tid);
+      $nids = taxonomy_select_nodes($tid);
+      // Label school profiles as such... but only one :)
+      foreach ($nids as $nid) {
+        if (!isset($data['school_profile_nid']) && _esdportal_dash_nid_is_school_profile($nid)) {
+          $data['school_profile_nid'] = $nid;
+        }
+      }
+      // Attach aside (report links) and name
+      $term_array = taxonomy_term_view($term, 'aside');
+      if (array_key_exists('field_links', $term_array) || array_key_exists('field_files', $term_array)) {
+        $data['aside'] = drupal_render($term_array);
+      }
+      $data['name'] = $term->name;
+      $data['bcode'] = $term->field_bcode['und'][0]['value'];
+      // Mark updatable schools as such
+      $data['updatable'] = (in_array($tid, $updatable_schools)) ? TRUE : FALSE;
+    }
+    cache_set('esdportal_dash_schools_' . $uid, $schools, 'cache', time() + 60*60);
+  }
+  return $schools;
+}
+
+
+/**
+ * Is nid referring to a school profile node?
+ *
+ * @param int $nid
+ *
+ * @return
+ *   bool
+ */
+function _esdportal_dash_nid_is_school_profile($nid) {
+  $type = db_select('node')
+            ->fields('node', array('type'))
+            ->condition('nid', $nid)
+            ->execute()
+            ->fetchField();
+
+  return $type == 'school_profile';
+}
+
+/**
+ * Check if user should see the dashboard.
+ *
+ * @param object $user
+ *   Drupal user account object
+ *
+ * @return bool
+ */
+function _esdportal_dash_check_user($user) {
+  $user_roles = array_values($user->roles);
+  if (!is_array($user_roles)) {
+    return FALSE;
+  }
+  if (in_array('Superintendent', $user_roles) || in_array('School Leader', $user_roles) || in_array('School Representative', $user_roles)) {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
+}
+
+/**
+ * Set custom top message on user/%/dash.
+ */
+function esdportal_dash_admin() {
+  $form = array();
+
+  $form['esdportal_dash_alert'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Alert message'),
+    '#description' => t('This message will display above the dashboard.'),
+    '#max_length' => 256,
+    '#size' => 20,
+    '#required' => TRUE,
+    '#default_value' => variable_get('esdportal_dash_alert', t('This page lists your school profiles.')),
+  );
+
+  $form['esdportal_dash_alerttype'] = array(
+    '#type' => 'select',
+    '#title' => t('Alert message type'),
+    '#required' => TRUE,
+    '#options' => array(
+      'instruction' => t('Instruction'),
+      'status' => t('Status'),
+      'warning' => t('Warning'),
+      'error' => t('Error'),
+    ),
+    '#default_value' => variable_get('esdportal_dash_alerttype', 'instruction'),
+  );
+
+  return system_settings_form($form);
+}
+
