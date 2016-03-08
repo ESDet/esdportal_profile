@@ -374,7 +374,7 @@ function esdportal_api_services_resources() {
             array(
               'name' => 'filter_values',
               'type' => 'array',
-              'description' => 'An array of special fields paired with comma-separated values to use to filter the result set. Allowed values for schools: field_special_ed_level (basic,intensive,moderate,none), field_special_ed_programs (autism,blindness,cognitive,deafness,developmental_delay,emotional,ld,multiple,orthopedic,other,speech), field_transportation_options (none,passes,busses,shared_bus,special_ed_only). Filter values are added to the query using an IN clause (OR).',
+              'description' => 'An array of special fields paired with comma-separated values to use to filter the result set. Allowed values for schools: field_special_ed_level (basic,intensive,moderate,none), field_special_ed_programs (autism,blindness,cognitive,deafness,developmental_delay,emotional,ld,multiple,orthopedic,other,speech), field_transportation_options (none,passes,busses,shared_bus,special_ed_only), field_academic_focus (special_education, vocational, technology, all_arts, foreign_lang, religious, business, visual_arts, performing_arts, medical, music, engineering, service_learning, mathematics, science, none). Filter values are added to the query using an IN clause (OR).',
               'optional' => TRUE,
               'source' => array('param' => 'filter_values'),
               'default value' => array(),
@@ -1129,6 +1129,11 @@ function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op,
         case 'field_transportation_options':
           $query->addTag('field_transportation_options_filter');
           $query->addMetaData('field_transportation_options_filter', $vals);
+          break;
+
+        case 'field_academic_focus':
+          $query->addTag('field_academic_focus_filter');
+          $query->addMetaData('field_academic_focus_filter', $vals);
           break;
 
         default:
@@ -2081,7 +2086,7 @@ function esdportal_api_query_field_special_ed_programs_filter_alter(\QueryAltera
 }
 
 /**
- * Adds a field_transportaion_options filter.
+ * Adds a field_transportation_options filter.
  */
 function esdportal_api_query_field_transportation_options_filter_alter(\QueryAlterableInterface &$query) {
   // Get parameters from query metadata.
@@ -2098,4 +2103,42 @@ function esdportal_api_query_field_transportation_options_filter_alter(\QueryAlt
   }
 
   $query->condition('transportation_options.field_transportation_options_value', $options, 'IN');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * Adds join to field_data_field_academic_focus.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query.
+ */
+function esdportal_api_query_join_academic_focus_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
+
+  $query->join('field_data_field_academic_focus', 'academic_focus', 'academic_focus.entity_id=school_profile_ref.entity_id');
+}
+
+/**
+ * Adds a field_academic_focus filter.
+ */
+function esdportal_api_query_field_academic_focus_filter_alter(\QueryAlterableInterface &$query) {
+  // Get parameters from query metadata.
+  $options = $query->getMetaData('field_academic_focus_filter');
+
+  if (!count($options)) {
+    return services_error(t('to filter academic focus, please provide some options!'));
+  }
+
+  // First, inner join with field_data_field_special_ed.
+  if (!$query->hasTag('join_academic_focus')) {
+    esdportal_api_query_join_academic_focus_alter($query);
+    $query->addTag('join_academic_focus');
+  }
+
+  $query->condition('academic_focus.field_academic_focus_value', $options, 'IN');
 }
