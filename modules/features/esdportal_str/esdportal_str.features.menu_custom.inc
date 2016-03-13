@@ -37,7 +37,7 @@ function esdportal_str_menu_default_menu_custom() {
   // Exported menu: menu-webform-results.
   $menus['menu-webform-results'] = array(
     'menu_name' => 'menu-webform-results',
-    'title' => 'Webform Results',
+    'title' => 'Data View/Export',
     'description' => '',
   );
   // Exported menu: navigation.
@@ -55,6 +55,7 @@ function esdportal_str_menu_default_menu_custom() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Data Entry');
+  t('Data View/Export');
   t('Downloads');
   t('Footer Links');
   t('Logistics Coordinator Menu');
@@ -64,7 +65,6 @@ function esdportal_str_menu_default_menu_custom() {
   t('This menu is enabled for users with the Logistics Coordinator role.');
   t('This menu is enabled in the footer for all users.');
   t('User menu');
-  t('Webform Results');
 
 
   return $menus;

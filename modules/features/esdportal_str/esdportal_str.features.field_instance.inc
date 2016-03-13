@@ -2993,7 +2993,7 @@ function esdportal_str_field_default_field_instances() {
     'bundle' => 'school_profile',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Is there an application process for your school?',
+    'description' => 'Is this an application/magnet school that requires a selective application process or audition?',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -3034,7 +3034,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 39,
+      'weight' => 13,
     ),
   );
 
@@ -3343,7 +3343,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 32,
+      'weight' => 8,
     ),
   );
 
@@ -4368,7 +4368,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 9,
+      'weight' => 17,
     ),
   );
 
@@ -5237,7 +5237,7 @@ function esdportal_str_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 10,
+      'weight' => 15,
     ),
   );
 
@@ -5336,7 +5336,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 13,
+      'weight' => 19,
     ),
   );
 
@@ -5495,7 +5495,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 8,
+      'weight' => 16,
     ),
   );
 
@@ -5538,7 +5538,7 @@ function esdportal_str_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 12,
+      'weight' => 14,
     ),
   );
 
@@ -5997,7 +5997,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 19,
+      'weight' => 10,
     ),
   );
 
@@ -6006,7 +6006,7 @@ function esdportal_str_field_default_field_instances() {
     'bundle' => 'school_profile',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Does your school have a specialized program for specific types of special education students? If so, please indicate below.',
+    'description' => 'Does your school have a dedicated/specialized program for specific types of special education students? If so, please indicate below. This means that your school has on-site programming with dedicated staff.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -6047,7 +6047,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 20,
+      'weight' => 11,
     ),
   );
 
@@ -6582,7 +6582,7 @@ function esdportal_str_field_default_field_instances() {
     'bundle' => 'school_profile',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'What time does school end?',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -6623,7 +6623,7 @@ function esdportal_str_field_default_field_instances() {
     'bundle' => 'school_profile',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'What time does school begin?',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -6757,7 +6757,51 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 18,
+      'weight' => 9,
+    ),
+  );
+
+  // Exported field_instance: 'node-school_profile-field_wheelchair_accessible'
+  $field_instances['node-school_profile-field_wheelchair_accessible'] = array(
+    'bundle' => 'school_profile',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Are all floors in your building wheelchair accessible?',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 78,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_wheelchair_accessible',
+    'label' => 'Wheelchair Accessibility',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 12,
     ),
   );
 
@@ -8713,6 +8757,94 @@ function esdportal_str_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'taxonomy_term-schools-field_2016_universe'
+  $field_instances['taxonomy_term-schools-field_2016_universe'] = array(
+    'bundle' => 'schools',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'aside' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 58,
+      ),
+    ),
+    'entity_type' => 'taxonomy_term',
+    'field_name' => 'field_2016_universe',
+    'label' => '2016 In Universe',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 48,
+    ),
+  );
+
+  // Exported field_instance: 'taxonomy_term-schools-field_2016_verified'
+  $field_instances['taxonomy_term-schools-field_2016_verified'] = array(
+    'bundle' => 'schools',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'aside' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 59,
+      ),
+    ),
+    'entity_type' => 'taxonomy_term',
+    'field_name' => 'field_2016_verified',
+    'label' => '2016 Key Fields Verified',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 49,
+    ),
+  );
+
   // Exported field_instance: 'taxonomy_term-schools-field_5e_roster'
   $field_instances['taxonomy_term-schools-field_5e_roster'] = array(
     'bundle' => 'schools',
@@ -9685,7 +9817,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 23,
+      'weight' => 24,
     ),
   );
 
@@ -9876,7 +10008,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 22,
+      'weight' => 23,
     ),
   );
 
@@ -10218,6 +10350,8 @@ function esdportal_str_field_default_field_instances() {
   t('2015 Site Visit Date');
   t('2015 Site Visit Eligible?');
   t('2015 Site Visit Zone');
+  t('2016 In Universe');
+  t('2016 Key Fields Verified');
   t('5E roster');
   t('A phone number where parents can contact the school for information.');
   t('AP Classes');
@@ -10236,6 +10370,7 @@ function esdportal_str_field_default_field_instances() {
   t('Application Fee Amount');
   t('Application Process');
   t('Applications Received');
+  t('Are all floors in your building wheelchair accessible?');
   t('Arts - Media');
   t('Arts - Music');
   t('Arts - Performing & Written');
@@ -10271,7 +10406,7 @@ function esdportal_str_field_default_field_instances() {
   t('Do you offer early childhood programs? If so, please select the years covered by your program.');
   t('Do you offer transportation for after-school programming?');
   t('Does your school have a bullying and/or cyber bulling policy in place?');
-  t('Does your school have a specialized program for specific types of special education students? If so, please indicate below.');
+  t('Does your school have a dedicated/specialized program for specific types of special education students? If so, please indicate below. This means that your school has on-site programming with dedicated staff.');
   t('Does your school have before or after care on site?');
   t('Does your school have uniforms or a dress code?');
   t('Does your school offer any bilingual/language immersion programs?');
@@ -10329,9 +10464,9 @@ function esdportal_str_field_default_field_instances() {
   t('In-School Programs');
   t('Instructional Model');
   t('Is there an application fee?');
-  t('Is there an application process for your school?');
   t('Is there anything else you would like to share about your program that we haven\'t already covered in the above questions?');
   t('Is there anything special about your school\'s schedule?');
+  t('Is this an application/magnet school that requires a selective application process or audition?');
   t('Languages spoken by program staff');
   t('Last Name');
   t('License Type');
@@ -10460,8 +10595,11 @@ function esdportal_str_field_default_field_instances() {
   t('What staff resources are available to students?');
   t('What supports are in place for English Language Learners?');
   t('What supports are in place for students with special needs?');
+  t('What time does school begin?');
+  t('What time does school end?');
   t('What transportation options are available for before and after the regular school day?  How do you determine eligibility?');
   t('What vocational or skills-based training programs does your school offer students, if any?');
+  t('Wheelchair Accessibility');
   t('Who is responsible for community partnerships and after-school programs at your school?');
   t('Written Contract');
   t('esd_ec_id');

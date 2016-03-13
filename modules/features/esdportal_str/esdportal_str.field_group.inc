@@ -21,7 +21,7 @@ function esdportal_str_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => '2013 Fields',
-    'weight' => '19',
+    'weight' => '22',
     'children' => array(
       0 => 'field_loc_email',
       1 => 'field_2011_pct_det_res',
@@ -55,7 +55,7 @@ function esdportal_str_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => '2014 Fields',
-    'weight' => '20',
+    'weight' => '21',
     'children' => array(
       0 => 'field_2014_graded',
       1 => 'field_2014_profile',
@@ -90,7 +90,7 @@ function esdportal_str_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => '2015 Fields',
-    'weight' => '21',
+    'weight' => '20',
     'children' => array(
       0 => 'field_2015_universe',
       1 => 'field_2015_graded',
@@ -113,10 +113,38 @@ function esdportal_str_field_group_info() {
         'classes' => 'group-2015 field-group-fieldset',
         'description' => '',
       ),
-      'formatter' => 'collapsible',
+      'formatter' => 'collapsed',
     ),
   );
   $export['group_2015|taxonomy_term|schools|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_2016|taxonomy_term|schools|form';
+  $field_group->group_name = 'group_2016';
+  $field_group->entity_type = 'taxonomy_term';
+  $field_group->bundle = 'schools';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => '2016 Fields',
+    'weight' => '19',
+    'children' => array(
+      0 => 'field_2016_universe',
+      1 => 'field_2016_verified',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'formatter' => 'collapsible',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-2016 field-group-fieldset',
+        'required_fields' => 1,
+      ),
+    ),
+  );
+  $export['group_2016|taxonomy_term|schools|form'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -201,7 +229,7 @@ function esdportal_str_field_group_info() {
         'classes' => 'group-eem field-group-fieldset',
         'description' => '',
       ),
-      'formatter' => 'collapsed',
+      'formatter' => 'collapsible',
     ),
   );
   $export['group_eem|taxonomy_term|schools|form'] = $field_group;
@@ -225,42 +253,37 @@ function esdportal_str_field_group_info() {
       3 => 'field_early_childhood_programs',
       4 => 'field_academic_focus',
       5 => 'field_instructional_model',
-      6 => 'field_transportation_options',
-      7 => 'field_staff_resources',
-      8 => 'field_special_ed_level',
-      9 => 'field_special_ed_programs',
-      10 => 'field_boys_sports',
-      11 => 'field_girls_sports',
-      12 => 'field_ell_level',
-      13 => 'field_ell_languages',
-      14 => 'field_facilities',
-      15 => 'field_dress_code',
-      16 => 'field_schedule',
-      17 => 'field_college_prep',
-      18 => 'field_skills_training',
-      19 => 'field_before_after_care',
-      20 => 'field_bullying_policy',
-      21 => 'field_immersion',
-      22 => 'field_extra_learning_resources',
-      23 => 'field_foreign_language',
-      24 => 'field_parent_involvement',
-      25 => 'field_application_process',
-      26 => 'field_admissions_url',
-      27 => 'field_application_fee',
-      28 => 'field_application_fee_amount',
-      29 => 'field_applications_received',
-      30 => 'field_students_accepted',
-      31 => 'field_student_clubs',
-      32 => 'field_student_clubs_dance',
-      33 => 'field_student_clubs_language',
-      34 => 'field_student_clubs_other',
-      35 => 'field_feeder_school',
-      36 => 'field_destination_school',
-      37 => 'field_arts_media',
-      38 => 'field_arts_music',
-      39 => 'field_arts_performing_written',
-      40 => 'field_arts_visual',
-      41 => 'field_message',
+      6 => 'field_staff_resources',
+      7 => 'field_boys_sports',
+      8 => 'field_girls_sports',
+      9 => 'field_ell_level',
+      10 => 'field_ell_languages',
+      11 => 'field_facilities',
+      12 => 'field_dress_code',
+      13 => 'field_schedule',
+      14 => 'field_college_prep',
+      15 => 'field_skills_training',
+      16 => 'field_bullying_policy',
+      17 => 'field_immersion',
+      18 => 'field_extra_learning_resources',
+      19 => 'field_foreign_language',
+      20 => 'field_parent_involvement',
+      21 => 'field_admissions_url',
+      22 => 'field_application_fee',
+      23 => 'field_application_fee_amount',
+      24 => 'field_applications_received',
+      25 => 'field_students_accepted',
+      26 => 'field_student_clubs',
+      27 => 'field_student_clubs_dance',
+      28 => 'field_student_clubs_language',
+      29 => 'field_student_clubs_other',
+      30 => 'field_feeder_school',
+      31 => 'field_destination_school',
+      32 => 'field_arts_media',
+      33 => 'field_arts_music',
+      34 => 'field_arts_performing_written',
+      35 => 'field_arts_visual',
+      36 => 'field_message',
     ),
     'format_type' => 'htab',
     'format_settings' => array(
@@ -287,7 +310,7 @@ function esdportal_str_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'School Profiles',
-    'weight' => '11',
+    'weight' => '18',
     'children' => array(
       0 => 'group_current_edit',
       1 => 'group_new_edit',

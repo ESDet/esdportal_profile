@@ -112,7 +112,7 @@ function esdportal_str_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => 0,
+    'weight' => -43,
   );
   // Exported menu link: menu-moderator-menu:5e-dashboard
   $menu_links['menu-moderator-menu:5e-dashboard'] = array(
@@ -122,11 +122,11 @@ function esdportal_str_menu_default_menu_links() {
     'link_title' => 'School Review Tracker',
     'options' => array(),
     'module' => 'system',
-    'hidden' => 0,
+    'hidden' => 1,
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => 0,
+    'weight' => -42,
   );
   // Exported menu link: menu-moderator-menu:admin/reports/school_profile_edits_per_day_by_school_reps
   $menu_links['menu-moderator-menu:admin/reports/school_profile_edits_per_day_by_school_reps'] = array(
@@ -136,11 +136,11 @@ function esdportal_str_menu_default_menu_links() {
     'link_title' => 'Stats: school profile edits per day by school reps',
     'options' => array(),
     'module' => 'system',
-    'hidden' => 0,
+    'hidden' => 1,
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => 0,
+    'weight' => -41,
   );
   // Exported menu link: menu-moderator-menu:early-learning-programs
   $menu_links['menu-moderator-menu:early-learning-programs'] = array(
@@ -158,7 +158,7 @@ function esdportal_str_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -47,
+    'weight' => -49,
   );
   // Exported menu link: menu-moderator-menu:manage-school-profiles
   $menu_links['menu-moderator-menu:manage-school-profiles'] = array(
@@ -176,7 +176,7 @@ function esdportal_str_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -49,
+    'weight' => -50,
   );
   // Exported menu link: menu-moderator-menu:manage-schools
   $menu_links['menu-moderator-menu:manage-schools'] = array(
@@ -190,7 +190,7 @@ function esdportal_str_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => 3,
+    'weight' => -40,
   );
   // Exported menu link: menu-moderator-menu:manage-users
   $menu_links['menu-moderator-menu:manage-users'] = array(
@@ -208,7 +208,7 @@ function esdportal_str_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -46,
+    'weight' => -48,
   );
   // Exported menu link: menu-moderator-menu:send-user-emails
   $menu_links['menu-moderator-menu:send-user-emails'] = array(
@@ -226,7 +226,7 @@ function esdportal_str_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -45,
+    'weight' => -47,
   );
   // Exported menu link: menu-moderator-menu:site-visit-status-report
   $menu_links['menu-moderator-menu:site-visit-status-report'] = array(
@@ -244,7 +244,7 @@ function esdportal_str_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -44,
+    'weight' => -46,
   );
   // Exported menu link: menu-moderator-menu:user
   $menu_links['menu-moderator-menu:user'] = array(
@@ -262,7 +262,7 @@ function esdportal_str_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -43,
+    'weight' => -45,
   );
   // Exported menu link: menu-moderator-menu:user/logout
   $menu_links['menu-moderator-menu:user/logout'] = array(
@@ -280,7 +280,7 @@ function esdportal_str_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -42,
+    'weight' => -44,
   );
   // Exported menu link: navigation:node/add
   $menu_links['navigation:node/add'] = array(

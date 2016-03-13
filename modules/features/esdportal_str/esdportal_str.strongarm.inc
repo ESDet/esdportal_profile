@@ -348,7 +348,7 @@ function esdportal_str_strongarm() {
           'weight' => '0',
         ),
         'locations' => array(
-          'weight' => '14',
+          'weight' => '20',
         ),
       ),
       'display' => array(),
