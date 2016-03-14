@@ -10,7 +10,9 @@ projects[drupal][patch][tableheaders][url] = "https://drupal.org/files/2097081-f
 projects[drupal][patch][tableheaders][md5] = "df41415bf45413a51d618946f0fb1e6b"
 
 projects[platform][version] = 1.3
-projects[registry_rebuild][version] = 2.2
+
+projects[registry_rebuild][subdir] = "contrib"
+projects[registry_rebuild][version] = 2.3
 
 projects[composer][type] = "module"
 projects[composer][subdir] = "contrib"
