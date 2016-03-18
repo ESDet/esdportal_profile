@@ -185,6 +185,10 @@ function esdportal_str_strongarm() {
       0 => 'k12_supplemental_2015',
       1 => 'bcode',
     ),
+    'data_k12_supplemental_2016' => array(
+      0 => 'k12_supplemental_2016',
+      1 => 'bcode',
+    ),
     'data_meap_2009' => array(
       0 => 'meap_2009',
       1 => 'BuildingCode',
@@ -207,6 +211,10 @@ function esdportal_str_strongarm() {
     ),
     'data_meap_2014' => array(
       0 => 'meap_2014',
+      1 => 'BuildingCode',
+    ),
+    'data_count_2016' => array(
+      0 => 'count_2016',
       1 => 'BuildingCode',
     ),
     'e3_contact' => array(
