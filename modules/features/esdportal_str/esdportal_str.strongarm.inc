@@ -117,6 +117,10 @@ function esdportal_str_strongarm() {
       0 => 'act_2014',
       1 => 'BuildingCode',
     ),
+    'data_count_2016' => array(
+      0 => 'count_2016',
+      1 => 'BuildingCode',
+    ),
     'data_earlychild' => array(
       0 => 'earlychild',
       1 => 'id',
@@ -211,10 +215,6 @@ function esdportal_str_strongarm() {
     ),
     'data_meap_2014' => array(
       0 => 'meap_2014',
-      1 => 'BuildingCode',
-    ),
-    'data_count_2016' => array(
-      0 => 'count_2016',
       1 => 'BuildingCode',
     ),
     'e3_contact' => array(
