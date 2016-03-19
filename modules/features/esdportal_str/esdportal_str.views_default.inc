@@ -10423,7 +10423,7 @@ function esdportal_str_views_default_views() {
       'empty_column' => 0,
     ),
     'field_2016_verified' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
@@ -10834,6 +10834,8 @@ function esdportal_str_views_default_views() {
 
   /* Display: School Universe Export */
   $handler = $view->new_display('views_data_export', 'School Universe Export', 'views_data_export_2');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'ESD School Universe';
   $handler->display->display_options['defaults']['query'] = FALSE;
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['distinct'] = TRUE;
@@ -10841,7 +10843,7 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
   $handler->display->display_options['style_options']['provide_file'] = 1;
-  $handler->display->display_options['style_options']['filename'] = '%view_%timestamp-full.csv';
+  $handler->display->display_options['style_options']['filename'] = 'esd_school_universe_%timestamp-full.csv';
   $handler->display->display_options['style_options']['parent_sort'] = 0;
   $handler->display->display_options['style_options']['quote'] = 1;
   $handler->display->display_options['style_options']['trim'] = 0;
@@ -10962,6 +10964,11 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['fields']['field_authorized_grades']['field'] = 'field_authorized_grades';
   $handler->display->display_options['fields']['field_authorized_grades']['relationship'] = 'term_node_tid';
   $handler->display->display_options['fields']['field_authorized_grades']['delta_offset'] = '0';
+  /* Field: Field: Email */
+  $handler->display->display_options['fields']['field_email_1']['id'] = 'field_email_1';
+  $handler->display->display_options['fields']['field_email_1']['table'] = 'field_data_field_email';
+  $handler->display->display_options['fields']['field_email_1']['field'] = 'field_email';
+  $handler->display->display_options['fields']['field_email_1']['label'] = 'Display Email';
   /* Field: Content: Principal First Name */
   $handler->display->display_options['fields']['field_school_contact_first_name']['id'] = 'field_school_contact_first_name';
   $handler->display->display_options['fields']['field_school_contact_first_name']['table'] = 'field_data_field_school_contact_first_name';
@@ -11148,6 +11155,21 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['fields']['TOTAL_ENROLLMENT_1']['field'] = 'TOTAL_ENROLLMENT';
   $handler->display->display_options['fields']['TOTAL_ENROLLMENT_1']['relationship'] = 'term_node_tid';
   $handler->display->display_options['fields']['TOTAL_ENROLLMENT_1']['separator'] = '';
+  /* Field: Taxonomy term: 2016 In Universe */
+  $handler->display->display_options['fields']['field_2016_universe']['id'] = 'field_2016_universe';
+  $handler->display->display_options['fields']['field_2016_universe']['table'] = 'field_data_field_2016_universe';
+  $handler->display->display_options['fields']['field_2016_universe']['field'] = 'field_2016_universe';
+  $handler->display->display_options['fields']['field_2016_universe']['relationship'] = 'term_node_tid';
+  /* Field: Taxonomy term: 2016 Key Fields Verified */
+  $handler->display->display_options['fields']['field_2016_verified']['id'] = 'field_2016_verified';
+  $handler->display->display_options['fields']['field_2016_verified']['table'] = 'field_data_field_2016_verified';
+  $handler->display->display_options['fields']['field_2016_verified']['field'] = 'field_2016_verified';
+  $handler->display->display_options['fields']['field_2016_verified']['relationship'] = 'term_node_tid';
+  /* Field: Content: Grades Served */
+  $handler->display->display_options['fields']['field_grades_served']['id'] = 'field_grades_served';
+  $handler->display->display_options['fields']['field_grades_served']['table'] = 'field_data_field_grades_served';
+  $handler->display->display_options['fields']['field_grades_served']['field'] = 'field_grades_served';
+  $handler->display->display_options['fields']['field_grades_served']['delta_offset'] = '0';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Published */
@@ -11199,6 +11221,7 @@ function esdportal_str_views_default_views() {
     'page' => 'page',
     'default' => 0,
   );
+  $handler->display->display_options['sitename_title'] = 0;
 
   /* Display: Export Status */
   $handler = $view->new_display('views_data_export', 'Export Status', 'views_data_export_3');
@@ -11322,8 +11345,11 @@ function esdportal_str_views_default_views() {
     'default' => 0,
   );
 
-  /* Display: School Universe Export */
-  $handler = $view->new_display('views_data_export', 'School Universe Export', 'views_data_export_4');
+  /* Display: School Guide Export */
+  $handler = $view->new_display('views_data_export', 'School Guide Export', 'views_data_export_4');
+  $handler->display->display_options['defaults']['query'] = FALSE;
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['distinct'] = TRUE;
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
@@ -11350,6 +11376,12 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
   $handler->display->display_options['relationships']['uid']['table'] = 'node';
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
+  /* Relationship: Esd k8 2015: Bcode */
+  $handler->display->display_options['relationships']['bcode']['id'] = 'bcode';
+  $handler->display->display_options['relationships']['bcode']['table'] = 'esd_k8_2015';
+  $handler->display->display_options['relationships']['bcode']['field'] = 'bcode';
+  $handler->display->display_options['relationships']['bcode']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['relationships']['bcode']['label'] = 'k8_2015';
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Field: Building code */
   $handler->display->display_options['fields']['field_bcode']['id'] = 'field_bcode';
@@ -11361,17 +11393,11 @@ function esdportal_str_views_default_views() {
     'thousand_separator' => '',
     'prefix_suffix' => 0,
   );
-  /* Field: Taxonomy term: Building Code (with zeros) */
-  $handler->display->display_options['fields']['field_bcode_5char']['id'] = 'field_bcode_5char';
-  $handler->display->display_options['fields']['field_bcode_5char']['table'] = 'field_data_field_bcode_5char';
-  $handler->display->display_options['fields']['field_bcode_5char']['field'] = 'field_bcode_5char';
-  $handler->display->display_options['fields']['field_bcode_5char']['relationship'] = 'term_node_tid';
-  $handler->display->display_options['fields']['field_bcode_5char']['type'] = 'text_plain';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['label'] = 'School Name';
+  $handler->display->display_options['fields']['title']['label'] = 'school_name';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
@@ -11379,46 +11405,53 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['fields']['field_school_contact_first_name']['id'] = 'field_school_contact_first_name';
   $handler->display->display_options['fields']['field_school_contact_first_name']['table'] = 'field_data_field_school_contact_first_name';
   $handler->display->display_options['fields']['field_school_contact_first_name']['field'] = 'field_school_contact_first_name';
+  $handler->display->display_options['fields']['field_school_contact_first_name']['label'] = 'principal_first';
   /* Field: Content: Principal Last Name */
   $handler->display->display_options['fields']['field_school_contact_last_name']['id'] = 'field_school_contact_last_name';
   $handler->display->display_options['fields']['field_school_contact_last_name']['table'] = 'field_data_field_school_contact_last_name';
   $handler->display->display_options['fields']['field_school_contact_last_name']['field'] = 'field_school_contact_last_name';
+  $handler->display->display_options['fields']['field_school_contact_last_name']['label'] = 'principal_last';
   /* Field: User: E-mail */
   $handler->display->display_options['fields']['mail']['id'] = 'mail';
   $handler->display->display_options['fields']['mail']['table'] = 'users';
   $handler->display->display_options['fields']['mail']['field'] = 'mail';
   $handler->display->display_options['fields']['mail']['relationship'] = 'uid';
+  $handler->display->display_options['fields']['mail']['label'] = 'user_email';
   /* Field: User: First Name */
   $handler->display->display_options['fields']['field_fname']['id'] = 'field_fname';
   $handler->display->display_options['fields']['field_fname']['table'] = 'field_data_field_fname';
   $handler->display->display_options['fields']['field_fname']['field'] = 'field_fname';
   $handler->display->display_options['fields']['field_fname']['relationship'] = 'uid';
-  $handler->display->display_options['fields']['field_fname']['label'] = 'User First Name';
+  $handler->display->display_options['fields']['field_fname']['label'] = 'user_first';
   /* Field: User: Last Name */
   $handler->display->display_options['fields']['field_lname']['id'] = 'field_lname';
   $handler->display->display_options['fields']['field_lname']['table'] = 'field_data_field_lname';
   $handler->display->display_options['fields']['field_lname']['field'] = 'field_lname';
   $handler->display->display_options['fields']['field_lname']['relationship'] = 'uid';
-  $handler->display->display_options['fields']['field_lname']['label'] = 'User Last Name';
+  $handler->display->display_options['fields']['field_lname']['label'] = 'user_last';
   /* Field: Taxonomy term: Address - Thoroughfare (i.e. Street address) */
   $handler->display->display_options['fields']['field_address_thoroughfare']['id'] = 'field_address_thoroughfare';
   $handler->display->display_options['fields']['field_address_thoroughfare']['table'] = 'field_data_field_address';
   $handler->display->display_options['fields']['field_address_thoroughfare']['field'] = 'field_address_thoroughfare';
   $handler->display->display_options['fields']['field_address_thoroughfare']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['field_address_thoroughfare']['label'] = 'address';
   /* Field: Taxonomy term: Address - Locality (i.e. City) */
   $handler->display->display_options['fields']['field_address_locality']['id'] = 'field_address_locality';
   $handler->display->display_options['fields']['field_address_locality']['table'] = 'field_data_field_address';
   $handler->display->display_options['fields']['field_address_locality']['field'] = 'field_address_locality';
   $handler->display->display_options['fields']['field_address_locality']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['field_address_locality']['label'] = 'city';
   /* Field: Taxonomy term: Address - Postal code */
   $handler->display->display_options['fields']['field_address_postal_code']['id'] = 'field_address_postal_code';
   $handler->display->display_options['fields']['field_address_postal_code']['table'] = 'field_data_field_address';
   $handler->display->display_options['fields']['field_address_postal_code']['field'] = 'field_address_postal_code';
   $handler->display->display_options['fields']['field_address_postal_code']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['field_address_postal_code']['label'] = 'zip';
   /* Field: Content: General Contact Phone */
   $handler->display->display_options['fields']['field_general_contact_phone']['id'] = 'field_general_contact_phone';
   $handler->display->display_options['fields']['field_general_contact_phone']['table'] = 'field_data_field_general_contact_phone';
   $handler->display->display_options['fields']['field_general_contact_phone']['field'] = 'field_general_contact_phone';
+  $handler->display->display_options['fields']['field_general_contact_phone']['label'] = 'phone_profile';
   /* Field: Taxonomy term: geo */
   $handler->display->display_options['fields']['field_geo']['id'] = 'field_geo';
   $handler->display->display_options['fields']['field_geo']['table'] = 'field_data_field_geo';
@@ -11433,161 +11466,117 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['fields']['field_authorized_grades']['table'] = 'field_data_field_authorized_grades';
   $handler->display->display_options['fields']['field_authorized_grades']['field'] = 'field_authorized_grades';
   $handler->display->display_options['fields']['field_authorized_grades']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['field_authorized_grades']['label'] = 'grades_authorized';
+  $handler->display->display_options['fields']['field_authorized_grades']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_authorized_grades']['settings'] = array(
+    'click_to_edit' => 0,
+    'click_to_edit_style' => 'button',
+    'empty_text' => '',
+    'fallback_format' => 'taxonomy_term_reference_link',
+  );
   $handler->display->display_options['fields']['field_authorized_grades']['delta_offset'] = '0';
   /* Field: Taxonomy term: Governance */
   $handler->display->display_options['fields']['field_governance_1']['id'] = 'field_governance_1';
   $handler->display->display_options['fields']['field_governance_1']['table'] = 'field_data_field_governance';
   $handler->display->display_options['fields']['field_governance_1']['field'] = 'field_governance';
   $handler->display->display_options['fields']['field_governance_1']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['field_governance_1']['label'] = 'governance';
+  $handler->display->display_options['fields']['field_governance_1']['type'] = 'taxonomy_term_reference_plain';
   /* Field: Taxonomy term: Authorizer */
   $handler->display->display_options['fields']['field_authorizer']['id'] = 'field_authorizer';
   $handler->display->display_options['fields']['field_authorizer']['table'] = 'field_data_field_authorizer';
   $handler->display->display_options['fields']['field_authorizer']['field'] = 'field_authorizer';
   $handler->display->display_options['fields']['field_authorizer']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['field_authorizer']['label'] = 'authorizer';
+  $handler->display->display_options['fields']['field_authorizer']['type'] = 'taxonomy_term_reference_plain';
   /* Field: Taxonomy term: Operator */
   $handler->display->display_options['fields']['field_operator']['id'] = 'field_operator';
   $handler->display->display_options['fields']['field_operator']['table'] = 'field_data_field_operator';
   $handler->display->display_options['fields']['field_operator']['field'] = 'field_operator';
   $handler->display->display_options['fields']['field_operator']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['field_operator']['label'] = 'operator';
+  $handler->display->display_options['fields']['field_operator']['type'] = 'taxonomy_term_reference_plain';
   /* Field: Taxonomy term: District */
   $handler->display->display_options['fields']['field_district']['id'] = 'field_district';
   $handler->display->display_options['fields']['field_district']['table'] = 'field_data_field_district';
   $handler->display->display_options['fields']['field_district']['field'] = 'field_district';
   $handler->display->display_options['fields']['field_district']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['field_district']['label'] = 'district';
+  $handler->display->display_options['fields']['field_district']['type'] = 'taxonomy_term_reference_plain';
   /* Field: Taxonomy term: School type */
   $handler->display->display_options['fields']['field_school_type_1']['id'] = 'field_school_type_1';
   $handler->display->display_options['fields']['field_school_type_1']['table'] = 'field_data_field_school_type';
   $handler->display->display_options['fields']['field_school_type_1']['field'] = 'field_school_type';
   $handler->display->display_options['fields']['field_school_type_1']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['field_school_type_1']['label'] = 'school_type';
+  $handler->display->display_options['fields']['field_school_type_1']['type'] = 'taxonomy_term_reference_plain';
   /* Field: Taxonomy term: School status */
   $handler->display->display_options['fields']['field_school_status_1']['id'] = 'field_school_status_1';
   $handler->display->display_options['fields']['field_school_status_1']['table'] = 'field_data_field_school_status';
   $handler->display->display_options['fields']['field_school_status_1']['field'] = 'field_school_status';
   $handler->display->display_options['fields']['field_school_status_1']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['field_school_status_1']['label'] = 'school_status';
+  $handler->display->display_options['fields']['field_school_status_1']['type'] = 'taxonomy_term_reference_plain';
   /* Field: Taxonomy term: School Scorecard status */
   $handler->display->display_options['fields']['field_school_scorecard_status_1']['id'] = 'field_school_scorecard_status_1';
   $handler->display->display_options['fields']['field_school_scorecard_status_1']['table'] = 'field_data_field_school_scorecard_status';
   $handler->display->display_options['fields']['field_school_scorecard_status_1']['field'] = 'field_school_scorecard_status';
   $handler->display->display_options['fields']['field_school_scorecard_status_1']['relationship'] = 'term_node_tid';
-  /* Field: Taxonomy term: 2011 Percent Detroit resident */
-  $handler->display->display_options['fields']['field_2011_pct_det_res_1']['id'] = 'field_2011_pct_det_res_1';
-  $handler->display->display_options['fields']['field_2011_pct_det_res_1']['table'] = 'field_data_field_2011_pct_det_res';
-  $handler->display->display_options['fields']['field_2011_pct_det_res_1']['field'] = 'field_2011_pct_det_res';
-  $handler->display->display_options['fields']['field_2011_pct_det_res_1']['relationship'] = 'term_node_tid';
-  /* Field: Taxonomy term: State status */
-  $handler->display->display_options['fields']['field_state_status']['id'] = 'field_state_status';
-  $handler->display->display_options['fields']['field_state_status']['table'] = 'field_data_field_state_status';
-  $handler->display->display_options['fields']['field_state_status']['field'] = 'field_state_status';
-  $handler->display->display_options['fields']['field_state_status']['relationship'] = 'term_node_tid';
-  /* Field: Taxonomy term: 2013 site visit date */
-  $handler->display->display_options['fields']['field_2013_site_visit_date']['id'] = 'field_2013_site_visit_date';
-  $handler->display->display_options['fields']['field_2013_site_visit_date']['table'] = 'field_data_field_2013_site_visit_date';
-  $handler->display->display_options['fields']['field_2013_site_visit_date']['field'] = 'field_2013_site_visit_date';
-  $handler->display->display_options['fields']['field_2013_site_visit_date']['relationship'] = 'term_node_tid';
-  /* Field: Taxonomy term: Opted in? */
-  $handler->display->display_options['fields']['field_opted_in']['id'] = 'field_opted_in';
-  $handler->display->display_options['fields']['field_opted_in']['table'] = 'field_data_field_opted_in';
-  $handler->display->display_options['fields']['field_opted_in']['field'] = 'field_opted_in';
-  $handler->display->display_options['fields']['field_opted_in']['relationship'] = 'term_node_tid';
-  $handler->display->display_options['fields']['field_opted_in']['type'] = 'list_key';
-  /* Field: Taxonomy term: grDataLetter */
-  $handler->display->display_options['fields']['field_grdataletter']['id'] = 'field_grdataletter';
-  $handler->display->display_options['fields']['field_grdataletter']['table'] = 'field_data_field_grdataletter';
-  $handler->display->display_options['fields']['field_grdataletter']['field'] = 'field_grdataletter';
-  $handler->display->display_options['fields']['field_grdataletter']['relationship'] = 'term_node_tid';
-  $handler->display->display_options['fields']['field_grdataletter']['type'] = 'list_key';
-  /* Field: Taxonomy term: grDataType */
-  $handler->display->display_options['fields']['field_grdatatype']['id'] = 'field_grdatatype';
-  $handler->display->display_options['fields']['field_grdatatype']['table'] = 'field_data_field_grdatatype';
-  $handler->display->display_options['fields']['field_grdatatype']['field'] = 'field_grdatatype';
-  $handler->display->display_options['fields']['field_grdatatype']['relationship'] = 'term_node_tid';
-  /* Field: Taxonomy term: 5E roster */
-  $handler->display->display_options['fields']['field_5e_roster']['id'] = 'field_5e_roster';
-  $handler->display->display_options['fields']['field_5e_roster']['table'] = 'field_data_field_5e_roster';
-  $handler->display->display_options['fields']['field_5e_roster']['field'] = 'field_5e_roster';
-  $handler->display->display_options['fields']['field_5e_roster']['relationship'] = 'term_node_tid';
-  $handler->display->display_options['fields']['field_5e_roster']['type'] = 'list_key';
+  $handler->display->display_options['fields']['field_school_scorecard_status_1']['label'] = 'scorecard_status';
+  $handler->display->display_options['fields']['field_school_scorecard_status_1']['type'] = 'taxonomy_term_reference_plain';
   /* Field: Taxonomy term: Scorecard Display */
   $handler->display->display_options['fields']['field_scorecard_display']['id'] = 'field_scorecard_display';
   $handler->display->display_options['fields']['field_scorecard_display']['table'] = 'field_data_field_scorecard_display';
   $handler->display->display_options['fields']['field_scorecard_display']['field'] = 'field_scorecard_display';
   $handler->display->display_options['fields']['field_scorecard_display']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['field_scorecard_display']['label'] = 'scorecard_display';
   $handler->display->display_options['fields']['field_scorecard_display']['type'] = 'list_key';
   /* Field: Taxonomy term: Specialty School */
   $handler->display->display_options['fields']['field_specialty_school']['id'] = 'field_specialty_school';
   $handler->display->display_options['fields']['field_specialty_school']['table'] = 'field_data_field_specialty_school';
   $handler->display->display_options['fields']['field_specialty_school']['field'] = 'field_specialty_school';
   $handler->display->display_options['fields']['field_specialty_school']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['field_specialty_school']['label'] = 'specialty';
   $handler->display->display_options['fields']['field_specialty_school']['type'] = 'list_key';
   /* Field: Taxonomy term: Special Ed Emphasis */
   $handler->display->display_options['fields']['field_special_ed_emphasis']['id'] = 'field_special_ed_emphasis';
   $handler->display->display_options['fields']['field_special_ed_emphasis']['table'] = 'field_data_field_special_ed_emphasis';
   $handler->display->display_options['fields']['field_special_ed_emphasis']['field'] = 'field_special_ed_emphasis';
   $handler->display->display_options['fields']['field_special_ed_emphasis']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['field_special_ed_emphasis']['label'] = 'sped_emphasis';
   $handler->display->display_options['fields']['field_special_ed_emphasis']['type'] = 'list_key';
   /* Field: Taxonomy term: Career Technical Emphasis */
   $handler->display->display_options['fields']['field_career_technical_emphasis']['id'] = 'field_career_technical_emphasis';
   $handler->display->display_options['fields']['field_career_technical_emphasis']['table'] = 'field_data_field_career_technical_emphasis';
   $handler->display->display_options['fields']['field_career_technical_emphasis']['field'] = 'field_career_technical_emphasis';
   $handler->display->display_options['fields']['field_career_technical_emphasis']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['field_career_technical_emphasis']['label'] = 'cte';
   $handler->display->display_options['fields']['field_career_technical_emphasis']['type'] = 'list_key';
   /* Field: Taxonomy term: Alternative School */
   $handler->display->display_options['fields']['field_alternative_school']['id'] = 'field_alternative_school';
   $handler->display->display_options['fields']['field_alternative_school']['table'] = 'field_data_field_alternative_school';
   $handler->display->display_options['fields']['field_alternative_school']['field'] = 'field_alternative_school';
   $handler->display->display_options['fields']['field_alternative_school']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['field_alternative_school']['label'] = 'alt_ed';
   $handler->display->display_options['fields']['field_alternative_school']['type'] = 'list_key';
   /* Field: Taxonomy term: Strict Discipline Academy */
   $handler->display->display_options['fields']['field_strict_discipline_academy']['id'] = 'field_strict_discipline_academy';
   $handler->display->display_options['fields']['field_strict_discipline_academy']['table'] = 'field_data_field_strict_discipline_academy';
   $handler->display->display_options['fields']['field_strict_discipline_academy']['field'] = 'field_strict_discipline_academy';
   $handler->display->display_options['fields']['field_strict_discipline_academy']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['field_strict_discipline_academy']['label'] = 'sda';
   $handler->display->display_options['fields']['field_strict_discipline_academy']['type'] = 'list_key';
   $handler->display->display_options['fields']['field_strict_discipline_academy']['settings'] = array(
     'skip_safe' => 0,
     'skip_empty_values' => 0,
   );
-  /* Field: Taxonomy term: Superintendents */
-  $handler->display->display_options['fields']['field_superintendents']['id'] = 'field_superintendents';
-  $handler->display->display_options['fields']['field_superintendents']['table'] = 'field_data_field_superintendents';
-  $handler->display->display_options['fields']['field_superintendents']['field'] = 'field_superintendents';
-  $handler->display->display_options['fields']['field_superintendents']['relationship'] = 'term_node_tid';
-  $handler->display->display_options['fields']['field_superintendents']['settings'] = array(
-    'link' => 0,
-  );
-  $handler->display->display_options['fields']['field_superintendents']['delta_offset'] = '0';
-  /* Field: Taxonomy term: Skillman Good Neighborhood */
-  $handler->display->display_options['fields']['field_skillman_good_neighborhood']['id'] = 'field_skillman_good_neighborhood';
-  $handler->display->display_options['fields']['field_skillman_good_neighborhood']['table'] = 'field_data_field_skillman_good_neighborhood';
-  $handler->display->display_options['fields']['field_skillman_good_neighborhood']['field'] = 'field_skillman_good_neighborhood';
-  $handler->display->display_options['fields']['field_skillman_good_neighborhood']['relationship'] = 'term_node_tid';
-  $handler->display->display_options['fields']['field_skillman_good_neighborhood']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Taxonomy term: 2014 Graded School */
-  $handler->display->display_options['fields']['field_2014_graded']['id'] = 'field_2014_graded';
-  $handler->display->display_options['fields']['field_2014_graded']['table'] = 'field_data_field_2014_graded';
-  $handler->display->display_options['fields']['field_2014_graded']['field'] = 'field_2014_graded';
-  $handler->display->display_options['fields']['field_2014_graded']['relationship'] = 'term_node_tid';
-  /* Field: Taxonomy term: ESD Basis ID */
-  $handler->display->display_options['fields']['field_esd_schid']['id'] = 'field_esd_schid';
-  $handler->display->display_options['fields']['field_esd_schid']['table'] = 'field_data_field_esd_schid';
-  $handler->display->display_options['fields']['field_esd_schid']['field'] = 'field_esd_schid';
-  $handler->display->display_options['fields']['field_esd_schid']['relationship'] = 'term_node_tid';
   /* Field: Taxonomy term: ESD Exclusive Typology */
   $handler->display->display_options['fields']['field_esd_exclusive_typology']['id'] = 'field_esd_exclusive_typology';
   $handler->display->display_options['fields']['field_esd_exclusive_typology']['table'] = 'field_data_field_esd_exclusive_typology';
   $handler->display->display_options['fields']['field_esd_exclusive_typology']['field'] = 'field_esd_exclusive_typology';
   $handler->display->display_options['fields']['field_esd_exclusive_typology']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['field_esd_exclusive_typology']['label'] = 'esd_typology';
   $handler->display->display_options['fields']['field_esd_exclusive_typology']['type'] = 'taxonomy_term_reference_plain';
-  /* Field: Taxonomy term: 2015 Graded Type */
-  $handler->display->display_options['fields']['field_2015_graded']['id'] = 'field_2015_graded';
-  $handler->display->display_options['fields']['field_2015_graded']['table'] = 'field_data_field_2015_graded';
-  $handler->display->display_options['fields']['field_2015_graded']['field'] = 'field_2015_graded';
-  $handler->display->display_options['fields']['field_2015_graded']['relationship'] = 'term_node_tid';
-  /* Field: Taxonomy term: 2015 In Universe */
-  $handler->display->display_options['fields']['field_2015_universe']['id'] = 'field_2015_universe';
-  $handler->display->display_options['fields']['field_2015_universe']['table'] = 'field_data_field_2015_universe';
-  $handler->display->display_options['fields']['field_2015_universe']['field'] = 'field_2015_universe';
-  $handler->display->display_options['fields']['field_2015_universe']['relationship'] = 'term_node_tid';
   /* Field: Taxonomy term: Address with phone number */
   $handler->display->display_options['fields']['field_address_data']['id'] = 'field_address_data';
   $handler->display->display_options['fields']['field_address_data']['table'] = 'field_data_field_address';
@@ -11595,6 +11584,169 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['fields']['field_address_data']['relationship'] = 'term_node_tid';
   $handler->display->display_options['fields']['field_address_data']['label'] = 'Phone';
   $handler->display->display_options['fields']['field_address_data']['selected_phone_type'] = TRUE;
+  /* Field: Content: Before/After Care */
+  $handler->display->display_options['fields']['field_before_after_care']['id'] = 'field_before_after_care';
+  $handler->display->display_options['fields']['field_before_after_care']['table'] = 'field_data_field_before_after_care';
+  $handler->display->display_options['fields']['field_before_after_care']['field'] = 'field_before_after_care';
+  $handler->display->display_options['fields']['field_before_after_care']['label'] = 'before_after_care';
+  $handler->display->display_options['fields']['field_before_after_care']['delta_offset'] = '0';
+  /* Field: Content: Closing time */
+  $handler->display->display_options['fields']['field_time_closed']['id'] = 'field_time_closed';
+  $handler->display->display_options['fields']['field_time_closed']['table'] = 'field_data_field_time_closed';
+  $handler->display->display_options['fields']['field_time_closed']['field'] = 'field_time_closed';
+  $handler->display->display_options['fields']['field_time_closed']['label'] = 'time_close';
+  /* Field: Content: Dress Code */
+  $handler->display->display_options['fields']['field_dress_code']['id'] = 'field_dress_code';
+  $handler->display->display_options['fields']['field_dress_code']['table'] = 'field_data_field_dress_code';
+  $handler->display->display_options['fields']['field_dress_code']['field'] = 'field_dress_code';
+  $handler->display->display_options['fields']['field_dress_code']['label'] = 'dress_code';
+  /* Field: Content: Grades Served */
+  $handler->display->display_options['fields']['field_grades_served']['id'] = 'field_grades_served';
+  $handler->display->display_options['fields']['field_grades_served']['table'] = 'field_data_field_grades_served';
+  $handler->display->display_options['fields']['field_grades_served']['field'] = 'field_grades_served';
+  $handler->display->display_options['fields']['field_grades_served']['label'] = 'grades_served';
+  $handler->display->display_options['fields']['field_grades_served']['type'] = 'list_key';
+  $handler->display->display_options['fields']['field_grades_served']['delta_offset'] = '0';
+  /* Field: Content: Opening time */
+  $handler->display->display_options['fields']['field_time_open']['id'] = 'field_time_open';
+  $handler->display->display_options['fields']['field_time_open']['table'] = 'field_data_field_time_open';
+  $handler->display->display_options['fields']['field_time_open']['field'] = 'field_time_open';
+  $handler->display->display_options['fields']['field_time_open']['label'] = 'time_open';
+  /* Field: Content: School URL */
+  $handler->display->display_options['fields']['field_school_url']['id'] = 'field_school_url';
+  $handler->display->display_options['fields']['field_school_url']['table'] = 'field_data_field_school_url';
+  $handler->display->display_options['fields']['field_school_url']['field'] = 'field_school_url';
+  $handler->display->display_options['fields']['field_school_url']['label'] = 'website';
+  /* Field: Content: Special Education Level */
+  $handler->display->display_options['fields']['field_special_ed_level']['id'] = 'field_special_ed_level';
+  $handler->display->display_options['fields']['field_special_ed_level']['table'] = 'field_data_field_special_ed_level';
+  $handler->display->display_options['fields']['field_special_ed_level']['field'] = 'field_special_ed_level';
+  $handler->display->display_options['fields']['field_special_ed_level']['label'] = 'sped_level';
+  /* Field: Content: Special Education Programs */
+  $handler->display->display_options['fields']['field_special_ed_programs']['id'] = 'field_special_ed_programs';
+  $handler->display->display_options['fields']['field_special_ed_programs']['table'] = 'field_data_field_special_ed_programs';
+  $handler->display->display_options['fields']['field_special_ed_programs']['field'] = 'field_special_ed_programs';
+  $handler->display->display_options['fields']['field_special_ed_programs']['label'] = 'sped_programs';
+  $handler->display->display_options['fields']['field_special_ed_programs']['delta_offset'] = '0';
+  /* Field: Content: Transportation */
+  $handler->display->display_options['fields']['field_transportation_options']['id'] = 'field_transportation_options';
+  $handler->display->display_options['fields']['field_transportation_options']['table'] = 'field_data_field_transportation_options';
+  $handler->display->display_options['fields']['field_transportation_options']['field'] = 'field_transportation_options';
+  $handler->display->display_options['fields']['field_transportation_options']['label'] = 'transportation';
+  $handler->display->display_options['fields']['field_transportation_options']['delta_offset'] = '0';
+  /* Field: Content: Wheelchair Accessibility */
+  $handler->display->display_options['fields']['field_wheelchair_accessible']['id'] = 'field_wheelchair_accessible';
+  $handler->display->display_options['fields']['field_wheelchair_accessible']['table'] = 'field_data_field_wheelchair_accessible';
+  $handler->display->display_options['fields']['field_wheelchair_accessible']['field'] = 'field_wheelchair_accessible';
+  $handler->display->display_options['fields']['field_wheelchair_accessible']['label'] = 'wheelchair';
+  /* Field: Esd k8 2015: Frac profela */
+  $handler->display->display_options['fields']['frac_profela']['id'] = 'frac_profela';
+  $handler->display->display_options['fields']['frac_profela']['table'] = 'esd_k8_2015';
+  $handler->display->display_options['fields']['frac_profela']['field'] = 'frac_profela';
+  $handler->display->display_options['fields']['frac_profela']['relationship'] = 'term_node_tid';
+  /* Field: Esd k8 2015: Frac profmath */
+  $handler->display->display_options['fields']['frac_profmath']['id'] = 'frac_profmath';
+  $handler->display->display_options['fields']['frac_profmath']['table'] = 'esd_k8_2015';
+  $handler->display->display_options['fields']['frac_profmath']['field'] = 'frac_profmath';
+  $handler->display->display_options['fields']['frac_profmath']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['frac_profmath']['label'] = 'profmath';
+  $handler->display->display_options['fields']['frac_profmath']['precision'] = '0';
+  /* Field: Esd k8 2015: Frac profscience */
+  $handler->display->display_options['fields']['frac_profscience']['id'] = 'frac_profscience';
+  $handler->display->display_options['fields']['frac_profscience']['table'] = 'esd_k8_2015';
+  $handler->display->display_options['fields']['frac_profscience']['field'] = 'frac_profscience';
+  $handler->display->display_options['fields']['frac_profscience']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['frac_profscience']['label'] = 'profscience';
+  $handler->display->display_options['fields']['frac_profscience']['precision'] = '0';
+  /* Field: Esd k8 2015: Frac profsocstud */
+  $handler->display->display_options['fields']['frac_profsocstud']['id'] = 'frac_profsocstud';
+  $handler->display->display_options['fields']['frac_profsocstud']['table'] = 'esd_k8_2015';
+  $handler->display->display_options['fields']['frac_profsocstud']['field'] = 'frac_profsocstud';
+  $handler->display->display_options['fields']['frac_profsocstud']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['frac_profsocstud']['label'] = 'profsocstud';
+  $handler->display->display_options['fields']['frac_profsocstud']['precision'] = '0';
+  /* Field: Esd k8 2015: Pr2 ela pts */
+  $handler->display->display_options['fields']['pr2_ela_pts']['id'] = 'pr2_ela_pts';
+  $handler->display->display_options['fields']['pr2_ela_pts']['table'] = 'esd_k8_2015';
+  $handler->display->display_options['fields']['pr2_ela_pts']['field'] = 'pr2_ela_pts';
+  $handler->display->display_options['fields']['pr2_ela_pts']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['pr2_ela_pts']['label'] = 'pts_ela';
+  $handler->display->display_options['fields']['pr2_ela_pts']['precision'] = '0';
+  /* Field: Esd k8 2015: Pr2 math pts */
+  $handler->display->display_options['fields']['pr2_math_pts']['id'] = 'pr2_math_pts';
+  $handler->display->display_options['fields']['pr2_math_pts']['table'] = 'esd_k8_2015';
+  $handler->display->display_options['fields']['pr2_math_pts']['field'] = 'pr2_math_pts';
+  $handler->display->display_options['fields']['pr2_math_pts']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['pr2_math_pts']['label'] = 'pts_math';
+  $handler->display->display_options['fields']['pr2_math_pts']['precision'] = '0';
+  /* Field: Esd k8 2015: Pr2 sci pts */
+  $handler->display->display_options['fields']['pr2_sci_pts']['id'] = 'pr2_sci_pts';
+  $handler->display->display_options['fields']['pr2_sci_pts']['table'] = 'esd_k8_2015';
+  $handler->display->display_options['fields']['pr2_sci_pts']['field'] = 'pr2_sci_pts';
+  $handler->display->display_options['fields']['pr2_sci_pts']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['pr2_sci_pts']['label'] = 'pts_sci';
+  $handler->display->display_options['fields']['pr2_sci_pts']['precision'] = '0';
+  /* Field: Esd k8 2015: Pr2 ss pts */
+  $handler->display->display_options['fields']['pr2_ss_pts']['id'] = 'pr2_ss_pts';
+  $handler->display->display_options['fields']['pr2_ss_pts']['table'] = 'esd_k8_2015';
+  $handler->display->display_options['fields']['pr2_ss_pts']['field'] = 'pr2_ss_pts';
+  $handler->display->display_options['fields']['pr2_ss_pts']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['pr2_ss_pts']['label'] = 'pts_ss';
+  $handler->display->display_options['fields']['pr2_ss_pts']['precision'] = '0';
+  /* Field: Esd k8 2015: Total ltrgrade */
+  $handler->display->display_options['fields']['total_ltrgrade']['id'] = 'total_ltrgrade';
+  $handler->display->display_options['fields']['total_ltrgrade']['table'] = 'esd_k8_2015';
+  $handler->display->display_options['fields']['total_ltrgrade']['field'] = 'total_ltrgrade';
+  $handler->display->display_options['fields']['total_ltrgrade']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['fields']['total_ltrgrade']['label'] = 'overall_grade';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'school_profile' => 'school_profile',
+  );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: Title */
+  $handler->display->display_options['filters']['title']['id'] = 'title';
+  $handler->display->display_options['filters']['title']['table'] = 'node';
+  $handler->display->display_options['filters']['title']['field'] = 'title';
+  $handler->display->display_options['filters']['title']['operator'] = 'contains';
+  $handler->display->display_options['filters']['title']['group'] = 1;
+  $handler->display->display_options['filters']['title']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['title']['expose']['operator_id'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['label'] = 'Filter by School Name';
+  $handler->display->display_options['filters']['title']['expose']['operator'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['identifier'] = 'title';
+  $handler->display->display_options['filters']['title']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    4 => 0,
+    5 => 0,
+    7 => 0,
+    3 => 0,
+    6 => 0,
+  );
+  /* Filter criterion: Taxonomy term: School status (field_school_status) */
+  $handler->display->display_options['filters']['field_school_status_tid']['id'] = 'field_school_status_tid';
+  $handler->display->display_options['filters']['field_school_status_tid']['table'] = 'field_data_field_school_status';
+  $handler->display->display_options['filters']['field_school_status_tid']['field'] = 'field_school_status_tid';
+  $handler->display->display_options['filters']['field_school_status_tid']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['filters']['field_school_status_tid']['operator'] = 'not';
+  $handler->display->display_options['filters']['field_school_status_tid']['value'] = array(
+    0 => '6',
+  );
+  $handler->display->display_options['filters']['field_school_status_tid']['group'] = 1;
+  $handler->display->display_options['filters']['field_school_status_tid']['vocabulary'] = 'school_status';
   $handler->display->display_options['path'] = 'export-school-universe-csv';
   $handler->display->display_options['displays'] = array(
     'page' => 'page',
@@ -11988,14 +12140,15 @@ function esdportal_str_views_default_views() {
     'title' => 'title',
     'field_school_contact_first_name' => 'field_school_contact_first_name',
     'field_school_contact_last_name' => 'field_school_contact_last_name',
-    'field_general_contact_phone' => 'field_general_contact_phone',
-    'field_address_data' => 'field_address_data',
     'field_time_open' => 'field_time_open',
     'field_time_closed' => 'field_time_closed',
-    'field_address_postal_code' => 'field_address_postal_code',
-    'edit_node' => 'edit_node',
-    'field_2016_verified' => 'field_2016_verified',
+    'field_before_after_care' => 'field_before_after_care',
+    'field_special_ed_level' => 'field_special_ed_level',
+    'field_special_ed_programs' => 'field_special_ed_programs',
     'changed' => 'changed',
+    'field_2016_verified' => 'field_2016_verified',
+    'log' => 'log',
+    'name' => 'name',
   );
   $handler->display->display_options['style_options']['default'] = 'changed';
   $handler->display->display_options['style_options']['info'] = array(
@@ -12025,20 +12178,6 @@ function esdportal_str_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_general_contact_phone' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_address_data' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
     'field_time_open' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
@@ -12053,21 +12192,19 @@ function esdportal_str_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_address_postal_code' => array(
-      'sortable' => 1,
-      'default_sort_order' => 'asc',
+    'field_before_after_care' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'edit_node' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_2016_verified' => array(
+    'field_special_ed_level' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_special_ed_programs' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -12075,6 +12212,25 @@ function esdportal_str_views_default_views() {
     'changed' => array(
       'sortable' => 1,
       'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_2016_verified' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'log' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -12440,6 +12596,7 @@ function esdportal_str_views_default_views() {
     t('School type'),
     t('Scorecard Display'),
     t('School Universe Export'),
+    t('ESD School Universe'),
     t('meap_2013.BuildingCode -> field_data_field_bcode.field_bcode_value'),
     t('esd_hs_2015.bcode -> field_data_field_bcode.field_bcode_value'),
     t('k8_2015'),
@@ -12454,6 +12611,7 @@ function esdportal_str_views_default_views() {
     t('Address - Postal code'),
     t('ESD Basis ID'),
     t('Authorized grades'),
+    t('Display Email'),
     t('General Contact Phone'),
     t('geo'),
     t('District'),
@@ -12477,21 +12635,57 @@ function esdportal_str_views_default_views() {
     t('HS Points'),
     t('K8 2015 Grade'),
     t('K8 Points'),
+    t('2016 In Universe'),
+    t('Grades Served'),
     t('Export Status'),
     t('Site visit status'),
     t('Address'),
     t('All taxonomy terms'),
-    t('2011 Percent Detroit resident'),
-    t('State status'),
-    t('2013 site visit date'),
-    t('grDataLetter'),
-    t('grDataType'),
-    t('5E roster'),
-    t('Specialty School'),
-    t('Special Ed Emphasis'),
-    t('Career Technical Emphasis'),
-    t('Alternative School'),
-    t('Strict Discipline Academy'),
+    t('School Guide Export'),
+    t('school_name'),
+    t('principal_first'),
+    t('principal_last'),
+    t('user_email'),
+    t('user_first'),
+    t('user_last'),
+    t('address'),
+    t('city'),
+    t('zip'),
+    t('phone_profile'),
+    t('grades_authorized'),
+    t('governance'),
+    t('authorizer'),
+    t('operator'),
+    t('district'),
+    t('school_type'),
+    t('school_status'),
+    t('scorecard_status'),
+    t('scorecard_display'),
+    t('specialty'),
+    t('sped_emphasis'),
+    t('cte'),
+    t('alt_ed'),
+    t('sda'),
+    t('esd_typology'),
+    t('before_after_care'),
+    t('time_close'),
+    t('dress_code'),
+    t('grades_served'),
+    t('time_open'),
+    t('website'),
+    t('sped_level'),
+    t('sped_programs'),
+    t('transportation'),
+    t('wheelchair'),
+    t('Frac profela'),
+    t('profmath'),
+    t('profscience'),
+    t('profsocstud'),
+    t('pts_ela'),
+    t('pts_math'),
+    t('pts_sci'),
+    t('pts_ss'),
+    t('overall_grade'),
     t('School Universe All'),
     t('act_2014.BuildingCode -> field_data_field_bcode.field_bcode_value'),
     t('esd_hs_2014.buildingcode -> field_data_field_bcode.field_bcode_value'),
