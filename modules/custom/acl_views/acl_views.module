@@ -1,0 +1,16 @@
+<?php
+/**
+ * @file
+ *
+ * Announces our presence to views.
+ */
+
+/**
+ * Implements hook_views_api().
+ */
+function acl_views_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'acl_views') . '/views',
+  );
+}

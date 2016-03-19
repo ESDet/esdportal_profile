@@ -3,14 +3,16 @@ core = 7.x
 api = 2
 
 projects[drupal][type] = "core"
-projects[drupal][version] = "7.39"
+projects[drupal][version] = "7.43"
 projects[drupal][patch][installredirect][url] = "https://drupal.org/files/issues/install-redirect-on-empty-database-728702-36.patch"
 projects[drupal][patch][installredirect][md5] = "f950215a38830a0ce537b78b46a2d151"
 projects[drupal][patch][tableheaders][url] = "https://drupal.org/files/2097081-fix-sticky-header-column-width-7.x-6.patch"
 projects[drupal][patch][tableheaders][md5] = "df41415bf45413a51d618946f0fb1e6b"
 
 projects[platform][version] = 1.3
-projects[registry_rebuild][version] = 2.2
+
+projects[registry_rebuild][subdir] = "contrib"
+projects[registry_rebuild][version] = 2.3
 
 projects[composer][type] = "module"
 projects[composer][subdir] = "contrib"
@@ -18,63 +20,8 @@ projects[composer][download][type] = "git"
 projects[composer][download][url] = "git://git.drupal.org/project/composer.git"
 projects[composer][download][branch] = "8.x-1.x"
 
-projects[esdportal_dash][type] = "module"
-projects[esdportal_dash][subdir] = "custom"
-projects[esdportal_dash][download][type] = "git"
-projects[esdportal_dash][download][url] = "https://github.com/ESDet/esdportal_dash.git"
-projects[esdportal_dash][download][branch] = "7.x-1.x"
-
-projects[esdportal_e3][type] = "module"
-projects[esdportal_e3][subdir] = "custom"
-projects[esdportal_e3][download][type] = "git"
-projects[esdportal_e3][download][url] = "https://github.com/ESDet/esdportal_e3.git"
-projects[esdportal_e3][download][revision] = "334f2c2577c311325661965d7eceb0537e5800bb"
-
-projects[esdportal_ecsitevisit_webform_options][type] = "module"
-projects[esdportal_ecsitevisit_webform_options][subdir] = "custom"
-projects[esdportal_ecsitevisit_webform_options][download][type] = "git"
-projects[esdportal_ecsitevisit_webform_options][download][url] = "https://github.com/ESDet/esdportal_ecsitevisit_webform_options.git"
-projects[esdportal_ecsitevisit_webform_options][download][branch] = "7.x-1.x"
-
-projects[esdportal_scoresbybcode][type] = "module"
-projects[esdportal_scoresbybcode][subdir] = "custom"
-projects[esdportal_scoresbybcode][download][type] = "git"
-projects[esdportal_scoresbybcode][download][url] = "https://github.com/ESDet/esdportal_scoresbybcode.git"
-projects[esdportal_scoresbybcode][download][branch] = "7.x-1.x"
-
-projects[esdportal_str][type] = "module"
-projects[esdportal_str][subdir] = "features"
-projects[esdportal_str][download][type] = "git"
-projects[esdportal_str][download][url] = "https://github.com/ESDet/esdportal_str.git"
-projects[esdportal_str][download][revision] = "0643da5653feb7e96bfccbdd2bc3b65fde4d762d"
-
-projects[esdportal_api][type] = "module"
-projects[esdportal_api][subdir] = "custom"
-projects[esdportal_api][download][type] = "git"
-projects[esdportal_api][download][url] = "https://github.com/ESDet/esdportal_api.git"
-projects[esdportal_api][download][revision] = "0defc70b5fc6f3bd0964cb4f8515fb712bdb66f6"
-
-projects[migrate_ec][type] = "module"
-projects[migrate_ec][type] = "module"
-projects[migrate_ec][subdir] = "custom"
-projects[migrate_ec][download][type] = "git"
-projects[migrate_ec][download][url] = "https://github.com/ESDet/migrate_ec.git"
-projects[migrate_ec][download][revision] = "57e5bd503d131b83ebe65409ff9776ee113c1196"
-
-projects[migrate_esdportal][type] = "module"
-projects[migrate_esdportal][subdir] = "custom"
-projects[migrate_esdportal][download][type] = "git"
-projects[migrate_esdportal][download][url] = "https://github.com/ESDet/migrate_esdportal.git"
-projects[migrate_esdportal][download][branch] = "7.x-1.x"
-
 projects[acl][subdir] = "contrib"
 projects[acl][version] = "1.0"
-
-projects[acl_views][type] = "module"
-projects[acl_views][subdir] = "custom"
-projects[acl_views][download][type] = "git"
-projects[acl_views][download][url] = "https://github.com/bnchdrff/acl_views.git"
-projects[acl_views][download][branch] = "7.x-1.x"
 
 projects[admin_menu][subdir] = "contrib"
 projects[admin_menu][version] = "3.0-rc4"
@@ -378,11 +325,6 @@ projects[webform_term_opts][patch][relatable_tid][url] = "https://drupal.org/fil
 projects[webform_term_opts][patch][relatable_tid][md5] = "fbf90c283fe9e02116093b6d42df3071"
 
 ; Themes
-projects[esd][type] = "theme"
-projects[esd][download][type] = "git"
-projects[esd][download][url] = "https://github.com/ESDet/esd.git"
-projects[esd][download][revision] = "0b342e708100c0d07124f506bc15dd8482b2ee0c"
-
 projects[omega][type] = "theme"
 projects[omega][download][type] = "git"
 projects[omega][download][url] = "git://git.drupal.org/project/omega.git"

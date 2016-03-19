@@ -1,0 +1,1171 @@
+<?php
+
+/**
+ * @file
+ * E3 module.
+ */
+
+/**
+ * Implements hook_entity_info().
+ */
+function esdportal_e3_entity_info() {
+  $return = array(
+    'e3_contact' => array(
+      'label' => t('E3 Contact'),
+      'entity class' => 'E3Contact',
+      'controller class' => 'E3ContactController',
+      'base table' => 'e3_contact',
+      'fieldable' => TRUE,
+      'entity keys' => array(
+        'id' => 'id',
+        'bundle' => 'type',
+        'label' => 'fullname',
+      ),
+      'bundle keys' => array(
+        'bundle' => 'type',
+      ),
+      'bundles' => array(),
+      'load hook' => 'e3_contact_load',
+      'view modes' => array(
+        'full' => array(
+          'label' => t('Default'),
+          'custom settings' => FALSE,
+        ),
+      ),
+      'label callback' => 'entity_class_label',
+      'uri callback' => 'entity_class_uri',
+      'module' => 'esdportal_e3',
+      'access callback' => 'e3_contact_access',
+    ),
+  );
+  $return['e3_contact_type'] = array(
+    'label' => t('E3 Contact Type'),
+    'entity class' => 'E3ContactType',
+    'controller class' => 'E3ContactTypeController',
+    'base table' => 'e3_contact_type',
+    'fieldable' => FALSE,
+    'bundle of' => 'e3_contact',
+    'exportable' => TRUE,
+    'entity keys' => array(
+      'id' => 'id',
+      'name' => 'type',
+      'label' => 'type',
+    ),
+    'module' => 'esdportal_e3',
+    // Enable the entity API's admin UI.
+    'admin ui' => array(
+      'path' => 'admin/structure/e3-contact-types',
+      'file' => 'esdportal_e3.e3_contact.admin.inc',
+      'controller class' => 'E3ContactTypeUIController',
+    ),
+    'access callback' => 'e3_contact_type_access',
+  );
+
+  $return['e3_note'] = array(
+    'label' => t('E3 Experience Note'),
+    'entity class' => 'E3Note',
+    'controller class' => 'E3NoteController',
+    'base table' => 'e3_note',
+    'fieldable' => TRUE,
+    'entity keys' => array(
+      'id' => 'id',
+      'bundle' => 'type',
+    ),
+    'bundle keys' => array(
+      'bundle' => 'type',
+    ),
+    'bundles' => array(),
+    'load hook' => 'e3_note_load',
+    'view modes' => array(
+      'full' => array(
+        'label' => t('Default'),
+        'custom settings' => FALSE,
+      ),
+    ),
+    'label callback' => 'e3_note_label',
+    'uri callback' => 'entity_class_uri',
+    'module' => 'esdportal_e3',
+    'access callback' => 'e3_note_access',
+  );
+  $return['e3_note_type'] = array(
+    'label' => t('E3 Experience Note Type'),
+    'entity class' => 'E3NoteType',
+    'controller class' => 'E3NoteTypeController',
+    'base table' => 'e3_note_type',
+    'fieldable' => FALSE,
+    'bundle of' => 'e3_note',
+    'exportable' => TRUE,
+    'entity keys' => array(
+      'id' => 'id',
+      'name' => 'type',
+      'label' => 'type',
+    ),
+    'module' => 'esdportal_e3',
+    // Enable the entity API's admin UI.
+    'admin ui' => array(
+      'path' => 'admin/structure/e3-note-types',
+      'file' => 'esdportal_e3.e3_note.admin.inc',
+      'controller class' => 'E3NoteTypeUIController',
+    ),
+    'access callback' => 'e3_note_type_access',
+  );
+  return $return;
+}
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function esdportal_e3_entity_info_alter(&$entity_info) {
+  foreach (e3_contact_types() as $type => $info) {
+    $entity_info['e3_contact']['bundles'][$type] = array(
+      'label' => $info->label,
+      'admin' => array(
+        'path' => 'admin/structure/e3-contact-types/manage/%e3_contact_type',
+        'real path' => 'admin/structure/e3-contact-types/manage/' . $type,
+        'bundle argument' => 4,
+      ),
+    );
+  }
+  foreach (e3_note_types() as $type => $info) {
+    $entity_info['e3_note']['bundles'][$type] = array(
+      'label' => $info->label,
+      'admin' => array(
+        'path' => 'admin/structure/e3-note-types/manage/%e3_note_type',
+        'real path' => 'admin/structure/e3-note-types/manage/' . $type,
+        'bundle argument' => 4,
+      ),
+    );
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function esdportal_e3_menu() {
+  $items = array();
+
+  $items['e3-contact/add'] = array(
+    'title' => 'Add contact',
+    'page callback' => 'e3_contact_admin_add_page',
+    'access arguments' => array('administer e3_contact entities'),
+    'file' => 'esdportal_e3.e3_contact.admin.inc',
+    'type' => MENU_LOCAL_ACTION,
+    'tab_parent' => 'e3-contact',
+    'tab_root' => 'e3-contact',
+  );
+
+  $e3_contact_uri = 'e3-contact/%e3_contact';
+  $e3_contact_uri_argument_position = 1;
+
+  $items[$e3_contact_uri] = array(
+    'title callback' => 'entity_label',
+    'title arguments' => array('e3_contact', $e3_contact_uri_argument_position),
+    'page callback' => 'e3_contact_view',
+    'page arguments' => array($e3_contact_uri_argument_position),
+    'access callback' => 'entity_access',
+    'access arguments' => array(
+      'view',
+      'e3_contact',
+      $e3_contact_uri_argument_position,
+    ),
+    'file' => 'esdportal_e3.e3_contact.pages.inc',
+  );
+
+  $items[$e3_contact_uri . '/view'] = array(
+    'title' => 'View',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+  );
+
+  $items[$e3_contact_uri . '/delete'] = array(
+    'title' => 'Delete contact',
+    'title callback' => 'e3_contact_label',
+    'title arguments' => array($e3_contact_uri_argument_position),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array(
+      'e3_contact_delete_form',
+      $e3_contact_uri_argument_position,
+    ),
+    'access callback' => 'entity_access',
+    'access arguments' => array(
+      'edit',
+      'e3_contact',
+      $e3_contact_uri_argument_position,
+    ),
+    'file' => 'esdportal_e3.e3_contact.admin.inc',
+  );
+
+  $items[$e3_contact_uri . '/edit'] = array(
+    'title' => 'Edit',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array(
+      'e3_contact_form',
+      $e3_contact_uri_argument_position,
+    ),
+    'access callback' => 'entity_access',
+    'access arguments' => array(
+      'edit',
+      'e3_contact',
+      $e3_contact_uri_argument_position,
+    ),
+    'file' => 'esdportal_e3.e3_contact.admin.inc',
+    'type' => MENU_LOCAL_TASK,
+    'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+  );
+
+  foreach (e3_contact_types() as $type => $info) {
+    $items['e3-contact/add/' . $type] = array(
+      'title' => 'Add contact',
+      'page callback' => 'e3_contact_add',
+      'page arguments' => array(2),
+      'access callback' => 'entity_access',
+      'access arguments' => array('create', 'e3_contact', $type),
+      'file' => 'esdportal_e3.e3_contact.admin.inc',
+    );
+  }
+
+  $items['admin/structure/e3-contact-types/%e3_contact_type/delete'] = array(
+    'title' => 'Delete',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('e3_contact_type_form_delete_confirm', 4),
+    'access arguments' => array('administer e3_contact types'),
+    'weight' => 1,
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'esdportal_e3.e3_contact.admin.inc',
+  );
+
+  $items['e3-contact/coach_autocomplete'] = array(
+    'page callback' => 'e3_contact_coach_autocomplete',
+    'file' => 'esdportal_e3.e3_contact.ajax.inc',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('create e3_contact entities'),
+  );
+
+  $items['e3-note/add'] = array(
+    'title' => 'Add experience note',
+    'page callback' => 'e3_note_admin_add_page',
+    'access arguments' => array('administer e3_note entities'),
+    'file' => 'esdportal_e3.e3_note.admin.inc',
+    'type' => MENU_LOCAL_ACTION,
+    'tab_parent' => 'e3-note',
+    'tab_root' => 'e3-note',
+  );
+
+  $e3_note_uri = 'e3-note/%e3_note';
+  $e3_note_uri_argument_position = 1;
+
+  $items[$e3_note_uri] = array(
+    'title callback' => 'entity_label',
+    'title arguments' => array('e3_note', $e3_note_uri_argument_position),
+    'page callback' => 'e3_note_view',
+    'page arguments' => array($e3_note_uri_argument_position),
+    'access callback' => 'entity_access',
+    'access arguments' => array(
+      'view',
+      'e3_note',
+      $e3_note_uri_argument_position,
+    ),
+    'file' => 'esdportal_e3.e3_note.pages.inc',
+  );
+
+  $items[$e3_note_uri . '/view'] = array(
+    'title' => 'View',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+  );
+
+  $items[$e3_note_uri . '/delete'] = array(
+    'title' => 'Delete E3 Note',
+    'title callback' => 'e3_note_label',
+    'title arguments' => array($e3_note_uri_argument_position),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('e3_note_delete_form', $e3_note_uri_argument_position),
+    'access callback' => 'entity_access',
+    'access arguments' => array(
+      'edit',
+      'e3_note',
+      $e3_note_uri_argument_position,
+    ),
+    'file' => 'esdportal_e3.e3_note.admin.inc',
+  );
+
+  $items[$e3_note_uri . '/edit'] = array(
+    'title' => 'Edit',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('e3_note_form', $e3_note_uri_argument_position),
+    'access callback' => 'entity_access',
+    'access arguments' => array(
+      'edit',
+      'e3_note',
+      $e3_note_uri_argument_position,
+    ),
+    'file' => 'esdportal_e3.e3_note.admin.inc',
+    'type' => MENU_LOCAL_TASK,
+    'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+  );
+
+  foreach (e3_note_types() as $type => $info) {
+    $items['e3-note/add/' . $type] = array(
+      'title' => 'Add note',
+      'page callback' => 'e3_note_add',
+      'page arguments' => array(2),
+      'access callback' => 'entity_access',
+      'access arguments' => array('create', 'e3_note', $type),
+      'file' => 'esdportal_e3.e3_note.admin.inc',
+    );
+  }
+
+  $items['admin/structure/e3-note-types/%e3_note_type/delete'] = array(
+    'title' => 'Delete',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('e3_note_type_form_delete_confirm', 4),
+    'access arguments' => array('administer e3_note types'),
+    'weight' => 1,
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'esdportal_e3.e3_note.admin.inc',
+  );
+
+  $items['e3-contact/%/teacher_report'] = array(
+    'title' => 'Teacher Report',
+    'page arguments' => array(1),
+    'page callback' => '_esdportal_e3_teacher_report',
+    'access arguments' => array('access content'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 11,
+  );
+
+  $items['e3-contact/%/observation_log'] = array(
+    'title' => 'Add observation log',
+    'page callback' => '_esdportal_e3_add_log',
+    'access arguments' => array('access content'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 12,
+  );
+
+  return $items;
+}
+
+/**
+ * Helper function.
+ *
+ * Provides the page callback for e3-contact/%/teacher_report.
+ */
+function _esdportal_e3_teacher_report($teacher_id = 1) {
+  drupal_goto('teacher-report/' . $teacher_id);
+}
+
+
+/**
+ * Helper function.
+ *
+ * Provides the page callback function for e3-contact/%/observation_log.i
+ * Todo: Install prepopulate module and add teacher id to url as arg.
+ */
+function _esdportal_e3_add_log() {
+  drupal_goto('e3-note/add/observation_log');
+}
+
+/**
+ * Implements hook_permission().
+ */
+function esdportal_e3_permission() {
+  $permissions = array(
+    // Contact entity permissions.
+    'administer e3_contact types' => array(
+      'title' => t('Administer contact types'),
+      'description' => t('Allows users to configure contact types and their fields.'),
+      'restrict access' => TRUE,
+    ),
+    'create e3_contact entities' => array(
+      'title' => t('Create contacts'),
+      'description' => t('Allows users to create contacts.'),
+      'restrict access' => TRUE,
+    ),
+    'view e3_contact entities' => array(
+      'title' => t('View contacts'),
+      'description' => t('Allows users to view contacts.'),
+      'restrict access' => TRUE,
+    ),
+    'edit any e3_contact entities' => array(
+      'title' => t('Edit any contacts'),
+      'description' => t('Allows users to edit any contacts.'),
+      'restrict access' => TRUE,
+    ),
+    'edit own e3_contact entities' => array(
+      'title' => t('Edit own contacts'),
+      'description' => t('Allows users to edit own contacts.'),
+      'restrict access' => TRUE,
+    ),
+    // Note entity permissions.
+    'administer e3_note types' => array(
+      'title' => t('Administer experience note types'),
+      'description' => t('Allows users to configure note types and their fields.'),
+      'restrict access' => TRUE,
+    ),
+    'create e3_note entities' => array(
+      'title' => t('Create experience notes'),
+      'description' => t('Allows users to create notes.'),
+      'restrict access' => TRUE,
+    ),
+    'view e3_note entities' => array(
+      'title' => t('View experience notes'),
+      'description' => t('Allows users to view notes.'),
+      'restrict access' => TRUE,
+    ),
+    'edit any e3_note entities' => array(
+      'title' => t('Edit any experience notes'),
+      'description' => t('Allows users to edit any notes.'),
+      'restrict access' => TRUE,
+    ),
+    'edit own e3_note entities' => array(
+      'title' => t('Edit own experience notes'),
+      'description' => t('Allows users to edit own notes.'),
+      'restrict access' => TRUE,
+    ),
+  );
+  return $permissions;
+}
+
+
+/**
+ * Implements hook_entity_property_info_alter().
+ */
+function esdportal_e3_entity_property_info_alter(&$info) {
+  // Contact entity.
+  $properties = &$info['e3_contact']['properties'];
+  $properties['created'] = array(
+    'label' => t("Date created"),
+    'type' => 'date',
+    'description' => t("The date the contact was posted."),
+    'setter callback' => 'entity_property_verbatim_set',
+    'setter permission' => 'administer e3_contact entities',
+    'schema field' => 'created',
+  );
+  $properties['changed'] = array(
+    'label' => t("Date changed"),
+    'type' => 'date',
+    'schema field' => 'changed',
+    'description' => t("The date the contact was most recently updated."),
+  );
+  $properties['uid'] = array(
+    'label' => t("Author"),
+    'type' => 'user',
+    'description' => t("The author of the E3 Contact."),
+    'setter callback' => 'entity_property_verbatim_set',
+    'setter permission' => 'administer e3_contact entities',
+    'required' => TRUE,
+    'schema field' => 'uid',
+  );
+  // Experience Note entity.
+  $note_properties = &$info['e3_note']['properties'];
+  $note_properties['created'] = array(
+    'label' => t("Date created"),
+    'type' => 'date',
+    'description' => t("The date the note was posted."),
+    'setter callback' => 'entity_property_verbatim_set',
+    'setter permission' => 'administer e3_note entities',
+    'schema field' => 'created',
+  );
+  $note_properties['changed'] = array(
+    'label' => t("Date changed"),
+    'type' => 'date',
+    'schema field' => 'changed',
+    'description' => t("The date the note was most recently updated."),
+  );
+  $note_properties['uid'] = array(
+    'label' => t("Coach"),
+    'type' => 'user',
+    'description' => t("The author of the E3 Note."),
+    'setter callback' => 'entity_property_verbatim_set',
+    'setter permission' => 'administer e3_note entities',
+    'required' => TRUE,
+    'schema field' => 'uid',
+  );
+}
+
+
+/**
+ * @defgroup e3_contact_api E3 Contact API
+ * @{
+ * CRUD E3 Contacts
+ * @}
+ */
+
+/**
+ * Access callback for E3 Contact.
+ */
+function e3_contact_access($op, $e3_contact, $account = NULL, $entity_type = NULL) {
+  global $user;
+
+  if (!isset($account)) {
+    $account = $user;
+  }
+  switch ($op) {
+    case 'create':
+      return user_access('administer e3_contact entities', $account)
+          || user_access('create e3_contact entities', $account);
+      break;
+
+    case 'view':
+      return user_access('administer e3_contact entities', $account)
+          || user_access('view e3_contact entities', $account);
+      break;
+
+    case 'edit':
+    case 'update':
+    case 'delete':
+      return user_access('administer e3_contact entities')
+          || user_access('edit any e3_contact entities')
+          || (user_access('edit own e3_contact entities') && ($e3_contact->uid == $account->uid));
+      break;
+  }
+}
+
+/**
+ * Loads an E3 Contact.
+ */
+function e3_contact_load($id, $reset = FALSE) {
+  $e3_contacts = e3_contact_load_multiple(array($id), array(), $reset);
+  return reset($e3_contacts);
+}
+
+/**
+ * Loads multiple E3 Contacts based on certain conditions.
+ */
+function e3_contact_load_multiple($ids = array(), $conditions = array(), $reset = FALSE) {
+  return entity_load('e3_contact', $ids, $conditions, $reset);
+}
+
+/**
+ * Saves an E3 Contact.
+ */
+function e3_contact_save($e3_contact) {
+  entity_save('e3_contact', $e3_contact);
+}
+
+/**
+ * Deletes an E3 Contact.
+ */
+function e3_contact_delete($e3_contact) {
+  entity_delete('e3_contact', entity_id('e3_contact', $e3_contact));
+}
+
+/**
+ * Deletes multiple E3 Contacts.
+ */
+function e3_contact_delete_multiple($e3_contact_ids) {
+  entity_delete_multiple('e3_contact', $e3_contact_ids);
+}
+
+/**
+ * @} End of "defgroup e3_contact_api".
+ */
+
+/**
+ * @defgroup e3_note_api E3 Contact API
+ * @{
+ * CRUD E3 Notes
+ * @}
+ */
+
+/**
+ * Access callback for E3 Note.
+ */
+function e3_note_access($op, $e3_note, $account = NULL, $entity_type = NULL) {
+  global $user;
+
+  if (!isset($account)) {
+    $account = $user;
+  }
+  switch ($op) {
+    case 'create':
+      return user_access('administer e3_note entities', $account)
+          || user_access('create e3_note entities', $account);
+
+    case 'view':
+      return user_access('administer e3_note entities', $account)
+          || user_access('view e3_note entities', $account);
+
+    case 'edit':
+    case 'update':
+    case 'delete':
+      return user_access('administer e3_note entities')
+          || user_access('edit any e3_note entities')
+          || (user_access('edit own e3_note entities') && ($e3_note->uid == $account->uid));
+  }
+}
+
+/**
+ * Loads an E3 Note.
+ */
+function e3_note_load($id, $reset = FALSE) {
+  $e3_notes = e3_note_load_multiple(array($id), array(), $reset);
+  return reset($e3_notes);
+}
+
+/**
+ * Loads multiple E3 Notes based on certain conditions.
+ */
+function e3_note_load_multiple($ids = array(), $conditions = array(), $reset = FALSE) {
+  return entity_load('e3_note', $ids, $conditions, $reset);
+}
+
+/**
+ * Saves an E3 Note.
+ */
+function e3_note_save($e3_note) {
+  entity_save('e3_note', $e3_note);
+}
+
+/**
+ * Deletes an E3 Note.
+ */
+function e3_note_delete($e3_note) {
+  entity_delete('e3_note', entity_id('e3_note', $e3_note));
+}
+
+/**
+ * Deletes multiple E3 Notes.
+ */
+function e3_note_delete_multiple($e3_note_ids) {
+  entity_delete_multiple('e3_note', $e3_note_ids);
+}
+
+/**
+ * @} End of "defgroup e3_note_api".
+ */
+
+/**
+ * @defgroup e3_contact_type_api E3 Contact Type API
+ * @{
+ * CRUD E3 Contact Types
+ * @}
+ */
+
+/**
+ * Access callback for E3 Contact Type.
+ */
+function e3_contact_type_access($op, $entity = NULL) {
+  return user_access('administer e3_contact types');
+}
+
+/**
+ * Loads an E3 Contact Type.
+ */
+function e3_contact_type_load($e3_contact_type) {
+  return e3_contact_types($e3_contact_type);
+}
+
+/**
+ * Lists E3 Contact Types.
+ */
+function e3_contact_types($type_name = NULL) {
+  $types = entity_load_multiple_by_name('e3_contact_type', isset($type_name) ? array($type_name) : FALSE);
+  return isset($type_name) ? reset($types) : $types;
+}
+
+/**
+ * Save E3 Contact Type.
+ */
+function e3_contact_type_save($e3_contact_type) {
+  entity_save('e3_contact_type', $e3_contact_type);
+}
+
+/**
+ * Deletes single E3 Contact Type.
+ */
+function e3_contact_type_delete($e3_contact_type) {
+  entity_delete('e3_contact_type', entity_id('e3_contact_type', $e3_contact_type));
+}
+
+/**
+ * Deletes multiple E3 Contact Types.
+ */
+function e3_contact_type_delete_multiple($e3_contact_type_ids) {
+  entity_delete_multiple('e3_contact_type', $e3_contact_type_ids);
+}
+
+/**
+ * @} End of "defgroup e3_contact_type_api".
+ */
+
+/**
+ * @defgroup e3_note_type_api E3 Note Type API
+ * @{
+ * CRUD E3 Note Types
+ * @}
+ */
+
+/**
+ * Access callback for E3 Note Type.
+ */
+function e3_note_type_access($op, $entity = NULL) {
+  return user_access('administer e3_note types');
+}
+
+/**
+ * Loads an E3 Note Type.
+ */
+function e3_note_type_load($e3_note_type) {
+  return e3_note_types($e3_note_type);
+}
+
+/**
+ * Lists E3 Note Types.
+ */
+function e3_note_types($type_name = NULL) {
+  $types = entity_load_multiple_by_name('e3_note_type', isset($type_name) ? array($type_name) : FALSE);
+  return isset($type_name) ? reset($types) : $types;
+}
+
+/**
+ * Saves an E3 Note Type.
+ */
+function e3_note_type_save($e3_note_type) {
+  entity_save('e3_note_type', $e3_note_type);
+}
+
+/**
+ * Deletes a single E3 Note Type.
+ */
+function e3_note_type_delete($e3_note_type) {
+  entity_delete('e3_note_type', entity_id('e3_note_type', $e3_note_type));
+}
+
+/**
+ * Deletes multiple E3 Note Types.
+ */
+function e3_note_type_delete_multiple($e3_note_type_ids) {
+  entity_delete_multiple('e3_note_type', $e3_note_type_ids);
+}
+
+/**
+ * @} End of "defgroup e3_note_type_api".
+ */
+
+
+/**
+ * Implements hook_views_api().
+ */
+function esdportal_e3_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'esdportal_e3'),
+  );
+}
+
+/**
+ * Implements callback entity_info_label.
+ */
+function e3_note_label($e3_note, $e3_note_type) {
+  return t('Note: @note', ['@note' => date('m-d-Y', $e3_note->changed)]);
+}
+
+/**
+ * Implements hook_action_info().
+ *
+ * Because VBO does not support actions for users we need to define a custom
+ * action to assign coach users to teacher entity-types.
+ */
+function esdportal_e3_action_info() {
+  return array(
+    'esdportal_e3_assign_coach_action' => array(
+      'type' => 'entity',
+      'label' => t('Change the coach.'),
+      'behavior' => array('views_property'),
+      'configurable' => TRUE,
+      'triggers' => array('any'),
+      'permissions' => array('edit any e3_contact entities'),
+    ),
+  );
+}
+
+/**
+ * Action function.
+ */
+function esdportal_e3_assign_coach_action($e3_contact, $context) {
+  $e3_contact->uid = $context['coach_uid'];
+  $e3_contact->save();
+}
+
+/**
+ * Action form function.
+ *
+ * Build the form that users will be presented with when they choose to bulk
+ * assign coach to teachers.
+ */
+function esdportal_e3_assign_coach_action_form($context) {
+  $form['coach_username'] = array(
+    '#type' => 'textfield',
+    '#maxlength' => USERNAME_MAX_LENGTH,
+    '#title' => t('Username'),
+    '#autocomplete_path' => 'user/autocomplete',
+    '#required' => TRUE,
+    '#size' => '10',
+    '#description' => t('The username of the coach.'),
+  );
+  return $form;
+}
+
+/**
+ * Action form validate function.
+ *
+ * Checks that the submitted text is a valid username.
+ */
+function esdportal_e3_assign_coach_action_validate($form, $form_state) {
+}
+
+/**
+ * Action form submit function.
+ *
+ * Pass submitted username back to esdportal_e3_contact_assign_coach.
+ */
+function esdportal_e3_assign_coach_action_submit($form, $form_state) {
+  $user = user_load_by_name($form_state['values']['coach_username']);
+  return array('coach_uid' => $user->uid);
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Hide the duration field for note add/edit, display when viewing the note.
+ */
+function esdportal_e3_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'e3_note_form') {
+    // CLASS assessment:
+    unset($form['field_observation_duration']);
+    unset($form['field_pc_average']);
+    unset($form['field_nc_average']);
+    unset($form['field_ts_average']);
+    unset($form['field_rsp_average']);
+    unset($form['field_bm_average']);
+    unset($form['field_p_average']);
+    unset($form['field_ilf_average']);
+    unset($form['field_cd_average']);
+    unset($form['field_qf_average']);
+    unset($form['field_lm_average']);
+    unset($form['field_es_score']);
+    unset($form['field_co_score']);
+    unset($form['field_is_score']);
+
+    // CLASS assessment Infant & Toddler:
+    unset($form['field_rc_average']);
+    unset($form['field_tsit_average']);
+    unset($form['field_fe_average']);
+    unset($form['field_els_average']);
+    unset($form['field_rspc_average']);
+  }
+}
+
+/**
+ * Implements hook_entity_presave().
+ *
+ * Calculate average(mean, 2 d.p.) field values, and associated scores.
+ */
+function esdportal_e3_entity_presave($entity) {
+  if ($entity->type == 'class_assessment') {
+    $wrapper = entity_metadata_wrapper('e3_note', $entity);
+    // Positive Climate average.
+    $pc_values = array();
+    if (NULL !== $wrapper->field_pc_cycle_1->value()) {
+      $pc_values[] = $wrapper->field_pc_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_pc_cycle_2->value()) {
+      $pc_values[] = $wrapper->field_pc_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_pc_cycle_3->value()) {
+      $pc_values[] = $wrapper->field_pc_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_pc_cycle_4->value()) {
+      $pc_values[] = $wrapper->field_pc_cycle_4->value();
+    }
+    $pc_average = round((array_sum($pc_values) / count($pc_values)), 2);
+    if ($pc_average > 0) {
+      $wrapper->field_pc_average->set($pc_average);
+    }
+    // Negative Climate average.
+    $nc_values = array();
+    if (NULL !== $wrapper->field_nc_cycle_1->value()) {
+      $nc_values[] = $wrapper->field_nc_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_nc_cycle_2->value()) {
+      $nc_values[] = $wrapper->field_nc_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_nc_cycle_3->value()) {
+      $nc_values[] = $wrapper->field_nc_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_nc_cycle_4->value()) {
+      $nc_values[] = $wrapper->field_nc_cycle_4->value();
+    }
+    $nc_average = round((array_sum($nc_values) / count($nc_values)), 2);
+    if ($nc_average > 0) {
+      $wrapper->field_nc_average->set($nc_average);
+    }
+    // Teacher Sensitivity average.
+    $ts_values = array();
+    if (NULL !== $wrapper->field_ts_cycle_1->value()) {
+      $ts_values[] = $wrapper->field_ts_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_ts_cycle_2->value()) {
+      $ts_values[] = $wrapper->field_ts_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_ts_cycle_3->value()) {
+      $ts_values[] = $wrapper->field_ts_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_ts_cycle_4->value()) {
+      $ts_values[] = $wrapper->field_ts_cycle_4->value();
+    }
+    $ts_average = round((array_sum($ts_values) / count($ts_values)), 2);
+    if ($ts_average > 0) {
+      $wrapper->field_ts_average->set($ts_average);
+    }
+    // Regard for Student Perspective average.
+    $rsp_values = array();
+    if (NULL !== $wrapper->field_rsp_cycle_1->value()) {
+      $rsp_values[] = $wrapper->field_rsp_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_rsp_cycle_2->value()) {
+      $rsp_values[] = $wrapper->field_rsp_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_rsp_cycle_3->value()) {
+      $rsp_values[] = $wrapper->field_rsp_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_rsp_cycle_4->value()) {
+      $rsp_values[] = $wrapper->field_rsp_cycle_4->value();
+    }
+    $rsp_average = round((array_sum($rsp_values) / count($rsp_values)), 2);
+    if ($rsp_average > 0) {
+      $wrapper->field_rsp_average->set($rsp_average);
+    }
+    // Behaviour Management average.
+    $bm_values = array();
+    if (NULL !== $wrapper->field_bm_cycle_1->value()) {
+      $bm_values[] = $wrapper->field_bm_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_bm_cycle_2->value()) {
+      $bm_values[] = $wrapper->field_bm_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_bm_cycle_3->value()) {
+      $bm_values[] = $wrapper->field_bm_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_bm_cycle_4->value()) {
+      $bm_values[] = $wrapper->field_bm_cycle_4->value();
+    }
+    $bm_average = round((array_sum($bm_values) / count($bm_values)), 2);
+    if ($bm_average > 0) {
+      $wrapper->field_bm_average->set($bm_average);
+    }
+    // Productivity average.
+    $p_values = array();
+    if (NULL !== $wrapper->field_p_cycle_1->value()) {
+      $p_values[] = $wrapper->field_p_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_p_cycle_2->value()) {
+      $p_values[] = $wrapper->field_p_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_p_cycle_3->value()) {
+      $p_values[] = $wrapper->field_p_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_p_cycle_4->value()) {
+      $p_values[] = $wrapper->field_p_cycle_4->value();
+    }
+    $p_average = round((array_sum($p_values) / count($p_values)), 2);
+    if ($p_average > 0) {
+      $wrapper->field_p_average->set($p_average);
+    }
+    // Instructional Learning Formats average.
+    $ilf_values = array();
+    if (NULL !== $wrapper->field_ilf_cycle_1->value()) {
+      $ilf_values[] = $wrapper->field_ilf_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_ilf_cycle_2->value()) {
+      $ilf_values[] = $wrapper->field_ilf_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_ilf_cycle_3->value()) {
+      $ilf_values[] = $wrapper->field_ilf_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_ilf_cycle_4->value()) {
+      $ilf_values[] = $wrapper->field_ilf_cycle_4->value();
+    }
+    $ilf_average = round((array_sum($ilf_values) / count($ilf_values)), 2);
+    if ($ilf_average > 0) {
+      $wrapper->field_ilf_average->set($ilf_average);
+    }
+    // Concept Development average.
+    $cd_values = array();
+    if (NULL !== $wrapper->field_cd_cycle_1->value()) {
+      $cd_values[] = $wrapper->field_cd_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_cd_cycle_2->value()) {
+      $cd_values[] = $wrapper->field_cd_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_cd_cycle_3->value()) {
+      $cd_values[] = $wrapper->field_cd_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_cd_cycle_4->value()) {
+      $cd_values[] = $wrapper->field_cd_cycle_4->value();
+    }
+    $cd_average = round((array_sum($cd_values) / count($cd_values)), 2);
+    if ($cd_average > 0) {
+      $wrapper->field_cd_average->set($cd_average);
+    }
+    // Quality of Feedback average.
+    $qf_values = array();
+    if (NULL !== $wrapper->field_qf_cycle_1->value()) {
+      $qf_values[] = $wrapper->field_qf_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_qf_cycle_2->value()) {
+      $qf_values[] = $wrapper->field_qf_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_qf_cycle_3->value()) {
+      $qf_values[] = $wrapper->field_qf_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_qf_cycle_4->value()) {
+      $qf_values[] = $wrapper->field_qf_cycle_4->value();
+    }
+    $qf_average = round((array_sum($qf_values) / count($qf_values)), 2);
+    if ($qf_average > 0) {
+      $wrapper->field_qf_average->set($qf_average);
+    }
+    // Language Modeling average.
+    $lm_values = array();
+    if (NULL !== $wrapper->field_lm_cycle_1->value()) {
+      $lm_values[] = $wrapper->field_lm_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_lm_cycle_2->value()) {
+      $lm_values[] = $wrapper->field_lm_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_lm_cycle_3->value()) {
+      $lm_values[] = $wrapper->field_lm_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_lm_cycle_4->value()) {
+      $lm_values[] = $wrapper->field_lm_cycle_4->value();
+    }
+    $lm_average = round((array_sum($lm_values) / count($lm_values)), 2);
+    if ($lm_average > 0) {
+      $wrapper->field_lm_average->set($lm_average);
+    }
+    // Emotional Support score.
+    $es_score = round((($pc_average + (8 - $nc_average) + $ts_average + $rsp_average) / 4), 2);
+    if ($es_score > 0) {
+      $wrapper->field_es_score->set($es_score);
+    }
+    // Classroom Organization score.
+    $co_score = round((($bm_average + $p_average + $ilf_average) / 3), 2);
+    if ($co_score > 0) {
+      $wrapper->field_co_score->set($co_score);
+    }
+    // Instructional Support score.
+    $is_score = round((($cd_average + $qf_average + $lm_average) / 3), 2);
+    if ($is_score > 0) {
+      $wrapper->field_is_score->set($is_score);
+    }
+  }
+
+  // field_rc_average = The average of all COMPLETED rc_cycle fields
+  // field_tsit_average = The average of all COMPLETED ts_cycle fields
+  // field_fe_average = The average of all COMPLETED fe_cycle fields
+  // field_els_average = The average of all COMPLETED els_cycle fields
+  // These can be placed before their respective xx_notes fields.
+  // field_rspc_score = average of the four above averages
+  if ($entity->type == 'class_assessment_it') {
+    $wrapper = entity_metadata_wrapper('e3_note', $entity);
+
+    // field_rc_average
+    $rc_values = array();
+    if (NULL !== $wrapper->field_rc_cycle_1->value()) {
+      $rc_values[] = $wrapper->field_rc_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_rc_cycle_2->value()) {
+      $rc_values[] = $wrapper->field_rc_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_rc_cycle_3->value()) {
+      $rc_values[] = $wrapper->field_rc_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_rc_cycle_4->value()) {
+      $rc_values[] = $wrapper->field_rc_cycle_4->value();
+    }
+    $rc_average = round((array_sum($rc_values) / count($rc_values)), 2);
+    if ($rc_average > 0) {
+      $wrapper->field_rc_average->set($rc_average);
+    }
+
+    // field_tsit_average
+    $ts_values = array();
+    if (NULL !== $wrapper->field_ts_cycle_1->value()) {
+      $ts_values[] = $wrapper->field_ts_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_ts_cycle_2->value()) {
+      $ts_values[] = $wrapper->field_ts_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_ts_cycle_3->value()) {
+      $ts_values[] = $wrapper->field_ts_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_ts_cycle_4->value()) {
+      $ts_values[] = $wrapper->field_ts_cycle_4->value();
+    }
+    $ts_average = round((array_sum($ts_values) / count($ts_values)), 2);
+    if ($ts_average > 0) {
+      $wrapper->field_tsit_average->set($ts_average);
+    }
+
+    // field_fe_average
+    $fe_values = array();
+    if (NULL !== $wrapper->field_fe_cycle_1->value()) {
+      $fe_values[] = $wrapper->field_fe_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_fe_cycle_2->value()) {
+      $fe_values[] = $wrapper->field_fe_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_fe_cycle_3->value()) {
+      $fe_values[] = $wrapper->field_fe_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_fe_cycle_4->value()) {
+      $fe_values[] = $wrapper->field_fe_cycle_4->value();
+    }
+    $fe_average = round((array_sum($fe_values) / count($fe_values)), 2);
+    if ($fe_average > 0) {
+      $wrapper->field_fe_average->set($fe_average);
+    }
+
+    // field_els_average
+    $els_values = array();
+    if (NULL !== $wrapper->field_els_cycle_1->value()) {
+      $els_values[] = $wrapper->field_els_cycle_1->value();
+    }
+    if (NULL !== $wrapper->field_els_cycle_2->value()) {
+      $els_values[] = $wrapper->field_els_cycle_2->value();
+    }
+    if (NULL !== $wrapper->field_els_cycle_3->value()) {
+      $els_values[] = $wrapper->field_els_cycle_3->value();
+    }
+    if (NULL !== $wrapper->field_els_cycle_4->value()) {
+      $els_values[] = $wrapper->field_els_cycle_4->value();
+    }
+    $els_average = round((array_sum($els_values) / count($els_values)), 2);
+    if ($els_average > 0) {
+      $wrapper->field_els_average->set($els_average);
+    }
+
+    // Responsive Caregiving Score.
+    $rspc_average = round((($rc_average + $tsit_average + $fe_average + $els_average) / 4), 2);
+    if ($rspc_average > 0) {
+      $wrapper->field_rspc_average->set($rspc_average);
+    }
+
+  }
+
+  // Calculate duration.
+  if ($entity->type === 'session_log' || $entity->type === 'observation_log') {
+    $wrapper = entity_metadata_wrapper('e3_note', $entity);
+
+    $date = $wrapper->field_time_of_observation->value();
+
+    $start = new DateObject($date['value'], $date['timezone']);
+    $end = new DateObject($date['value2'], $date['timezone']);
+
+    $duration = $start->difference($end, 'seconds');
+
+    $wrapper->field_observation_duration->set($duration);
+  }
+}

@@ -1,0 +1,2144 @@
+<?php
+
+/**
+ * @file
+ * esdportal_api.module
+ */
+
+use Tobscure\JsonApi\Document;
+use Drupal\esdportal_api\Serializers\EcSerializer;
+use Drupal\esdportal_api\Serializers\SchoolSerializer;
+use Drupal\esdportal_api\EcDataUtils;
+
+define("ESDPORTAL_API_DEFAULT_LIMIT", 100);
+define("ESDPORTAL_API_MAX_LIMIT", 1000);
+
+// Define any filter_special query_TAG_alters here:
+define("ESDPORTAL_API_SPECIALTAGS_SCHOOLS", "school_profile_has_specialed, school_profile_has_arts, school_profile_has_sports, school_profile_has_transportation, school_profile_has_before_after_care, school_profile_application_required, school_profile_collegereadiness, esd_k8hs_2015_highscore");
+define("ESDPORTAL_API_SPECIALTAGS_ECS", "ec_profile_is_free_or_reduced_cost, ec_profile_has_transportation, ec_profile_has_special_needs_experience, ec_profile_has_meals, has_esd_el_2014, has_esd_el_2015, esd_el_highscore");
+
+// Do the same for special sorts:
+// These sorts are defined as query tags with names "sort_tag_[asc|desc]".
+define("ESDPORTAL_API_SPECIALSORTS_ECS", "ec_profile_changed, ec_total_pts");
+define("ESDPORTAL_API_SPECIALSORTS_SCHOOLS", "school_profile_changed, school_combined_total_pts");
+
+/**
+ * Implements hook_services_resources().
+ *
+ * Defines resources for special (non-standard) ESD Portal data.
+ */
+function esdportal_api_services_resources() {
+  $api = array(
+    'ecs' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'help' => 'Retrieves Early Childhood Center',
+          'callback' => '_esdportal_api_retrieve_ec',
+          'access callback' => 'user_access',
+          'access arguments' => array('access content'),
+          'access arguments append' => FALSE,
+          'args' => array(
+            array(
+              'name' => 'id',
+              'type' => 'int',
+              'description' => 'ec entity ID',
+              'source' => array('path' => '0'),
+              'optional' => FALSE,
+              'default value' => NULL,
+            ),
+            array(
+              'name' => 'includes',
+              'type' => 'string',
+              'description' => 'Include other datasets, comma-separated (current options: ec_profile, most_recent_ec_state_rating, ' . implode(', ', _esdportal_api_get_ec_data_tables()) . ', all)',
+              'source' => array('param' => 'includes'),
+              'optional' => TRUE,
+              'default value' => NULL,
+            ),
+            array(
+              'name' => 'flatten_fields',
+              'type' => 'int',
+              'description' => 'Remove localization structure from fields if true',
+              'source' => array('param' => 'flatten_fields'),
+              'optional' => TRUE,
+              'default value' => 0,
+            ),
+          ),
+        ),
+        'index' => array(
+          'help' => 'Lists Early Childhood Centers',
+          'callback' => '_esdportal_api_index_ecs',
+          'access arguments' => array('access content'),
+          'args' => array(
+            array(
+              'name' => 'includes',
+              'type' => 'string',
+              'description' => 'Include other datasets, comma-separated (current options: ec_profile, most_recent_ec_state_rating, ' . implode(', ', _esdportal_api_get_ec_data_tables()) . ', all)',
+              'source' => array('param' => 'includes'),
+              'optional' => TRUE,
+              'default value' => NULL,
+            ),
+            array(
+              'name' => 'flatten_fields',
+              'type' => 'int',
+              'description' => 'Remove localization structure from fields if true',
+              'source' => array('param' => 'flatten_fields'),
+              'optional' => TRUE,
+              'default value' => 0,
+            ),
+            array(
+              'name' => 'filter',
+              'type' => 'array',
+              'description' => 'An array of field or property names from early childhood center entities paired with values to use to filter the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'filter'),
+              'default value' => array(),
+              'commerce_services_field_populate' => 'taxonomy_term',
+            ),
+            array(
+              'name' => 'filter_op',
+              'type' => 'array',
+              'description' => 'An array of field or property names from early childhood center entities paired with the operator to use when filtering the result set. If operator is IN, the query builder will attempt to explode the value of filter by commas (e.g. `filter[field_school_type]=10,922&filter_op[field_school_type]=IN` will be transformed into a `WHERE ... IN (..., ...)` query.',
+              'optional' => TRUE,
+              'source' => array('param' => 'filter_op'),
+              'default value' => array(),
+              'commerce_services_match_keys' => array(
+                'arg' => 'filter',
+                'default value' => '=',
+              ),
+            ),
+            array(
+              'name' => 'filter_special',
+              'type' => 'array',
+              'description' => 'A comma-separated list of custom filters to apply. Options: ' . ESDPORTAL_API_SPECIALTAGS_ECS,
+              'optional' => TRUE,
+              'source' => array('param' => 'filter_special'),
+              'default value' => array(),
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'sort_by',
+              'type' => 'string',
+              'description' => 'A comma separated list of field or property names from early childhood center entities by which to sort the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'sort_by'),
+              'default value' => 'name',
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'sort_order',
+              'type' => 'string',
+              'description' => 'A comma separated list of order specifiers (DESC or ASC) indicating the direction the sort_by values should be applied to the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'sort_order'),
+              'default value' => 'DESC',
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'sort_by_special',
+              'type' => 'string',
+              'description' => 'A comma separated list of special sorts to apply. Options: ' . ESDPORTAL_API_SPECIALSORTS_ECS,
+              'optional' => TRUE,
+              'source' => array('param' => 'sort_by_special'),
+              'default value' => 'name',
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'sort_order_special',
+              'type' => 'string',
+              'description' => 'A comma separated list of order specifiers (DESC or ASC) indicating the direction the sort_by_special values should be applied to the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'sort_order_special'),
+              'default value' => 'DESC',
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'near_latlon',
+              'type' => 'string',
+              'description' => 'A comma separated pair of decimal latitude and longitude to use as a geo-spatial filter, along with near_miles.',
+              'optional' => TRUE,
+              'source' => array('param' => 'near_latlon'),
+              'default value' => NULL,
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'near_miles',
+              'type' => 'string',
+              'description' => 'Radius in miles to include in a geo-spatial query originating at coordinates specified in near_latlon.',
+              'optional' => TRUE,
+              'source' => array('param' => 'near_miles'),
+              'default value' => NULL,
+            ),
+            array(
+              'name' => 'limit',
+              'type' => 'int',
+              'description' => 'Limit response count (default ' . ESDPORTAL_API_DEFAULT_LIMIT . ')',
+              'source' => array('param' => 'limit'),
+              'optional' => TRUE,
+              'default value' => ESDPORTAL_API_DEFAULT_LIMIT,
+            ),
+            array(
+              'name' => 'offset',
+              'type' => 'int',
+              'description' => 'Offset starting record',
+              'source' => array('param' => 'offset'),
+              'optional' => TRUE,
+              'default value' => 0,
+            ),
+          ),
+        ),
+      ),
+    ),
+    'ec_state_ratings' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'help' => 'Retrieves state ratings for an Early Childhood Center',
+          'callback' => '_esdportal_api_retrieve_ec_state_rating',
+          'access callback' => 'user_access',
+          'access arguments' => array('access content'),
+          'access arguments append' => FALSE,
+          'args' => array(
+            array(
+              'name' => 'esd_ec_id',
+              'type' => 'int',
+              'description' => 'ESD-universe early childhood center ID',
+              'source' => array('path' => '0'),
+              'optional' => FALSE,
+              'default value' => NULL,
+            ),
+            array(
+              'name' => 'batch_timestamp',
+              'type' => 'int',
+              'description' => 'UNIX timestamp of a specific batch (if not provided, returns most recent rating)',
+              'source' => array('param' => 'batch_timestamp'),
+              'optional' => TRUE,
+              'default value' => NULL,
+            ),
+          ),
+        ),
+        'index' => array(
+          'help' => 'Lists most recent Early Childhood Center state ratings',
+          'callback' => '_esdportal_api_index_ec_state_ratings',
+          'access arguments' => array('access content'),
+          'args' => array(
+            array(
+              'name' => 'batch_timestamp',
+              'type' => 'int',
+              'description' => 'UNIX timestamp of a specific batch (if not provided, returns most recent ratings)',
+              'source' => array('path' => '1'),
+              'optional' => TRUE,
+              'default value' => NULL,
+            ),
+          ),
+        ),
+      ),
+    ),
+    'schools' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'help' => 'Retrieves School',
+          'callback' => '_esdportal_api_retrieve_school',
+          'access callback' => 'user_access',
+          'access arguments' => array('access content'),
+          'access arguments append' => FALSE,
+          'args' => array(
+            array(
+              'name' => 'id',
+              'type' => 'int',
+              'description' => 'school entity ID',
+              'source' => array('path' => '0'),
+              'optional' => FALSE,
+              'default value' => NULL,
+            ),
+            array(
+              'name' => 'includes',
+              'type' => 'string',
+              'description' => 'Include other datasets, comma-separated (current options: school_profile, ' . implode(', ', _esdportal_api_get_school_data_tables()) . ', all)',
+              'source' => array('param' => 'includes'),
+              'optional' => TRUE,
+              'default value' => NULL,
+            ),
+            array(
+              'name' => 'flatten_fields',
+              'type' => 'int',
+              'description' => 'Remove localization structure from fields if true',
+              'source' => array('param' => 'flatten_fields'),
+              'optional' => TRUE,
+              'default value' => 0,
+            ),
+          ),
+        ),
+        'index' => array(
+          'help' => 'Lists Schools',
+          'callback' => '_esdportal_api_index_schools',
+          'access arguments' => array('access content'),
+          'args' => array(
+            array(
+              'name' => 'includes',
+              'type' => 'string',
+              'description' => 'Include other datasets, comma-separated (current options: school_profile, ' . implode(', ', _esdportal_api_get_school_data_tables()) . ', all)',
+              'source' => array('param' => 'includes'),
+              'optional' => TRUE,
+              'default value' => NULL,
+            ),
+            array(
+              'name' => 'flatten_fields',
+              'type' => 'int',
+              'description' => 'Remove localization structure from fields if true',
+              'source' => array('param' => 'flatten_fields'),
+              'optional' => TRUE,
+              'default value' => 0,
+            ),
+            array(
+              'name' => 'filter',
+              'type' => 'array',
+              'description' => 'An array of field or property names from school entities paired with values to use to filter the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'filter'),
+              'default value' => array(),
+              'commerce_services_field_populate' => 'taxonomy_term',
+            ),
+            array(
+              'name' => 'filter_op',
+              'type' => 'array',
+              'description' => 'An array of field or property names from school entities paired with the operator to use when filtering the result set. If operator is IN, the query builder will attempt to explode the value of filter by commas (e.g. `filter[field_school_type]=10,922&filter_op[field_school_type]=IN` will be transformed into a `WHERE ... IN (..., ...)` query.',
+              'optional' => TRUE,
+              'source' => array('param' => 'filter_op'),
+              'default value' => array(),
+              'commerce_services_match_keys' => array(
+                'arg' => 'filter',
+                'default value' => '=',
+              ),
+            ),
+            array(
+              'name' => 'filter_special',
+              'type' => 'array',
+              'description' => 'A comma-separated list of custom filters to apply. Options: ' . ESDPORTAL_API_SPECIALTAGS_SCHOOLS,
+              'optional' => TRUE,
+              'source' => array('param' => 'filter_special'),
+              'default value' => array(),
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'sort_by',
+              'type' => 'string',
+              'description' => 'A comma separated list of field or property names from school entities by which to sort the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'sort_by'),
+              'default value' => 'name',
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'sort_order',
+              'type' => 'string',
+              'description' => 'A comma separated list of order specifiers (DESC or ASC) indicating the direction the sort_by values should be applied to the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'sort_order'),
+              'default value' => 'DESC',
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'sort_by_special',
+              'type' => 'string',
+              'description' => 'A comma separated list of special sorts to apply. Options: ' . ESDPORTAL_API_SPECIALSORTS_SCHOOLS,
+              'optional' => TRUE,
+              'source' => array('param' => 'sort_by_special'),
+              'default value' => 'name',
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'sort_order_special',
+              'type' => 'string',
+              'description' => 'A comma separated list of order specifiers (DESC or ASC) indicating the direction the sort_by_special values should be applied to the result set.',
+              'optional' => TRUE,
+              'source' => array('param' => 'sort_order_special'),
+              'default value' => 'DESC',
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'near_latlon',
+              'type' => 'string',
+              'description' => 'A comma separated pair of decimal latitude and longitude to use as a geo-spatial filter, along with near_miles.',
+              'optional' => TRUE,
+              'source' => array('param' => 'near_latlon'),
+              'default value' => NULL,
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'near_miles',
+              'type' => 'string',
+              'description' => 'Radius in miles to include in a geo-spatial query originating at coordinates specified in near_latlon.',
+              'optional' => TRUE,
+              'source' => array('param' => 'near_miles'),
+              'default value' => NULL,
+            ),
+            array(
+              'name' => 'filter_values',
+              'type' => 'array',
+              'description' => 'An array of special fields paired with comma-separated values to use to filter the result set. Allowed values for schools: field_special_ed_level (basic,intensive,moderate,none), field_special_ed_programs (autism,blindness,cognitive,deafness,developmental_delay,emotional,ld,multiple,orthopedic,other,speech), field_transportation_options (none,passes,busses,shared_bus,special_ed_only), field_academic_focus (special_education, vocational, technology, all_arts, foreign_lang, religious, business, visual_arts, performing_arts, medical, music, engineering, service_learning, mathematics, science, none). Filter values are added to the query using an IN clause (OR).',
+              'optional' => TRUE,
+              'source' => array('param' => 'filter_values'),
+              'default value' => array(),
+              'commerce_services_explode' => ',',
+            ),
+            array(
+              'name' => 'limit',
+              'type' => 'int',
+              'description' => 'Limit response count (default ' . ESDPORTAL_API_DEFAULT_LIMIT . ')',
+              'source' => array('param' => 'limit'),
+              'optional' => TRUE,
+              'default value' => ESDPORTAL_API_DEFAULT_LIMIT,
+            ),
+            array(
+              'name' => 'offset',
+              'type' => 'int',
+              'description' => 'Offset starting record',
+              'source' => array('param' => 'offset'),
+              'optional' => TRUE,
+              'default value' => 0,
+            ),
+          ),
+        ),
+      ),
+    ),
+
+  );
+
+  return $api;
+}
+
+/**
+ * Retrieves a single early childhood center.
+ *
+ * @param int $id
+ *   ESD internal ec id.
+ * @param string $includes
+ *   Related datasets to include, comma-separated. 'all' will include all.
+ * @param bool $flatten_fields
+ *   If true, remove l10n structure & other drupal crap from response.
+ *
+ * @return array
+ *   Nested array of the ec data.
+ */
+function _esdportal_api_retrieve_ec($id, $includes, $flatten_fields = FALSE) {
+  $document = new Document();
+
+  $ec = taxonomy_term_load($id);
+
+  if (!$ec || $ec->vid != 19) {
+    return services_error(t('early childhood center @id does not exist.', array('@id' => $id)), 404);
+  }
+
+  $all_includes = array_merge(['ec_profile', 'most_recent_ec_state_rating'], _esdportal_api_get_ec_data_tables());
+
+  $includes = (strlen($includes) > 0) ? explode(',', $includes) : NULL;
+
+  // Add ec_profile and most_recent_ec_state_rating by default if no other
+  // includes are specified.
+  if (!count($includes)) {
+    $includes[] = 'ec_profile';
+    $includes[] = 'most_recent_ec_state_rating';
+  }
+
+  // Include all the includes.
+  if (in_array('all', $includes)) {
+    $includes = $all_includes;
+  }
+
+  $serializer = ($includes) ? new EcSerializer($includes) : new EcSerializer([]);
+
+  $ecs = [$ec];
+
+  _esdportal_api_load_includes_for_ecs($ecs, $includes, $flatten_fields);
+
+  $resource = $serializer->resource($ecs[0]);
+
+  $document->setData($resource);
+
+  return $document->toArray();
+}
+
+/**
+ * Helper function to flatten an entity's fields.
+ *
+ * @param string $entity_type
+ *   Drupal entity type.
+ * @param object &$entity
+ *   An entity object.
+ */
+function _esdportal_api_flatten_entity_fields($entity_type, &$entity) {
+  if (isset($entity->vocabulary_machine_name)) {
+    $entity->machine_name = $entity->vocabulary_machine_name;
+  }
+  \Drupal\esdportal_api\EcDataUtils::flattenFields($entity_type, $entity);
+}
+
+/**
+ * Given a taxonomy term, find the first node related to it & return its nid.
+ *
+ * @param string $bundle
+ *   Content type.
+ * @param object $term
+ *   Taxonomy term.
+ *
+ * @return int
+ *   node id
+ */
+function _esdportal_api_get_related_nid($bundle, $term) {
+  $nid = db_query("SELECT ti.nid FROM taxonomy_index AS ti INNER JOIN node AS n ON n.nid=ti.nid WHERE ti.tid=:tid AND n.type=:bundle", array(':tid' => $term->tid, ':bundle' => $bundle))->fetchField();
+
+  return $nid;
+}
+
+/**
+ * Retrieves list of all early childhood centers.
+ *
+ * @param string $includes
+ *   Related datasets to include, comma-separated. 'all' will include all.
+ * @param bool $flatten_fields
+ *   If true, remove l10n structure & other drupal structures from response.
+ * @param array|bool $filter
+ *   An associative array of property names, single column field names, or
+ *   multi-column field column names with their values to use to filter the
+ *   result set of the index request.
+ * @param array|bool $filter_op
+ *   An associative array of field and property names with the operators to use
+ *   when applying their filter conditions to the index request query.
+ * @param array|bool $filter_special
+ *   An array of names of special filters to apply.
+ * @param array|bool $sort_by
+ *   An array of database fields to sort the query by, with sort fields being
+ *   valid properties, single column field names, or multi-column field column
+ *   names for the matching entity type.
+ * @param array|bool $sort_order
+ *   The corresponding sort orders for the fields specified in the $sort_by
+ *   array; one of either 'DESC' or 'ASC'.
+ * @param array|bool $sort_by_special
+ *   A comma separated list of special sorts to apply.
+ * @param array|bool $sort_order_special
+ *   The corresponding sort orders for the fields specified in the
+ *   $sort_by_special array; one of either 'DESC' or 'ASC'.
+ * @param array|bool $near_latlon
+ *   A pair of latitude & longitude coordinates to use in a geoquery along with
+ *   the following param.
+ * @param float|bool $near_miles
+ *   Distance in miles to include in a geospatial query.
+ * @param int $limit
+ *   If null, return all results.
+ * @param int $offset
+ *   Offset starting record.
+ *
+ * @return array
+ *   JSON-API data.
+ */
+function _esdportal_api_index_ecs($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $sort_by_special = FALSE, $sort_order_special = FALSE, $near_latlon = FALSE, $near_miles = FALSE, $limit = NULL, $offset = 0) {
+  $document = new Document();
+
+  list($ecs, $total) = _esdportal_api_taxonomy_get_tree(19, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $sort_by_special, $sort_order_special, $near_latlon, $near_miles, [], $limit, $offset);
+
+  $link_to_self = $_SERVER['REQUEST_URI'];
+
+  // All the potential includes aside from data tables.
+  $special_includes = [
+    'ec_profile',
+    'most_recent_ec_state_rating'
+  ];
+
+  $all_includes = array_merge($special_includes, _esdportal_api_get_ec_data_tables());
+
+  $includes = (strlen($includes) > 0) ? explode(',', $includes) : [];
+
+  // Include all the includes.
+  if (in_array('all', $includes)) {
+    $includes = $all_includes;
+  }
+
+  $serializer = ($includes) ? new EcSerializer($includes) : new EcSerializer([]);
+
+  _esdportal_api_load_includes_for_ecs($ecs, $includes, $flatten_fields);
+
+  $collection = $serializer->collection($ecs);
+
+  $document->setData($collection);
+
+  $document->addMeta('total', $total);
+  $document->addLink('self', $link_to_self);
+
+  return $document->toArray();
+}
+
+/**
+ * Retrieves an ec_state_rating.
+ *
+ * Retrieves a single EC Center's rating with given timestamp or most recent
+ * timestamp if none is given.
+ *
+ * @param int $esd_ec_id
+ *   Early childhood center ID.
+ * @param int $batch_timestamp
+ *   The specific timestamp to grab. If null, return most recent one.
+ *
+ * @return array
+ *   State rating data.
+ */
+function _esdportal_api_retrieve_ec_state_rating($esd_ec_id, $batch_timestamp = NULL) {
+  if (isset($batch_timestamp) && $batch_timestamp > 0) {
+    $rating = db_query('SELECT * FROM {ec_state_ratings} WHERE timestamp=:batch_timestamp AND esd_ec_id=:esd_ec_id', array(':esd_ec_id' => $esd_ec_id, ':batch_timestamp' => $batch_timestamp))->fetchAssoc();
+  }
+  else {
+    $rating = db_query('SELECT * FROM {ec_state_ratings} WHERE timestamp=(SELECT MAX(timestamp) FROM {ec_state_ratings}) AND esd_ec_id=:esd_ec_id', array(':esd_ec_id' => $esd_ec_id))->fetchAssoc();
+  }
+  return $rating;
+}
+
+/**
+ * Lists all batch timestamps.
+ *
+ * Not offered via api yet.
+ */
+function _esdportal_api_index_ec_state_ratings_batches() {
+  return db_query('SELECT DISTINCT(timestamp) FROM {ec_state_ratings} ORDER BY timestamp DESC')->fetchAssoc();
+}
+
+/**
+ * Lists ec_state_ratings.
+ *
+ * Lists set of EC state ratings with given timestamp or most recent timestamp,
+ * if none is given.
+ *
+ * @param int $batch_timestamp
+ *   The specific batch timestamp to retrieve. If null, retrieve most recent
+ *   batch.
+ *
+ * @return array
+ *   Array of ec state rating data.
+ */
+function _esdportal_api_index_ec_state_ratings($batch_timestamp = NULL) {
+  if (isset($batch_timestamp) && $batch_timestamp > 0) {
+    $ratings = db_query('SELECT * FROM {ec_state_ratings} WHERE timestamp=:batch_timestamp', array(':batch_timestamp' => $batch_timestamp))->fetchAssoc();
+  }
+  else {
+    $ratings = db_query('SELECT * FROM {ec_state_ratings} WHERE timestamp=(SELECT MAX(timestamp) FROM {ec_state_ratings})')->fetchAll();
+  }
+
+  return array('ec_state_ratings' => $ratings);
+}
+
+/**
+ * Retrieves a single school.
+ *
+ * @param int $id
+ *   ESD internal school id.
+ * @param string $includes
+ *   Related datasets to include, comma-separated. 'all' will include all.
+ * @param bool $flatten_fields
+ *   If true, remove l10n structure & other drupal structures from response.
+ *
+ * @return array
+ *   JSON-API data
+ */
+function _esdportal_api_retrieve_school($id, $includes, $flatten_fields = FALSE) {
+  $document = new Document();
+
+  $school = taxonomy_term_load($id);
+
+  if (!$school || ($school->vid != 4)) {
+    return services_error(t('school @id does not exist.', array('@id' => $id)), 404);
+  }
+
+  $all_includes = array_merge(['school_profile'], _esdportal_api_get_school_data_tables());
+
+  $includes = (strlen($includes) > 0) ? explode(',', $includes) : NULL;
+
+  // Add school_profile by default if no other includes are specified.
+  if (!count($includes)) {
+    $includes[] = 'school_profile';
+  }
+
+  // Include all the includes.
+  if (in_array('all', $includes)) {
+    $includes = $all_includes;
+  }
+
+  $serializer = ($includes) ? new SchoolSerializer($includes) : new SchoolSerializer([]);
+
+  $schools = [$school];
+
+  _esdportal_api_load_includes_for_schools($schools, $includes, $flatten_fields);
+
+  $resource = $serializer->resource($schools[0]);
+
+  $document->setData($resource);
+
+  return $document->toArray();
+}
+
+/**
+ * Retrieves list of all schools.
+ *
+ * @param string $includes
+ *   Related datasets to include, comma-separated. 'all' will include all.
+ * @param bool $flatten_fields
+ *   If true, remove l10n structure & other drupal structures from response.
+ * @param array|bool $filter
+ *   An associative array of property names, single column field names, or
+ *   multi-column field column names with their values to use to filter the
+ *   result set of the index request.
+ * @param array|bool $filter_op
+ *   An associative array of field and property names with the operators to use
+ *   when applying their filter conditions to the index request query.
+ * @param array|bool $filter_special
+ *   An array of names of special filters to apply.
+ * @param array|bool $sort_by
+ *   An array of database fields to sort the query by, with sort fields being
+ *   valid properties, single column field names, or multi-column field column
+ *   names for the matching entity type.
+ * @param array|bool $sort_order
+ *   The corresponding sort orders for the fields specified in the $sort_by.
+ * @param array|bool $sort_by_special
+ *   A comma separated list of special sorts to apply.
+ * @param array|bool $sort_order_special
+ *   The corresponding sort orders for the fields specified in the
+ *   array; one of either 'DESC' or 'ASC'.
+ * @param array|bool $near_latlon
+ *   A pair of latitude & longitude coordinates to use in a geoquery along with
+ *   the following param.
+ * @param float|bool $near_miles
+ *   Distance in miles to include in a geospatial query.
+ * @param array|bool $filter_values
+ *   Filter with acceptable values. Associative array.
+ * @param int $limit
+ *   If null, return all results.
+ * @param int $offset
+ *   Offset starting record.
+ *
+ * @return array
+ *   JSON-API data.
+ */
+function _esdportal_api_index_schools($includes = NULL, $flatten_fields = FALSE, $filter = FALSE, $filter_op = FALSE, $filter_special = FALSE, $sort_by = FALSE, $sort_order = FALSE, $sort_by_special = FALSE, $sort_order_special = FALSE, $near_latlon = FALSE, $near_miles = FALSE, $filter_values = FALSE, $limit = NULL, $offset = 0) {
+  $document = new Document();
+
+  list($schools, $total) = _esdportal_api_taxonomy_get_tree(4, $filter, $filter_op, $filter_special, $sort_by, $sort_order, $sort_by_special, $sort_order_special, $near_latlon, $near_miles, $filter_values, $limit, $offset);
+
+  $link_to_self = $_SERVER['REQUEST_URI'];
+
+  $all_includes = array_merge(['school_profile'], _esdportal_api_get_school_data_tables());
+
+  $includes = (strlen($includes) > 0) ? explode(',', $includes) : [];
+
+  // Include all the includes.
+  if (in_array('all', $includes)) {
+    $includes = $all_includes;
+  }
+
+  $serializer = ($includes) ? new SchoolSerializer($includes) : new SchoolSerializer([]);
+
+  _esdportal_api_load_includes_for_schools($schools, $includes, $flatten_fields);
+
+  $collection = $serializer->collection($schools);
+
+  $document->setData($collection);
+
+  $document->addMeta('total', $total);
+  $document->addLink('self', $link_to_self);
+
+  return $document->toArray();
+}
+
+/**
+ * Lists all school data tables.
+ *
+ * @return array
+ *   Data table names.
+ */
+function _esdportal_api_get_school_data_tables() {
+  $potential_data_tables = \Drupal\esdportal_api\EcDataUtils::getDataTablesWithBcodes();
+  return \Drupal\esdportal_api\EcDataUtils::extractDataTableNames($potential_data_tables);
+}
+
+/**
+ * List all Early Childhood data tables.
+ *
+ * @return array
+ *   Data table names.
+ */
+function _esdportal_api_get_ec_data_tables() {
+  $potential_data_tables = \Drupal\esdportal_api\EcDataUtils::getDataTablesWithProgramIds();
+  return \Drupal\esdportal_api\EcDataUtils::extractDataTableNames($potential_data_tables);
+}
+
+/**
+ * Loads all includes for a set of schools.
+ *
+ * First, load BCODE-related data tables (not as positive of a match as schid)
+ * and then try loading schid-related tables.
+ *
+ * @param array &$schools
+ *   School entities.
+ * @param array $includes
+ *   Datasets to include.
+ * @param bool $flatten_fields
+ *   Whether or not to flattenFields.
+ */
+function _esdportal_api_load_includes_for_schools(array &$schools, array $includes = [], $flatten_fields = NULL) {
+  $potential_bcode_data_tables = \Drupal\esdportal_api\EcDataUtils::getDataTablesWithBcodes();
+  $potential_bcode_data_table_names = \Drupal\esdportal_api\EcDataUtils::extractDataTableNames($potential_bcode_data_tables);
+
+  $bcode_tables_to_include = array_intersect($potential_bcode_data_table_names, $includes);
+
+  $potential_schid_data_tables = \Drupal\esdportal_api\EcDataUtils::getDataTablesWithEsdSchids();
+  $potential_schid_data_table_names = \Drupal\esdportal_api\EcDataUtils::extractDataTableNames($potential_schid_data_tables);
+
+  $schid_tables_to_include = array_intersect($potential_schid_data_table_names, $includes);
+
+  foreach ($schools as &$school) {
+    // Some schools don't have BCODEs.
+    if (!isset($school->field_bcode[LANGUAGE_NONE])) {
+      $school->bcode = NULL;
+    }
+    else {
+      $school->bcode = $school->field_bcode[LANGUAGE_NONE][0]['value'];
+    }
+
+    // Some schools don't have ESD internal school IDs.
+    if (!isset($school->field_esd_schid[LANGUAGE_NONE])) {
+      $school->esd_schid = NULL;
+    }
+    else {
+      $school->esd_schid = $school->field_esd_schid[LANGUAGE_NONE][0]['value'];
+    }
+
+    if ($flatten_fields) {
+      _esdportal_api_flatten_entity_fields('taxonomy_term', $school);
+    }
+
+    $school->school_profile_id = _esdportal_api_get_related_nid('school_profile', $school);
+  }
+  unset($school);
+
+  if (in_array('school_profile', $includes)) {
+    foreach ($schools as &$school) {
+      if ($school->school_profile_id) {
+        $school->school_profile = node_load($school->school_profile_id);
+
+        if ($flatten_fields) {
+          _esdportal_api_flatten_entity_fields('node', $school->school_profile);
+        }
+      }
+    }
+  }
+  unset($school);
+
+  // First, load BCODE-joined tables...
+  if (count($bcode_tables_to_include) > 0) {
+    // we've got some data tables to include!
+    foreach ($schools as &$school) {
+      if ($school->bcode !== NULL) {
+        foreach ($bcode_tables_to_include as $table) {
+          $table_info = $potential_bcode_data_tables[$table];
+          $data_table_identifier = $table_info->name;
+
+          $q = db_select($table_info->name)
+                 ->fields($table_info->name)
+                 ->condition($table_info->table_schema['primary key'][0], $school->bcode);
+
+          try {
+            $res = $q->execute();
+          }
+          catch (Exception $e) {
+            // No table?
+            if ($e->getCode() == '42') {
+              // Do nothing for now...
+            }
+            else {
+              watchdog_exception('_esdportal_api_load_includes_for_schools', $e);
+            }
+          }
+
+          $data = $res->fetchObject();
+
+          $school->{$data_table_identifier} = ($data) ? $data : FALSE;
+        }
+      }
+    }
+    unset($school);
+  }
+
+  // And then overwrite (if necessary) or add internal-ID-joined tables.
+  if (count($schid_tables_to_include) > 0) {
+    foreach ($schools as &$school) {
+      if ($school->esd_schid !== NULL) {
+        foreach ($schid_tables_to_include as $table) {
+          $table_info = $potential_schid_data_tables[$table];
+          $data_table_identifier = $table_info->name;
+
+          $q = db_select($table_info->name)
+                 ->fields($table_info->name)
+                 ->condition($table_info->meta['join']['field_data_field_esd_schid']['field'], $school->esd_schid);
+
+          try {
+            $res = $q->execute();
+          }
+          catch (Exception $e) {
+            // No table?
+            if ($e->getCode() == '42') {
+              // Do nothing for now...
+            }
+            else {
+              watchdog_exception('_esdportal_api_load_includes_for_schools', $e);
+            }
+          }
+
+          $data = $res->fetchObject();
+
+          // Keep BCODE data if it's there already.
+          $school->{$data_table_identifier} = ($data) ? $data : $school->{$data_table_identifier};
+        }
+      }
+    }
+    unset($school);
+  }
+}
+
+/**
+ * Loads all includes for a set of early childhood centers.
+ *
+ * @param array &$ecs
+ *   Early childhood center entities.
+ * @param array $includes
+ *   Datasets to include.
+ * @param bool $flatten_fields
+ *   Whether or not to flattenFields.
+ */
+function _esdportal_api_load_includes_for_ecs(array &$ecs, array $includes = [], $flatten_fields = NULL) {
+  $potential_data_tables = \Drupal\esdportal_api\EcDataUtils::getDataTablesWithProgramIds();
+  $potential_data_table_names = \Drupal\esdportal_api\EcDataUtils::extractDataTableNames($potential_data_tables);
+
+  $tables_to_include = array_intersect($potential_data_table_names, $includes);
+
+  foreach ($ecs as &$ec) {
+    // Some ecs don't have program_ids.
+    if (!isset($ec->field_esd_ec_id[LANGUAGE_NONE])) {
+      $ec->program_id = NULL;
+    }
+    else {
+      $ec->program_id = $ec->field_esd_ec_id[LANGUAGE_NONE][0]['value'];
+    }
+
+    if ($flatten_fields) {
+      _esdportal_api_flatten_entity_fields('taxonomy_term', $ec);
+    }
+
+    $ec->ec_profile_id = _esdportal_api_get_related_nid('ec_profile', $ec);
+  }
+  unset($ec);
+
+  if (in_array('ec_profile', $includes)) {
+    foreach ($ecs as $ec) {
+      if ($ec->ec_profile_id) {
+        $ec->ec_profile = node_load($ec->ec_profile_id);
+
+        if ($flatten_fields) {
+          _esdportal_api_flatten_entity_fields('node', $ec->ec_profile);
+        }
+      }
+    }
+  }
+  unset($ec);
+
+  if (in_array('most_recent_ec_state_rating', $includes)) {
+    foreach ($ecs as $ec) {
+      $ec->most_recent_ec_state_rating = (object) _esdportal_api_retrieve_ec_state_rating(\Drupal\esdportal_api\EcDataUtils::getEcId($ec));
+      $ec->most_recent_ec_state_rating_id = $ec->most_recent_ec_state_rating->rating_id;
+    }
+  }
+
+  if (count($tables_to_include) > 0) {
+    // we've got some data tables to include!
+    foreach ($ecs as &$ec) {
+      if ($ec->program_id !== NULL) {
+        foreach ($tables_to_include as $table) {
+          $table_info = $potential_data_tables[$table];
+          $data_table_identifier = $table_info->name;
+
+          $q = db_select($table_info->name)
+                 ->fields($table_info->name)
+                 ->condition($table_info->table_schema['primary key'][0], $ec->program_id);
+
+          try {
+            $res = $q->execute();
+          }
+          catch (Exception $e) {
+            // No table?
+            if ($e->getCode() == '42') {
+              // Do nothing for now...
+            }
+            else {
+              watchdog_exception('_esdportal_api_load_includes_for_schools', $e);
+            }
+          }
+
+          $data = $res->fetchObject();
+
+          $ec->{$data_table_identifier} = ($data) ? $data : FALSE;
+        }
+      }
+    }
+    unset($ec);
+  }
+}
+
+
+/**
+ * Load vocabulary terms.
+ *
+ * Loads a whole taxonomy vocabulary, with sort and filter options akin to
+ * commerce_services.
+ *
+ * Function signature cribbed from commerce_services module.
+ *
+ * @param int $vid
+ *   Taxonomy vocabulary id.
+ * @param array $filter
+ *   An associative array of property names, single column field names, or
+ *   multi-column field column names with their values to use to filter the
+ *   result set of the index request.
+ * @param array $filter_op
+ *   An associative array of field and property names with the operators to use
+ *   when applying their filter conditions to the index request query.
+ * @param array $filter_special
+ *   An array of names of special filters to apply.
+ * @param array $sort_by
+ *   An array of database fields to sort the query by, with sort fields being
+ *   valid properties, single column field names, or multi-column field column
+ *   names for the matching entity type.
+ * @param array $sort_order
+ *   The corresponding sort orders for the fields specified in the $sort_by
+ *   array; one of either 'DESC' or 'ASC'.
+ * @param array|bool $sort_by_special
+ *   A comma separated list of special sorts to apply.
+ * @param array|bool $sort_order_special
+ *   The corresponding sort orders for the fields specified in the
+ *   array; one of either 'DESC' or 'ASC'.
+ * @param array|bool $near_latlon
+ *   A pair of latitude & longitude coordinates to use in a geoquery along with
+ *   the following param.
+ * @param $near_miles
+ *   Distance in miles to include in a geospatial query.
+ * @param array|bool $filter_values
+ *   Filter with acceptable values. Associative array.
+ * @param int $limit
+ *   The number of entities to retrieve.
+ * @param int $offset
+ *   The zero-based index from which to start retrieving entities.
+ *
+ * @return array
+ *   Array of term objects & total # of results.
+ */
+function _esdportal_api_taxonomy_get_tree($vid, array $filter, array $filter_op, array $filter_special, array $sort_by, array $sort_order, array $sort_by_special, array $sort_order_special, array $near_latlon, $near_miles, array $filter_values, $limit, $offset) {
+  // Start building a query.
+  $query = new EntityFieldQuery();
+
+  $query
+    ->addTag('term_access')
+    ->addMetaData('op', 'view')
+    ->entityCondition('entity_type', 'taxonomy_term')
+    ->propertyCondition('vid', (int) $vid, '=')
+    ->range($offset, $limit);
+
+  // Add the specified property and field condtions to the query.
+  if ($filter && $filter_op) {
+    \Drupal\esdportal_api\EcDataUtils::indexQueryFilter($query, 'taxonomy_term', $filter, $filter_op);
+  }
+
+  // Add the specified sort conditions to the query.
+  if ($sort_by && $sort_order) {
+    \Drupal\esdportal_api\EcDataUtils::indexQuerySort($query, 'taxonomy_term', $sort_by, $sort_order);
+  }
+
+  // Add special filters.
+  if ($filter_special) {
+    $allowed_tags = explode(', ', ESDPORTAL_API_SPECIALTAGS_SCHOOLS . ', ' . ESDPORTAL_API_SPECIALTAGS_ECS);
+
+    foreach ($filter_special[0] as $tag) {
+      if (in_array($tag, $allowed_tags)) {
+        $query->addTag($tag);
+      }
+    }
+  }
+
+  // Add special sorts.
+  if ($sort_by_special) {
+    $allowed_special_sorts = explode(', ', ESDPORTAL_API_SPECIALSORTS_ECS . ', ' . ESDPORTAL_API_SPECIALSORTS_SCHOOLS);
+
+    // As in commerce_services:
+    // Loop over each sort field to add them as property or field order by
+    // directions on the query object. This function assumes the $sort_by and
+    // $sort_order arrays contain an equal number of elements with keys matching
+    // the sort field to the appropriate sort order.
+    //
+    // To avoid contradictory / duplicate sorts, build the array of sort => dir
+    // and then add the tags from there.
+
+    $special_sorts = [];
+
+    foreach ($sort_by_special as $sort_key => $sort_field) {
+      // Determine the corresponding sort direction for this sort field,
+      // defaulting to DESC in case of an erroneous request.
+      $direction = 'DESC';
+
+      if (!empty($sort_order_special[$sort_key])) {
+        $direction = strtolower($sort_order_special[$sort_key]);
+      }
+
+      $sort_type = $sort_by_special[$sort_key];
+
+      if (in_array($sort_type, $allowed_special_sorts)) {
+        $special_sorts[$sort_type] = $direction;
+      }
+    }
+
+    foreach ($special_sorts as $sort_type => $direction) {
+      // Construct tag as "special_sort_name_DIR"
+      $tag = $sort_by_special[$sort_key] . '_' . $direction;
+      $query->addTag($tag);
+    }
+  }
+
+  // Add proximity
+  if ($near_latlon && $near_miles) {
+    $query->addTag('geoproximity');
+    $query->addMetaData('latitude', $near_latlon[0]);
+    $query->addMetaData('longitude', $near_latlon[1]);
+    $query->addMetaData('miles', $near_miles);
+  }
+
+  // Add filters on included resources.
+  if ($filter_values) {
+    foreach ($filter_values as $field => $vals) {
+      switch ($field) {
+        case 'field_special_ed_level':
+          $query->addTag('field_special_ed_level_filter');
+          $query->addMetaData('field_special_ed_level_filter', $vals);
+          break;
+
+        case 'field_special_ed_programs':
+          $query->addTag('field_special_ed_programs_filter');
+          $query->addMetaData('field_special_ed_programs_filter', $vals);
+          break;
+
+        case 'field_transportation_options':
+          $query->addTag('field_transportation_options_filter');
+          $query->addMetaData('field_transportation_options_filter', $vals);
+          break;
+
+        case 'field_academic_focus':
+          $query->addTag('field_academic_focus_filter');
+          $query->addMetaData('field_academic_focus_filter', $vals);
+          break;
+
+        default:
+          services_error(t('unimplemented option for filter_values'), 400);
+          break;
+      }
+    }
+  }
+
+  // Execute the query and load the terms it returns, if any.
+  try {
+    $result = $query->execute();
+  }
+  catch (Exception $e) {
+    return services_error(t('request error'), 400);
+  }
+
+  if (!empty($result['taxonomy_term'])) {
+    $tids = array_keys($result['taxonomy_term']);
+    $terms = taxonomy_term_load_multiple($tids);
+  }
+  else {
+    // Empty set.
+    $terms = [];
+  }
+
+  $total = $query->range(0, 999999999)->count()->execute();
+
+  return [$terms, $total];
+}
+
+/**
+ * Implements hook_services_request_preprocess_alter().
+ *
+ * Via commerce_services...
+ *
+ * This preprocess function performs a variety of Commerce Services specific
+ * operations on resource arguments. Any argument using one of the following
+ * keys on any resource will be preprocessed:
+ *
+ * commerce_services_explode:
+ *
+ * For certain resources, we define arguments as strings that should be exploded
+ * into arrays prior to being passed to the resource callback. To indicate this,
+ * our argument definitions may include a commerce_services_explode key whose
+ * value is the delimiter this preprocess function will use to explode the value
+ * of that argument into an array.
+ *
+ * Example: the product-display resource includes an index callback definition
+ * that may accept a fields argument. This argument was defined as a string
+ * derived from the GET parameters of the API request, but prior to invoking the
+ * index callback, this preprocess function will see that the argument indicates
+ * it is a comma delimited string and explode it accordingly.
+ *
+ * commerce_services_required_fields:
+ *
+ * Additionally, when a fields argument contains a value from the API request,
+ * there may be certain fields or properties that should always be returned even
+ * if not included in the argument value. These may be indicated in argument
+ * definitions via the commerce_services_required_fields array. This preprocess
+ * function will ensure that the fields array always includes required fields.
+ *
+ * commerce_services_field_populate:
+ *
+ * As a best practice, we really try to avoid array notation in our query
+ * parameters. However, if you want a resource callback argument to be an
+ * associative array, this would typically be your only option. The primary use
+ * case in Commerce Services is to apply a filter to an index query, where you
+ * would specify a field or property name and the corresponding value that the
+ * query should be filtered by: GET /product-display?filter[status]=1
+ *
+ * To avoid this, we make the commerce_services_field_populate option available.
+ * Its value should be the entity type for the query that will be used to
+ * generate the response. During preprocessing, this function will look for any
+ * query parameter whose key matches a field or property name on the given
+ * entity type and add it directly to the argument's array. Thus, instead of the
+ * array notation demonstrated above, you could: GET /product-display?status=1
+ *
+ * The only exception to this will be field or property names that collide with
+ * actual argument names for the operation callback. Thus, if the index
+ * operation actually had an argument called status, you would have to revert to
+ * array notation to apply a filter on the status property.
+ *
+ * commerce_services_match_keys:
+ *
+ * Finally, this preprocess function also accommodates key matching between
+ * related array arguments. One argument may specify another argument whose keys
+ * should all be represented in its own value array, providing a default value
+ * to fill in for any keys that are missing.
+ *
+ * Example: the product-display resource includes an index callback definition
+ * that may accept filter and filter_op array arguments. In the event that an
+ * operator is not specified for a particular filter, it should default to a
+ * simple equality check with the '=' operator. Therefore, the filter_op
+ * argument uses the commerce_services_match_keys property to specify that its
+ * array keys should match those of the filter argument, using '=' as the
+ * default value.
+ */
+function esdportal_api_services_request_preprocess_alter($controller, &$args) {
+  // Build an associative array of arguments whose keys are their names and
+  // values their numeric key in the $args array.
+  $arg_names = array();
+
+  foreach ($controller['args'] as $key => $value) {
+    $arg_names[$value['name']] = $key;
+  }
+
+  // Loop over the argument metadata in the controller looking for any that
+  // include any of our special keys.
+  foreach ($controller['args'] as $key => $value) {
+    // If this argument needs to be exploded into an array...
+    if (!empty($value['commerce_services_explode'])) {
+      // Explode the argument using the specified delimiter.
+      if (!empty($args[$key])) {
+        if (is_string($args[$key])) {
+          $args[$key] = explode($value['commerce_services_explode'], $args[$key]);
+        }
+        elseif (is_array($args[$key])) {
+          foreach ($args[$key] as &$param) {
+            $param = explode($value['commerce_services_explode'], $param);
+          }
+        }
+      }
+      else {
+        // Otherwise ensure it is just converted to an array.
+        $args[$key] = array();
+      }
+    }
+
+    // If this argument is for a fields array that we want to ensure contains
+    // one or more required values...
+    if (!empty($value['commerce_services_required_fields']) && !empty($args[$key])) {
+      foreach ($value['commerce_services_required_fields'] as $required_field) {
+        if (!in_array($required_field, $args[$key])) {
+          $args[$key][] = $required_field;
+        }
+      }
+    }
+
+    // If this argument should be populated from other query parameters that
+    // don't match other arguments on the operation...
+    if (!empty($value['commerce_services_field_populate'])) {
+      // Loop over the query parameters.
+      foreach ($_GET as $param_key => $param_value) {
+        // Continue if this is either the 'q' parameter or the name of an
+        // argument for the operation callback.
+        if ($param_key === 'q' || in_array($param_key, array_keys($arg_names), TRUE)) {
+          continue;
+        }
+
+        // If this parameter key is a property for the specified entity type,
+        // add it to the argument's value array now.
+        if (in_array($param_key, array_keys(\Drupal\esdportal_api\EcDataUtils::entityTypeProperties($value['commerce_services_field_populate'])), TRUE)) {
+          $args[$key][$param_key] = $param_value;
+        }
+        else {
+          // Otherwise look and see if the parameter key begins with a field
+          // name, assuming it must be either a field name or field column name.
+          foreach (array_keys(\Drupal\esdportal_api\EcDataUtils::entityTypeFields($value['commerce_services_field_populate'])) as $field_name) {
+            if (strpos($param_key, $field_name) === 0) {
+              $field_info = field_info_field($field_name);
+
+              // If it is the field name and the field type has a single column
+              // schema, add it to the argument's value array now.
+              if ($field_name == $param_key && count($field_info['columns']) == 1) {
+                $args[$key][$param_key] = $param_value;
+                break;
+              }
+              else {
+                // Otherwise if the parameter key contains a valid column
+                // specification for the field type, add it to the argument's
+                // value array as well.
+                $column = substr($param_key, strlen($field_name) + 1);
+
+                if (in_array($column, array_keys($field_info['columns']))) {
+                  $args[$key][$param_key] = $param_value;
+                  break;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // If this argument is an associative array that needs keys matching some
+    // other array argument...
+    if (!empty($value['commerce_services_match_keys'])) {
+      $matching_arg_key = $arg_names[$value['commerce_services_match_keys']['arg']];
+
+      if (!empty($args[$matching_arg_key])) {
+        // Loop over the argument value that this argument's keys should match.
+        foreach ($args[$matching_arg_key] as $arg_key => $arg_value) {
+          if (empty($args[$key][$arg_key])) {
+            $args[$key][$arg_key] = $value['commerce_services_match_keys']['default value'];
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// As new query_TAG_alters are added, be sure to also include them in the
+// constants at the top of this module!
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF ec_profile.field_ec_subsidy {vid:18} = “Accepts State Subsidy”
+ * {tid:5141}
+ * OR IF ec_profile ec_profile.field_ec_specialty {vid:35}
+ * = “Early Head Start” {tid:5158} OR “Head Start” {tid:5155} OR
+ * “Great Start Readiness Program {tid:5154}
+ */
+function esdportal_api_query_ec_profile_is_free_or_reduced_cost_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with ec_profiles.
+  if (!$query->hasTag('has_ec_profile')) {
+    esdportal_api_query_has_ec_profile_alter($query);
+    $query->addTag('has_ec_profile');
+  }
+
+  _esdportal_api_add_ec_ti_join($query);
+
+  $query->condition('ti.tid', array(5141, 5158, 5155, 5154), 'IN');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF ec_profile.field_ec_transportation = 1
+ */
+function esdportal_api_query_ec_profile_has_transportation_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with ec_profiles.
+  if (!$query->hasTag('has_ec_profile')) {
+    esdportal_api_query_has_ec_profile_alter($query);
+    $query->addTag('has_ec_profile');
+  }
+
+  $query->join('field_data_field_ec_transportation', 'ec_transportation', 'ec_transportation.entity_id=ec_profile_ref.entity_id');
+  $query->condition('ec_transportation.field_ec_transportation_value', '1', '=');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF ec_profile.field_ec_special {vid:34} CONTAINS more than 5 values/items.
+ */
+function esdportal_api_query_ec_profile_has_special_needs_experience_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with ec_profiles.
+  if (!$query->hasTag('has_ec_profile')) {
+    esdportal_api_query_has_ec_profile_alter($query);
+    $query->addTag('has_ec_profile');
+  }
+
+  $query->join('field_data_field_ec_special', 'ec_special', 'ec_special.entity_id=ec_profile_ref.entity_id');
+  $query->groupBy('ec_special.entity_id');
+  $query->having('COUNT(ec_special.entity_id) > 5');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF ec_profile.field_ec_meals {vid:30} = “Lunch” {tid:5163}
+ * AND “Afternoon Snack” {tid:5164}
+ */
+function esdportal_api_query_ec_profile_has_meals_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with ec_profiles.
+  if (!$query->hasTag('has_ec_profile')) {
+    esdportal_api_query_has_ec_profile_alter($query);
+    $query->addTag('has_ec_profile');
+  }
+
+  $subquery = db_select('taxonomy_index', 'ti_has_meals');
+  $subquery->addField('ti_has_meals', 'nid', 'ti_has_meals_nid');
+  $subquery->addField('ti_has_meals', 'tid', 'ti_has_meals_tid');
+  $subquery->condition('ti_has_meals.tid', array(5163, 5164), 'IN');
+
+  $query->join($subquery, 'ti_has_meals', 'ti_has_meals_nid=ec_profile_ref.entity_id');
+  $query->groupBy('ti_has_meals_nid');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * Only return early childhood centers with a record in esd_el_2014.
+ */
+function esdportal_api_query_has_esd_el_2014_alter(\QueryAlterableInterface &$query) {
+  // Join with field_data_field_esd_ec_id to get program_id.
+  if (!$query->hasTag('has_esd_ec_id')) {
+    esdportal_api_query_has_esd_ec_id_alter($query);
+    $query->addTag('has_esd_ec_id');
+  }
+
+  $query->join('esd_el_2014', 'esd_el_2014', 'esd_el_2014.program_id=ec_id.field_esd_ec_id_value');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * Only return early childhood centers with a record in esd_el_2015.
+ */
+function esdportal_api_query_has_esd_el_2015_alter(\QueryAlterableInterface &$query) {
+  // Join with field_data_field_esd_ec_id to get program_id.
+  if (!$query->hasTag('has_esd_ec_id')) {
+    esdportal_api_query_has_esd_ec_id_alter($query);
+    $query->addTag('has_esd_ec_id');
+  }
+
+  $query->join('esd_el_2015', 'esd_el_2015', 'esd_el_2015.program_id=ec_id.field_esd_ec_id_value');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * Only return early childhood centers with an ec_id.
+ */
+function esdportal_api_query_has_esd_ec_id_alter(\QueryAlterableInterface &$query) {
+  $query->join('field_data_field_esd_ec_id', 'ec_id', 'ec_id.entity_id=taxonomy_term_data.tid');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * Only return early childhood centers with a record in ec_state_ratings.
+ */
+function esdportal_api_query_has_ec_state_rating_alter(\QueryAlterableInterface &$query) {
+  // Join with field_data_field_esd_ec_id to get program_id.
+  if (!$query->hasTag('has_esd_ec_id')) {
+    esdportal_api_query_has_esd_ec_id_alter($query);
+    $query->addTag('has_esd_ec_id');
+  }
+
+  $query->join('ec_state_ratings', 'esr', 'ec_id.field_esd_ec_id_value=esr.esd_ec_id AND timestamp=(SELECT MAX(ec_state_ratings.timestamp) FROM {ec_state_ratings})');
+}
+
+/**
+ * Adds join with ec_profiles.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for ec taxonomy terms.
+ */
+function esdportal_api_query_has_ec_profile_alter(\QueryAlterableInterface &$query) {
+  $query->join('field_data_field_ec', 'ec_profile_ref', 'ec_profile_ref.field_ec_tid=taxonomy_term_data.tid');
+  $query->condition('ec_profile_ref.bundle', 'ec_profile', '=');
+}
+
+/**
+ * Adds join with taxonomy_index to an ec query.
+ *
+ * Alias taxonomy_index as ti & group by ti.nid.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query.
+ */
+function _esdportal_api_add_ec_ti_join(\QueryAlterableInterface &$query) {
+  $query->join('taxonomy_index', 'ti', 'ti.nid=ec_profile_ref.entity_id');
+  $query->groupBy('ti.nid');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * Adds join to field_data_field_special_ed_level.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query.
+ */
+function esdportal_api_query_join_special_ed_level_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
+
+  $query->join('field_data_field_special_ed_level', 'special_ed_level', 'special_ed_level.entity_id=school_profile_ref.entity_id');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * Adds join to field_data_field_special_ed_programs.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query.
+ */
+function esdportal_api_query_join_special_ed_programs_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
+
+  $query->join('field_data_field_special_ed_programs', 'special_ed_programs', 'special_ed_programs.entity_id=school_profile_ref.entity_id');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF school_profile.field_special_ed_level = moderate OR intensive.
+ */
+function esdportal_api_query_school_profile_has_specialed_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with field_data_field_special_ed.
+  if (!$query->hasTag('join_special_ed_level')) {
+    esdportal_api_query_join_special_ed_level_alter($query);
+    $query->addTag('join_special_ed_level');
+  }
+
+  $query->condition('special_ed_level.field_special_ed_level_value', array('moderate', 'intensive'), 'IN');
+  $query->addTag('school_profile_has_specialed');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF schools.field_arts_media + schools.field_arts_visual +
+ * schools.field_arts_music + schools.field_arts.performing_written CONTAINS
+ * more than 2 values total
+ * OR IF schools.field_academic_focus = all_arts OR visual_arts OR
+ * performing_arts OR music.
+ */
+function esdportal_api_query_school_profile_has_arts_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
+
+  $q_visual = db_select('field_data_field_arts_visual', 'favisual')
+    ->condition('field_arts_visual_value', 'None', '!=');
+  $q_visual->addField('favisual', 'entity_id', 'id');
+  $q_visual->addExpression('COUNT(favisual.field_arts_visual_value)', 'count');
+  $q_visual->groupBy('entity_id');
+
+  $q_music = db_select('field_data_field_arts_music', 'famusic')
+    ->condition('field_arts_music_value', 'None', '!=');
+  $q_music->addField('famusic', 'entity_id', 'id');
+  $q_music->addExpression('COUNT(famusic.field_arts_music_value)', 'count');
+  $q_music->groupBy('entity_id');
+
+  $q_media = db_select('field_data_field_arts_media', 'famedia')
+    ->condition('field_arts_media_value', 'None', '!=');
+  $q_media->addField('famedia', 'entity_id', 'id');
+  $q_media->addExpression('COUNT(famedia.field_arts_media_value)', 'count');
+  $q_media->groupBy('entity_id');
+
+  $q_visual
+    ->union($q_music)
+    ->union($q_media);
+
+  $count_subq = db_select($q_visual, 'unioned');
+  $count_subq->addField('unioned', 'id', 'union_id');
+  $count_subq->addExpression('SUM(count)', 'total');
+  $count_subq->groupBy('union_id');
+  $count_subq->havingCondition('total', 2, '>');
+
+  $query->join($count_subq, 'counts', 'union_id=school_profile_ref.entity_id');
+
+  $faf_subq = db_select('field_data_field_academic_focus', 'faf')
+    ->condition('field_academic_focus_value', ['all_arts', 'visual_arts', 'performing_arts', 'music'], 'IN');
+  $faf_subq->addField('faf', 'entity_id', 'id');
+
+  $query->leftJoin($faf_subq, 'faf', 'faf.id=school_profile_ref.entity_id');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF school_profile.field_boys_sports CONTAINS 3 or more values/items
+ * AND IF schools.field_girls_sports CONTAINS 3 or more values/items.
+ */
+function esdportal_api_query_school_profile_has_sports_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
+
+  $q_boysports = db_select('field_data_field_boys_sports', 'fbs')
+    ->condition('field_boys_sports_value', 'none', '!=');
+  $q_boysports->addField('fbs', 'entity_id', 'id');
+  $q_boysports->addExpression('COUNT(fbs.field_boys_sports_value)', 'count');
+  $q_boysports->groupBy('entity_id');
+  $q_boysports->havingCondition('count', 2, '>');
+
+  $q_girlsports = db_select('field_data_field_girls_sports', 'fgs')
+    ->condition('field_girls_sports_value', 'none', '!=');
+  $q_girlsports->addField('fgs', 'entity_id', 'id');
+  $q_girlsports->addExpression('COUNT(fgs.field_girls_sports_value)', 'count');
+  $q_girlsports->groupBy('entity_id');
+  $q_girlsports->havingCondition('count', 2, '>');
+
+  $q_boysports->union($q_girlsports);
+
+  $query->join($q_boysports, 'boycount', 'boycount.id=school_profile_ref.entity_id');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * Adds join to field_data_field_transportation_options.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query.
+ */
+function esdportal_api_query_join_transportation_options_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
+
+  $query->join('field_data_field_transportation_options', 'transportation_options', 'transportation_options.entity_id=school_profile_ref.entity_id');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF school_profile.field_transportation_options = passes OR busses OR
+ * shared_bus.
+ */
+function esdportal_api_query_school_profile_has_transportation_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
+
+  if (!$query->hasTag('field_transportation_options_filter')) {
+    $query->addTag('field_transportation_options_filter');
+    $query->addMetaData('field_transportation_options_filter', ['passes', 'busses', 'shared_bus']);
+    esdportal_api_query_field_transportation_options_filter_alter($query);
+  }
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF school_profile.field_before_after_care = after OR before.
+ */
+function esdportal_api_query_school_profile_has_before_after_care_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
+
+  $query->join('field_data_field_before_after_care', 'beforeaftercare', "beforeaftercare.entity_id=school_profile_ref.entity_id AND beforeaftercare.field_before_after_care_value IN ('before', 'after')");
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF school_profile.field_application_process = yes.
+ */
+function esdportal_api_query_school_profile_application_required_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
+
+  $query->join('field_data_field_application_process', 'apppx', "apppx.entity_id=school_profile_ref.entity_id AND apppx.field_application_process_value='yes'");
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * IF school_profile.field_facilities = college_center
+ * OR IF school_profile.field_extra_learning_resources = career_counseling
+ * OR IF school_profile.field_staff_resources = college_counselor
+ * AND IF school_profile.field_college_prep CONTAINS any value EXCEPT none.
+ */
+function esdportal_api_query_school_profile_collegereadiness_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
+
+  $query->join('field_data_field_college_prep', 'collegeprep', "collegeprep.entity_id=school_profile_ref.entity_id AND collegeprep.field_college_prep_value IS NOT NULL AND collegeprep.field_college_prep_value != 'none'");
+  $query->join('field_data_field_facilities', 'facil', "facil.entity_id=school_profile_ref.entity_id AND facil.field_facilities_value = 'college_center'");
+  $query->leftJoin('field_data_field_extra_learning_resources', 'extralearn', "extralearn.entity_id=school_profile_ref.entity_id AND extralearn.field_extra_learning_resources_value = 'career_counseling'");
+  $query->leftJoin('field_data_field_staff_resources', 'staffres', "staffres.entity_id=school_profile_ref.entity_id AND staffres.field_staff_resources_value = 'college_counselor'");
+}
+
+/**
+ * Adds join with school_profiles.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_has_school_profile_alter(\QueryAlterableInterface &$query) {
+  $query->join('field_data_field_school', 'school_profile_ref', 'school_profile_ref.field_school_tid=taxonomy_term_data.tid');
+  $query->condition('school_profile_ref.bundle', 'school_profile', '=');
+  $query->addField('school_profile_ref', 'entity_id', 'school_profile_id');
+}
+
+/**
+ * Sort by ec profile changed timestamp, ascending.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_ec_profile_changed_asc_alter(\QueryAlterableInterface &$query) {
+  if (!$query->hasTag('has_ec_profile')) {
+    esdportal_api_query_has_ec_profile_alter($query);
+    $query->addTag('has_ec_profile');
+  }
+
+  $query->join('node', 'n', 'ec_profile_ref.entity_id=n.nid');
+
+  // Our orderBy comes first!
+  $order =& $query->getOrderBy();
+  $order = array_reverse($order, TRUE);
+  $order['n.changed'] = 'ASC';
+  $order = array_reverse($order, TRUE);
+}
+
+/**
+ * Sort by ec profile changed timestamp, descending.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_ec_profile_changed_desc_alter(\QueryAlterableInterface &$query) {
+  if (!$query->hasTag('has_ec_profile')) {
+    esdportal_api_query_has_ec_profile_alter($query);
+    $query->addTag('has_ec_profile');
+  }
+
+  $query->join('node', 'n', 'ec_profile_ref.entity_id=n.nid');
+
+  // Our orderBy comes first!
+  $order =& $query->getOrderBy();
+  $order = array_reverse($order, TRUE);
+  $order['n.changed'] = 'DESC';
+  $order = array_reverse($order, TRUE);
+}
+
+/**
+ * Sort by school profile changed timestamp, ascending.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_school_profile_changed_asc_alter(\QueryAlterableInterface &$query) {
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
+
+  $query->join('node', 'n', 'school_profile_ref.entity_id=n.nid');
+
+  // Our orderBy comes first!
+  $order =& $query->getOrderBy();
+  $order = array_reverse($order, TRUE);
+  $order['n.changed'] = 'ASC';
+  $order = array_reverse($order, TRUE);
+}
+
+/**
+ * Sort by school profile changed timestamp, descending.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_school_profile_changed_desc_alter(\QueryAlterableInterface &$query) {
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
+
+  $query->join('node', 'n', 'school_profile_ref.entity_id=n.nid');
+
+  // Our orderBy comes first!
+  $order =& $query->getOrderBy();
+  $order = array_reverse($order, TRUE);
+  $order['n.changed'] = 'DESC';
+  $order = array_reverse($order, TRUE);
+}
+
+/**
+ * Sort by Early Learning ESD score.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_ec_total_pts_desc_alter(\QueryAlterableInterface &$query) {
+  // Add tag (which also adds needed joins)
+  if (!$query->hasTag('has_ec_state_rating')) {
+    esdportal_api_query_has_ec_state_rating_alter($query);
+    $query->addTag('has_ec_state_rating');
+  }
+
+  // Our orderBy comes first.
+  $order =& $query->getOrderBy();
+  $order = array_reverse($order, TRUE);
+  $order['esr.total_points'] = 'DESC';
+  $order = array_reverse($order, TRUE);
+}
+
+/**
+ * Sort by Early Learning ESD score.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_ec_total_pts_asc_alter(\QueryAlterableInterface &$query) {
+  // Add tag (which also adds needed joins)
+  if (!$query->hasTag('has_ec_state_rating')) {
+    esdportal_api_query_has_ec_state_rating_alter($query);
+    $query->addTag('has_ec_state_rating');
+  }
+
+  // Our orderBy comes first.
+  $order =& $query->getOrderBy();
+  $order = array_reverse($order, TRUE);
+  $order['esr.total_points'] = 'ASC';
+  $order = array_reverse($order, TRUE);
+}
+
+/**
+ * Adds a BCODE join to a school query.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_has_bcode_alter(\QueryAlterableInterface &$query) {
+  $query->join('field_data_field_bcode', 'field_bcode', "field_bcode.entity_id=taxonomy_term_data.tid AND field_bcode.bundle='schools'");
+}
+
+/**
+ * Only show high scoring schools.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_esd_k8hs_2015_highscore_alter(\QueryAlterableInterface &$query) {
+  // Add bcode join.
+  if (!$query->hasTag('has_bcode')) {
+    esdportal_api_query_has_bcode_alter($query);
+    $query->addTag('has_bcode');
+  }
+
+  // Build a UNIONed table of combined K8 & HS grades.
+  $k8_grades = db_select('esd_k8_2015', 'k8grades');
+  $k8_grades->addField('k8grades', 'bcode', 'grade_bcode');
+  $k8_grades->addField('k8grades', 'total_ltrgrade', 'grade_ltrgrade');
+
+  $hs_grades = db_select('esd_hs_2015', 'hsgrades');
+  $hs_grades->addField('hsgrades', 'bcode', 'grade_bcode');
+  $hs_grades->addField('hsgrades', 'total_ltrgrade', 'grade_ltrgrade');
+
+  $k8_grades->union($hs_grades);
+
+  // Join with our query.
+  $query->join($k8_grades, 'grades', 'grade_bcode=field_bcode.field_bcode_value');
+  $query->condition('grade_ltrgrade', ['C+', 'B-', 'B', 'B+', 'A-', 'A', 'A+'], 'IN');
+}
+
+/**
+ * Only show high scoring early childhood centers.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for early childhood taxonomy terms.
+ */
+function esdportal_api_query_esd_el_highscore_alter(\QueryAlterableInterface &$query) {
+  // Join with ec_state_ratings.
+  if (!$query->hasTag('has_ec_state_rating')) {
+    esdportal_api_query_has_ec_state_rating_alter($query);
+    $query->addTag('has_ec_state_rating');
+  }
+
+  $query->condition('esr.overall_rating', ['Bronze', 'Silver', 'Gold'], 'IN');
+}
+
+/**
+ * Sort by K8/HS ESD score.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_school_combined_total_pts_desc_alter(\QueryAlterableInterface &$query) {
+  // Add bcode join.
+  if (!$query->hasTag('has_bcode')) {
+    esdportal_api_query_has_bcode_alter($query);
+    $query->addTag('has_bcode');
+  }
+
+  // Build a UNIONed table of combined K8 & HS scores.
+  $k8_scores = db_select('esd_k8_2015', 'k8scores');
+  $k8_scores->addField('k8scores', 'bcode', 'score_bcode');
+  $k8_scores->addExpression('k8scores.total_pts*100', 'score');
+
+  $hs_scores = db_select('esd_hs_2015', 'hsscores');
+  $hs_scores->addField('hsscores', 'bcode', 'score_bcode');
+  $hs_scores->addField('hsscores', 'total_pts', 'score');
+
+  $k8_scores->union($hs_scores);
+
+  // Join with our query.
+  $query->join($k8_scores, 'scores', 'score_bcode=field_bcode.field_bcode_value');
+
+  // Our orderBy comes first.
+  $order =& $query->getOrderBy();
+  $order = array_reverse($order, TRUE);
+  $order['scores.score'] = 'DESC';
+  $order = array_reverse($order, TRUE);
+}
+
+/**
+ * Sort by K8/HS ESD score.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school taxonomy terms.
+ */
+function esdportal_api_query_school_combined_total_pts_asc_alter(\QueryAlterableInterface &$query) {
+  // Add bcode join.
+  if (!$query->hasTag('has_bcode')) {
+    esdportal_api_query_has_bcode_alter($query);
+    $query->addTag('has_bcode');
+  }
+
+  // Build a UNIONed table of combined K8 & HS scores.
+  $k8_scores = db_select('esd_k8_2015', 'k8scores');
+  $k8_scores->addField('k8scores', 'bcode', 'score_bcode');
+  $k8_scores->addExpression('k8scores.total_pts*100', 'score');
+
+  $hs_scores = db_select('esd_hs_2015', 'hsscores');
+  $hs_scores->addField('hsscores', 'bcode', 'score_bcode');
+  $hs_scores->addField('hsscores', 'total_pts', 'score');
+
+  $k8_scores->union($hs_scores);
+
+  // Join with our query.
+  $query->join($k8_scores, 'scores', 'score_bcode=field_bcode.field_bcode_value');
+
+  // Our orderBy comes first.
+  $order =& $query->getOrderBy();
+  $order = array_reverse($order, TRUE);
+  $order['scores.score'] = 'ASC';
+  $order = array_reverse($order, TRUE);
+}
+
+/**
+ * Adds a geofield join to a school query.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school or EC taxonomy terms.
+ */
+function esdportal_api_query_has_geo_alter(\QueryAlterableInterface &$query) {
+  $query->join('field_data_field_geo', 'field_geo', 'field_geo.entity_id=taxonomy_term_data.tid');
+}
+
+/**
+ * Adds a proximity filter.
+ *
+ * Expects query metadata:
+ *  - latitude
+ *  - longitude
+ *  - miles
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query, probably looking for school or EC taxonomy terms.
+ */
+function esdportal_api_query_geoproximity_alter(\QueryAlterableInterface &$query) {
+  // Add geo join.
+  if (!$query->hasTag('has_geo')) {
+    esdportal_api_query_has_geo_alter($query);
+    $query->addTag('has_geo');
+  }
+
+  $haversine = <<<'EOQ'
+(
+  3959
+  *
+  ACOS(
+    COS(
+      RADIANS(:latitude)
+    )
+    *
+    COS(
+      RADIANS(field_geo.field_geo_lat)
+    )
+    *
+    COS(
+      RADIANS(field_geo.field_geo_lon)
+      -
+      RADIANS(:longitude)
+    )
+    +
+    SIN(
+      RADIANS(:latitude)
+    )
+    *
+    SIN(
+      RADIANS(field_geo.field_geo_lat)
+    )
+  )
+)
+<=
+:miles
+EOQ;
+
+  $query->where($haversine, [
+    ':latitude' => $query->getMetaData('latitude'),
+    ':longitude' => $query->getMetaData('longitude'),
+    ':miles' => $query->getMetaData('miles')
+  ]);
+}
+
+/**
+ * Adds a field_special_ed_level filter.
+ */
+function esdportal_api_query_field_special_ed_level_filter_alter(\QueryAlterableInterface &$query) {
+  // Get parameters from query metadata.
+  $levels = $query->getMetaData('field_special_ed_level_filter');
+
+  if (!count($levels)) {
+    return services_error(t('to filter special ed level, please provide some levels!'));
+  }
+
+  // First, inner join with field_data_field_special_ed.
+  if (!$query->hasTag('join_special_ed_level')) {
+    esdportal_api_query_join_special_ed_level_alter($query);
+    $query->addTag('join_special_ed_level');
+  }
+
+  $query->condition('special_ed_level.field_special_ed_level_value', $levels, 'IN');
+}
+
+/**
+ * Adds a field_special_ed_programs filter.
+ */
+function esdportal_api_query_field_special_ed_programs_filter_alter(\QueryAlterableInterface &$query) {
+  // Get parameters from query metadata.
+  $programs = $query->getMetaData('field_special_ed_programs_filter');
+
+  if (!count($programs)) {
+    return services_error(t('to filter special ed programs, please provide some programs!'));
+  }
+
+  // First, inner join with field_data_field_special_ed.
+  if (!$query->hasTag('join_special_ed_programs')) {
+    esdportal_api_query_join_special_ed_programs_alter($query);
+    $query->addTag('join_special_ed_programs');
+  }
+
+  $query->condition('special_ed_programs.field_special_ed_programs_value', $programs, 'IN');
+}
+
+/**
+ * Adds a field_transportation_options filter.
+ */
+function esdportal_api_query_field_transportation_options_filter_alter(\QueryAlterableInterface &$query) {
+  // Get parameters from query metadata.
+  $options = $query->getMetaData('field_transportation_options_filter');
+
+  if (!count($options)) {
+    return services_error(t('to filter tranportation options, please provide some options!'));
+  }
+
+  // First, inner join with field_data_field_special_ed.
+  if (!$query->hasTag('join_transportation_options')) {
+    esdportal_api_query_join_transportation_options_alter($query);
+    $query->addTag('join_transportation_options');
+  }
+
+  $query->condition('transportation_options.field_transportation_options_value', $options, 'IN');
+}
+
+/**
+ * Alters EntityFieldQuery.
+ *
+ * Adds join to field_data_field_academic_focus.
+ *
+ * @param \QueryAlterableInterface &$query
+ *   A query.
+ */
+function esdportal_api_query_join_academic_focus_alter(\QueryAlterableInterface &$query) {
+  // First, inner join with school_profiles.
+  if (!$query->hasTag('has_school_profile')) {
+    esdportal_api_query_has_school_profile_alter($query);
+    $query->addTag('has_school_profile');
+  }
+
+  $query->join('field_data_field_academic_focus', 'academic_focus', 'academic_focus.entity_id=school_profile_ref.entity_id');
+}
+
+/**
+ * Adds a field_academic_focus filter.
+ */
+function esdportal_api_query_field_academic_focus_filter_alter(\QueryAlterableInterface &$query) {
+  // Get parameters from query metadata.
+  $options = $query->getMetaData('field_academic_focus_filter');
+
+  if (!count($options)) {
+    return services_error(t('to filter academic focus, please provide some options!'));
+  }
+
+  // First, inner join with field_data_field_special_ed.
+  if (!$query->hasTag('join_academic_focus')) {
+    esdportal_api_query_join_academic_focus_alter($query);
+    $query->addTag('join_academic_focus');
+  }
+
+  $query->condition('academic_focus.field_academic_focus_value', $options, 'IN');
+}

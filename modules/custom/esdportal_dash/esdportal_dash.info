@@ -1,0 +1,4 @@
+name = School Leader Dashboard
+description = Provide a page at /user/%/dashboard that displays relevant content to school admins
+package = ESD custom
+core = 7.x

@@ -1,0 +1,9 @@
+name = "migrate_ec"
+description = "Imports early childhood data"
+core = "7.x"
+dependencies[] = "esdportal_str"
+dependencies[] = "migrate"
+package = "Migration"
+
+files[] = "migrate_ec.module"
+files[] = "migrate_ec.migrate.inc"

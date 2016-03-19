@@ -1,0 +1,58 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "7dcea21896af2a6fe5639fafc21c5b7a",
+    "packages": [
+        {
+            "name": "tobscure/json-api",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bnchdrff/json-api.git",
+                "reference": "2f418c15e8001728321e048637d99a12d5cf6bb1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bnchdrff/json-api/zipball/2f418c15e8001728321e048637d99a12d5cf6bb1",
+                "reference": "2f418c15e8001728321e048637d99a12d5cf6bb1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "squizlabs/php_codesniffer": "1.5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tobscure\\JsonApi\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Toby Zerner",
+                    "email": "toby.zerner@gmail.com"
+                }
+            ],
+            "description": "JSON-API responses in PHP.",
+            "support": {
+                "source": "https://github.com/bnchdrff/json-api/tree/master"
+            },
+            "time": "2015-04-23 17:38:58"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "tobscure/json-api": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
