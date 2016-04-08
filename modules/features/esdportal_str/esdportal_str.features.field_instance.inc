@@ -7052,6 +7052,44 @@ function esdportal_str_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'taxonomy_term-ec-field_ed_participant'
+  $field_instances['taxonomy_term-ec-field_ed_participant'] = array(
+    'bundle' => 'ec',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 21,
+      ),
+    ),
+    'entity_type' => 'taxonomy_term',
+    'field_name' => 'field_ed_participant',
+    'label' => 'Enroll Detroit Participant',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 19,
+    ),
+  );
+
   // Exported field_instance: 'taxonomy_term-ec-field_esd_ec_id'
   $field_instances['taxonomy_term-ec-field_esd_ec_id'] = array(
     'bundle' => 'ec',
@@ -8757,6 +8795,50 @@ function esdportal_str_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'taxonomy_term-schools-field_2016_recommended'
+  $field_instances['taxonomy_term-schools-field_2016_recommended'] = array(
+    'bundle' => 'schools',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'aside' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 60,
+      ),
+    ),
+    'entity_type' => 'taxonomy_term',
+    'field_name' => 'field_2016_recommended',
+    'label' => '2016 Recommended School',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 50,
+    ),
+  );
+
   // Exported field_instance: 'taxonomy_term-schools-field_2016_universe'
   $field_instances['taxonomy_term-schools-field_2016_universe'] = array(
     'bundle' => 'schools',
@@ -9264,6 +9346,50 @@ function esdportal_str_field_default_field_instances() {
       'settings' => array(),
       'type' => 'options_select',
       'weight' => 22,
+    ),
+  );
+
+  // Exported field_instance: 'taxonomy_term-schools-field_ed_participant'
+  $field_instances['taxonomy_term-schools-field_ed_participant'] = array(
+    'bundle' => 'schools',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'aside' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 61,
+      ),
+    ),
+    'entity_type' => 'taxonomy_term',
+    'field_name' => 'field_ed_participant',
+    'label' => 'Enroll Detroit Participant',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 51,
     ),
   );
 
@@ -10352,6 +10478,7 @@ function esdportal_str_field_default_field_instances() {
   t('2015 Site Visit Zone');
   t('2016 In Universe');
   t('2016 Key Fields Verified');
+  t('2016 Recommended School');
   t('5E roster');
   t('A phone number where parents can contact the school for information.');
   t('AP Classes');
@@ -10425,6 +10552,7 @@ function esdportal_str_field_default_field_instances() {
   t('Email from old location field');
   t('English Language Learners');
   t('Enrichment opportunities');
+  t('Enroll Detroit Participant');
   t('Enter one or many users who should see school profiles (or other data) listed on their dashboard.');
   t('Environment');
   t('Extra Learning Resources');

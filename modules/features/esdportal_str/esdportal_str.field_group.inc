@@ -133,6 +133,8 @@ function esdportal_str_field_group_info() {
     'children' => array(
       0 => 'field_2016_universe',
       1 => 'field_2016_verified',
+      2 => 'field_2016_recommended',
+      3 => 'field_ed_participant',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -372,6 +374,7 @@ function esdportal_str_field_group_info() {
     'weight' => '22',
     'children' => array(
       0 => 'field_scorecard_display',
+      1 => 'field_ed_participant',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
