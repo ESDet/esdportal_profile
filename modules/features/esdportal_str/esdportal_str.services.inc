@@ -177,6 +177,20 @@ function esdportal_str_default_services_endpoint() {
         ),
       ),
     ),
+    'most_recent_ec_timestamp' => array(
+      'operations' => array(
+        'index' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
+    'most_recent_school_timestamp' => array(
+      'operations' => array(
+        'index' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
     'node' => array(
       'operations' => array(
         'retrieve' => array(

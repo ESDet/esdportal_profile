@@ -400,7 +400,24 @@ function esdportal_api_services_resources() {
         ),
       ),
     ),
-
+    'most_recent_school_timestamp' => array(
+      'operations' => array(
+        'index' => array(
+          'help' => 'Get the timestamp of the most recently modified school or school profile.',
+          'callback' => '_esdportal_api_most_recent_school_timestamp',
+          'access arguments' => array('access content'),
+        ),
+      ),
+    ),
+    'most_recent_ec_timestamp' => array(
+      'operations' => array(
+        'index' => array(
+          'help' => 'Get the timestamp of the most recently modified early childhood center or early childhood center profile.',
+          'callback' => '_esdportal_api_most_recent_ec_timestamp',
+          'access arguments' => array('access content'),
+        ),
+      ),
+    ),
   );
 
   return $api;
@@ -2141,4 +2158,22 @@ function esdportal_api_query_field_academic_focus_filter_alter(\QueryAlterableIn
   }
 
   $query->condition('academic_focus.field_academic_focus_value', $options, 'IN');
+}
+
+/**
+ * Get timestamp of most recently-modified school or school profile.
+ */
+function _esdportal_api_most_recent_school_timestamp() {
+  return [
+    'most_recent_school_timestamp' => (int) db_query("SELECT MAX(ts) FROM ( SELECT MAX(timestamp) AS ts FROM {taxonomy_term_data_revision} WHERE vid=4 UNION SELECT MAX(changed) AS ts FROM {node} WHERE type='school_profile') AS bothofem")->fetchField()
+  ];
+}
+
+/**
+ * Get timestamp of most recently-modified early childhood center or ec profile.
+ */
+function _esdportal_api_most_recent_ec_timestamp() {
+  return [
+    'most_recent_ec_timestamp' => (int) db_query("SELECT MAX(ts) FROM ( SELECT MAX(timestamp) AS ts FROM {taxonomy_term_data_revision} WHERE vid=19 UNION SELECT MAX(changed) AS ts FROM {node} WHERE type='ec_profile') AS bothofem")->fetchField()
+  ];
 }
