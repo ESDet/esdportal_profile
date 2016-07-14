@@ -65,6 +65,7 @@ function esdportal_e3_feature_user_default_permissions() {
   $permissions['edit any e3_note entities'] = array(
     'name' => 'edit any e3_note entities',
     'roles' => array(
+      'Coach' => 'Coach',
       'E3 Admin' => 'E3 Admin',
       'administrator' => 'administrator',
     ),
