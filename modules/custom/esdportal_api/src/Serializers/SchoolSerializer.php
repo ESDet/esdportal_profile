@@ -29,6 +29,7 @@ use Drupal\esdportal_api\Serializers\EsdK82016Serializer;
 use Drupal\esdportal_api\Serializers\fiveessentials_2013Serializer;
 use Drupal\esdportal_api\Serializers\fiveessentials_2014Serializer;
 use Drupal\esdportal_api\Serializers\fiveessentials_2015Serializer;
+use Drupal\esdportal_api\Serializers\fiveessentials_2016Serializer;
 use Drupal\esdportal_api\Serializers\meap_2009Serializer;
 use Drupal\esdportal_api\Serializers\meap_2010Serializer;
 use Drupal\esdportal_api\Serializers\meap_2011Serializer;
