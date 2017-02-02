@@ -5,7 +5,10 @@
 name: php
 
 # The toolstack used to build the application.
-toolstack: "php:drupal"
+type: php
+
+build:
+    flavor: drupal
 
 # The relationships of the application with services or other applications.
 # The left-hand side is the name of the relationship as it will be exposed
@@ -17,10 +20,19 @@ relationships:
 
 # The configuration of app when it is exposed to the web.
 web:
-    # The public directory of the app, relative to its root.
-    document_root: "/"
-    # The front-controller script to send non-static requests to.
-    passthru: "/index.php"
+    locations:
+        "/":
+            root: "public"
+            passthru: "/index.php"
+            index:
+                - index.php
+            expires: 300
+            scripts: true
+            allow: true
+        "/sites/default/files":
+            expires: 300
+            passthru: true
+            allow: true
 
 # The size of the persistent disk of the application (in MB).
 disk: 3968
