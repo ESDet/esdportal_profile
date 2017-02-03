@@ -185,6 +185,10 @@ function esdportal_str_strongarm() {
       0 => 'fiveessentials_2015',
       1 => 'State_Schl_Id',
     ),
+    'data_fiveessentials_2016' => array(
+      0 => 'fiveessentials_2016',
+      1 => 'State_Schl_Id',
+    ),
     'data_k12_supplemental_2015' => array(
       0 => 'k12_supplemental_2015',
       1 => 'bcode',
@@ -364,7 +368,7 @@ function esdportal_str_strongarm() {
           'weight' => '0',
         ),
         'locations' => array(
-          'weight' => '20',
+          'weight' => '10',
         ),
       ),
       'display' => array(),
