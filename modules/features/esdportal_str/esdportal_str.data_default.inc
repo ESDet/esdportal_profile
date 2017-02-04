@@ -1365,6 +1365,258 @@ function esdportal_str_data_default() {
   );
   $export['count_2016'] = $data_table;
 
+// HIHIHI
+
+  $data_table = new stdClass();
+  $data_table->disabled = FALSE; /* Edit this to true to make a default data_table disabled initially */
+  $data_table->api_version = 1;
+  $data_table->title = '2015-16 Student Count with Detroit City Totals';
+  $data_table->name = 'count_2017';
+  $data_table->table_schema = array(
+    'description' => '2015-16.Student.Count.with.Detroit.City.Totals.xlsx',
+    'fields' => array(
+      'SchoolYear' => array(
+        'type' => 'varchar',
+        'size' => 'normal',
+        'length' => '255',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'ISDCode' => array(
+        'type' => 'int',
+        'size' => 'tiny',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'ISDName' => array(
+        'type' => 'varchar',
+        'size' => 'normal',
+        'length' => '255',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'DistrictCode' => array(
+        'type' => 'int',
+        'size' => 'medium',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'DistrictName' => array(
+        'type' => 'varchar',
+        'size' => 'normal',
+        'length' => '255',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'BuildingCode' => array(
+        'type' => 'int',
+        'size' => 'medium',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => '',
+      ),
+      'BuildingName' => array(
+        'type' => 'varchar',
+        'size' => 'normal',
+        'length' => '255',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'EntityType' => array(
+        'type' => 'varchar',
+        'size' => 'normal',
+        'length' => '255',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'LOCALE_NAME' => array(
+        'type' => 'varchar',
+        'size' => 'normal',
+        'length' => '255',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'TOTAL_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'MALE_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'FEMALE_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'AMERICAN_INDIAN_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'ASIAN_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'AFRICAN_AMERICAN_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'HISPANIC_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'HAWAIIAN_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'WHITE_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'TWO_OR_MORE_RACES_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'KINDERGARTEN_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'GRADE_1_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'GRADE_2_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'GRADE_3_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'GRADE_4_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'GRADE_5_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'GRADE_6_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'GRADE_7_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'GRADE_8_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'GRADE_9_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'GRADE_10_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'GRADE_11_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'GRADE_12_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'ECONOMIC_DISADVANTAGED_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'SPECIAL_EDUCATION_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+      'ENGLISH_LANGUAGE_LEARNERS_ENROLLMENT' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => FALSE,
+        'description' => '',
+      ),
+    ),
+    'name' => 'count_2017',
+    'primary key' => array(
+      0 => 'BuildingCode',
+    ),
+  );
+  $data_table->meta = array(
+    'label_field' => '',
+    'is_entity_type' => TRUE,
+    'entity_id' => 'BuildingCode',
+    'join' => array(
+      'field_data_field_bcode' => array(
+        'left_field' => 'field_bcode_value',
+        'field' => 'BuildingCode',
+        'inner_join' => '0',
+      ),
+    ),
+  );
+  $export['count_2017'] = $data_table;
+
+// HIHIHI
+
   $data_table = new stdClass();
   $data_table->disabled = FALSE; /* Edit this to true to make a default data_table disabled initially */
   $data_table->api_version = 1;
@@ -8070,6 +8322,244 @@ function esdportal_str_data_default() {
   );
   $export['esd_k8_2016'] = $data_table;
 
+/// HI
+
+  $data_table = new stdClass();
+  $data_table->disabled = FALSE; /* Edit this to true to make a default data_table disabled initially */
+  $data_table->api_version = 1;
+  $data_table->title = 'Esd k8 2017';
+  $data_table->name = 'esd_k8_2017';
+  $data_table->table_schema = array(
+    'description' => 'ESD K8 Scorecard Data for 2017 Summer Release',
+    'fields' => array(
+      'bcode' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Building Code',
+      ),
+      'schoolname' => array(
+        'type' => 'varchar',
+        'size' => 'normal',
+        'length' => '255',
+        'not null' => FALSE,
+        'description' => 'School Name',
+      ),
+      'total_ltrgrade' => array(
+        'type' => 'varchar',
+        'size' => 'normal',
+        'length' => '255',
+        'not null' => FALSE,
+        'description' => 'ESD Scorecard Letter Grade',
+      ),
+      'total_pts' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Total Points out of 100',
+      ),
+      'prof_cat_points' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Proficiency Points out of 10 (average of 4 point scales)',
+      ),
+      'growth_cat_points' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Growth Points out of 10 (average of 2 categories)',
+      ),
+      'net5e_cat_pts' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => '5E Points out of Ten',
+      ),
+      'pts_progress_math' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Points out of 10 for Math Growth',
+      ),
+      'mean_pctl_math' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Mean Student Percentile Growth in School for Students at Same Math Baseline MEAP Score',
+      ),
+      'pts_progress_read' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Points out of 10 for Reading Growth',
+      ),
+      'mean_pctl_reading' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Mean Student Percentile Growth in School for Students at Same Reading Baseline MEAP Score',
+      ),
+      'cat5e' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => FALSE,
+        'not null' => FALSE,
+        'description' => 'Net 5E Score',
+      ),
+      'mstep_mathpts' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => FALSE,
+        'not null' => FALSE,
+      ),
+      'mstep_mathprof' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => FALSE,
+        'not null' => FALSE,
+      ),
+      'mstep_elapts' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => FALSE,
+        'not null' => FALSE,
+      ),
+      'mstep_elaprof' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => FALSE,
+        'not null' => FALSE,
+      ),
+      'mstep_scipts' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => FALSE,
+        'not null' => FALSE,
+      ),
+      'mstep_sciprof' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => FALSE,
+        'not null' => FALSE,
+      ),
+      'mstep_socpts' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => FALSE,
+        'not null' => FALSE,
+      ),
+      'mstep_socprof' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => FALSE,
+        'not null' => FALSE,
+      ),
+      'scatter_elaprof' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => FALSE,
+        'not null' => FALSE,
+      ),
+      'scatter_elagrowth' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => FALSE,
+        'not null' => FALSE,
+      ),
+      'scatter_mathprof' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => FALSE,
+        'not null' => FALSE,
+      ),
+      'scatter_mathgrowth' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '16',
+        'scale' => '8',
+        'unsigned' => FALSE,
+        'not null' => FALSE,
+      ),
+      '5E_year' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => '',
+      ),
+    ),
+    'name' => 'esd_k8_2017',
+    'primary key' => array(
+      0 => 'bcode',
+    ),
+  );
+  $data_table->meta = array(
+    'label_field' => '',
+    'is_entity_type' => TRUE,
+    'entity_id' => 'bcode',
+    'join' => array(
+      'field_data_field_bcode' => array(
+        'left_field' => 'field_bcode_value',
+        'field' => 'bcode',
+        'inner_join' => '0',
+      ),
+    ),
+  );
+  $export['esd_k8_2017'] = $data_table;
+
+
+/// HI
   $data_table = new stdClass();
   $data_table->disabled = FALSE; /* Edit this to true to make a default data_table disabled initially */
   $data_table->api_version = 1;
@@ -11863,6 +12353,114 @@ function esdportal_str_data_default() {
     ),
   );
   $export['k12_supplemental_2016'] = $data_table;
+
+// HIHIHI
+
+  $data_table = new stdClass();
+  $data_table->disabled = FALSE; /* Edit this to true to make a default data_table disabled initially */
+  $data_table->api_version = 1;
+  $data_table->title = 'Supplemental K12 data for 2017';
+  $data_table->name = 'k12_supplemental_2017';
+  $data_table->table_schema = array(
+    'description' => 'K12 Supplemental 2017',
+    'fields' => array(
+      'bcode' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Building/Entity Code used as unique identifier',
+      ),
+      'school_name' => array(
+        'type' => 'varchar',
+        'size' => 'normal',
+        'length' => '255',
+        'not null' => FALSE,
+        'description' => 'Name of school (included on all datasets for cross referencing)',
+      ),
+      'avg_commute' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '6',
+        'scale' => '2',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Average Commute Distance (Fall 2013)',
+      ),
+      'michigan_ttb' => array(
+        'type' => 'int',
+        'size' => 'normal',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => '2014 Michigan Top-to-bottom percentile ranking',
+      ),
+      'iep_pct' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '6',
+        'scale' => '2',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => '% with an Individualized Education Plan 2013-14',
+      ),
+      'attendance_all' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '6',
+        'scale' => '2',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Attendance Rate of All Students',
+      ),
+      'chronic_absentee_pct' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '6',
+        'scale' => '2',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Percent of Students Chronically Absent',
+      ),
+      'attendance_ca' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '6',
+        'scale' => '2',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Attendance rate of Chronically Absent Students Only',
+      ),
+      'mobility_rate' => array(
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => '6',
+        'scale' => '2',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'Full Attendance Equivalent of Chronic Abs',
+      ),
+    ),
+    'name' => 'k12_supplemental_2017',
+    'primary key' => array(
+      0 => 'bcode',
+    ),
+  );
+  $data_table->meta = array(
+    'label_field' => '',
+    'is_entity_type' => TRUE,
+    'entity_id' => 'bcode',
+    'join' => array(
+      'field_data_field_bcode' => array(
+        'left_field' => 'field_bcode_value',
+        'field' => 'bcode',
+        'inner_join' => '0',
+      ),
+    ),
+  );
+  $export['k12_supplemental_2017'] = $data_table;
+
+// HIHIHI
 
   $data_table = new stdClass();
   $data_table->disabled = FALSE; /* Edit this to true to make a default data_table disabled initially */
