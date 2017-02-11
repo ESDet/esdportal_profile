@@ -1365,8 +1365,6 @@ function esdportal_str_data_default() {
   );
   $export['count_2016'] = $data_table;
 
-// HIHIHI
-
   $data_table = new stdClass();
   $data_table->disabled = FALSE; /* Edit this to true to make a default data_table disabled initially */
   $data_table->api_version = 1;
@@ -1614,8 +1612,6 @@ function esdportal_str_data_default() {
     ),
   );
   $export['count_2017'] = $data_table;
-
-// HIHIHI
 
   $data_table = new stdClass();
   $data_table->disabled = FALSE; /* Edit this to true to make a default data_table disabled initially */
@@ -8322,8 +8318,6 @@ function esdportal_str_data_default() {
   );
   $export['esd_k8_2016'] = $data_table;
 
-/// HI
-
   $data_table = new stdClass();
   $data_table->disabled = FALSE; /* Edit this to true to make a default data_table disabled initially */
   $data_table->api_version = 1;
@@ -8558,8 +8552,6 @@ function esdportal_str_data_default() {
   );
   $export['esd_k8_2017'] = $data_table;
 
-
-/// HI
   $data_table = new stdClass();
   $data_table->disabled = FALSE; /* Edit this to true to make a default data_table disabled initially */
   $data_table->api_version = 1;
@@ -12354,8 +12346,6 @@ function esdportal_str_data_default() {
   );
   $export['k12_supplemental_2016'] = $data_table;
 
-// HIHIHI
-
   $data_table = new stdClass();
   $data_table->disabled = FALSE; /* Edit this to true to make a default data_table disabled initially */
   $data_table->api_version = 1;
@@ -12459,8 +12449,6 @@ function esdportal_str_data_default() {
     ),
   );
   $export['k12_supplemental_2017'] = $data_table;
-
-// HIHIHI
 
   $data_table = new stdClass();
   $data_table->disabled = FALSE; /* Edit this to true to make a default data_table disabled initially */
