@@ -10836,7 +10836,8 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
-  $handler->display->display_options['style_options']['provide_file'] = 0;
+  $handler->display->display_options['style_options']['provide_file'] = 1;
+  $handler->display->display_options['style_options']['filename'] = 'school_profiles_%timestamp-yy == 17-%timestamp-dd == 02.csv';
   $handler->display->display_options['style_options']['parent_sort'] = 0;
   $handler->display->display_options['style_options']['quote'] = 1;
   $handler->display->display_options['style_options']['trim'] = 0;
@@ -10950,6 +10951,10 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['fields']['field_scorecard_display']['table'] = 'field_data_field_scorecard_display';
   $handler->display->display_options['fields']['field_scorecard_display']['field'] = 'field_scorecard_display';
   $handler->display->display_options['fields']['field_scorecard_display']['relationship'] = 'term_node_tid';
+  /* Field: Content: Message to families */
+  $handler->display->display_options['fields']['field_message']['id'] = 'field_message';
+  $handler->display->display_options['fields']['field_message']['table'] = 'field_data_field_message';
+  $handler->display->display_options['fields']['field_message']['field'] = 'field_message';
   $handler->display->display_options['path'] = 'export-school-profiles';
   $handler->display->display_options['displays'] = array(
     'page' => 'page',
@@ -12149,6 +12154,16 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['fields']['field_2015_5essentials_roster']['field'] = 'field_2015_5essentials_roster';
   $handler->display->display_options['fields']['field_2015_5essentials_roster']['relationship'] = 'term_node_tid';
   $handler->display->display_options['fields']['field_2015_5essentials_roster']['label'] = '2015 5E Roster';
+  /* Field: Taxonomy term: 2016 In Universe */
+  $handler->display->display_options['fields']['field_2016_universe']['id'] = 'field_2016_universe';
+  $handler->display->display_options['fields']['field_2016_universe']['table'] = 'field_data_field_2016_universe';
+  $handler->display->display_options['fields']['field_2016_universe']['field'] = 'field_2016_universe';
+  $handler->display->display_options['fields']['field_2016_universe']['relationship'] = 'term_node_tid';
+  /* Field: Taxonomy term: 2017 In Universe */
+  $handler->display->display_options['fields']['field_2017_universe']['id'] = 'field_2017_universe';
+  $handler->display->display_options['fields']['field_2017_universe']['table'] = 'field_data_field_2017_universe';
+  $handler->display->display_options['fields']['field_2017_universe']['field'] = 'field_2017_universe';
+  $handler->display->display_options['fields']['field_2017_universe']['relationship'] = 'term_node_tid';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Published */
@@ -12658,6 +12673,7 @@ function esdportal_str_views_default_views() {
     t('School status'),
     t('School type'),
     t('Scorecard Display'),
+    t('Message to families'),
     t('School Universe Export'),
     t('ESD School Universe'),
     t('meap_2013'),
@@ -12776,6 +12792,7 @@ function esdportal_str_views_default_views() {
     t('Site Visit Hub'),
     t('2014 5Essentials Roster Submitted?'),
     t('2015 5E Roster'),
+    t('2017 In Universe'),
     t('Progress'),
     t('Recent Revisions'),
     t('Revision User'),
@@ -12917,11 +12934,6 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['fields']['field_ap_classes']['table'] = 'field_data_field_ap_classes';
   $handler->display->display_options['fields']['field_ap_classes']['field'] = 'field_ap_classes';
   $handler->display->display_options['fields']['field_ap_classes']['relationship'] = 'tid_representative';
-  /* Field: Content: College Counseling */
-  $handler->display->display_options['fields']['field_college_counseling']['id'] = 'field_college_counseling';
-  $handler->display->display_options['fields']['field_college_counseling']['table'] = 'field_data_field_college_counseling';
-  $handler->display->display_options['fields']['field_college_counseling']['field'] = 'field_college_counseling';
-  $handler->display->display_options['fields']['field_college_counseling']['relationship'] = 'tid_representative';
   /* Field: Content: College Prep */
   $handler->display->display_options['fields']['field_college_prep']['id'] = 'field_college_prep';
   $handler->display->display_options['fields']['field_college_prep']['table'] = 'field_data_field_college_prep';
@@ -13349,11 +13361,24 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['title'] = 'Profile Data Export';
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
-  $handler->display->display_options['style_plugin'] = 'views_data_export_xls';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
   $handler->display->display_options['style_options']['provide_file'] = 1;
-  $handler->display->display_options['style_options']['filename'] = '%view_%timestamp-mmm_%timestamp-mmm.xls';
+  $handler->display->display_options['style_options']['filename'] = 'School_Profile_Data_%timestamp-full.csv';
   $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['style_options']['quote'] = 1;
+  $handler->display->display_options['style_options']['trim'] = 0;
+  $handler->display->display_options['style_options']['replace_newlines'] = 0;
+  $handler->display->display_options['style_options']['header'] = 1;
   $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Field: Building code */
+  $handler->display->display_options['fields']['field_bcode']['id'] = 'field_bcode';
+  $handler->display->display_options['fields']['field_bcode']['table'] = 'field_data_field_bcode';
+  $handler->display->display_options['fields']['field_bcode']['field'] = 'field_bcode';
+  $handler->display->display_options['fields']['field_bcode']['label'] = 'BCODE';
+  $handler->display->display_options['fields']['field_bcode']['settings'] = array(
+    'thousand_separator' => '',
+    'prefix_suffix' => 0,
+  );
   /* Field: Taxonomy term: Name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
@@ -13383,7 +13408,7 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['fields']['field_admissions_url']['table'] = 'field_data_field_admissions_url';
   $handler->display->display_options['fields']['field_admissions_url']['field'] = 'field_admissions_url';
   $handler->display->display_options['fields']['field_admissions_url']['relationship'] = 'tid_representative';
-  /* Field: Content: After School Transportation */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_after_school_transportatio']['id'] = 'field_after_school_transportatio';
   $handler->display->display_options['fields']['field_after_school_transportatio']['table'] = 'field_data_field_after_school_transportatio';
   $handler->display->display_options['fields']['field_after_school_transportatio']['field'] = 'field_after_school_transportatio';
@@ -13545,7 +13570,7 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['fields']['field_parent_involvement']['field'] = 'field_parent_involvement';
   $handler->display->display_options['fields']['field_parent_involvement']['relationship'] = 'tid_representative';
   $handler->display->display_options['fields']['field_parent_involvement']['delta_offset'] = '0';
-  /* Field: Content: Person Responsible */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_person_responsible']['id'] = 'field_person_responsible';
   $handler->display->display_options['fields']['field_person_responsible']['table'] = 'field_data_field_person_responsible';
   $handler->display->display_options['fields']['field_person_responsible']['field'] = 'field_person_responsible';
@@ -13673,7 +13698,7 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['fields']['field_email']['table'] = 'field_data_field_email';
   $handler->display->display_options['fields']['field_email']['field'] = 'field_email';
   $handler->display->display_options['fields']['field_email']['relationship'] = 'tid_representative';
-  /* Field: Content: Counselor/Student Ratio */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_counselor_student_ratio']['id'] = 'field_counselor_student_ratio';
   $handler->display->display_options['fields']['field_counselor_student_ratio']['table'] = 'field_data_field_counselor_student_ratio';
   $handler->display->display_options['fields']['field_counselor_student_ratio']['field'] = 'field_counselor_student_ratio';
@@ -13700,88 +13725,83 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['fields']['field_dual_enrollment_institutio']['field'] = 'field_dual_enrollment_institutio';
   $handler->display->display_options['fields']['field_dual_enrollment_institutio']['relationship'] = 'tid_representative';
   $handler->display->display_options['fields']['field_dual_enrollment_institutio']['delta_offset'] = '0';
-  /* Field: Content: Early Child Center Relationships */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_early_child_center_relatio']['id'] = 'field_early_child_center_relatio';
   $handler->display->display_options['fields']['field_early_child_center_relatio']['table'] = 'field_data_field_early_child_center_relatio';
   $handler->display->display_options['fields']['field_early_child_center_relatio']['field'] = 'field_early_child_center_relatio';
   $handler->display->display_options['fields']['field_early_child_center_relatio']['relationship'] = 'tid_representative';
-  $handler->display->display_options['fields']['field_early_child_center_relatio']['delta_offset'] = '0';
   /* Field: Content: Early Childhood Programs */
   $handler->display->display_options['fields']['field_early_childhood_programs']['id'] = 'field_early_childhood_programs';
   $handler->display->display_options['fields']['field_early_childhood_programs']['table'] = 'field_data_field_early_childhood_programs';
   $handler->display->display_options['fields']['field_early_childhood_programs']['field'] = 'field_early_childhood_programs';
   $handler->display->display_options['fields']['field_early_childhood_programs']['relationship'] = 'tid_representative';
   $handler->display->display_options['fields']['field_early_childhood_programs']['delta_offset'] = '0';
-  /* Field: Content: Early Childhood Transition */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_early_childhood_transition']['id'] = 'field_early_childhood_transition';
   $handler->display->display_options['fields']['field_early_childhood_transition']['table'] = 'field_data_field_early_childhood_transition';
   $handler->display->display_options['fields']['field_early_childhood_transition']['field'] = 'field_early_childhood_transition';
   $handler->display->display_options['fields']['field_early_childhood_transition']['relationship'] = 'tid_representative';
-  /* Field: Content: Character Development */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_character_development']['id'] = 'field_character_development';
   $handler->display->display_options['fields']['field_character_development']['table'] = 'field_data_field_character_development';
   $handler->display->display_options['fields']['field_character_development']['field'] = 'field_character_development';
   $handler->display->display_options['fields']['field_character_development']['relationship'] = 'tid_representative';
-  /* Field: Content: College Counseling */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_college_counseling_1']['id'] = 'field_college_counseling_1';
   $handler->display->display_options['fields']['field_college_counseling_1']['table'] = 'field_data_field_college_counseling';
   $handler->display->display_options['fields']['field_college_counseling_1']['field'] = 'field_college_counseling';
   $handler->display->display_options['fields']['field_college_counseling_1']['relationship'] = 'tid_representative';
-  /* Field: Content: Discipline Programs */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_discipline_programs']['id'] = 'field_discipline_programs';
   $handler->display->display_options['fields']['field_discipline_programs']['table'] = 'field_data_field_discipline_programs';
   $handler->display->display_options['fields']['field_discipline_programs']['field'] = 'field_discipline_programs';
   $handler->display->display_options['fields']['field_discipline_programs']['relationship'] = 'tid_representative';
-  /* Field: Content: English Language Learners */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_english_language_learners']['id'] = 'field_english_language_learners';
   $handler->display->display_options['fields']['field_english_language_learners']['table'] = 'field_data_field_english_language_learners';
   $handler->display->display_options['fields']['field_english_language_learners']['field'] = 'field_english_language_learners';
   $handler->display->display_options['fields']['field_english_language_learners']['relationship'] = 'tid_representative';
-  /* Field: Content: Family Supports */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_family_supports']['id'] = 'field_family_supports';
   $handler->display->display_options['fields']['field_family_supports']['table'] = 'field_data_field_family_supports';
   $handler->display->display_options['fields']['field_family_supports']['field'] = 'field_family_supports';
   $handler->display->display_options['fields']['field_family_supports']['relationship'] = 'tid_representative';
-  /* Field: Content: In-School Programs */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_in_school_programs']['id'] = 'field_in_school_programs';
   $handler->display->display_options['fields']['field_in_school_programs']['table'] = 'field_data_field_in_school_programs';
   $handler->display->display_options['fields']['field_in_school_programs']['field'] = 'field_in_school_programs';
   $handler->display->display_options['fields']['field_in_school_programs']['relationship'] = 'tid_representative';
-  $handler->display->display_options['fields']['field_in_school_programs']['delta_offset'] = '0';
-  /* Field: Content: Organized Sports */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_organized_sports']['id'] = 'field_organized_sports';
   $handler->display->display_options['fields']['field_organized_sports']['table'] = 'field_data_field_organized_sports';
   $handler->display->display_options['fields']['field_organized_sports']['field'] = 'field_organized_sports';
   $handler->display->display_options['fields']['field_organized_sports']['relationship'] = 'tid_representative';
-  $handler->display->display_options['fields']['field_organized_sports']['delta_offset'] = '0';
-  /* Field: Content: Parent Supports */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_parent_supports']['id'] = 'field_parent_supports';
   $handler->display->display_options['fields']['field_parent_supports']['table'] = 'field_data_field_parent_supports';
   $handler->display->display_options['fields']['field_parent_supports']['field'] = 'field_parent_supports';
   $handler->display->display_options['fields']['field_parent_supports']['relationship'] = 'tid_representative';
-  /* Field: Content: Special Needs */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_special_needs']['id'] = 'field_special_needs';
   $handler->display->display_options['fields']['field_special_needs']['table'] = 'field_data_field_special_needs';
   $handler->display->display_options['fields']['field_special_needs']['field'] = 'field_special_needs';
   $handler->display->display_options['fields']['field_special_needs']['relationship'] = 'tid_representative';
-  /* Field: Content: Special Tracks */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_special_tracks']['id'] = 'field_special_tracks';
   $handler->display->display_options['fields']['field_special_tracks']['table'] = 'field_data_field_special_tracks';
   $handler->display->display_options['fields']['field_special_tracks']['field'] = 'field_special_tracks';
   $handler->display->display_options['fields']['field_special_tracks']['relationship'] = 'tid_representative';
-  /* Field: Content: Student Development Programs */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_student_development_progra']['id'] = 'field_student_development_progra';
   $handler->display->display_options['fields']['field_student_development_progra']['table'] = 'field_data_field_student_development_progra';
   $handler->display->display_options['fields']['field_student_development_progra']['field'] = 'field_student_development_progra';
   $handler->display->display_options['fields']['field_student_development_progra']['relationship'] = 'tid_representative';
-  $handler->display->display_options['fields']['field_student_development_progra']['delta_offset'] = '0';
-  /* Field: Content: Student Leadership Opportunities */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_student_leadership_opportu']['id'] = 'field_student_leadership_opportu';
   $handler->display->display_options['fields']['field_student_leadership_opportu']['table'] = 'field_data_field_student_leadership_opportu';
   $handler->display->display_options['fields']['field_student_leadership_opportu']['field'] = 'field_student_leadership_opportu';
   $handler->display->display_options['fields']['field_student_leadership_opportu']['relationship'] = 'tid_representative';
-  $handler->display->display_options['fields']['field_student_leadership_opportu']['delta_offset'] = '0';
-  /* Field: Content: Transportation */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_transportation']['id'] = 'field_transportation';
   $handler->display->display_options['fields']['field_transportation']['table'] = 'field_data_field_transportation';
   $handler->display->display_options['fields']['field_transportation']['field'] = 'field_transportation';
@@ -13823,12 +13843,13 @@ function esdportal_str_views_default_views() {
     'name' => 'name',
     'field_2016_universe' => 'field_2016_universe',
     'field_2016_verified' => 'field_2016_verified',
-    'field_application_process' => 'field_application_process',
     'total_ltrgrade' => 'total_ltrgrade',
     'total_ltrgrade_1' => 'total_ltrgrade_1',
     'field_2016_recommended' => 'field_2016_recommended',
     'field_ed_participant' => 'field_ed_participant',
     'field_operator' => 'field_operator',
+    'field_school_scorecard_status' => 'field_school_scorecard_status',
+    'field_scorecard_display' => 'field_scorecard_display',
   );
   $handler->display->display_options['style_options']['default'] = 'name';
   $handler->display->display_options['style_options']['info'] = array(
@@ -13872,13 +13893,6 @@ function esdportal_str_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_application_process' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
     'total_ltrgrade' => array(
       'sortable' => 1,
       'default_sort_order' => 'desc',
@@ -13901,13 +13915,27 @@ function esdportal_str_views_default_views() {
       'empty_column' => 0,
     ),
     'field_ed_participant' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_operator' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_school_scorecard_status' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_scorecard_display' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -14101,6 +14129,28 @@ function esdportal_str_views_default_views() {
     'empty_text' => '',
     'fallback_format' => 'list_default',
   );
+  /* Field: Taxonomy term: 2017 In Universe */
+  $handler->display->display_options['fields']['field_2017_universe']['id'] = 'field_2017_universe';
+  $handler->display->display_options['fields']['field_2017_universe']['table'] = 'field_data_field_2017_universe';
+  $handler->display->display_options['fields']['field_2017_universe']['field'] = 'field_2017_universe';
+  $handler->display->display_options['fields']['field_2017_universe']['type'] = 'editable';
+  $handler->display->display_options['fields']['field_2017_universe']['settings'] = array(
+    'click_to_edit' => 0,
+    'click_to_edit_style' => 'button',
+    'empty_text' => '',
+    'fallback_format' => 'list_default',
+  );
+  /* Field: Taxonomy term: ESD Exclusive Typology */
+  $handler->display->display_options['fields']['field_esd_exclusive_typology']['id'] = 'field_esd_exclusive_typology';
+  $handler->display->display_options['fields']['field_esd_exclusive_typology']['table'] = 'field_data_field_esd_exclusive_typology';
+  $handler->display->display_options['fields']['field_esd_exclusive_typology']['field'] = 'field_esd_exclusive_typology';
+  $handler->display->display_options['fields']['field_esd_exclusive_typology']['type'] = 'editable';
+  $handler->display->display_options['fields']['field_esd_exclusive_typology']['settings'] = array(
+    'click_to_edit' => 0,
+    'click_to_edit_style' => 'button',
+    'empty_text' => '',
+    'fallback_format' => 'taxonomy_term_reference_link',
+  );
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Taxonomy vocabulary: Machine name */
@@ -14245,6 +14295,27 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['filters']['field_2016_universe_value']['expose']['operator'] = 'field_2016_universe_value_op';
   $handler->display->display_options['filters']['field_2016_universe_value']['expose']['identifier'] = 'field_2016_universe_value';
   $handler->display->display_options['filters']['field_2016_universe_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    4 => 0,
+    17 => 0,
+    7 => 0,
+    18 => 0,
+    6 => 0,
+    19 => 0,
+    21 => 0,
+    20 => 0,
+  );
+  /* Filter criterion: Taxonomy term: 2017 In Universe (field_2017_universe) */
+  $handler->display->display_options['filters']['field_2017_universe_value']['id'] = 'field_2017_universe_value';
+  $handler->display->display_options['filters']['field_2017_universe_value']['table'] = 'field_data_field_2017_universe';
+  $handler->display->display_options['filters']['field_2017_universe_value']['field'] = 'field_2017_universe_value';
+  $handler->display->display_options['filters']['field_2017_universe_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_2017_universe_value']['expose']['operator_id'] = 'field_2017_universe_value_op';
+  $handler->display->display_options['filters']['field_2017_universe_value']['expose']['label'] = '2017 In Universe';
+  $handler->display->display_options['filters']['field_2017_universe_value']['expose']['operator'] = 'field_2017_universe_value_op';
+  $handler->display->display_options['filters']['field_2017_universe_value']['expose']['identifier'] = 'field_2017_universe_value';
+  $handler->display->display_options['filters']['field_2017_universe_value']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     4 => 0,
@@ -14653,6 +14724,191 @@ function esdportal_str_views_default_views() {
   $handler->display->display_options['fields']['field_council_district']['field'] = 'field_council_district';
   $handler->display->display_options['path'] = 'magazine-export';
   $handler->display->display_options['sitename_title'] = 0;
+
+  /* Display: YouthTruth Export */
+  $handler = $view->new_display('views_data_export', 'YouthTruth Export', 'views_data_export_4');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'YouthTruth Export';
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['style_options']['provide_file'] = 1;
+  $handler->display->display_options['style_options']['filename'] = 'YouthTruth_export_%timestamp-yy-%timestamp-mm%timestamp-dd.csv';
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['style_options']['quote'] = 1;
+  $handler->display->display_options['style_options']['trim'] = 0;
+  $handler->display->display_options['style_options']['replace_newlines'] = 0;
+  $handler->display->display_options['style_options']['header'] = 1;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Field: Building code */
+  $handler->display->display_options['fields']['field_bcode']['id'] = 'field_bcode';
+  $handler->display->display_options['fields']['field_bcode']['table'] = 'field_data_field_bcode';
+  $handler->display->display_options['fields']['field_bcode']['field'] = 'field_bcode';
+  $handler->display->display_options['fields']['field_bcode']['settings'] = array(
+    'thousand_separator' => '',
+    'prefix_suffix' => 0,
+  );
+  /* Field: Taxonomy term: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['label'] = 'School Name';
+  $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['name']['link_to_taxonomy'] = TRUE;
+  /* Field: Taxonomy term: ESD Exclusive Typology */
+  $handler->display->display_options['fields']['field_esd_exclusive_typology']['id'] = 'field_esd_exclusive_typology';
+  $handler->display->display_options['fields']['field_esd_exclusive_typology']['table'] = 'field_data_field_esd_exclusive_typology';
+  $handler->display->display_options['fields']['field_esd_exclusive_typology']['field'] = 'field_esd_exclusive_typology';
+  $handler->display->display_options['fields']['field_esd_exclusive_typology']['label'] = 'ESD Typology';
+  /* Field: Taxonomy term: Governance */
+  $handler->display->display_options['fields']['field_governance']['id'] = 'field_governance';
+  $handler->display->display_options['fields']['field_governance']['table'] = 'field_data_field_governance';
+  $handler->display->display_options['fields']['field_governance']['field'] = 'field_governance';
+  /* Field: Taxonomy term: Operator */
+  $handler->display->display_options['fields']['field_operator']['id'] = 'field_operator';
+  $handler->display->display_options['fields']['field_operator']['table'] = 'field_data_field_operator';
+  $handler->display->display_options['fields']['field_operator']['field'] = 'field_operator';
+  /* Field: Taxonomy term: Authorizer */
+  $handler->display->display_options['fields']['field_authorizer']['id'] = 'field_authorizer';
+  $handler->display->display_options['fields']['field_authorizer']['table'] = 'field_data_field_authorizer';
+  $handler->display->display_options['fields']['field_authorizer']['field'] = 'field_authorizer';
+  /* Field: Taxonomy term: School type */
+  $handler->display->display_options['fields']['field_school_type']['id'] = 'field_school_type';
+  $handler->display->display_options['fields']['field_school_type']['table'] = 'field_data_field_school_type';
+  $handler->display->display_options['fields']['field_school_type']['field'] = 'field_school_type';
+  /* Field: Content: Grades Served */
+  $handler->display->display_options['fields']['field_grades_served']['id'] = 'field_grades_served';
+  $handler->display->display_options['fields']['field_grades_served']['table'] = 'field_data_field_grades_served';
+  $handler->display->display_options['fields']['field_grades_served']['field'] = 'field_grades_served';
+  $handler->display->display_options['fields']['field_grades_served']['relationship'] = 'tid_representative';
+  /* Field: Taxonomy term: Address - Thoroughfare (i.e. Street address) */
+  $handler->display->display_options['fields']['field_address_thoroughfare']['id'] = 'field_address_thoroughfare';
+  $handler->display->display_options['fields']['field_address_thoroughfare']['table'] = 'field_data_field_address';
+  $handler->display->display_options['fields']['field_address_thoroughfare']['field'] = 'field_address_thoroughfare';
+  $handler->display->display_options['fields']['field_address_thoroughfare']['label'] = 'Address';
+  /* Field: Taxonomy term: Address - Locality (i.e. City) */
+  $handler->display->display_options['fields']['field_address_locality']['id'] = 'field_address_locality';
+  $handler->display->display_options['fields']['field_address_locality']['table'] = 'field_data_field_address';
+  $handler->display->display_options['fields']['field_address_locality']['field'] = 'field_address_locality';
+  /* Field: Taxonomy term: Address - Postal code */
+  $handler->display->display_options['fields']['field_address_postal_code']['id'] = 'field_address_postal_code';
+  $handler->display->display_options['fields']['field_address_postal_code']['table'] = 'field_data_field_address';
+  $handler->display->display_options['fields']['field_address_postal_code']['field'] = 'field_address_postal_code';
+  /* Field: Content: School URL */
+  $handler->display->display_options['fields']['field_school_url']['id'] = 'field_school_url';
+  $handler->display->display_options['fields']['field_school_url']['table'] = 'field_data_field_school_url';
+  $handler->display->display_options['fields']['field_school_url']['field'] = 'field_school_url';
+  $handler->display->display_options['fields']['field_school_url']['relationship'] = 'tid_representative';
+  $handler->display->display_options['fields']['field_school_url']['label'] = 'School Website';
+  /* Field: Five Essentials 2013: Net5e */
+  $handler->display->display_options['fields']['Net5e']['id'] = 'Net5e';
+  $handler->display->display_options['fields']['Net5e']['table'] = 'fiveessentials_2013';
+  $handler->display->display_options['fields']['Net5e']['field'] = 'Net5e';
+  $handler->display->display_options['fields']['Net5e']['separator'] = '';
+  /* Field: Five Essentials 2014: Net5e */
+  $handler->display->display_options['fields']['Net5e_1']['id'] = 'Net5e_1';
+  $handler->display->display_options['fields']['Net5e_1']['table'] = 'fiveessentials_2014';
+  $handler->display->display_options['fields']['Net5e_1']['field'] = 'Net5e';
+  $handler->display->display_options['fields']['Net5e_1']['separator'] = '';
+  /* Field: Five Essentials 2015: The overall 5Essentials score is a summary indicator that describes a school’s performance on the 5Essentials as a group.  This score is calculated by adding up the school’s performance on each individual Essential. Being light green (strong) or dark green (very strong) on an Essential counts as +1; yellow (neutral) or missing counts as 0; and orange (weak) or dark red (very weak) counts as -1. */
+  $handler->display->display_options['fields']['Net5e_2']['id'] = 'Net5e_2';
+  $handler->display->display_options['fields']['Net5e_2']['table'] = 'fiveessentials_2015';
+  $handler->display->display_options['fields']['Net5e_2']['field'] = 'Net5e';
+  $handler->display->display_options['fields']['Net5e_2']['label'] = '2015 net5e';
+  $handler->display->display_options['fields']['Net5e_2']['separator'] = '';
+  /* Field: Five Essentials 2016: The overall 5Essentials score is a summary indicator that describes a school’s performance on the 5Essentials as a group.  This score is calculated by adding up the school’s performance on each individual Essential. Being light green (strong) or dark green (very strong) on an Essential counts as +1; yellow (neutral) or missing counts as 0; and orange (weak) or dark red (very weak) counts as -1. */
+  $handler->display->display_options['fields']['Net5e_3']['id'] = 'Net5e_3';
+  $handler->display->display_options['fields']['Net5e_3']['table'] = 'fiveessentials_2016';
+  $handler->display->display_options['fields']['Net5e_3']['field'] = 'Net5e';
+  $handler->display->display_options['fields']['Net5e_3']['label'] = '2016 net5e';
+  $handler->display->display_options['fields']['Net5e_3']['separator'] = '';
+  /* Field: Five Essentials 2013: Category5e */
+  $handler->display->display_options['fields']['Category5E']['id'] = 'Category5E';
+  $handler->display->display_options['fields']['Category5E']['table'] = 'fiveessentials_2013';
+  $handler->display->display_options['fields']['Category5E']['field'] = 'Category5E';
+  $handler->display->display_options['fields']['Category5E']['label'] = '2013 Category5e';
+  $handler->display->display_options['fields']['Category5E']['separator'] = '';
+  /* Field: Five Essentials 2014: Category5e */
+  $handler->display->display_options['fields']['Category5E_1']['id'] = 'Category5E_1';
+  $handler->display->display_options['fields']['Category5E_1']['table'] = 'fiveessentials_2014';
+  $handler->display->display_options['fields']['Category5E_1']['field'] = 'Category5E';
+  $handler->display->display_options['fields']['Category5E_1']['label'] = '2014 Category5e';
+  $handler->display->display_options['fields']['Category5E_1']['separator'] = '';
+  /* Field: Five Essentials 2015: Category 5E corresponds to how strong a school is on the Essentials. A school's performance determines how well organized they are for improvement. 1-5: 1 if Not Yet Organized, 2 if Partially Organized, 3 if Moderately Organized, 4 if Organized, 5 if Well-Organized */
+  $handler->display->display_options['fields']['Category5E_2']['id'] = 'Category5E_2';
+  $handler->display->display_options['fields']['Category5E_2']['table'] = 'fiveessentials_2015';
+  $handler->display->display_options['fields']['Category5E_2']['field'] = 'Category5E';
+  $handler->display->display_options['fields']['Category5E_2']['label'] = '2015 Category5e';
+  $handler->display->display_options['fields']['Category5E_2']['separator'] = '';
+  /* Field: Five Essentials 2016: Category 5E corresponds to how strong a school is on the Essentials. A school's performance determines how well organized they are for improvement. 1-5: 1 if Not Yet Organized, 2 if Partially Organized, 3 if Moderately Organized, 4 if Organized, 5 if Well-Organized */
+  $handler->display->display_options['fields']['Category5E_3']['id'] = 'Category5E_3';
+  $handler->display->display_options['fields']['Category5E_3']['table'] = 'fiveessentials_2016';
+  $handler->display->display_options['fields']['Category5E_3']['field'] = 'Category5E';
+  $handler->display->display_options['fields']['Category5E_3']['label'] = '2016 Category5e';
+  $handler->display->display_options['fields']['Category5E_3']['separator'] = '';
+  /* Field: Taxonomy term: District */
+  $handler->display->display_options['fields']['field_district']['id'] = 'field_district';
+  $handler->display->display_options['fields']['field_district']['table'] = 'field_data_field_district';
+  $handler->display->display_options['fields']['field_district']['field'] = 'field_district';
+  /* Field: 2014-15 Student Count with Detroit City Totals: Total enrollment */
+  $handler->display->display_options['fields']['TOTAL_ENROLLMENT']['id'] = 'TOTAL_ENROLLMENT';
+  $handler->display->display_options['fields']['TOTAL_ENROLLMENT']['table'] = 'count_2016';
+  $handler->display->display_options['fields']['TOTAL_ENROLLMENT']['field'] = 'TOTAL_ENROLLMENT';
+  $handler->display->display_options['fields']['TOTAL_ENROLLMENT']['label'] = '2014-15 Total enrollment';
+  $handler->display->display_options['fields']['TOTAL_ENROLLMENT']['separator'] = '';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Taxonomy vocabulary: Machine name */
+  $handler->display->display_options['filters']['machine_name']['id'] = 'machine_name';
+  $handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
+  $handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
+  $handler->display->display_options['filters']['machine_name']['value'] = array(
+    'schools' => 'schools',
+  );
+  $handler->display->display_options['filters']['machine_name']['group'] = 1;
+  $handler->display->display_options['filters']['machine_name']['expose']['operator_id'] = 'machine_name_op';
+  $handler->display->display_options['filters']['machine_name']['expose']['label'] = 'Machine name';
+  $handler->display->display_options['filters']['machine_name']['expose']['operator'] = 'machine_name_op';
+  $handler->display->display_options['filters']['machine_name']['expose']['identifier'] = 'machine_name';
+  /* Filter criterion: Taxonomy term: Name */
+  $handler->display->display_options['filters']['name']['id'] = 'name';
+  $handler->display->display_options['filters']['name']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['filters']['name']['field'] = 'name';
+  $handler->display->display_options['filters']['name']['operator'] = 'word';
+  $handler->display->display_options['filters']['name']['group'] = 1;
+  $handler->display->display_options['filters']['name']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['name']['expose']['operator_id'] = 'name_op';
+  $handler->display->display_options['filters']['name']['expose']['label'] = 'Filter by School Name';
+  $handler->display->display_options['filters']['name']['expose']['operator'] = 'name_op';
+  $handler->display->display_options['filters']['name']['expose']['identifier'] = 'name';
+  $handler->display->display_options['filters']['name']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    4 => 0,
+    5 => 0,
+    7 => 0,
+    3 => 0,
+    6 => 0,
+  );
+  /* Filter criterion: Taxonomy term: School status (field_school_status) */
+  $handler->display->display_options['filters']['field_school_status_tid']['id'] = 'field_school_status_tid';
+  $handler->display->display_options['filters']['field_school_status_tid']['table'] = 'field_data_field_school_status';
+  $handler->display->display_options['filters']['field_school_status_tid']['field'] = 'field_school_status_tid';
+  $handler->display->display_options['filters']['field_school_status_tid']['operator'] = 'not';
+  $handler->display->display_options['filters']['field_school_status_tid']['value'] = array(
+    0 => '6',
+  );
+  $handler->display->display_options['filters']['field_school_status_tid']['vocabulary'] = 'school_status';
+  /* Filter criterion: Taxonomy term: 2017 In Universe (field_2017_universe) */
+  $handler->display->display_options['filters']['field_2017_universe_value']['id'] = 'field_2017_universe_value';
+  $handler->display->display_options['filters']['field_2017_universe_value']['table'] = 'field_data_field_2017_universe';
+  $handler->display->display_options['filters']['field_2017_universe_value']['field'] = 'field_2017_universe_value';
+  $handler->display->display_options['filters']['field_2017_universe_value']['value'] = array(
+    1 => '1',
+  );
+  $handler->display->display_options['path'] = 'yt-export';
+  $handler->display->display_options['sitename_title'] = 0;
   $translatables['manage_schools'] = array(
     t('Master'),
     t('Manage School Taxonomy'),
@@ -14667,7 +14923,6 @@ function esdportal_str_views_default_views() {
     t('Profile'),
     t('Profile NID'),
     t('AP Classes'),
-    t('College Counseling'),
     t('College Prep'),
     t('Machine name'),
     t('Filter by School Name'),
@@ -14698,9 +14953,10 @@ function esdportal_str_views_default_views() {
     t('Girls Sports'),
     t('Data export'),
     t('Profile Data Export'),
+    t('BCODE'),
     t('School'),
     t('Admissions URL'),
-    t('After School Transportation'),
+    t('Broken handler field_data_field_after_school_transportatio.field_after_school_transportatio'),
     t('Application Fee'),
     t('Application Fee Amount'),
     t('Application Process'),
@@ -14719,7 +14975,7 @@ function esdportal_str_views_default_views() {
     t('Grades Served'),
     t('Immersion'),
     t('Parent Involvement'),
-    t('Person Responsible'),
+    t('Broken handler field_data_field_person_responsible.field_person_responsible'),
     t('Principal First Name'),
     t('Principal Last Name'),
     t('Schedule'),
@@ -14737,25 +14993,27 @@ function esdportal_str_views_default_views() {
     t('Time of your site visit'),
     t('Transportation'),
     t('Email'),
-    t('Counselor/Student Ratio'),
+    t('Broken handler field_data_field_counselor_student_ratio.field_counselor_student_ratio'),
     t('Destination School'),
     t('Dress Code'),
     t('Dual Enrollment'),
     t('Dual Enrollment Institutions'),
-    t('Early Child Center Relationships'),
+    t('Broken handler field_data_field_early_child_center_relatio.field_early_child_center_relatio'),
     t('Early Childhood Programs'),
-    t('Early Childhood Transition'),
-    t('Character Development'),
-    t('Discipline Programs'),
-    t('English Language Learners'),
-    t('Family Supports'),
-    t('In-School Programs'),
-    t('Organized Sports'),
-    t('Parent Supports'),
-    t('Special Needs'),
-    t('Special Tracks'),
-    t('Student Development Programs'),
-    t('Student Leadership Opportunities'),
+    t('Broken handler field_data_field_early_childhood_transition.field_early_childhood_transition'),
+    t('Broken handler field_data_field_character_development.field_character_development'),
+    t('Broken handler field_data_field_college_counseling.field_college_counseling'),
+    t('Broken handler field_data_field_discipline_programs.field_discipline_programs'),
+    t('Broken handler field_data_field_english_language_learners.field_english_language_learners'),
+    t('Broken handler field_data_field_family_supports.field_family_supports'),
+    t('Broken handler field_data_field_in_school_programs.field_in_school_programs'),
+    t('Broken handler field_data_field_organized_sports.field_organized_sports'),
+    t('Broken handler field_data_field_parent_supports.field_parent_supports'),
+    t('Broken handler field_data_field_special_needs.field_special_needs'),
+    t('Broken handler field_data_field_special_tracks.field_special_tracks'),
+    t('Broken handler field_data_field_student_development_progra.field_student_development_progra'),
+    t('Broken handler field_data_field_student_leadership_opportu.field_student_leadership_opportu'),
+    t('Broken handler field_data_field_transportation.field_transportation'),
     t('Phone'),
     t('Edit typology'),
     t('Items per page'),
@@ -14778,6 +15036,7 @@ function esdportal_str_views_default_views() {
     t('Operator'),
     t('SC Status'),
     t('SC Display'),
+    t('2017 In Universe'),
     t('ESD Exclusive Typology'),
     t('Scorecard status'),
     t('School status'),
@@ -14814,6 +15073,19 @@ function esdportal_str_views_default_views() {
     t('K8 2015 Grade'),
     t('Title'),
     t('City Council District'),
+    t('YouthTruth Export'),
+    t('Address - Locality (i.e. City)'),
+    t('Address - Postal code'),
+    t('School Website'),
+    t('Net5e'),
+    t('2015 net5e'),
+    t('2016 net5e'),
+    t('2013 Category5e'),
+    t('2014 Category5e'),
+    t('2015 Category5e'),
+    t('2016 Category5e'),
+    t('District'),
+    t('2014-15 Total enrollment'),
   );
   $export['manage_schools'] = $view;
 
@@ -16140,6 +16412,129 @@ function esdportal_str_views_default_views() {
     'page' => 'page',
     'default' => 0,
   );
+
+  /* Display: Coach export */
+  $handler = $view->new_display('views_data_export', 'Coach export', 'views_data_export_2');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Coach export';
+  $handler->display->display_options['defaults']['query'] = FALSE;
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['distinct'] = TRUE;
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['style_options']['provide_file'] = 1;
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['style_options']['quote'] = 1;
+  $handler->display->display_options['style_options']['trim'] = 0;
+  $handler->display->display_options['style_options']['replace_newlines'] = 0;
+  $handler->display->display_options['style_options']['header'] = 1;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: User: Last Name */
+  $handler->display->display_options['fields']['field_lname']['id'] = 'field_lname';
+  $handler->display->display_options['fields']['field_lname']['table'] = 'field_data_field_lname';
+  $handler->display->display_options['fields']['field_lname']['field'] = 'field_lname';
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_fname']['id'] = 'field_fname';
+  $handler->display->display_options['fields']['field_fname']['table'] = 'field_data_field_fname';
+  $handler->display->display_options['fields']['field_fname']['field'] = 'field_fname';
+  /* Field: User: E-mail */
+  $handler->display->display_options['fields']['mail']['id'] = 'mail';
+  $handler->display->display_options['fields']['mail']['table'] = 'users';
+  $handler->display->display_options['fields']['mail']['field'] = 'mail';
+  /* Field: User: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'users';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['label'] = 'Username';
+  $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
+  /* Field: User: Last access */
+  $handler->display->display_options['fields']['access']['id'] = 'access';
+  $handler->display->display_options['fields']['access']['table'] = 'users';
+  $handler->display->display_options['fields']['access']['field'] = 'access';
+  $handler->display->display_options['fields']['access']['date_format'] = 'short';
+  /* Field: User: Last login */
+  $handler->display->display_options['fields']['login']['id'] = 'login';
+  $handler->display->display_options['fields']['login']['table'] = 'users';
+  $handler->display->display_options['fields']['login']['field'] = 'login';
+  $handler->display->display_options['fields']['login']['date_format'] = 'short';
+  /* Field: User: Roles */
+  $handler->display->display_options['fields']['rid']['id'] = 'rid';
+  $handler->display->display_options['fields']['rid']['table'] = 'users_roles';
+  $handler->display->display_options['fields']['rid']['field'] = 'rid';
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: User: Last Name (field_lname) */
+  $handler->display->display_options['sorts']['field_lname_value']['id'] = 'field_lname_value';
+  $handler->display->display_options['sorts']['field_lname_value']['table'] = 'field_data_field_lname';
+  $handler->display->display_options['sorts']['field_lname_value']['field'] = 'field_lname_value';
+  $handler->display->display_options['sorts']['field_lname_value']['order'] = 'DESC';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: User: Active */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'users';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = '1';
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['status']['expose']['operator_id'] = '';
+  $handler->display->display_options['filters']['status']['expose']['label'] = 'Active';
+  $handler->display->display_options['filters']['status']['expose']['operator'] = 'status_op';
+  $handler->display->display_options['filters']['status']['expose']['identifier'] = 'status';
+  $handler->display->display_options['filters']['status']['expose']['required'] = TRUE;
+  /* Filter criterion: User: E-mail */
+  $handler->display->display_options['filters']['mail']['id'] = 'mail';
+  $handler->display->display_options['filters']['mail']['table'] = 'users';
+  $handler->display->display_options['filters']['mail']['field'] = 'mail';
+  $handler->display->display_options['filters']['mail']['operator'] = 'contains';
+  $handler->display->display_options['filters']['mail']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['mail']['expose']['operator_id'] = 'mail_op';
+  $handler->display->display_options['filters']['mail']['expose']['label'] = 'Filter by E-mail';
+  $handler->display->display_options['filters']['mail']['expose']['operator'] = 'mail_op';
+  $handler->display->display_options['filters']['mail']['expose']['identifier'] = 'mail';
+  $handler->display->display_options['filters']['mail']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    4 => 0,
+    5 => 0,
+    7 => 0,
+    3 => 0,
+    6 => 0,
+  );
+  /* Filter criterion: User: Last Name (field_lname) */
+  $handler->display->display_options['filters']['field_lname_value']['id'] = 'field_lname_value';
+  $handler->display->display_options['filters']['field_lname_value']['table'] = 'field_data_field_lname';
+  $handler->display->display_options['filters']['field_lname_value']['field'] = 'field_lname_value';
+  $handler->display->display_options['filters']['field_lname_value']['operator'] = 'contains';
+  $handler->display->display_options['filters']['field_lname_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_lname_value']['expose']['operator_id'] = 'field_lname_value_op';
+  $handler->display->display_options['filters']['field_lname_value']['expose']['label'] = 'Filter by Last Name';
+  $handler->display->display_options['filters']['field_lname_value']['expose']['operator'] = 'field_lname_value_op';
+  $handler->display->display_options['filters']['field_lname_value']['expose']['identifier'] = 'field_lname_value';
+  $handler->display->display_options['filters']['field_lname_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    4 => 0,
+    5 => 0,
+    7 => 0,
+    3 => 0,
+    6 => 0,
+  );
+  /* Filter criterion: User: Roles */
+  $handler->display->display_options['filters']['rid']['id'] = 'rid';
+  $handler->display->display_options['filters']['rid']['table'] = 'users_roles';
+  $handler->display->display_options['filters']['rid']['field'] = 'rid';
+  $handler->display->display_options['filters']['rid']['value'] = array(
+    21 => '21',
+    20 => '20',
+  );
+  $handler->display->display_options['path'] = 'export-coaches';
+  $handler->display->display_options['displays'] = array(
+    'page' => 'page',
+    'default' => 0,
+  );
+  $handler->display->display_options['sitename_title'] = 0;
   $translatables['manage_users'] = array(
     t('Master'),
     t('Manage Users'),
@@ -16170,6 +16565,8 @@ function esdportal_str_views_default_views() {
     t('Last Name'),
     t('First Name'),
     t('Last login'),
+    t('Coach export'),
+    t('Roles'),
   );
   $export['manage_users'] = $view;
 
@@ -25060,10 +25457,6 @@ return $nids;';
   $handler->display->display_options['fields']['field_site_visit_status']['relationship'] = 'uid';
   $handler->display->display_options['fields']['field_site_visit_status']['type'] = 'taxonomy_term_reference_plain';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
-  $handler->display->display_options['filter_groups']['groups'] = array(
-    1 => 'AND',
-    2 => 'OR',
-  );
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Taxonomy term: School status (field_school_status) */
   $handler->display->display_options['filters']['field_school_status_tid']['id'] = 'field_school_status_tid';
@@ -25217,18 +25610,18 @@ return $nids;';
   );
   $handler->display->display_options['filters']['field_school_type_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_school_type_tid']['vocabulary'] = 'school_type';
-  /* Filter criterion: Taxonomy term: 2015 In Universe (field_2015_universe) */
-  $handler->display->display_options['filters']['field_2015_universe_value']['id'] = 'field_2015_universe_value';
-  $handler->display->display_options['filters']['field_2015_universe_value']['table'] = 'field_data_field_2015_universe';
-  $handler->display->display_options['filters']['field_2015_universe_value']['field'] = 'field_2015_universe_value';
-  $handler->display->display_options['filters']['field_2015_universe_value']['relationship'] = 'field_school_tid';
-  $handler->display->display_options['filters']['field_2015_universe_value']['group'] = 1;
-  $handler->display->display_options['filters']['field_2015_universe_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_2015_universe_value']['expose']['operator_id'] = 'field_2015_universe_value_op';
-  $handler->display->display_options['filters']['field_2015_universe_value']['expose']['label'] = '2015 In Universe';
-  $handler->display->display_options['filters']['field_2015_universe_value']['expose']['operator'] = 'field_2015_universe_value_op';
-  $handler->display->display_options['filters']['field_2015_universe_value']['expose']['identifier'] = 'field_2015_universe_value';
-  $handler->display->display_options['filters']['field_2015_universe_value']['expose']['remember_roles'] = array(
+  /* Filter criterion: Taxonomy term: 2017 In Universe (field_2017_universe) */
+  $handler->display->display_options['filters']['field_2017_universe_value']['id'] = 'field_2017_universe_value';
+  $handler->display->display_options['filters']['field_2017_universe_value']['table'] = 'field_data_field_2017_universe';
+  $handler->display->display_options['filters']['field_2017_universe_value']['field'] = 'field_2017_universe_value';
+  $handler->display->display_options['filters']['field_2017_universe_value']['relationship'] = 'field_school_tid';
+  $handler->display->display_options['filters']['field_2017_universe_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_2017_universe_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_2017_universe_value']['expose']['operator_id'] = 'field_2017_universe_value_op';
+  $handler->display->display_options['filters']['field_2017_universe_value']['expose']['label'] = '2017 Universe';
+  $handler->display->display_options['filters']['field_2017_universe_value']['expose']['operator'] = 'field_2017_universe_value_op';
+  $handler->display->display_options['filters']['field_2017_universe_value']['expose']['identifier'] = 'field_2017_universe_value';
+  $handler->display->display_options['filters']['field_2017_universe_value']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     4 => 0,
@@ -25237,115 +25630,8 @@ return $nids;';
     18 => 0,
     6 => 0,
     19 => 0,
-  );
-  /* Filter criterion: Taxonomy term: 2014 School Profile Complete? (field_2014_profile) */
-  $handler->display->display_options['filters']['field_2014_profile_value']['id'] = 'field_2014_profile_value';
-  $handler->display->display_options['filters']['field_2014_profile_value']['table'] = 'field_data_field_2014_profile';
-  $handler->display->display_options['filters']['field_2014_profile_value']['field'] = 'field_2014_profile_value';
-  $handler->display->display_options['filters']['field_2014_profile_value']['relationship'] = 'field_school_tid';
-  $handler->display->display_options['filters']['field_2014_profile_value']['group'] = 1;
-  $handler->display->display_options['filters']['field_2014_profile_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_2014_profile_value']['expose']['operator_id'] = 'field_2014_profile_value_op';
-  $handler->display->display_options['filters']['field_2014_profile_value']['expose']['label'] = 'School Profile Complete?';
-  $handler->display->display_options['filters']['field_2014_profile_value']['expose']['use_operator'] = TRUE;
-  $handler->display->display_options['filters']['field_2014_profile_value']['expose']['operator'] = 'field_2014_profile_value_op';
-  $handler->display->display_options['filters']['field_2014_profile_value']['expose']['identifier'] = 'field_2014_profile_value';
-  $handler->display->display_options['filters']['field_2014_profile_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    4 => 0,
-    17 => 0,
-    7 => 0,
-    18 => 0,
-    6 => 0,
-    19 => 0,
-  );
-  /* Filter criterion: Taxonomy term: 2015 5Essentials Roster Submitted? (field_2015_5essentials_roster) */
-  $handler->display->display_options['filters']['field_2015_5essentials_roster_value']['id'] = 'field_2015_5essentials_roster_value';
-  $handler->display->display_options['filters']['field_2015_5essentials_roster_value']['table'] = 'field_data_field_2015_5essentials_roster';
-  $handler->display->display_options['filters']['field_2015_5essentials_roster_value']['field'] = 'field_2015_5essentials_roster_value';
-  $handler->display->display_options['filters']['field_2015_5essentials_roster_value']['relationship'] = 'field_school_tid';
-  $handler->display->display_options['filters']['field_2015_5essentials_roster_value']['group'] = 1;
-  $handler->display->display_options['filters']['field_2015_5essentials_roster_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_2015_5essentials_roster_value']['expose']['operator_id'] = 'field_2015_5essentials_roster_value_op';
-  $handler->display->display_options['filters']['field_2015_5essentials_roster_value']['expose']['label'] = '2015 5E Roster Submitted?';
-  $handler->display->display_options['filters']['field_2015_5essentials_roster_value']['expose']['operator'] = 'field_2015_5essentials_roster_value_op';
-  $handler->display->display_options['filters']['field_2015_5essentials_roster_value']['expose']['identifier'] = 'field_2015_5essentials_roster_value';
-  $handler->display->display_options['filters']['field_2015_5essentials_roster_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    4 => 0,
-    17 => 0,
-    7 => 0,
-    18 => 0,
-    6 => 0,
-    19 => 0,
-  );
-  /* Filter criterion: Taxonomy term: 2015 5Essentials Student Component Complete? (field_2015_5essentials_student) */
-  $handler->display->display_options['filters']['field_2015_5essentials_student_value']['id'] = 'field_2015_5essentials_student_value';
-  $handler->display->display_options['filters']['field_2015_5essentials_student_value']['table'] = 'field_data_field_2015_5essentials_student';
-  $handler->display->display_options['filters']['field_2015_5essentials_student_value']['field'] = 'field_2015_5essentials_student_value';
-  $handler->display->display_options['filters']['field_2015_5essentials_student_value']['relationship'] = 'field_school_tid';
-  $handler->display->display_options['filters']['field_2015_5essentials_student_value']['group'] = 1;
-  $handler->display->display_options['filters']['field_2015_5essentials_student_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_2015_5essentials_student_value']['expose']['operator_id'] = 'field_2015_5essentials_student_value_op';
-  $handler->display->display_options['filters']['field_2015_5essentials_student_value']['expose']['label'] = '2015 5Essentials Student Component Complete? (field_2015_5essentials_student)';
-  $handler->display->display_options['filters']['field_2015_5essentials_student_value']['expose']['use_operator'] = TRUE;
-  $handler->display->display_options['filters']['field_2015_5essentials_student_value']['expose']['operator'] = 'field_2015_5essentials_student_value_op';
-  $handler->display->display_options['filters']['field_2015_5essentials_student_value']['expose']['identifier'] = 'field_2015_5essentials_student_value';
-  $handler->display->display_options['filters']['field_2015_5essentials_student_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    4 => 0,
-    17 => 0,
-    7 => 0,
-    18 => 0,
-    6 => 0,
-    19 => 0,
-  );
-  /* Filter criterion: Taxonomy term: 2015 5Essentials Teacher Component Complete? (field_2015_5essentials_teacher) */
-  $handler->display->display_options['filters']['field_2015_5essentials_teacher_value']['id'] = 'field_2015_5essentials_teacher_value';
-  $handler->display->display_options['filters']['field_2015_5essentials_teacher_value']['table'] = 'field_data_field_2015_5essentials_teacher';
-  $handler->display->display_options['filters']['field_2015_5essentials_teacher_value']['field'] = 'field_2015_5essentials_teacher_value';
-  $handler->display->display_options['filters']['field_2015_5essentials_teacher_value']['relationship'] = 'field_school_tid';
-  $handler->display->display_options['filters']['field_2015_5essentials_teacher_value']['group'] = 2;
-  $handler->display->display_options['filters']['field_2015_5essentials_teacher_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_2015_5essentials_teacher_value']['expose']['operator_id'] = 'field_2015_5essentials_teacher_value_op';
-  $handler->display->display_options['filters']['field_2015_5essentials_teacher_value']['expose']['label'] = '2015 5Essentials Teacher Component Complete? (field_2015_5essentials_teacher)';
-  $handler->display->display_options['filters']['field_2015_5essentials_teacher_value']['expose']['use_operator'] = TRUE;
-  $handler->display->display_options['filters']['field_2015_5essentials_teacher_value']['expose']['operator'] = 'field_2015_5essentials_teacher_value_op';
-  $handler->display->display_options['filters']['field_2015_5essentials_teacher_value']['expose']['identifier'] = 'field_2015_5essentials_teacher_value';
-  $handler->display->display_options['filters']['field_2015_5essentials_teacher_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    4 => 0,
-    17 => 0,
-    7 => 0,
-    18 => 0,
-    6 => 0,
-    19 => 0,
-  );
-  /* Filter criterion: Taxonomy term: 2015 Graded Type (field_2015_graded) */
-  $handler->display->display_options['filters']['field_2015_graded_value']['id'] = 'field_2015_graded_value';
-  $handler->display->display_options['filters']['field_2015_graded_value']['table'] = 'field_data_field_2015_graded';
-  $handler->display->display_options['filters']['field_2015_graded_value']['field'] = 'field_2015_graded_value';
-  $handler->display->display_options['filters']['field_2015_graded_value']['relationship'] = 'field_school_tid';
-  $handler->display->display_options['filters']['field_2015_graded_value']['group'] = 2;
-  $handler->display->display_options['filters']['field_2015_graded_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_2015_graded_value']['expose']['operator_id'] = 'field_2015_graded_value_op';
-  $handler->display->display_options['filters']['field_2015_graded_value']['expose']['label'] = '2015 Graded Type';
-  $handler->display->display_options['filters']['field_2015_graded_value']['expose']['operator'] = 'field_2015_graded_value_op';
-  $handler->display->display_options['filters']['field_2015_graded_value']['expose']['identifier'] = 'field_2015_graded_value';
-  $handler->display->display_options['filters']['field_2015_graded_value']['expose']['multiple'] = TRUE;
-  $handler->display->display_options['filters']['field_2015_graded_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    4 => 0,
-    17 => 0,
-    7 => 0,
-    18 => 0,
-    6 => 0,
-    19 => 0,
+    21 => 0,
+    20 => 0,
   );
   $handler->display->display_options['path'] = 'send-user-emails';
 
@@ -25433,12 +25719,7 @@ return $nids;';
     t('ESD Exclusive Typology'),
     t('Active'),
     t('School type'),
-    t('2015 In Universe'),
-    t('School Profile Complete?'),
-    t('2015 5E Roster Submitted?'),
-    t('2015 5Essentials Student Component Complete? (field_2015_5essentials_student)'),
-    t('2015 5Essentials Teacher Component Complete? (field_2015_5essentials_teacher)'),
-    t('2015 Graded Type'),
+    t('2017 Universe'),
     t('Data export'),
     t('Last Name'),
     t('First Name'),

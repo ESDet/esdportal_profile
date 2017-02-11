@@ -2776,56 +2776,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 40,
-    ),
-  );
-
-  // Exported field_instance: 'node-school_profile-field_after_school_transportatio'
-  $field_instances['node-school_profile-field_after_school_transportatio'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Do you offer transportation for after-school programming?',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 55,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 8,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 11,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_after_school_transportatio',
-    'label' => 'After School Transportation',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_buttons',
-      'weight' => 13,
+      'weight' => 36,
     ),
   );
 
@@ -2875,7 +2826,123 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 51,
+      'weight' => 40,
+    ),
+  );
+
+  // Exported field_instance: 'node-school_profile-field_application_deadline'
+  $field_instances['node-school_profile-field_application_deadline'] = array(
+    'bundle' => 'school_profile',
+    'deleted' => 0,
+    'description' => 'When does your application window close?',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'date',
+        'settings' => array(
+          'format_type' => 'long',
+          'fromto' => 'both',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+          'show_remaining_days' => FALSE,
+          'show_repeat_rule' => 'show',
+        ),
+        'type' => 'date_default',
+        'weight' => 80,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_application_deadline',
+    'label' => 'Application Deadline',
+    'required' => 0,
+    'settings' => array(
+      'default_value' => 'now',
+      'default_value2' => 'same',
+      'default_value_code' => '',
+      'default_value_code2' => '',
+      'entity_translation_sync' => FALSE,
+      'restrictions' => array(
+        'allowed_values' => array(
+          'type' => 'disabled',
+        ),
+        'max' => array(
+          'date' => array(
+            'day' => 9,
+            'month' => 1,
+            'year' => 2017,
+          ),
+          'host_entity_date' => array(
+            'end_date' => 0,
+            'field' => 'node:school_profile:field_site_visit_available_dates',
+          ),
+          'type' => 'disabled',
+        ),
+        'min' => array(
+          'date' => array(
+            'day' => 9,
+            'month' => 1,
+            'year' => 2017,
+          ),
+          'host_entity_date' => array(
+            'end_date' => 0,
+            'field' => 'node:school_profile:field_site_visit_available_dates',
+          ),
+          'type' => 'disabled',
+        ),
+      ),
+      'restrictions2' => array(
+        'allowed_values' => array(
+          'type' => 'disabled',
+        ),
+        'max' => array(
+          'date' => NULL,
+          'host_entity_date' => array(
+            'end_date' => FALSE,
+            'field' => NULL,
+          ),
+          'host_entity_interval' => array(
+            'field' => NULL,
+          ),
+          'interval' => NULL,
+          'type' => 'disabled',
+        ),
+        'min' => array(
+          'date' => NULL,
+          'host_entity_date' => array(
+            'end_date' => FALSE,
+            'field' => NULL,
+          ),
+          'host_entity_interval' => array(
+            'field' => NULL,
+          ),
+          'interval' => NULL,
+          'type' => 'disabled',
+        ),
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'date',
+      'settings' => array(
+        'increment' => 15,
+        'input_format' => 'm/d/Y - H:i:s',
+        'input_format_custom' => '',
+        'label_position' => 'above',
+        'no_fieldset' => 0,
+        'repeat_collapsed' => 0,
+        'text_parts' => array(),
+        'year_range' => '-3:+3',
+      ),
+      'type' => 'date_popup',
+      'weight' => 34,
     ),
   );
 
@@ -2925,7 +2992,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 41,
+      'weight' => 37,
     ),
   );
 
@@ -2984,7 +3051,123 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 42,
+      'weight' => 38,
+    ),
+  );
+
+  // Exported field_instance: 'node-school_profile-field_application_open'
+  $field_instances['node-school_profile-field_application_open'] = array(
+    'bundle' => 'school_profile',
+    'deleted' => 0,
+    'description' => 'When does your school begin accepting applications?',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'date',
+        'settings' => array(
+          'format_type' => 'long',
+          'fromto' => 'both',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+          'show_remaining_days' => FALSE,
+          'show_repeat_rule' => 'show',
+        ),
+        'type' => 'date_default',
+        'weight' => 79,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_application_open',
+    'label' => 'Application Window Opens',
+    'required' => 0,
+    'settings' => array(
+      'default_value' => 'now',
+      'default_value2' => 'same',
+      'default_value_code' => '',
+      'default_value_code2' => '',
+      'entity_translation_sync' => FALSE,
+      'restrictions' => array(
+        'allowed_values' => array(
+          'type' => 'disabled',
+        ),
+        'max' => array(
+          'date' => array(
+            'day' => 9,
+            'month' => 1,
+            'year' => 2017,
+          ),
+          'host_entity_date' => array(
+            'end_date' => 0,
+            'field' => 'node:school_profile:field_site_visit_available_dates',
+          ),
+          'type' => 'disabled',
+        ),
+        'min' => array(
+          'date' => array(
+            'day' => 9,
+            'month' => 1,
+            'year' => 2017,
+          ),
+          'host_entity_date' => array(
+            'end_date' => 0,
+            'field' => 'node:school_profile:field_site_visit_available_dates',
+          ),
+          'type' => 'disabled',
+        ),
+      ),
+      'restrictions2' => array(
+        'allowed_values' => array(
+          'type' => 'disabled',
+        ),
+        'max' => array(
+          'date' => NULL,
+          'host_entity_date' => array(
+            'end_date' => FALSE,
+            'field' => NULL,
+          ),
+          'host_entity_interval' => array(
+            'field' => NULL,
+          ),
+          'interval' => NULL,
+          'type' => 'disabled',
+        ),
+        'min' => array(
+          'date' => NULL,
+          'host_entity_date' => array(
+            'end_date' => FALSE,
+            'field' => NULL,
+          ),
+          'host_entity_interval' => array(
+            'field' => NULL,
+          ),
+          'interval' => NULL,
+          'type' => 'disabled',
+        ),
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'date',
+      'settings' => array(
+        'increment' => 15,
+        'input_format' => 'm/d/Y - H:i:s',
+        'input_format_custom' => '',
+        'label_position' => 'above',
+        'no_fieldset' => 0,
+        'repeat_collapsed' => 0,
+        'text_parts' => array(),
+        'year_range' => '-3:+3',
+      ),
+      'type' => 'date_popup',
+      'weight' => 33,
     ),
   );
 
@@ -3034,7 +3217,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 13,
+      'weight' => 35,
     ),
   );
 
@@ -3093,7 +3276,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 43,
+      'weight' => 39,
     ),
   );
 
@@ -3143,7 +3326,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 15,
+      'weight' => 34,
     ),
   );
 
@@ -3193,7 +3376,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 16,
+      'weight' => 35,
     ),
   );
 
@@ -3243,7 +3426,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 17,
+      'weight' => 36,
     ),
   );
 
@@ -3293,7 +3476,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 14,
+      'weight' => 37,
     ),
   );
 
@@ -3343,7 +3526,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 8,
+      'weight' => 27,
     ),
   );
 
@@ -3393,7 +3576,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 21,
+      'weight' => 39,
     ),
   );
 
@@ -3443,111 +3626,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 33,
-    ),
-  );
-
-  // Exported field_instance: 'node-school_profile-field_character_development'
-  $field_instances['node-school_profile-field_character_development'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'What school-wide programs that support character development do you have?',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 53,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 6,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 9,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_character_development',
-    'label' => 'Character Development',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 3,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 7,
-    ),
-  );
-
-  // Exported field_instance: 'node-school_profile-field_college_counseling'
-  $field_instances['node-school_profile-field_college_counseling'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Please describe the college counseling offered to students.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 64,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 19,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 22,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_college_counseling',
-    'label' => 'College Counseling',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 3,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 11,
+      'weight' => 32,
     ),
   );
 
@@ -3597,59 +3676,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 25,
-    ),
-  );
-
-  // Exported field_instance: 'node-school_profile-field_counselor_student_ratio'
-  $field_instances['node-school_profile-field_counselor_student_ratio'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'What is your counselor-to-student ratio?',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 63,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 18,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 21,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_counselor_student_ratio',
-    'label' => 'Counselor/Student Ratio',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 15,
+      'weight' => 42,
     ),
   );
 
@@ -3702,59 +3729,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 46,
-    ),
-  );
-
-  // Exported field_instance: 'node-school_profile-field_discipline_programs'
-  $field_instances['node-school_profile-field_discipline_programs'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'What school-wide discipline programs do you have? Or, how do you handle discipline at your school?',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 52,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 5,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 8,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_discipline_programs',
-    'label' => 'Discipline Programs',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 3,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 8,
+      'weight' => 42,
     ),
   );
 
@@ -3804,7 +3779,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 30,
+      'weight' => 33,
     ),
   );
 
@@ -3854,7 +3829,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 27,
+      'weight' => 43,
     ),
   );
 
@@ -3907,59 +3882,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 28,
-    ),
-  );
-
-  // Exported field_instance: 'node-school_profile-field_early_child_center_relatio'
-  $field_instances['node-school_profile-field_early_child_center_relatio'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'If you have relationships with early child centers, please list which ones.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 68,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 23,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 26,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_early_child_center_relatio',
-    'label' => 'Early Child Center Relationships',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 17,
+      'weight' => 44,
     ),
   );
 
@@ -4008,59 +3931,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 35,
-    ),
-  );
-
-  // Exported field_instance: 'node-school_profile-field_early_childhood_transition'
-  $field_instances['node-school_profile-field_early_childhood_transition'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'What do you do to transition children from early childhood programs?',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 67,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 22,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 25,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_early_childhood_transition',
-    'label' => 'Early Childhood Transition',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 3,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 16,
+      'weight' => 28,
     ),
   );
 
@@ -4110,7 +3981,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 24,
+      'weight' => 17,
     ),
   );
 
@@ -4160,7 +4031,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 23,
+      'weight' => 16,
     ),
   );
 
@@ -4213,59 +4084,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
-    ),
-  );
-
-  // Exported field_instance: 'node-school_profile-field_english_language_learners'
-  $field_instances['node-school_profile-field_english_language_learners'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'What supports are in place for English Language Learners?',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 56,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 9,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 12,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_english_language_learners',
-    'label' => 'English Language Learners',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 3,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 9,
+      'weight' => 22,
     ),
   );
 
@@ -4315,7 +4134,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 36,
+      'weight' => 16,
     ),
   );
 
@@ -4368,7 +4187,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 17,
+      'weight' => 30,
     ),
   );
 
@@ -4418,59 +4237,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 29,
-    ),
-  );
-
-  // Exported field_instance: 'node-school_profile-field_family_supports'
-  $field_instances['node-school_profile-field_family_supports'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'What resources or supports do you offer families?',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 58,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 13,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 16,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_family_supports',
-    'label' => 'Family Supports',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 3,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 21,
+      'weight' => 14,
     ),
   );
 
@@ -4523,7 +4290,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 45,
+      'weight' => 41,
     ),
   );
 
@@ -4573,7 +4340,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 37,
+      'weight' => 33,
     ),
   );
 
@@ -4620,7 +4387,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 7,
+      'weight' => 23,
     ),
   );
 
@@ -4670,7 +4437,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 22,
+      'weight' => 38,
     ),
   );
 
@@ -4720,7 +4487,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 1,
+      'weight' => 26,
     ),
   );
 
@@ -4775,7 +4542,7 @@ function esdportal_str_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 27,
+      'weight' => 15,
     ),
   );
 
@@ -4825,59 +4592,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 34,
-    ),
-  );
-
-  // Exported field_instance: 'node-school_profile-field_in_school_programs'
-  $field_instances['node-school_profile-field_in_school_programs'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'What programs are in place (during school hours) to support your regular curriculum? Please add one per text field and use the "add more" button for each new entry.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 51,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 4,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 7,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_in_school_programs',
-    'label' => 'In-School Programs',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 13,
     ),
   );
 
@@ -4968,59 +4683,7 @@ function esdportal_str_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 10,
-    ),
-  );
-
-  // Exported field_instance: 'node-school_profile-field_organized_sports'
-  $field_instances['node-school_profile-field_organized_sports'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Please list the school\'s organized sports offerings.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 62,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 17,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 20,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_organized_sports',
-    'label' => 'Organized Sports',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 12,
+      'weight' => 18,
     ),
   );
 
@@ -5070,111 +4733,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 38,
-    ),
-  );
-
-  // Exported field_instance: 'node-school_profile-field_parent_supports'
-  $field_instances['node-school_profile-field_parent_supports'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'What opportunities do you offer for parents to be involved during or after school?  What time are parent meetings?  What decision-making opportunities are there for parents?  Are there classes for parents?',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 59,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 14,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 17,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_parent_supports',
-    'label' => 'Parent Supports',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 3,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 20,
-    ),
-  );
-
-  // Exported field_instance: 'node-school_profile-field_person_responsible'
-  $field_instances['node-school_profile-field_person_responsible'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Who is responsible for community partnerships and after-school programs at your school?',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 50,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 3,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 6,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_person_responsible',
-    'label' => 'Person Responsible',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 5,
+      'weight' => 17,
     ),
   );
 
@@ -5237,7 +4796,7 @@ function esdportal_str_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 15,
+      'weight' => 19,
     ),
   );
 
@@ -5287,7 +4846,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 31,
+      'weight' => 18,
     ),
   );
 
@@ -5336,7 +4895,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 19,
+      'weight' => 9,
     ),
   );
 
@@ -5389,7 +4948,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 4,
+      'weight' => 20,
     ),
   );
 
@@ -5442,7 +5001,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 5,
+      'weight' => 21,
     ),
   );
 
@@ -5495,7 +5054,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 16,
+      'weight' => 29,
     ),
   );
 
@@ -5538,7 +5097,7 @@ function esdportal_str_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 14,
+      'weight' => 31,
     ),
   );
 
@@ -5661,7 +5220,7 @@ function esdportal_str_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 26,
+      'weight' => 14,
     ),
   );
 
@@ -5720,7 +5279,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 25,
+      'weight' => 13,
     ),
   );
 
@@ -5776,7 +5335,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 23,
+      'weight' => 11,
     ),
   );
 
@@ -5897,7 +5456,7 @@ function esdportal_str_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 24,
+      'weight' => 12,
     ),
   );
 
@@ -5947,7 +5506,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 26,
+      'weight' => 41,
     ),
   );
 
@@ -6051,110 +5610,6 @@ function esdportal_str_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-school_profile-field_special_needs'
-  $field_instances['node-school_profile-field_special_needs'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'What supports are in place for students with special needs?',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 57,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 10,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 13,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_special_needs',
-    'label' => 'Special Needs',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 3,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 10,
-    ),
-  );
-
-  // Exported field_instance: 'node-school_profile-field_special_tracks'
-  $field_instances['node-school_profile-field_special_tracks'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Do you have linked learning or special tracks? If so, please describe.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 65,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 20,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 23,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_special_tracks',
-    'label' => 'Special Tracks',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 3,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 22,
-    ),
-  );
-
   // Exported field_instance: 'node-school_profile-field_staff_resources'
   $field_instances['node-school_profile-field_staff_resources'] = array(
     'bundle' => 'school_profile',
@@ -6201,7 +5656,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 13,
+      'weight' => 15,
     ),
   );
 
@@ -6251,7 +5706,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 47,
+      'weight' => 40,
     ),
   );
 
@@ -6304,7 +5759,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 48,
+      'weight' => 42,
     ),
   );
 
@@ -6357,7 +5812,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 49,
+      'weight' => 41,
     ),
   );
 
@@ -6410,111 +5865,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 50,
-    ),
-  );
-
-  // Exported field_instance: 'node-school_profile-field_student_development_progra'
-  $field_instances['node-school_profile-field_student_development_progra'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Please list student development programs available during school hours.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 61,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 16,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 19,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_student_development_progra',
-    'label' => 'Student Development Programs',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 18,
-    ),
-  );
-
-  // Exported field_instance: 'node-school_profile-field_student_leadership_opportu'
-  $field_instances['node-school_profile-field_student_leadership_opportu'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Please list the leadership opportunities available for students.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 60,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 15,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 18,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_student_leadership_opportu',
-    'label' => 'Student Leadership Opportunities',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 19,
+      'weight' => 43,
     ),
   );
 
@@ -6573,7 +5924,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 44,
+      'weight' => 40,
     ),
   );
 
@@ -6614,7 +5965,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 3,
+      'weight' => 25,
     ),
   );
 
@@ -6655,59 +6006,7 @@ function esdportal_str_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 2,
-    ),
-  );
-
-  // Exported field_instance: 'node-school_profile-field_transportation'
-  $field_instances['node-school_profile-field_transportation'] = array(
-    'bundle' => 'school_profile',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'What transportation options are available for before and after the regular school day?  How do you determine eligibility?',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 54,
-      ),
-      'growthdataask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 7,
-      ),
-      'sitevisitask' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 10,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_transportation',
-    'label' => 'Transportation',
-    'required' => 0,
-    'settings' => array(
-      'entity_translation_sync' => FALSE,
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 3,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 14,
+      'weight' => 24,
     ),
   );
 
@@ -6757,7 +6056,7 @@ function esdportal_str_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 9,
+      'weight' => 12,
     ),
   );
 
@@ -6801,7 +6100,7 @@ function esdportal_str_field_default_field_instances() {
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 12,
+      'weight' => 13,
     ),
   );
 
@@ -8464,10 +7763,9 @@ function esdportal_str_field_default_field_instances() {
         'weight' => 0,
       ),
       'default' => array(
-        'label' => 'above',
-        'module' => 'list',
+        'label' => 'hidden',
         'settings' => array(),
-        'type' => 'list_default',
+        'type' => 'hidden',
         'weight' => 56,
       ),
     ),
@@ -8813,10 +8111,9 @@ function esdportal_str_field_default_field_instances() {
         'weight' => 0,
       ),
       'default' => array(
-        'label' => 'above',
-        'module' => 'list',
+        'label' => 'hidden',
         'settings' => array(),
-        'type' => 'list_default',
+        'type' => 'hidden',
         'weight' => 60,
       ),
     ),
@@ -8857,10 +8154,9 @@ function esdportal_str_field_default_field_instances() {
         'weight' => 0,
       ),
       'default' => array(
-        'label' => 'above',
-        'module' => 'list',
+        'label' => 'hidden',
         'settings' => array(),
-        'type' => 'list_default',
+        'type' => 'hidden',
         'weight' => 58,
       ),
     ),
@@ -8901,10 +8197,9 @@ function esdportal_str_field_default_field_instances() {
         'weight' => 0,
       ),
       'default' => array(
-        'label' => 'above',
-        'module' => 'list',
+        'label' => 'hidden',
         'settings' => array(),
-        'type' => 'list_default',
+        'type' => 'hidden',
         'weight' => 59,
       ),
     ),
@@ -8924,6 +8219,49 @@ function esdportal_str_field_default_field_instances() {
       ),
       'type' => 'options_onoff',
       'weight' => 49,
+    ),
+  );
+
+  // Exported field_instance: 'taxonomy_term-schools-field_2017_universe'
+  $field_instances['taxonomy_term-schools-field_2017_universe'] = array(
+    'bundle' => 'schools',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'aside' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'default' => array(
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 62,
+      ),
+    ),
+    'entity_type' => 'taxonomy_term',
+    'field_name' => 'field_2017_universe',
+    'label' => '2017 In Universe',
+    'required' => 0,
+    'settings' => array(
+      'entity_translation_sync' => FALSE,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 52,
     ),
   );
 
@@ -9121,9 +8459,10 @@ function esdportal_str_field_default_field_instances() {
         'weight' => 0,
       ),
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
+        'module' => 'taxonomy',
         'settings' => array(),
-        'type' => 'hidden',
+        'type' => 'taxonomy_term_reference_plain',
         'weight' => 19,
       ),
     ),
@@ -9367,10 +8706,9 @@ function esdportal_str_field_default_field_instances() {
         'weight' => 0,
       ),
       'default' => array(
-        'label' => 'above',
-        'module' => 'list',
+        'label' => 'hidden',
         'settings' => array(),
-        'type' => 'list_default',
+        'type' => 'hidden',
         'weight' => 61,
       ),
     ),
@@ -9844,9 +9182,10 @@ function esdportal_str_field_default_field_instances() {
         'weight' => 0,
       ),
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
+        'module' => 'taxonomy',
         'settings' => array(),
-        'type' => 'hidden',
+        'type' => 'taxonomy_term_reference_plain',
         'weight' => 18,
       ),
     ),
@@ -10479,6 +9818,7 @@ function esdportal_str_field_default_field_instances() {
   t('2016 In Universe');
   t('2016 Key Fields Verified');
   t('2016 Recommended School');
+  t('2017 In Universe');
   t('5E roster');
   t('A phone number where parents can contact the school for information.');
   t('AP Classes');
@@ -10487,15 +9827,16 @@ function esdportal_str_field_default_field_instances() {
   t('Actual enrollment');
   t('Address');
   t('Admissions URL');
-  t('After School Transportation');
   t('Age From');
   t('Age To');
   t('Age groups');
   t('Alternative School');
   t('Application / registration fee');
+  t('Application Deadline');
   t('Application Fee');
   t('Application Fee Amount');
   t('Application Process');
+  t('Application Window Opens');
   t('Applications Received');
   t('Are all floors in your building wheelchair accessible?');
   t('Arts - Media');
@@ -10514,24 +9855,18 @@ function esdportal_str_field_default_field_instances() {
   t('Capacity');
   t('Care setting');
   t('Career Technical Emphasis');
-  t('Character Development');
   t('City Council District');
   t('Closing time');
-  t('College Counseling');
   t('College Prep');
   t('Contact person');
-  t('Counselor/Student Ratio');
   t('Delegate');
   t('Destination School');
   t('Details of partnership - 1');
   t('Details of partnership - 2');
   t('Details of partnership - 3');
-  t('Discipline Programs');
   t('District');
-  t('Do you have linked learning or special tracks? If so, please describe.');
   t('Do you offer dual enrollment?');
   t('Do you offer early childhood programs? If so, please select the years covered by your program.');
-  t('Do you offer transportation for after-school programming?');
   t('Does your school have a bullying and/or cyber bulling policy in place?');
   t('Does your school have a dedicated/specialized program for specific types of special education students? If so, please indicate below. This means that your school has on-site programming with dedicated staff.');
   t('Does your school have before or after care on site?');
@@ -10544,13 +9879,10 @@ function esdportal_str_field_default_field_instances() {
   t('ELL Level');
   t('ESD Basis ID');
   t('ESD Exclusive Typology');
-  t('Early Child Center Relationships');
   t('Early Childhood Programs');
-  t('Early Childhood Transition');
   t('Eligibility');
   t('Email');
   t('Email from old location field');
-  t('English Language Learners');
   t('Enrichment opportunities');
   t('Enroll Detroit Participant');
   t('Enter one or many users who should see school profiles (or other data) listed on their dashboard.');
@@ -10559,7 +9891,6 @@ function esdportal_str_field_default_field_instances() {
   t('Facebook URL');
   t('Facilities');
   t('Facilities available');
-  t('Family Supports');
   t('Family and community supports');
   t('Fee');
   t('Feeder School');
@@ -10585,11 +9916,9 @@ function esdportal_str_field_default_field_instances() {
   t('How do parents get involved at your school?');
   t('How many applications did you receive this year?');
   t('How many students did you accept this year?');
-  t('If you have relationships with early child centers, please list which ones.');
   t('If your school offers dual enrollment, with which institutions?');
   t('Immersion');
   t('In months');
-  t('In-School Programs');
   t('Instructional Model');
   t('Is there an application fee?');
   t('Is there anything else you would like to share about your program that we haven\'t already covered in the above questions?');
@@ -10612,25 +9941,18 @@ function esdportal_str_field_default_field_instances() {
   t('Opening time');
   t('Operator');
   t('Opted in?');
-  t('Organized Sports');
   t('Other enrollment');
   t('Other student clubs not listed above (up to three).');
   t('Outreach Status');
   t('Parent Involvement');
-  t('Parent Supports');
   t('Partner name - 1');
   t('Partner name - 2');
   t('Partner name - 3');
   t('Pay schedule');
-  t('Person Responsible');
   t('Photos');
   t('Playground and/or physical activity space on site');
   t('Please check all AP classes offered (HS only)');
-  t('Please describe the college counseling offered to students.');
   t('Please indicate if your school has a special academic theme or area of focus.');
-  t('Please list student development programs available during school hours.');
-  t('Please list the leadership opportunities available for students.');
-  t('Please list the school\'s organized sports offerings.');
   t('Please select any dates when you can\'t have a site visit.');
   t('Please upload any files that include information that you would like to share about your school. This may include budget, list of board members, growth data summary, awards, etc.');
   t('Please use this to send a personal message to families about your school. A good place to start is to let families know what makes your school different or sets it apart from other schools.');
@@ -10667,8 +9989,6 @@ function esdportal_str_field_default_field_instances() {
   t('Special Ed Emphasis');
   t('Special Education Level');
   t('Special Education Programs');
-  t('Special Needs');
-  t('Special Tracks');
   t('Special needs experience');
   t('Specialty');
   t('Specialty School');
@@ -10679,8 +9999,6 @@ function esdportal_str_field_default_field_instances() {
   t('Student Clubs Dance');
   t('Student Clubs Language');
   t('Student Clubs Other');
-  t('Student Development Programs');
-  t('Student Leadership Opportunities');
   t('Student clubs (Note that clubs are distinct from courses)');
   t('Students Accepted');
   t('Subsidy');
@@ -10704,31 +10022,22 @@ function esdportal_str_field_default_field_instances() {
   t('Week Cost for Infant/Toddler Care');
   t('Weekly Cost for Preschool');
   t('What college preparation/awareness resources does your school provide to students?');
-  t('What do you do to transition children from early childhood programs?');
   t('What extra learning resources are offered for students?');
   t('What facilities and resources does your school have?');
   t('What foreign languages are taught at your school?');
   t('What instructional and/or curriculum modes does your school use, if any?');
   t('What is the weekly cost of full-time care for Preschool');
   t('What is the weekly cost of full-time care for infant/toddler care?');
-  t('What is your counselor-to-student ratio?');
   t('What kind of transportation is provided for students by the school/district?');
-  t('What opportunities do you offer for parents to be involved during or after school?  What time are parent meetings?  What decision-making opportunities are there for parents?  Are there classes for parents?');
-  t('What programs are in place (during school hours) to support your regular curriculum? Please add one per text field and use the "add more" button for each new entry.');
-  t('What resources or supports do you offer families?');
   t('What school(s) do students typically attend after they graduate your school?');
   t('What school(s) do students typically attend before yours?');
-  t('What school-wide discipline programs do you have? Or, how do you handle discipline at your school?');
-  t('What school-wide programs that support character development do you have?');
   t('What staff resources are available to students?');
-  t('What supports are in place for English Language Learners?');
-  t('What supports are in place for students with special needs?');
   t('What time does school begin?');
   t('What time does school end?');
-  t('What transportation options are available for before and after the regular school day?  How do you determine eligibility?');
   t('What vocational or skills-based training programs does your school offer students, if any?');
   t('Wheelchair Accessibility');
-  t('Who is responsible for community partnerships and after-school programs at your school?');
+  t('When does your application window close?');
+  t('When does your school begin accepting applications?');
   t('Written Contract');
   t('esd_ec_id');
   t('geo');

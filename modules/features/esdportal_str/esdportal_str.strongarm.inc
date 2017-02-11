@@ -121,6 +121,10 @@ function esdportal_str_strongarm() {
       0 => 'count_2016',
       1 => 'BuildingCode',
     ),
+    'data_count_2017' => array(
+      0 => 'count_2017',
+      1 => 'BuildingCode',
+    ),
     'data_earlychild' => array(
       0 => 'earlychild',
       1 => 'id',
@@ -169,6 +173,10 @@ function esdportal_str_strongarm() {
       0 => 'esd_k8_2016',
       1 => 'bcode',
     ),
+    'data_esd_k8_2017' => array(
+      0 => 'esd_k8_2017',
+      1 => 'bcode',
+    ),
     'data_esd_site_visit_2014' => array(
       0 => 'esd_site_visit_2014',
       1 => 'bcode',
@@ -185,12 +193,20 @@ function esdportal_str_strongarm() {
       0 => 'fiveessentials_2015',
       1 => 'State_Schl_Id',
     ),
+    'data_fiveessentials_2016' => array(
+      0 => 'fiveessentials_2016',
+      1 => 'State_Schl_Id',
+    ),
     'data_k12_supplemental_2015' => array(
       0 => 'k12_supplemental_2015',
       1 => 'bcode',
     ),
     'data_k12_supplemental_2016' => array(
       0 => 'k12_supplemental_2016',
+      1 => 'bcode',
+    ),
+    'data_k12_supplemental_2017' => array(
+      0 => 'k12_supplemental_2017',
       1 => 'bcode',
     ),
     'data_meap_2009' => array(
@@ -364,7 +380,7 @@ function esdportal_str_strongarm() {
           'weight' => '0',
         ),
         'locations' => array(
-          'weight' => '20',
+          'weight' => '10',
         ),
       ),
       'display' => array(),
